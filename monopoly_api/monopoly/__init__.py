@@ -18,7 +18,12 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app,db)
 
-    from monopoly import models
+    from .game import models
+    from .player import models
+    from .cards import models
+    from .game import models
+
+
 
     return app
 

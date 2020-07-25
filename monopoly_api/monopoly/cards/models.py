@@ -2,8 +2,6 @@ from monopoly import db
 import uuid
 import enum
 
-
-
 class Colours(enum.Enum):
     Any=0
     Green=1
@@ -67,47 +65,7 @@ class ActionCard(db.Model):
     actionType = db.Column(db.Integer,db.Enum(ActionType),nullable=False)
 
 
-class GameStatus(enum.Enum):
-    WaitingToStart = 0
-    InProgress = 1
-    Completed = 2
 
-
-class Game(db.Model):
-    gameId = db.Column(db.String,primary_key=True, unique=True,nullable=False,default=uuid.uuid4())
-    numberOfPlayers = db.Column(db.Integer,nullable=False,default=0)
-    currentPlayer = db.Column(db.Integer)
-    numberOfTurnsPlayed = db.Column(db.Integer,nullable=False,default=0)
-    gameStatus = db.Column(db.Enum(GameStatus),nullable=False, default=GameStatus.WaitingToStart)
-
-
-class Player(db.Model):
-    playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    playerPassCode = db.Column(db.String,unique=True,nullable=False,default=uuid.uuid4())
-    gameId = db.Column(db.String,db.ForeignKey("game.gameId"))
-    playerName = db.Column(db.String)
-    playerGameOrder = db.Column(db.Integer)
-    game = db.relationship("game")
-
-
-class GameCardStatus(enum.Enum):
-    IsNotDrawn = 0
-    IsOnHand = 1
-    IsPlayedOnField = 2
-    IsDiscarded = 3
-
-
-class GameCards(db.Model):
-    __table_args__ = (
-        db.PrimaryKeyConstraint('gameId', 'cardId'),
-    )
-    gameId = db.Column(db.String,db.ForeignKey("game.gameId"))
-    cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"))
-    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"))
-    game = db.relationship("game")
-    player = db.relationship("player")
-    card = db.relationship("cards")
-    cardStatus = db.Column(db.Enum(GameCardStatus),nullable=False, default=GameCardStatus.IsNotDrawn)
 
     
     
