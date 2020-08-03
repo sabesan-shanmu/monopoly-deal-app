@@ -6,6 +6,8 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    API_VERSION = os.environ.get('API_VERSION')
+    API_TITLE = os.environ.get('API_TITLE')
 
 class ProductionConfig(Config):
     DEBUG = False
