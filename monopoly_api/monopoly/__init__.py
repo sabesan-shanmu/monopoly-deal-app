@@ -21,6 +21,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app,db)
     ma.init_app(app)
+    
     flask_api.version = app.config['API_TITLE']
     flask_api.version = app.config['API_VERSION']
     flask_api.init_app(app)

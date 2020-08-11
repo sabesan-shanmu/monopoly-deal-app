@@ -1,7 +1,8 @@
 from monopoly import db
 import monopoly.common.enums as Enum
 import uuid
-
+from datetime import datetime
+from sqlalchemy import UniqueConstraint
 
 
 class PropertiesCard(db.Model):
@@ -40,12 +41,14 @@ class ActionCard(db.Model):
 
 
 class Player(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('gameId', 'playerName',name='unique_player'),
+    )
     playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    playerPassCode = db.Column(db.String,unique=True,nullable=False,default=uuid.uuid4())
-    gameId = db.Column(db.String,db.ForeignKey("game.gameId"))
+    playerPassCode = db.Column(db.String,unique=True,nullable=False)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=False)
     playerName = db.Column(db.String)
     playerGameOrder = db.Column(db.Integer)
-    game = db.relationship("game")
 
    
 class Cards(db.Model):
@@ -55,10 +58,10 @@ class Cards(db.Model):
     cashCardId = db.Column(db.Integer,db.ForeignKey("cash_card.cashCardId"))
     rentId = db.Column(db.Integer,db.ForeignKey("rent_card.rentCardId"))
     actionId = db.Column(db.Integer,db.ForeignKey("action_card.actionCardId"))
-    properties = db.relationship("properties_card")  
-    cash = db.relationship("cash_card")  
-    rent = db.relationship("rent_card")  
-    action = db.relationship("action_card")  
+    properties = db.relationship(PropertiesCard)  
+    cash = db.relationship(CashCard,primaryjoin=cashCardId==CashCard.cashCardId)  
+    rent = db.relationship(RentCard,primaryjoin=rentId==RentCard.rentCardId)
+    action = db.relationship(ActionCard,primaryjoin=actionId==ActionCard.actionCardId)
 
 
 
@@ -67,12 +70,9 @@ class GameCards(db.Model):
     __table_args__ = (
         db.PrimaryKeyConstraint('gameId', 'cardId'),
     )
-    gameId = db.Column(db.String,db.ForeignKey("game.gameId"))
-    cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"))
-    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"))
-    game = db.relationship("game")
-    player = db.relationship("player")
-    card = db.relationship("cards")
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=True)
+    cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
+    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardStatus),nullable=False, default=Enum.GameCardStatus.IsNotDrawn)
 
 
@@ -80,10 +80,14 @@ class GameCards(db.Model):
 
 
 class Game(db.Model):
-    gameId = db.Column(db.String,primary_key=True, unique=True,nullable=False,default=uuid.uuid4())
+    gameId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    gamePassCode = db.Column(db.String, unique=True,nullable=False,default=uuid.uuid4)
     numberOfPlayers = db.Column(db.Integer,nullable=False,default=0)
-    currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId"))
+    name = db.Column(db.String,nullable=False)
+    currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id'))
     numberOfTurnsPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
-    ownerPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId"))
-    player =  db.relationship("player")
+    createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
+    players =  db.relationship(Player,primaryjoin=gameId==Player.gameId)
+    def __str__(self):
+        return self.name
