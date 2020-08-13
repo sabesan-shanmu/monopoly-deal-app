@@ -45,7 +45,7 @@ class Player(db.Model):
         db.UniqueConstraint('gameId', 'playerName',name='unique_player'),
     )
     playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    playerPassCode = db.Column(db.String,unique=True,nullable=False)
+    playerPassCode = db.Column(db.String,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=False)
     playerName = db.Column(db.String)
     playerGameOrder = db.Column(db.Integer)
