@@ -24,14 +24,14 @@ class Payee(Enum):
 
 
 class ActionType(Enum):
-    DrawCards = 0
-    ForceDeal = 1
-    SlyDeal = 2
-    SinglePay = 3
-    AllPlay = 4
-    Reject = 5
-    StealItAll = 6
-    DoubleRent = 7
+    DrawCards = 0  # current player only
+    ForceDeal = 1 # 2 players
+    SlyDeal = 2 # 2 players
+    SinglePay = 3 # 2 players
+    AllPlay = 4 # all players
+    Reject = 5 # 2 players
+    StealItAll = 6 # 2 players
+    DoubleRent = 7 # add on
 
 
  
@@ -42,10 +42,10 @@ class CardTypes(Enum):
     Action = 4
 
 class GameCardStatus(Enum):
-    IsNotDrawn = 0
-    IsOnHand = 1
-    IsPlayedOnField = 2
-    IsDiscarded = 3
+    IsNotDrawn = 0 #game cards no one owns
+    IsOnHand = 1 #player cards owend by a player
+    IsPlayedOnField = 2 #game cards owned by player but can be shown on field that are owned by player
+    IsDiscarded = 3 #game cards that are discarded and dont need to be shown to the user
 
 
 class GameStatus(Enum):

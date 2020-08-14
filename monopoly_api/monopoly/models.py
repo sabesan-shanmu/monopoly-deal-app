@@ -88,6 +88,8 @@ class Game(db.Model):
     numberOfTurnsPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
+    currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
+    isPlayerTurnComplete = db.Column(db.Boolean,nullable=False,default=False)
     players =  db.relationship(Player,primaryjoin=gameId==Player.gameId)
     def __str__(self):
         return self.name
