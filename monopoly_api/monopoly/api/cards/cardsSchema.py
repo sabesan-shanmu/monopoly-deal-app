@@ -6,7 +6,6 @@ import monopoly.common.enums as Enum
 class CardSchema(ma.Schema):
     cardId = fields.Integer(required=True)
     cardType = EnumField(Enum.CardTypes, by_value=True)
-    cardImagedUrl = fields.String(required=True)
     propertiesCardId = fields.Integer()
     cashCardId = fields.Integer()
     rentCardId = fields.Integer()
