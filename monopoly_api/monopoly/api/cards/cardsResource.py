@@ -1,5 +1,5 @@
 from flask_restx import Resource
-from flask import jsonifygi
+from flask import jsonify
 from monopoly.models import Cards
 from monopoly import db
 from .cardsSchema import CardSchema
@@ -10,7 +10,7 @@ class ManyCardsResource(Resource):
         result= CardSchema(many=True).dump(cards)
         return jsonify(result)
 
-class SingleCardsResource(Resource):
+class SingleCardResource(Resource):
     def get(self,cardId):
         card = db.session.query(Cards).filter(cardId=cardId).first()
         if card is None:

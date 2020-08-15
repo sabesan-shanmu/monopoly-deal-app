@@ -15,6 +15,7 @@ class Colours(Enum):
     Red=8
     Yellow=9
     Neutral=10
+    Magenta=11
 
 
 class Payee(Enum):
@@ -24,16 +25,16 @@ class Payee(Enum):
 
 
 class ActionType(Enum):
-    DrawCards = 0  # current player only
-    ForceDeal = 1 # 2 players
-    SlyDeal = 2 # 2 players
-    SinglePay = 3 # 2 players
-    AllPlay = 4 # all players
-    Reject = 5 # 2 players
-    StealItAll = 6 # 2 players
-    DoubleRent = 7 # add on
-
-
+    DealBreaker = 1
+    ForcedDeal = 2
+    SlyDeal = 3
+    JustSayNo = 4
+    DebtCollector = 5
+    ItsMyBirthday = 6
+    DoubleTheRent = 7
+    House = 8
+    Hotel = 9
+    PassGo = 10
  
 class CardTypes(Enum):
     Properties = 1
@@ -44,9 +45,9 @@ class CardTypes(Enum):
 class GameCardStatus(Enum):
     IsNotDrawn = 0 #game cards no one owns
     IsOnHand = 1 #player cards owend by a player
-    IsPlayedOnField = 2 #game cards owned by player but can be shown on field that are owned by player
+    IsPlayedOnPropertyPile = 2 #game cards owned by player but can be shown on field that are owned by player
     IsDiscarded = 3 #game cards that are discarded and dont need to be shown to the user
-
+    IsPlayedOnCashPile = 4
 
 class GameStatus(Enum):
     WaitingToStart = 0

@@ -58,7 +58,7 @@ class Cards(db.Model):
     cashCardId = db.Column(db.Integer,db.ForeignKey("cash_card.cashCardId"))
     rentId = db.Column(db.Integer,db.ForeignKey("rent_card.rentCardId"))
     actionId = db.Column(db.Integer,db.ForeignKey("action_card.actionCardId"))
-    properties = db.relationship(PropertiesCard)  
+    properties = db.relationship(PropertiesCard,primaryjoin=propertiesCardId==PropertiesCard.propertiesCardId)  
     cash = db.relationship(CashCard,primaryjoin=cashCardId==CashCard.cashCardId)  
     rent = db.relationship(RentCard,primaryjoin=rentId==RentCard.rentCardId)
     action = db.relationship(ActionCard,primaryjoin=actionId==ActionCard.actionCardId)
@@ -74,7 +74,7 @@ class GameCards(db.Model):
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardStatus),nullable=False, default=Enum.GameCardStatus.IsNotDrawn)
-
+    isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=False)
 
 
 
@@ -93,3 +93,16 @@ class Game(db.Model):
     players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,passive_deletes=True)
     def __str__(self):
         return self.name
+
+
+class RentTransaction(db.Model):
+    rentTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=True)
+    transactionStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
+    payee = db.Column(db.Integer,db.Enum(Enum.Payee),nullable=False)
+
+class RentPayeeTransaction(db.Model):
+    rentPayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    rentTransactionId = db.Column(db.Integer,db.ForeignKey("rent_transaction.rentTransactionId"),nullable=True)
+    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"),nullable=True)
+    
