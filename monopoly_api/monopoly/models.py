@@ -84,12 +84,12 @@ class Game(db.Model):
     gamePassCode = db.Column(db.String, unique=True,nullable=False,default=uuid.uuid4)
     numberOfPlayers = db.Column(db.Integer,nullable=False,default=0)
     name = db.Column(db.String,nullable=False)
-    currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id'))
+    currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id',ondelete='CASCADE'))
     numberOfTurnsPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
     currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
     isPlayerTurnComplete = db.Column(db.Boolean,nullable=False,default=False)
-    players =  db.relationship(Player,primaryjoin=gameId==Player.gameId)
+    players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,passive_deletes=True)
     def __str__(self):
         return self.name
