@@ -56,12 +56,12 @@ class Cards(db.Model):
     cardType =  db.Column(db.Enum(Enum.CardTypes))
     propertiesCardId = db.Column(db.Integer,db.ForeignKey("properties_card.propertiesCardId"))
     cashCardId = db.Column(db.Integer,db.ForeignKey("cash_card.cashCardId"))
-    rentId = db.Column(db.Integer,db.ForeignKey("rent_card.rentCardId"))
-    actionId = db.Column(db.Integer,db.ForeignKey("action_card.actionCardId"))
+    rentCardId = db.Column(db.Integer,db.ForeignKey("rent_card.rentCardId"))
+    actionCardId = db.Column(db.Integer,db.ForeignKey("action_card.actionCardId"))
     properties = db.relationship(PropertiesCard,primaryjoin=propertiesCardId==PropertiesCard.propertiesCardId)  
     cash = db.relationship(CashCard,primaryjoin=cashCardId==CashCard.cashCardId)  
-    rent = db.relationship(RentCard,primaryjoin=rentId==RentCard.rentCardId)
-    action = db.relationship(ActionCard,primaryjoin=actionId==ActionCard.actionCardId)
+    rent = db.relationship(RentCard,primaryjoin=rentCardId==RentCard.rentCardId)
+    action = db.relationship(ActionCard,primaryjoin=actionCardId==ActionCard.actionCardId)
 
 
 
