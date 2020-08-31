@@ -8,13 +8,13 @@ from sqlalchemy import UniqueConstraint
 class PropertiesCard(db.Model):
     propertiesCardId = db.Column(db.Integer, primary_key=True,nullable=False)
     name = db.Column(db.String,nullable=False)
-    primaryColourId = db.Column(db.Integer,db.Enum(Enum.Colours),nullable=False)
-    secondaryColourId = db.Column(db.Integer,db.Enum(Enum.Colours),nullable=True)
+    primaryColourId = db.Column(db.Enum(Enum.Colours),nullable=False)
+    secondaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
     price= db.Column(db.Integer,nullable=False)
 
 
 class PropertiesColor(db.Model):
-    colorId = db.Column(db.Integer,db.Enum(Enum.Colours),nullable=False,primary_key=True)
+    colorId = db.Column(db.Enum(Enum.Colours),nullable=False,primary_key=True)
     onePairRentPrice = db.Column(db.Integer,nullable=False)
     twoPairRentPrice = db.Column(db.Integer,nullable=False)
     threePairRentPrice = db.Column(db.Integer,nullable=False)
@@ -28,16 +28,16 @@ class CashCard(db.Model):
 
 class RentCard(db.Model):
     rentCardId = db.Column(db.Integer,primary_key=True,nullable=False)
-    primaryColourId = db.Column(db.Integer,db.Enum(Enum.Colours),nullable=False)
-    secondaryColourId = db.Column(db.Integer,db.Enum(Enum.Colours),nullable=True)
-    payee = db.Column(db.Integer,db.Enum(Enum.Payee),nullable=False)
+    primaryColourId = db.Column(db.Enum(Enum.Colours),nullable=False)
+    secondaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
+    payee = db.Column(db.Enum(Enum.Payee),nullable=False)
 
 
 class ActionCard(db.Model):
     actionCardId = db.Column(db.Integer,primary_key=True,nullable=False)
     name = db.Column(db.String,nullable=False)
     price= db.Column(db.Integer,nullable=False)
-    actionType = db.Column(db.Integer,db.Enum(Enum.ActionType),nullable=False)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=False)
 
 
 class Player(db.Model):
@@ -99,7 +99,7 @@ class RentTransaction(db.Model):
     rentTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=True)
     transactionStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
-    payee = db.Column(db.Integer,db.Enum(Enum.Payee),nullable=False)
+    payee = db.Column(db.Enum(Enum.Payee),nullable=False)
 
 class RentPayeeTransaction(db.Model):
     rentPayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)

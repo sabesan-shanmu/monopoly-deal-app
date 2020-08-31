@@ -15,7 +15,6 @@ class Colours(Enum):
     Red=8
     Yellow=9
     Neutral=10
-    Magenta=11
 
 
 class Payee(Enum):
@@ -24,7 +23,7 @@ class Payee(Enum):
 
 
 
-class ActionType(Enum):
+class ActionTypes(Enum):
     DealBreaker = 1
     ForcedDeal = 2
     SlyDeal = 3

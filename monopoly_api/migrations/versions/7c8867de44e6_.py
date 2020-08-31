@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6f784e61cbc3
+Revision ID: 7c8867de44e6
 Revises: 
-Create Date: 2020-08-15 19:43:46.584877
+Create Date: 2020-08-30 17:28:07.683160
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6f784e61cbc3'
+revision = '7c8867de44e6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -76,12 +76,12 @@ def upgrade():
     sa.Column('cardType', sa.Enum('Properties', 'Cash', 'Rent', 'Action', name='cardtypes'), nullable=True),
     sa.Column('propertiesCardId', sa.Integer(), nullable=True),
     sa.Column('cashCardId', sa.Integer(), nullable=True),
-    sa.Column('rentId', sa.Integer(), nullable=True),
-    sa.Column('actionId', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['actionId'], ['action_card.actionCardId'], ),
+    sa.Column('rentCardId', sa.Integer(), nullable=True),
+    sa.Column('actionCardId', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['actionCardId'], ['action_card.actionCardId'], ),
     sa.ForeignKeyConstraint(['cashCardId'], ['cash_card.cashCardId'], ),
     sa.ForeignKeyConstraint(['propertiesCardId'], ['properties_card.propertiesCardId'], ),
-    sa.ForeignKeyConstraint(['rentId'], ['rent_card.rentCardId'], ),
+    sa.ForeignKeyConstraint(['rentCardId'], ['rent_card.rentCardId'], ),
     sa.PrimaryKeyConstraint('cardId'),
     sa.UniqueConstraint('cardId')
     )
