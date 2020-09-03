@@ -213,4 +213,5 @@ def create_card():
             print(error)
             db.session.rollback()
         
-create_card()
+if __name__ == '__main__':
+    create_card()
