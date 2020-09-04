@@ -51,6 +51,7 @@ class MultipleGamesResource(Resource):
     def post(self):  
         try:
             game = create_game_schema().load(request.get_json())
+            
             db.session.add(game)
             db.session.commit()
             result = GameSchema().dump(game)
