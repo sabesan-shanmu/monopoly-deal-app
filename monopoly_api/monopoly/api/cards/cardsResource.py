@@ -12,7 +12,7 @@ class ManyCardsResource(Resource):
 
 class SingleCardResource(Resource):
     def get(self,cardId):
-        card = db.session.query(Cards).filter(cardId=cardId).first()
+        card = db.session.query(Cards).filter_by(cardId=cardId).first()
         if card is None:
             return {"errors": "Card Not Found"}, 404
         else:    

@@ -6,7 +6,7 @@ from monopoly.common import constants,enums
 from flask import request,jsonify   
 from werkzeug.security import generate_password_hash,check_password_hash
 from marshmallow import ValidationError
-from sqlalchemy import and_
+from sqlalchemy import and_,exc
 
 class ManyPlayersResource(Resource):
     def post(self,gamePassCode):

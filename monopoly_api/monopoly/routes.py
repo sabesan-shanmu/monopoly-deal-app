@@ -1,6 +1,6 @@
 from monopoly import flask_api
 from monopoly.api.games.gamesResource import MultipleGamesResource,SingleGameResource
-from monopoly.api.players.playersResource import ManyPlayersResource,VerifyUserResource
+om monopoly.api.games.players.playersResource import ManyPlayersResource,VerifyUserResource
 from monopoly.api.cards.cardsResource import SingleCardResource,ManyCardsResource
 
 flask_api.add_resource(MultipleGamesResource, '/games/')

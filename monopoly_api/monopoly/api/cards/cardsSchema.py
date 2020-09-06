@@ -3,25 +3,42 @@ from marshmallow import fields,post_dump
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
 
+
+class ActionCardSchema(ma.Schema):
+    name = fields.String(required=True)
+    price= fields.Integer(required=True)
+    actionType = EnumField(Enum.ActionTypes,by_value=True)
+
+class CashCardSchema(ma.Schema):
+    price = fields.Integer(required=True)
+
+class RentCardSchema(ma.Schema):
+    primaryColourId = EnumField(Enum.Colours,by_value=True)
+    secondaryColourId = EnumField(Enum.Colours,by_value=True)
+    payee = EnumField(Enum.Payee,by_value=True)
+
+
+class PropertiesCardSchema(ma.Schema):
+    name = fields.String(required=True)
+    primaryColourId = EnumField(Enum.Colours,by_value=True)
+    secondaryColourId = EnumField(Enum.Colours,by_value=True)
+    price = fields.Integer(required=True)
+
+
 class CardSchema(ma.Schema):
     cardId = fields.Integer(required=True)
     cardType = EnumField(Enum.CardTypes, by_value=True)
-    propertiesCardId = fields.Integer()
-    cashCardId = fields.Integer()
-    rentCardId = fields.Integer()
-    actionCardId = fields.Integer()
-    links = ma.HyperlinkRelated(
-        {"self":ma.AbsoluteUrlFor("single_card_resource", gamePassCode="<cardId>")}
+    action = fields.Nested(ActionCardSchema)
+    properties = fields.Nested(PropertiesCardSchema)
+    rent = fields.Nested(RentCardSchema)
+    cash = fields.Nested(CashCardSchema)
+    links = ma.Hyperlinks(
+        {"self": ma.AbsoluteUrlFor("single_card_resource", cardId="<cardId>")}
     )
-
+    # Remove None fields
     @post_dump
-    def post_process(self,card):
-        if card["propertiesCardId"] is not None:
-            card["links"].append({"propertiesCard":ma.AbsoluteUrlFor("single_properties_card_resource", gamePassCode="<propertiesCardId>")})
-        if card["cashCardId"] is not None:
-            card["links"].append({"cashCard":ma.AbsoluteUrlFor("single_cash_card_resource", gamePassCode="<cashCardId>")})
-        if card["rentCardId"] is not None:
-            card["links"].append({"rentCard":ma.AbsoluteUrlFor("single_rent_card_resource", gamePassCode="<rentCardId>")})
-        if card["actionCardId"] is not None:
-            card["links"].append({"actionCard":ma.AbsoluteUrlFor("single_action_card_resource", gamePassCode="<actionCardId>")})
-        return card
+    def remove_skip_values(self, data,**kwargs):
+        return {
+            key: value for key, value in data.items()
+            if value is not None
+        }
