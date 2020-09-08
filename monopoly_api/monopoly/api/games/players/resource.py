@@ -1,32 +1,34 @@
 from flask_restx import Resource
-from monopoly import db
-from monopoly.models import Game,Player
-from .playersSchema import create_player_schema,PlayerSchema
+#from monopoly import db
+#from monopoly.models import Game,Player
+from .schema import create_player_schema,PlayerSchema
 from monopoly.common import constants,enums
 from flask import request,jsonify   
 from werkzeug.security import generate_password_hash,check_password_hash
 from marshmallow import ValidationError
 from sqlalchemy import and_,exc
+from monopoly.api.games.services import get_game_by_gamepasscode
+from .services import get_players_by_gameid,add_player
+from monopoly import db
 
 class ManyPlayersResource(Resource):
     def post(self,gamePassCode):
         try:
-            game = db.session.query(Game).filter_by(gamePassCode=gamePassCode).first()
+            game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 return {"errors": "Game Not Found"}, 404
 
             #Get all current players that are part of the game
-            players = db.session.query(Player).filter_by(gameId=game.gameId).all()
+            players = get_players_by_gameid(game.gameId)
             if len(players)>=constants.MAX_NUMBER_OF_PLAYERS or game.gameStatus != enums.GameStatus.WaitingToStart:
                 return {"errors": "No more players can join the game"}, 400
             #create the player
             player = create_player_schema().load(request.get_json())
-            player.gameId = game.gameId
+            player.gameId = game.gameId 
             player.playerPassCode = generate_password_hash(player.playerPassCode)
             #evaluate their order based on other players' order
             player.playerGameOrder = 1 if len(players) == 0  else max(p.playerGameOrder for p in players)+1
-            db.session.add(player)
-            db.session.commit()
+            add_player(player)
             # TODO: log the user in session 
             result = PlayerSchema().dump(player)
             return jsonify(result)
@@ -39,7 +41,7 @@ class ManyPlayersResource(Resource):
 class VerifyUserResource(Resource):
     def post(self,gamePassCode):
         try:
-            game = db.session.query(Game).filter_by(gamePassCode=gamePassCode).first()
+            game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 return {"errors": "Game Not Found"}, 404
             player = create_player_schema().load(request.get_json())

@@ -18,8 +18,8 @@ class create_game_schema(ma.Schema):
 
 class update_game_schema(ma.Schema):
     gamePassCode = fields.Str(required=True)
-    numberOfTurnsPlayed = fields.Int(required=True,validate=Range(min=0,max=3))
-    currentPlayerId = fields.Int(allow_none=True)
+    #numberOfTurnsPlayed = fields.Int(required=True,validate=Range(min=0,max=3))
+    #currentPlayerId = fields.Int(allow_none=True)
     gameStatus =  EnumField(Enum.GameStatus, by_value=True)
 
 

@@ -1,18 +1,17 @@
 from flask_restx import Resource
 from flask import jsonify
-from monopoly.models import Cards
-from monopoly import db
-from .cardsSchema import CardSchema
+from .schema import CardSchema
+from .services import get_card,get_cards
 
 class ManyCardsResource(Resource):
     def get(self):
-        cards = db.session.query(Cards).all()
+        cards = get_cards()
         result= CardSchema(many=True).dump(cards)
         return jsonify(result)
 
 class SingleCardResource(Resource):
     def get(self,cardId):
-        card = db.session.query(Cards).filter_by(cardId=cardId).first()
+        card = get_card(cardId)
         if card is None:
             return {"errors": "Card Not Found"}, 404
         else:    
