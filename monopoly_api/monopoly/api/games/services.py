@@ -1,6 +1,6 @@
 from monopoly.models import Game
 from monopoly import db
-from sqlalchemy import update
+from sqlalchemy import update,exc
 
 def get_games():
     return db.session.query(Game).all()
@@ -17,16 +17,23 @@ def create_game(game):
         db.session.commit()
     except exc.IntegrityError:
         db.session.rollback()
+        raise
 
 def delete_game(game):
-    db.session.delete(game)
-    db.session.commit() 
-
+    try:
+        db.session.delete(game)
+        db.session.commit() 
+    except exc.IntegrityError:
+        db.session.rollback()
+        raise
 
 def update_game(game):
-    game = update(game).where(gameId=game.gameId).values(game)
-    db.session.commit()
-    return game;
-
+    try:
+        game = update(game).where(gameId=game.gameId).values(game)
+        db.session.commit()
+        return game
+    except exc.IntegrityError:
+        db.session.rollback()
+        raise
 
 

@@ -1,10 +1,10 @@
-from marshmallow import fields,validates,post_load,validate,ValidationError,pre_load
+from marshmallow import fields,validates,post_load,validate,ValidationError,post_dump
 from marshmallow.validate import Range,Length
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
 from monopoly import ma
 from monopoly.models import Game
-
+from monopoly.api.games.players.schema import PlayerSchema
 
 
 
@@ -18,8 +18,6 @@ class create_game_schema(ma.Schema):
 
 class update_game_schema(ma.Schema):
     gamePassCode = fields.Str(required=True)
-    #numberOfTurnsPlayed = fields.Int(required=True,validate=Range(min=0,max=3))
-    #currentPlayerId = fields.Int(allow_none=True)
     gameStatus =  EnumField(Enum.GameStatus, by_value=True)
 
 
@@ -31,12 +29,20 @@ class update_game_schema(ma.Schema):
 
 class GameSchema(ma.Schema):
     gamePassCode = fields.Str(required=True)
-    numberOfPlayers = fields.Int(required=True,validate=Range(min=0,max=3))
+    numberOfPlayers = fields.Int(required=True)
     name = fields.Str()
     currentPlayerId = fields.Int()
-    numberOfTurnsPlayed = fields.Int()
     gameStatus = EnumField(Enum.GameStatus, by_value=True)
     createdUtcDate = fields.DateTime()
+    players = fields.Nested(PlayerSchema,many=True)
     links = ma.Hyperlinks(
         {"self": ma.AbsoluteUrlFor("single_game_resource", gamePassCode="<gamePassCode>")}
     )
+    @post_dump
+    def update_number_of_players(self, data, many, **kwargs):
+        data["numberOfPlayers"] = len(data["players"])
+        return data
+
+        
+
+

@@ -11,6 +11,4 @@ class create_player_schema(ma.Schema):
 
 class PlayerSchema(ma.Schema):
     playerName = fields.String()
-    playerId = fields.Integer()
     playerGameOrder = fields.Integer()
-    gameId = fields.Integer()
