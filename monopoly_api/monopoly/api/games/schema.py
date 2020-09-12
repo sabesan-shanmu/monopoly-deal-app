@@ -20,8 +20,6 @@ class update_game_schema(ma.Schema):
     gamePassCode = fields.Str(required=True)
     gameStatus =  EnumField(Enum.GameStatus, by_value=True)
 
-
-
     @post_load
     def make_game(self, data, **kwargs):
         return Game(**data)

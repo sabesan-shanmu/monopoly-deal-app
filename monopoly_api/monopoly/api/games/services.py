@@ -29,9 +29,10 @@ def delete_game(game):
 
 def update_game(game):
     try:
-        game = update(game).where(gameId=game.gameId).values(game)
+        gameUpdate=get_game_by_gamepasscode(game.gamePassCode)
+        gameUpdate.gameStatus=game.gameStatus
         db.session.commit()
-        return game
+        return gameUpdate
     except exc.IntegrityError:
         db.session.rollback()
         raise

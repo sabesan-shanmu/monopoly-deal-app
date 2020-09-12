@@ -26,18 +26,16 @@ class SingleGameResource(Resource):
                 return {"errors": "Game Not Found"}, 404
              
             game = update_game_schema().load(request.get_json())
-            if game.currentPlayerId != game.currentPlayerId and  gameFound.currentPlayerId is not None:
-                raise ValidationError("Specified player is unable to update the game")
-            elif game.gamePassCode != gameFound.gamePassCode:
+            if game.gamePassCode != gameFound.gamePassCode:
                 raise ValidationError("Request gamePassCode doesn't match url")
             elif game.gameStatus == Enum.GameStatus.WaitingToStart:
-                raise ValidationError("Game cannot be rese to Waiting To Start.")
+                raise ValidationError("Game cannot be reset to Waiting To Start.")
 
             if gameFound.gameStatus == Enum.GameStatus.WaitingToStart and game.gameStatus == Enum.GameStatus.InProgress:
                 try:
                     cards = get_cards()
-                    players = get_players_by_gameid(game.gameId)
-                    create_game_cards(game.gameId,players,cards)
+                    players = get_players_by_gameid(gameFound.gameId)
+                    create_game_cards(gameFound.gameId,players,cards)
                 except exc.IntegrityError as error:
                     return {"errors": error.orig.args}, 400
         
