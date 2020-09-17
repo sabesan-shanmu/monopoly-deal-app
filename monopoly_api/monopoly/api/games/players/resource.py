@@ -1,7 +1,7 @@
 from flask_restx import Resource
 from .schema import create_player_schema,PlayerSchema
 from monopoly.common import constants,enums
-from flask import request,jsonify   
+from flask import request,jsonify,redirect
 from werkzeug.security import generate_password_hash,check_password_hash
 from marshmallow import ValidationError
 from sqlalchemy import and_,exc
@@ -9,7 +9,7 @@ from monopoly.api.games.services import get_game_by_gamepasscode
 from .services import get_players_by_gameid,add_player,get_player
 from monopoly import db
 
-class ManyPlayersResource(Resource):
+class RegisterResource(Resource):
     def post(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
@@ -34,7 +34,7 @@ class ManyPlayersResource(Resource):
         except exc.IntegrityError:
             return {"errors": "Player name already exists"}, 404
 
-class VerifyUserResource(Resource):
+class LoginResource(Resource):
     def post(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)

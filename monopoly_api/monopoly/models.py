@@ -70,9 +70,9 @@ class GameCards(db.Model):
     __table_args__ = (
         db.PrimaryKeyConstraint('gameId', 'cardId'),
     )
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=True)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
-    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"),nullable=True)
+    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardStatus),nullable=False, default=Enum.GameCardStatus.IsNotDrawn)
     isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=False)
 
@@ -87,13 +87,13 @@ class Game(db.Model):
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
     currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
-    players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,passive_deletes=True)
+    players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,cascade="all,delete")
 
     def __str__(self):
         return self.name
 
 class GameTurn(db.Model):
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),primary_key=True,nullable=True)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
     currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id',ondelete='CASCADE'))
     numberOfTurnsPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameTurn = db.Column(db.Integer,nullable=False,default=0)
@@ -101,12 +101,12 @@ class GameTurn(db.Model):
 
 class RentTransaction(db.Model):
     rentTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=True)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     transactionStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     payee = db.Column(db.Enum(Enum.Payee),nullable=False)
 
 class RentPayeeTransaction(db.Model):
     rentPayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     rentTransactionId = db.Column(db.Integer,db.ForeignKey("rent_transaction.rentTransactionId"),nullable=True)
-    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId"),nullable=True)
+    playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     
