@@ -5,7 +5,7 @@ from monopoly import db
 import random 
 
 """ 
-Purpose:Script for initial creating card data 
+Purpose:Script for initial card data creation
 """
 
 
