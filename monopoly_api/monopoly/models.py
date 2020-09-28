@@ -86,19 +86,19 @@ class Game(db.Model):
     name = db.Column(db.String,nullable=False,unique=True)
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
-    currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
     players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,cascade="all,delete")
 
     def __str__(self):
         return self.name
 
-class GameTurn(db.Model):
+class GamePlayerMoves(db.Model):
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
     currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id',ondelete='CASCADE'))
-    numberOfTurnsPlayed = db.Column(db.Integer,nullable=False,default=0)
+    numberMovesPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameTurn = db.Column(db.Integer,nullable=False,default=0)
+    currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
+    gameMoveStatus = db.Column(db.Enum(Enum.GameMoveStatus),nullable=False, default=Enum.GameMoveStatus.WaitingForPlayerToBeginMove)
     
-
 class RentTransaction(db.Model):
     rentTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
@@ -107,6 +107,6 @@ class RentTransaction(db.Model):
 
 class RentPayeeTransaction(db.Model):
     rentPayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    rentTransactionId = db.Column(db.Integer,db.ForeignKey("rent_transaction.rentTransactionId"),nullable=True)
+    rentTransactionfId = db.Column(db.Integer,db.ForeignKey("rent_transaction.rentTransactionId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     

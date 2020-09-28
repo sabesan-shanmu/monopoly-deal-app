@@ -4,6 +4,9 @@ from monopoly.common.enums import CardTypes,Colours,ActionTypes,Payee
 from monopoly import db
 import random 
 
+""" 
+Purpose:Script for initial creating card data 
+"""
 
 
 def create_action_cards():

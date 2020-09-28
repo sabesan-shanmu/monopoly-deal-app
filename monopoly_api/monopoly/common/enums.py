@@ -24,16 +24,16 @@ class Payee(Enum):
 
 
 class ActionTypes(Enum):
-    DealBreaker = 1
-    ForcedDeal = 2
-    SlyDeal = 3
-    JustSayNo = 4
-    DebtCollector = 5
-    ItsMyBirthday = 6
-    DoubleTheRent = 7
-    House = 8
-    Hotel = 9
-    PassGo = 10
+    DealBreaker = 1 # can only be played if there's a set in play
+    ForcedDeal = 2 # swap cards with a player
+    SlyDeal = 3 # take a card from a player
+    JustSayNo = 4 # can be played if something is asked to be done by a player
+    DebtCollector = 5 # ask one person for money
+    ItsMyBirthday = 6 # ask other player's for money
+    DoubleTheRent = 7 # can only be played with rent card 
+    House = 8 #no action needed
+    Hotel = 9 # no action needed
+    PassGo = 10 #player can draw 2 cards
  
 class CardTypes(Enum):
     Properties = 1
@@ -43,12 +43,17 @@ class CardTypes(Enum):
 
 class GameCardStatus(Enum):
     IsNotDrawn = 0 #game cards no one owns
-    IsOnHand = 1 #player cards owend by a player
+    IsOnHand = 1 #player cards owned by a player
     IsPlayedOnPropertyPile = 2 #game cards owned by player but can be shown on field that are owned by player
     IsDiscarded = 3 #game cards that are discarded and dont need to be shown to the user
-    IsPlayedOnCashPile = 4
+    IsPlayedOnCashPile = 4 #game cards owned by player but can be shown on field that are owned by player
 
 class GameStatus(Enum):
     WaitingToStart = 0
     InProgress = 1
     Completed = 2
+
+class GameMoveStatus(Enum):
+    WaitingForPlayerToBeginMove = 0
+    MoveInProgress = 1
+    MoveComplete = 2

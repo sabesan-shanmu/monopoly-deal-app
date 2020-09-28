@@ -3,7 +3,7 @@ from monopoly.models import GameCards
 import monopoly.common.enums as Enum
 from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS
 from monopoly import db
-from sqlalchemy import exc
+from sqlalchemy import exc,and_
 
 def create_game_cards(gameId,players,cards):
     try:
@@ -27,3 +27,7 @@ def create_game_cards(gameId,players,cards):
         db.session.rollback()
         raise
     
+
+def get_game_cards_in_play(gameId):
+    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsPlayedOnCashPile,Enum.GameCardStatus.IsPlayedOnPropertyPile]))).all()
+    #.in_([Enum.GameCardStatus.IsPlayedOnCashPile,Enum.GameCardStatus.IsPlayedOnPropertyPile]))).group_by(GameCards.playerId).all()
