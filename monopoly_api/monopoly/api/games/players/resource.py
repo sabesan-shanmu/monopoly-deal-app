@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from marshmallow import ValidationError
 from sqlalchemy import and_,exc
 from monopoly.api.games.services import get_game_by_gamepasscode
-from .services import get_players_by_gameid,add_player,get_player
+from .services import get_players_by_gameid,add_player,get_player_by_player_name
 from monopoly.auth import create_tokens
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 
@@ -44,7 +44,7 @@ class LoginResource(Resource):
             if game is None:
                 return {"errors": "Game Not Found"}, 404
             player = create_player_schema().load(request.get_json())
-            playerFound = get_player(game.gameId,player)
+            playerFound = get_player_by_player_name(game.gameId,player.playerNamee)
             if playerFound is None:
                 return {"errors": "Player Not Found"}, 404
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):

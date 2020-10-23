@@ -104,7 +104,8 @@ class RentTransaction(db.Model):
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     transactionStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     payee = db.Column(db.Enum(Enum.Payee),nullable=False)
-
+    total = db.Column(db.Integer)
+    
 class RentPayeeTransaction(db.Model):
     rentPayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     rentTransactionfId = db.Column(db.Integer,db.ForeignKey("rent_transaction.rentTransactionId"),nullable=True)

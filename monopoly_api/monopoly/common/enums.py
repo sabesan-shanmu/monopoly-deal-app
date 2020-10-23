@@ -31,9 +31,9 @@ class ActionTypes(Enum):
     DebtCollector = 5 # ask one person for money
     ItsMyBirthday = 6 # ask other player's for money
     DoubleTheRent = 7 # can only be played with rent card 
-    House = 8 #no action needed
+    House = 8 # no action needed
     Hotel = 9 # no action needed
-    PassGo = 10 #player can draw 2 cards
+    PassGo = 10 # player can draw 2 cards
  
 class CardTypes(Enum):
     Properties = 1
@@ -42,11 +42,11 @@ class CardTypes(Enum):
     Action = 4
 
 class GameCardStatus(Enum):
-    IsNotDrawn = 0 #game cards no one owns
-    IsOnHand = 1 #player cards owned by a player
-    IsPlayedOnPropertyPile = 2 #game cards owned by player but can be shown on field that are owned by player
-    IsDiscarded = 3 #game cards that are discarded and dont need to be shown to the user
-    IsPlayedOnCashPile = 4 #game cards owned by player but can be shown on field that are owned by player
+    IsNotDrawn = 0 # game cards no one owns
+    IsOnHand = 1 # player cards owned by a player
+    IsPlayedOnPropertyPile = 2 # game cards owned by player but can be shown on field that are owned by player
+    IsDiscarded = 3 # game cards that are discarded and dont need to be shown to the user
+    IsPlayedOnCashPile = 4 # game cards owned by player but can be shown on field that are owned by player
 
 class GameStatus(Enum):
     WaitingToStart = 0
@@ -57,3 +57,12 @@ class GameMoveStatus(Enum):
     WaitingForPlayerToBeginMove = 0
     MoveInProgress = 1
     MoveComplete = 2
+
+
+
+''' 
+Rules for where the card can be played
+Rules for the action required on the card before turn can be completed
+Rules for 
+
+ '''

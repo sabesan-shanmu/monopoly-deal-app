@@ -29,5 +29,7 @@ def create_game_cards(gameId,players,cards):
     
 
 def get_game_cards_in_play(gameId):
-    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsPlayedOnCashPile,Enum.GameCardStatus.IsPlayedOnPropertyPile]))).all()
-    #.in_([Enum.GameCardStatus.IsPlayedOnCashPile,Enum.GameCardStatus.IsPlayedOnPropertyPile]))).group_by(GameCards.playerId).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsPlayedOnCashPile,Enum.GameCardStatus.IsPlayedOnPropertyPile]))).group_by(GameCards.playerId).all()
+
+def get_game_cards_on_hand(gameId,playerId):
+        return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId==playerId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsOnHand]))).all()
