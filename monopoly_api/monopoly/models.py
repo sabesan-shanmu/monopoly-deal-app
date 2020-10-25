@@ -47,6 +47,7 @@ class Player(db.Model):
     playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     playerPassCode = db.Column(db.String,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=False)
+    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode"),nullable=False)
     playerName = db.Column(db.String)
     playerGameOrder = db.Column(db.Integer)
 

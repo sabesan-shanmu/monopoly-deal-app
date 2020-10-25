@@ -9,11 +9,11 @@ from monopoly.api.cards.services import get_cards
 from monopoly.api.games.gameCards.services import create_game_cards
 from monopoly.api.games.players.services import get_players_by_gameid
 from sqlalchemy import exc
-from flask_jwt_extended import jwt_required
-
+from monopoly.auth import validate_gamepassCode
 
 class SingleGameResource(Resource):
-    #@jwt_required
+    
+    @validate_gamepassCode
     def get(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
@@ -26,7 +26,7 @@ class SingleGameResource(Resource):
             return error.messages,400
 
         
-    #@jwt_required
+    @validate_gamepassCode
     def post(self,gamePassCode):
         try:
             gameFound = get_game_by_gamepasscode(gamePassCode)
@@ -61,7 +61,7 @@ class SingleGameResource(Resource):
             return {"errors": error.messages}, 400
         except:
             return {"errors": "Internal Server Error"}, 500
-    #@jwt_required
+    @validate_gamepassCode
     def delete(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)

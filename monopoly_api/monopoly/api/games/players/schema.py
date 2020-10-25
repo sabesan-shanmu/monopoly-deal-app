@@ -12,4 +12,5 @@ class create_player_schema(ma.Schema):
 class PlayerSchema(ma.Schema):
     playerName = fields.String()
     playerGameOrder = fields.Integer()
-    gameId = fields.Integer()
+    gamePassCode = fields.String()
+

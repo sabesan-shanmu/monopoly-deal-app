@@ -1,5 +1,7 @@
 import os
 from dotenv import load_dotenv
+import datetime
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
@@ -8,8 +10,8 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     API_VERSION = os.environ.get('API_VERSION')
     API_TITLE = os.environ.get('API_TITLE')
-    JWT_ACCESS_TOKEN_EXPIRES=os.environ.get('JWT_ACCESS_TOKEN_EXPIRES')
-    JWT_REFRESH_TOKEN_EXPIRES=os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')
+    JWT_ACCESS_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_ACCESS_TOKEN_EXPIRES')))
+    JWT_REFRESH_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
 
 class ProductionConfig(Config):
     DEBUG = True
