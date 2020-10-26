@@ -17,9 +17,23 @@ def validate_gamepassCode(func):
         verify_jwt_in_request()
         identity = get_jwt_identity()
         expectedGamePassCode = identity.get("gamePassCode")        
-        gamePassCode = kwargs.get("gamePassCode")
-        if gamePassCode is not None and expectedGamePassCode != gamePassCode:
+        actualGamePassCode = kwargs.get("gamePassCode")
+        if actualGamePassCode is not None and expectedGamePassCode != actualGamePassCode:
             return {"errors":"GamePassCode mismatch"},400
+
+        return func(*args,**kwargs)
+    return wrapper
+
+
+def validate_player(func):
+    @wraps(func)
+    def wrapper(*args,**kwargs):
+        verify_jwt_in_request()
+        identity = get_jwt_identity()
+        expectedPlayerId = identity.get("playerId")        
+        actualPlayerId = kwargs.get("playerId")
+        if expectedPlayerId != actualPlayerId:
+            return {"errors":"Player Id mismatch"},400
 
         return func(*args,**kwargs)
     return wrapper

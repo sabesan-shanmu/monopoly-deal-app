@@ -10,6 +10,7 @@ class create_player_schema(ma.Schema):
         return Player(**data)
 
 class PlayerSchema(ma.Schema):
+    playerId = fields.Integer()
     playerName = fields.String()
     playerGameOrder = fields.Integer()
     gamePassCode = fields.String()
