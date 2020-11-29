@@ -7,8 +7,10 @@ from monopoly.api.games.services import get_game_by_gamepasscode
 from .services import get_game_cards_in_play
 from monopoly.api.games.services import get_game_by_gamepasscode
 from .schema import GameCardSchema
+from monopoly.auth import validate_gamepassCode
 
 class GameCardsResource(Resource):
+    @validate_gamepassCode
     def get(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)

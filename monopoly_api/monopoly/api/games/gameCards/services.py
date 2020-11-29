@@ -33,3 +33,6 @@ def get_game_cards_in_play(gameId):
 
 def get_game_cards_on_hand(gameId,playerId):
     return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId==playerId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsOnHand]))).all()
+
+def draw_game_cards(gameId,number):
+    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId is None,GameCards.cardStatus.in_([Enum.GameCardStatus.IsNotDrawn]))).limit(number).all()

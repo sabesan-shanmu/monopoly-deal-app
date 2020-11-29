@@ -10,6 +10,7 @@ from monopoly.api.games.gameCards.services import create_game_cards
 from monopoly.api.games.players.services import get_players_by_gameid
 from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
+from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
 
 class SingleGameResource(Resource):
     
@@ -49,6 +50,8 @@ class SingleGameResource(Resource):
                         raise ValidationError("Not enough players to start the game")
 
                     create_game_cards(gameFound.gameId,players,cards)
+                    create_game_player_moves(gameFound)
+                    
                 except exc.IntegrityError as error:
                     return {"errors": error.orig.args}, 400
                 except ValidationError as error:
@@ -61,6 +64,8 @@ class SingleGameResource(Resource):
             return {"errors": error.messages}, 400
         except:
             return {"errors": "Internal Server Error"}, 500
+
+
     @validate_gamepassCode
     def delete(self,gamePassCode):
         try:
