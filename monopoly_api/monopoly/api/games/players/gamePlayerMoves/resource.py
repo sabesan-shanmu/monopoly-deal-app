@@ -9,27 +9,12 @@ from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.common.enums import GameMoveStatus
 from monopoly.common.constants import EXPECTED_GAME_MOVE_STATUS,MAX_NUMBER_OF_MOVES
 
-"""
-{
-    "turn:":3,
-    "status":---
-    WaitingForPlayerToBeginMove = 0
-    MoveInProgress = 1
-    MoveComplete = 2
 
-}
-
-
-MoveInProgress  |    WaitingForPlayerToBeginMove and current playerid
-MoveComplete   |  MoveInProgress and current playyerId and check if actionis complete based on last card played
-WaitingForPlayerToBegin| MoveComplete and assign to the next guy  OR player chooses to skip a turn
-
-"""
 
 
 class GamePlayerMovesResource(Resource):
-    #@validate_gamepassCode
-    #@validate_player
+    @validate_gamepassCode
+    @validate_player
     def post(self,gamePassCode,playerId):
         try:
             updated_player_move = update_player_moves().load(request.json())
@@ -43,24 +28,28 @@ class GamePlayerMovesResource(Resource):
                 return "No Current Moves found",404
 
             if not is_player_moves_status_valid(current_player_move,updated_player_move):
-                return "Invalid Game Status",400
+                return "Invalid Game   Status",400
+
+            if not is_player_valid(current_player_move,playerId):
+                return "Player not alowed to update",400
 
             if (updated_player_move.gameMoveStatus == GameMoveStatus.WaitingForPlayerToBeginMove 
                 and current_player_move.numberMovesPlayed == MAX_NUMBER_OF_MOVES):
                 currentPlayerGameOrder = get_player_game_order(game.players,current_player_move.currentPlayerId)
                 updated_player_move.currentPlayerId = get_next_player_id(game.players,1) if len(game.players) == currentPlayerGameOrder else get_next_player_id(game.players,currentPlayerGameOrder+1) 
+                updated_player_move.gameTurn = current_player_move.gameTurn + 1
 
             updated_player_move.numberMovesPlayed = 1 if current_player_move.numberMovesPlayed == MAX_NUMBER_OF_MOVES else (current_player_move.numberMovesPlayed + 1)
             
-            update_game_player_moves(update_game_player_moves)
+            gamePlayerMove = update_game_player_moves(update_game_player_moves)
 
-
-            return "",200
+            result = GamePlayerMovesSchema().dump(gamePlayerMove)
+            return jsonify(result)
         except Exception as err:
             print(err)
             return "Internal Server Error",500
             
-    #@validate_gamepassCode
+    @validate_gamepassCode
     def get(self,gamePassCode,playerId):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
@@ -89,12 +78,7 @@ def is_player_moves_status_valid(current_player_move,update_player_move):
 
 def is_player_move_count_valid(current_player_move,update_player_move):
     return current_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
-'''
-current is 3 and movecomplete  -> next is 1 and waitingforplayertobeginmove,reassign playerId
-current is x and movecomplete -> next is x+1 and waitingforplayertobeginmove,current playerId
-current is x and WaitingForPlayerToBeginMove -> next is x and MoveInProgress
-current is x and MoveInProgress -> next is x and MoveComplete
-'''
 
-def is_player_valid(playerId,current_player_move):
-    return 
+
+def is_player_valid(current_player_move,playerId):
+    return current_player_move.currentPlayerId == playerId

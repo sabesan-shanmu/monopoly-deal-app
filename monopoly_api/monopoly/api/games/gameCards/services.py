@@ -5,13 +5,13 @@ from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS
 from monopoly import db
 from sqlalchemy import exc,and_
 
-def create_game_cards(gameId,players,cards):
+def create_game_cards(game,players,cards):
     try:
         game_cards = []
         while len(cards)>0:
             selected_index = random.randint(0,len(cards)-1)
             selected_card = cards.pop(selected_index)
-            game_cards.append(GameCards(gameId=gameId,cardId=selected_card.cardId,cardStatus=Enum.GameCardStatus.IsNotDrawn))
+            game_cards.append(GameCards(gameId=game.gameId,cardId=selected_card.cardId,cardStatus=Enum.GameCardStatus.IsNotDrawn))
         
         list_of_game_cards=list(range(0,len(game_cards)))
         for player in players:

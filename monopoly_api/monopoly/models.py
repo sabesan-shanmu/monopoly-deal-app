@@ -76,8 +76,7 @@ class GameCards(db.Model):
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardStatus),nullable=False, default=Enum.GameCardStatus.IsNotDrawn)
     isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=False)
-
-
+    housingPrimaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
 
 
 class Game(db.Model):
@@ -97,7 +96,6 @@ class GamePlayerMoves(db.Model):
     currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id',ondelete='CASCADE'))
     numberMovesPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameTurn = db.Column(db.Integer,nullable=False,default=0)
-    currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
     gameMoveStatus = db.Column(db.Enum(Enum.GameMoveStatus),nullable=False, default=Enum.GameMoveStatus.WaitingForPlayerToBeginMove)
     
 class RentTransaction(db.Model):
@@ -112,3 +110,7 @@ class RentPayeeTransaction(db.Model):
     rentTransactionfId = db.Column(db.Integer,db.ForeignKey("rent_transaction.rentTransactionId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     
+class GameInPlayCard(db.Model):
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
+    currentInPlayCardId = db.Column(db.Integer,db.ForeignKey("cards.cardId",use_alter=True,name="fk_game_card_id"),nullable=True)
+   
