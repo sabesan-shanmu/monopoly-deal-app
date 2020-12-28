@@ -1,7 +1,8 @@
 from flask import jsonify
 from monopoly import flask_api
+from monopoly.exceptions import BadResourceException
 from sqlalchemy.exc import DBAPIError
-from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import InternalServerError
 
 
 
@@ -41,6 +42,11 @@ MONOPOLY_ERRORS = {
         "name":"PlayerIdMismatchError",
         "message":"Player Id in Token does not match requested resource."
     },
+    "RESOURCE_NOT_FOUND_ERROR":{
+        "code":400,
+        "name":"NotFoundError",
+        "message":"Request Resource is not found."
+    },
     "DB_ERROR":{
         "code":500,
         "name":"DatabaseError",
@@ -53,19 +59,23 @@ MONOPOLY_ERRORS = {
     },
 }
 
-def getFormattedError(errorType,**kwargs):
+def get_formatted_error(errorType,**kwargs):
     error = MONOPOLY_ERRORS.get(errorType)
     msg = kwargs.get('message', None)
     error["message"] = msg if msg is not None else error["message"]
-    return error
-
+    return error,error.get("code")
 
 
 @flask_api.errorhandler(DBAPIError)
 def database_error_handler(error):
-    return getFormattedError("DB_ERROR")
+    return get_formatted_error("DB_ERROR")
+
+@flask_api.errorhandler(InternalServerError)
+def internal_server_error_handler(error):
+    return get_formatted_error("DEFAULT")
 
 
-
-
+@flask_api.errorhandler(BadResourceException)
+def bad_resource_error_handler(error):
+    return get_formatted_error("RESOURCE_NOT_FOUND_ERROR",message=error.message)
 
