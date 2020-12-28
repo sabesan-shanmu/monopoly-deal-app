@@ -12,8 +12,10 @@ from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
 from monopoly.api.games.gameInPlayCard.services import create_game_in_play_card
-class SingleGameResource(Resource):
-    
+from monopoly.exceptions import ResourceNotFoundException
+
+
+class SingleGameResource(Resource):   
     @validate_gamepassCode
     def get(self,gamePassCode):
         try:
@@ -69,17 +71,13 @@ class SingleGameResource(Resource):
 
     @validate_gamepassCode
     def delete(self,gamePassCode):
-        try:
-            game = get_game_by_gamepasscode(gamePassCode)
-            if game is None:
-                return {"errors": "Game Not Found"}, 404
-            else:
-                delete_game(game)
-                return {"message":"Game Deleted"}, 200
-        except exc.IntegrityError as error:
-            return {"errors": error.orig.args}, 400     
-        except:
-            return {"errors": "Internal Server Error"}, 500
+        game = get_game_by_gamepasscode(gamePassCode)
+        if game is None:
+            raise ResourceNotFoundException(message="Game Not Found")
+        else:
+            delete_game(game)
+            result = GameSchema().dump(game)
+            return jsonify(result)
 
 class MultipleGamesResource(Resource):
 

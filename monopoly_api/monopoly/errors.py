@@ -1,7 +1,7 @@
 from flask import jsonify
 from monopoly import flask_api
-from monopoly.exceptions import BadResourceException
-from sqlalchemy.exc import DBAPIError
+from monopoly.exceptions import ResourceNotFoundException
+from sqlalchemy.exc import DBAPIError,SQLAlchemyError
 from werkzeug.exceptions import InternalServerError
 
 
@@ -65,8 +65,8 @@ def get_formatted_error(errorType,**kwargs):
     error["message"] = msg if msg is not None else error["message"]
     return error,error.get("code")
 
-
 @flask_api.errorhandler(DBAPIError)
+@flask_api.errorhandler(SQLAlchemyError)
 def database_error_handler(error):
     return get_formatted_error("DB_ERROR")
 
@@ -75,7 +75,7 @@ def internal_server_error_handler(error):
     return get_formatted_error("DEFAULT")
 
 
-@flask_api.errorhandler(BadResourceException)
+@flask_api.errorhandler(ResourceNotFoundException)
 def bad_resource_error_handler(error):
     return get_formatted_error("RESOURCE_NOT_FOUND_ERROR",message=error.message)
 

@@ -23,9 +23,10 @@ def delete_game(game):
     try:
         db.session.delete(game)
         db.session.commit() 
-    except exc.IntegrityError:
+    except:
         db.session.rollback()
         raise
+        
 
 def update_game(game):
     try:
