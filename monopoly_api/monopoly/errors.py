@@ -1,8 +1,9 @@
 from flask import jsonify
 from monopoly import flask_api
-from monopoly.exceptions import ResourceNotFoundException
+from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException
 from sqlalchemy.exc import DBAPIError,SQLAlchemyError
 from werkzeug.exceptions import InternalServerError
+from marshmallow import ValidationError
 
 
 
@@ -47,6 +48,11 @@ MONOPOLY_ERRORS = {
         "name":"NotFoundError",
         "message":"Request Resource is not found."
     },
+    "VALIDATION_ERROR":{
+        "code": 404,
+        "name":"ValidationError",
+        "message":"Validation Error(s)"
+    },
     "DB_ERROR":{
         "code":500,
         "name":"DatabaseError",
@@ -79,3 +85,7 @@ def internal_server_error_handler(error):
 def bad_resource_error_handler(error):
     return get_formatted_error("RESOURCE_NOT_FOUND_ERROR",message=error.message)
 
+
+@flask_api.errorhandler(ResourceValidationException)
+def validation_errror_handler(error):
+    return get_formatted_error("VALIDATION_ERROR",message=([error.message] if isinstance(error.message, (str, bytes)) else error.message))

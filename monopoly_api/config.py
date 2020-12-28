@@ -13,6 +13,8 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_ACCESS_TOKEN_EXPIRES')))
     JWT_REFRESH_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
     PROPAGATE_EXCEPTIONS = True
+    ERROR_404_HELP = False
+
 
 class ProductionConfig(Config):
     DEBUG = True

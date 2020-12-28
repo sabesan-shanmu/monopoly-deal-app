@@ -12,7 +12,7 @@ from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
 from monopoly.api.games.gameInPlayCard.services import create_game_in_play_card
-from monopoly.exceptions import ResourceNotFoundException
+from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException
 
 
 class SingleGameResource(Resource):   
@@ -87,15 +87,7 @@ class MultipleGamesResource(Resource):
         return jsonify(result)
 
     def post(self):  
-        try:
-            game = create_game_schema().load(request.get_json()) 
-            create_game(game)
-            result = GameSchema().dump(game)
-            return jsonify(result)
-        except ValidationError as error:
-            return {"errors": error.messages}, 400
-        except exc.IntegrityError as error:
-            return {"errors":error.orig.args}, 400
-        except:
-            return {"errors": "Internal Server Error"}, 500
- 
+        game = create_game_schema().load(request.get_json()) 
+        create_game(game)
+        result = GameSchema().dump(game)
+        return jsonify(result)
