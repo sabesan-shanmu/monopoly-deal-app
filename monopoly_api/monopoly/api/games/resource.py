@@ -21,12 +21,12 @@ class SingleGameResource(Resource):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
-                return {"errors": "Game Not Found"}, 404
-            else:    
+                raise ResourceNotFoundException(message="Game Not Found")
+            else: 
                 result = GameSchema().dump(game)
                 return jsonify(result)
-        except Exception as error:
-            return error.messages,400
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
         
     @validate_gamepassCode
@@ -63,31 +63,38 @@ class SingleGameResource(Resource):
             gameFound = update_game(game)
             result = GameSchema().dump(gameFound)
             return jsonify(result)
-        except ValidationError as error:
-            return {"errors": error.messages}, 400
-        except:
-            return {"errors": "Internal Server Error"}, 500
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
 
     @validate_gamepassCode
     def delete(self,gamePassCode):
-        game = get_game_by_gamepasscode(gamePassCode)
-        if game is None:
-            raise ResourceNotFoundException(message="Game Not Found")
-        else:
-            delete_game(game)
-            result = GameSchema().dump(game)
-            return jsonify(result)
+        try:
+            game = get_game_by_gamepasscode(gamePassCode)
+            if game is None:
+                raise ResourceNotFoundException(message="Game Not Found")
+            else:
+                delete_game(game)
+                result = GameSchema().dump(game)
+                return jsonify(result)
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
 class MultipleGamesResource(Resource):
 
     def get(self):
-        games = get_games()
-        result= GameSchema(many=True).dump(games)
-        return jsonify(result)
+        try:
+            games = get_games()
+            result= GameSchema(many=True).dump(games)
+            return jsonify(result)
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
-    def post(self):  
-        game = create_game_schema().load(request.get_json()) 
-        create_game(game)
-        result = GameSchema().dump(game)
-        return jsonify(result)
+    def post(self): 
+        try:
+            game = create_game_schema().load(request.get_json()) 
+            create_game(game)
+            result = GameSchema().dump(game)
+            return jsonify(result)
+        except ValidationError as e:
+            raise ResourceValidationException(e)
