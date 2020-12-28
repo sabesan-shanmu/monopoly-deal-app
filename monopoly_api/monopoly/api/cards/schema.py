@@ -16,6 +16,7 @@ class RentCardSchema(ma.Schema):
     primaryColourId = EnumField(Enum.Colours,by_value=True)
     secondaryColourId = EnumField(Enum.Colours,by_value=True)
     payee = EnumField(Enum.Payee,by_value=True)
+    price = fields.Integer(required=True)
 
 
 class PropertiesCardSchema(ma.Schema):

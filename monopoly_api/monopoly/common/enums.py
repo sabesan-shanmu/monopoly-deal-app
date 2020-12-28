@@ -34,6 +34,7 @@ class ActionTypes(Enum):
     House = 8 # no action needed
     Hotel = 9 # no action needed
     PassGo = 10 # player can draw 2 cards
+
  
 class CardTypes(Enum):
     Properties = 1
@@ -47,6 +48,7 @@ class GameCardStatus(Enum):
     IsPlayedOnPropertyPile = 2 # game cards owned by player but can be shown on field that are owned by player
     IsDiscarded = 3 # game cards that are discarded and dont need to be shown to the user
     IsPlayedOnCashPile = 4 # game cards owned by player but can be shown on field that are owned by player
+    IsInPlay = 5 # all the cards that the player plays on their turn. clear this once the player's turn ends
 
 class GameStatus(Enum):
     WaitingToStart = 0

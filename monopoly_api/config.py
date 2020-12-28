@@ -12,6 +12,7 @@ class Config:
     API_TITLE = os.environ.get('API_TITLE')
     JWT_ACCESS_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_ACCESS_TOKEN_EXPIRES')))
     JWT_REFRESH_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
+    PROPAGATE_EXCEPTIONS = True
 
 class ProductionConfig(Config):
     DEBUG = True

@@ -28,7 +28,7 @@ class GamePlayerMovesResource(Resource):
                 return "No Current Moves found",404
 
             if not is_player_moves_status_valid(current_player_move,updated_player_move):
-                return "Invalid Game   Status",400
+                return "Invalid Game Status",400
 
             if not is_player_valid(current_player_move,playerId):
                 return "Player not alowed to update",400

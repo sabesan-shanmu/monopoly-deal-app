@@ -31,7 +31,7 @@ class RentCard(db.Model):
     primaryColourId = db.Column(db.Enum(Enum.Colours),nullable=False)
     secondaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
     payee = db.Column(db.Enum(Enum.Payee),nullable=False)
-
+    price= db.Column(db.Integer,nullable=False)
 
 class ActionCard(db.Model):
     actionCardId = db.Column(db.Integer,primary_key=True,nullable=False)
