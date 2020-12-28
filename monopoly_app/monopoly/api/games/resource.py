@@ -12,7 +12,7 @@ from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
 from monopoly.api.games.gameInPlayCard.services import create_game_in_play_card
-from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException
+from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 
 
 class SingleGameResource(Resource):   
@@ -34,32 +34,30 @@ class SingleGameResource(Resource):
         try:
             gameFound = get_game_by_gamepasscode(gamePassCode)
             if gameFound is None:
-                return {"errors": "Game Not Found"}, 404
+                raise ResourceNotFoundException(message="Game Not Found")
              
             game = update_game_schema().load(request.get_json())
             if game.gamePassCode != gameFound.gamePassCode:
-                raise ValidationError("Request gamePassCode doesn't match url")
+                raise FieldValidationException("Request gamePassCode doesn't match url")
             elif game.gameStatus == Enum.GameStatus.WaitingToStart:
-                raise ValidationError("Game cannot be reset to Waiting To Start.")
+                raise FieldValidationException("Game cannot be reset to Waiting To Start.")
             elif gameFound.gameStatus == Enum.GameStatus.Completed:
-                raise ValidationError("Game is complete.No longer can be updated.")
+                raise FieldValidationException("Game is complete.No longer can be updated.")
 
             if gameFound.gameStatus == Enum.GameStatus.WaitingToStart and game.gameStatus == Enum.GameStatus.InProgress:
                 try:
                     cards = get_cards()
                     players = get_players_by_gameid(gameFound.gameId)
                     if len(players)< Constants.MIN_NUMBER_OF_PLAYERS:
-                        raise ValidationError("Not enough players to start the game")
+                        raise FieldValidationException("Not enough players to start the game")
 
                     create_game_cards(gameFound,players,cards)
                     create_game_player_moves(gameFound)
                     create_game_in_play_card(gameFound)
                     
-                except exc.IntegrityError as error:
-                    return {"errors": error.orig.args}, 400
-                except ValidationError as error:
-                    return {"errors": error.messages}, 400
-        
+                except ValidationError as e:
+                    raise ResourceValidationException(e)
+            
             gameFound = update_game(game)
             result = GameSchema().dump(gameFound)
             return jsonify(result)

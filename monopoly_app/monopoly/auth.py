@@ -20,7 +20,7 @@ def validate_gamepassCode(func):
         expectedGamePassCode = identity.get("gamePassCode", None)    
         actualGamePassCode = kwargs.get("gamePassCode", None)
         if actualGamePassCode is not None and expectedGamePassCode != actualGamePassCode:
-            return get_jwt_formatted_error("GAME_CODE_MISMATCH_ERROR")
+            return get_formatted_error("GAME_CODE_MISMATCH_ERROR")
 
         return func(*args,**kwargs)
     return wrapper
@@ -34,7 +34,7 @@ def validate_player(func):
         expectedPlayerId = identity.get("playerId", None)        
         actualPlayerId = kwargs.get("playerId", None)
         if expectedPlayerId != actualPlayerId:
-            return get_jwt_formatted_error("PLAYER_ID_MISMATCH_ERROR")
+            return get_formatted_error("PLAYER_ID_MISMATCH_ERROR")
 
         return func(*args,**kwargs)
     return wrapper

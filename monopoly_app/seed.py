@@ -118,19 +118,19 @@ def create_cash_card():
 
 def create_rent_card():
     rentCards = [
-        RentCard(rentCardId=1,primaryColourId=Colours.Black,secondaryColourId=Colours.Neutral,payee=Payee.All),
-        RentCard(rentCardId=2,primaryColourId=Colours.Any,secondaryColourId=Colours.Any,payee=Payee.Single),
-        RentCard(rentCardId=3,primaryColourId=Colours.Pink,secondaryColourId=Colours.Orange,payee=Payee.All),
-        RentCard(rentCardId=4,primaryColourId=Colours.Red,secondaryColourId=Colours.Yellow,payee=Payee.All),
-        RentCard(rentCardId=5,primaryColourId=Colours.Black,secondaryColourId=Colours.Neutral,payee=Payee.All),
-        RentCard(rentCardId=6,primaryColourId=Colours.Green,secondaryColourId=Colours.DarkBlue,payee=Payee.All),
-        RentCard(rentCardId=7,primaryColourId=Colours.Red,secondaryColourId=Colours.Yellow,payee=Payee.All),
-        RentCard(rentCardId=8,primaryColourId=Colours.Brown,secondaryColourId=Colours.LightBlue,payee=Payee.All),
-        RentCard(rentCardId=9,primaryColourId=Colours.Green,secondaryColourId=Colours.DarkBlue,payee=Payee.All),
-        RentCard(rentCardId=10,primaryColourId=Colours.Any,secondaryColourId=Colours.Any,payee=Payee.Single),
-        RentCard(rentCardId=11,primaryColourId=Colours.Pink,secondaryColourId=Colours.Orange,payee=Payee.All),
-        RentCard(rentCardId=12,primaryColourId=Colours.Brown,secondaryColourId=Colours.LightBlue,payee=Payee.All),
-        RentCard(rentCardId=13,primaryColourId=Colours.Any,secondaryColourId=Colours.Any,payee=Payee.Single)
+        RentCard(rentCardId=1,primaryColourId=Colours.Black,secondaryColourId=Colours.Neutral,payee=Payee.All,price=1),
+        RentCard(rentCardId=2,primaryColourId=Colours.Any,secondaryColourId=Colours.Any,payee=Payee.Single,price=3),
+        RentCard(rentCardId=3,primaryColourId=Colours.Pink,secondaryColourId=Colours.Orange,payee=Payee.All,price=1),
+        RentCard(rentCardId=4,primaryColourId=Colours.Red,secondaryColourId=Colours.Yellow,payee=Payee.All,price=1),
+        RentCard(rentCardId=5,primaryColourId=Colours.Black,secondaryColourId=Colours.Neutral,payee=Payee.All,price=1),
+        RentCard(rentCardId=6,primaryColourId=Colours.Green,secondaryColourId=Colours.DarkBlue,payee=Payee.All,price=1),
+        RentCard(rentCardId=7,primaryColourId=Colours.Red,secondaryColourId=Colours.Yellow,payee=Payee.All,price=1),
+        RentCard(rentCardId=8,primaryColourId=Colours.Brown,secondaryColourId=Colours.LightBlue,payee=Payee.All,price=1),
+        RentCard(rentCardId=9,primaryColourId=Colours.Green,secondaryColourId=Colours.DarkBlue,payee=Payee.All,price=1),
+        RentCard(rentCardId=10,primaryColourId=Colours.Any,secondaryColourId=Colours.Any,payee=Payee.Single,price=3),
+        RentCard(rentCardId=11,primaryColourId=Colours.Pink,secondaryColourId=Colours.Orange,payee=Payee.All,price=1),
+        RentCard(rentCardId=12,primaryColourId=Colours.Brown,secondaryColourId=Colours.LightBlue,payee=Payee.All,price=1),
+        RentCard(rentCardId=13,primaryColourId=Colours.Any,secondaryColourId=Colours.Any,payee=Payee.Single,price=3)
     ]
     return rentCards
 

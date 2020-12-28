@@ -23,7 +23,7 @@ def create_game_cards(game,players,cards):
                 
         db.session.bulk_save_objects(game_cards)
         db.session.commit()
-    except exc.IntegrityError:
+    except:
         db.session.rollback()
         raise
     
