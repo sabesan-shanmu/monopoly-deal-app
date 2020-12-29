@@ -9,14 +9,14 @@ from monopoly.api.games.gameInPlayCard.resource import GameInPlayCardResource
 
 flask_api.add_resource(MultipleGamesResource, '/api/games/')
 flask_api.add_resource(SingleGameResource, '/api/games/<string:gamePassCode>/')
-flask_api.add_resource(GameCardsResource,'/api/games/<string:gamePassCode>/gameCards')
-flask_api.add_resource(RegisterResource,'/api/games/<string:gamePassCode>/register')
-flask_api.add_resource(LoginResource,'/api/games/<string:gamePassCode>/login')
-flask_api.add_resource(RefreshResource,'/api/games/<string:gamePassCode>/refresh')
-flask_api.add_resource(GameInPlayCardResource,'/api/games/<string:gamePassCode>/gameInPlayCard')
+flask_api.add_resource(GameCardsResource,'/api/games/<string:gamePassCode>/gameCards/')
+flask_api.add_resource(RegisterResource,'/api/games/<string:gamePassCode>/register/')
+flask_api.add_resource(LoginResource,'/api/games/<string:gamePassCode>/login/')
+flask_api.add_resource(RefreshResource,'/api/games/<string:gamePassCode>/refresh/')
+flask_api.add_resource(GameInPlayCardResource,'/api/games/<string:gamePassCode>/gameInPlayCard/')
 
-flask_api.add_resource(ManyPlayerCardsResource,'/api/games/<string:gamePassCode>/players/<int:playerId>/playerCards')
-flask_api.add_resource(GamePlayerMovesResource,'/api/games/<string:gamePassCode>/players/<int:playerId>/gameplayerMoves')
+flask_api.add_resource(ManyPlayerCardsResource,'/api/games/<string:gamePassCode>/players/<int:playerId>/playerCards/')
+flask_api.add_resource(GamePlayerMovesResource,'/api/games/<string:gamePassCode>/players/<int:playerId>/gameplayerMoves/')
 
 
 flask_api.add_resource(ManyCardsResource,'/api/cards/')

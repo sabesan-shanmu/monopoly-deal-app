@@ -44,8 +44,8 @@ def jwt_expired_token_callback(expired_token):
     return get_formatted_error("EXPIRED_TOKEN_ERROR")
 
 @jwt.invalid_token_loader
-def jwt_invalid_token_loader_callback(msg):
-    return get_formatted_error("INVALID_TOKEN_ERROR",msg=msg)
+def jwt_invalid_token_loader_callback(message):
+    return get_formatted_error("INVALID_TOKEN_ERROR",message=message)
 
 @jwt.needs_fresh_token_loader
 def jwt_needs_fresh_token_callback():
@@ -55,7 +55,8 @@ def jwt_needs_fresh_token_callback():
 def jwt_revoked_token_callback():
     return get_formatted_error("REVOKED_TOKEN_ERROR")
 
-
-
+@jwt.unauthorized_loader
+def jwt_missing_token_callback(message):
+    return get_formatted_error("MISSING_TOKEN_ERROR",message=message)
 
 

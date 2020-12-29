@@ -1,9 +1,8 @@
 
 from flask_restx import Resource
 from flask import request,jsonify
-from .services import get_game_player_moves,update_game_player_moves
-from monopoly.api.games.services import get_game_by_gamepasscode,get_player_game_order,
-get_next_player_id,is_player_moves_status_valid,is_player_move_count_valid,is_player_valid
+from .services import get_game_player_moves,update_game_player_moves,get_player_game_order,get_next_player_id,is_player_moves_status_valid,is_player_move_count_valid,is_player_valid
+from monopoly.api.games.services import get_game_by_gamepasscode
 from .schema import GamePlayerMovesSchema,update_player_moves
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.common.enums import GameMoveStatus

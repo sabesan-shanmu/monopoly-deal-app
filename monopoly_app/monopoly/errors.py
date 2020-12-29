@@ -18,6 +18,11 @@ MONOPOLY_ERRORS = {
         "name":"InvalidTokenError",
         "message":"Invalid Token."
     },
+    "MISSING_TOKEN_ERROR":{
+        "code": 401,
+        "name":"MissingTokenError",
+        "message":"Missing Token."
+    },
     "MISSING_REFRESH_TOKEN_ERROR":{
         "code": 401,
         "name":"RefreshTokenError",
