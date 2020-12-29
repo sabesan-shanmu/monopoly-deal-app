@@ -10,7 +10,7 @@ def update_game_in_play_card(gameInPlaydCard):
         GameInPlayCard.query.filter_by(gameId=gameInPlaydCard.gameId).update(dict(gameInPlaydCard))
         db.session.commit()
         return gameInPlaydCard
-    except exc.IntegrityError:
+    except:
         db.session.rollback()
         raise
 
@@ -21,6 +21,6 @@ def create_game_in_play_card(game):
         )
         db.session.add(gameInPlaydCard)
         db.session.commit()
-    except exc.IntegrityError:
+    except:
         db.session.rollback()
         raise

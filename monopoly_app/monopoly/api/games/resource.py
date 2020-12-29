@@ -53,7 +53,7 @@ class SingleGameResource(Resource):
 
                     create_game_cards(gameFound,players,cards)
                     create_game_player_moves(gameFound)
-                    create_game_in_play_card(gameFound)
+                        (gameFound)
                     
                 except ValidationError as e:
                     raise ResourceValidationException(e)
