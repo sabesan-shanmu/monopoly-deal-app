@@ -38,18 +38,18 @@ class SingleGameResource(Resource):
              
             game = update_game_schema().load(request.get_json())
             if game.gamePassCode != gameFound.gamePassCode:
-                raise FieldValidationException("Request gamePassCode doesn't match url")
+                raise FieldValidationException(message="GamePassCode in request body doesn't match url")
             elif game.gameStatus == Enum.GameStatus.WaitingToStart:
-                raise FieldValidationException("Game cannot be reset to Waiting To Start.")
+                raise FieldValidationException(message="Game cannot be reset to Waiting To Start.")
             elif gameFound.gameStatus == Enum.GameStatus.Completed:
-                raise FieldValidationException("Game is complete.No longer can be updated.")
+                raise FieldValidationException(message="Game is complete.No longer can be updated.")
 
             if gameFound.gameStatus == Enum.GameStatus.WaitingToStart and game.gameStatus == Enum.GameStatus.InProgress:
                 try:
                     cards = get_cards()
                     players = get_players_by_gameid(gameFound.gameId)
                     if len(players)< Constants.MIN_NUMBER_OF_PLAYERS:
-                        raise FieldValidationException("Not enough players to start the game")
+                        raise FieldValidationException(message="Not enough players to start the game")
 
                     create_game_cards(gameFound,players,cards)
                     create_game_player_moves(gameFound)

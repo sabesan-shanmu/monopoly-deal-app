@@ -4,6 +4,8 @@ from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.api.games.gameCards.services import get_game_cards_on_hand
 from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.api.games.services import get_game_by_gamepasscode
+from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
+from marshmallow import ValidationError
 
 class ManyPlayerCardsResource(Resource):   
     @validate_gamepassCode
@@ -12,11 +14,11 @@ class ManyPlayerCardsResource(Resource):
         try:
             gameFound = get_game_by_gamepasscode(gamePassCode)
             if gameFound is None:
-                return {"errors": "Game Not Found"}, 404
+                raise ResourceNotFoundException(message="Game Not Found")
             playerCards = get_game_cards_on_hand(gameFound.gameId,playerId)
             result = GameCardSchema(many=True).dump(playerCards)
             return jsonify(result)
-        except Exception as err:
-            print(err)
-            return "Internal Server Error",500
+        except ValidationError as e:
+            raise ResourceValidationException(e)
+
 

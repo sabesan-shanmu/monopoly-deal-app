@@ -5,6 +5,28 @@ from monopoly import db
 from sqlalchemy import exc
 
 
+
+
+def get_player_game_order(players,playerId):
+    return[x for x in players if x.playerId==playerId][0].playerGameOrder 
+
+def get_next_player_id(players,playerGameOrder):
+    return[x for x in players if x.playerGameOrder==playerGameOrder][0].playerId 
+
+def is_player_moves_status_valid(current_player_move,update_player_move):
+    return EXPECTED_GAME_MOVE_STATUS[current_player_move.gameMoveStatus] == update_player_move.gameMoveStatus
+
+
+def is_player_move_count_valid(current_player_move,update_player_move):
+    return current_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
+
+
+def is_player_valid(current_player_move,playerId):
+    return current_player_move.currentPlayerId == playerId
+
+
+
+
 def create_game_player_moves(game):
     try:
         gamePlayerMoves = GamePlayerMoves(

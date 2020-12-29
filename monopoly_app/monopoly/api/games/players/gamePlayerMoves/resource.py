@@ -1,14 +1,15 @@
 
 from flask_restx import Resource
 from flask import request,jsonify
-from marshmallow import ValidationError
 from .services import get_game_player_moves,update_game_player_moves
-from monopoly.api.games.services import get_game_by_gamepasscode
+from monopoly.api.games.services import get_game_by_gamepasscode,get_player_game_order,
+get_next_player_id,is_player_moves_status_valid,is_player_move_count_valid,is_player_valid
 from .schema import GamePlayerMovesSchema,update_player_moves
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.common.enums import GameMoveStatus
 from monopoly.common.constants import EXPECTED_GAME_MOVE_STATUS,MAX_NUMBER_OF_MOVES
-
+from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
+from marshmallow import ValidationError
 
 
 
@@ -21,17 +22,17 @@ class GamePlayerMovesResource(Resource):
             game = get_game_by_gamepasscode(gamePassCode)
             
             if game is None:
-                return {"errors": "Game Not Found"}, 404        
+                raise ResourceNotFoundException(message="Game Not Found")   
             
             current_player_move = get_game_player_moves(game.gameId)
             if current_player_move is None:
-                return "No Current Moves found",404
+                raise FieldValidationException(message="No Current Moves found")
 
             if not is_player_moves_status_valid(current_player_move,updated_player_move):
-                return "Invalid Game Status",400
+                raise FieldValidationException(message="Invalid Game Status")
 
             if not is_player_valid(current_player_move,playerId):
-                return "Player not alowed to update",400
+                raise FieldValidationException(message="Player not alowed to update")
 
             if (updated_player_move.gameMoveStatus == GameMoveStatus.WaitingForPlayerToBeginMove 
                 and current_player_move.numberMovesPlayed == MAX_NUMBER_OF_MOVES):
@@ -45,40 +46,22 @@ class GamePlayerMovesResource(Resource):
 
             result = GamePlayerMovesSchema().dump(gamePlayerMove)
             return jsonify(result)
-        except Exception as err:
-            print(err)
-            return "Internal Server Error",500
+        except ValidationError as e:
+            raise ResourceValidationException(e)
             
     @validate_gamepassCode
     def get(self,gamePassCode,playerId):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
-                return {"errors": "Game Not Found"}, 404 
+                raise ResourceNotFoundException(message="Game Not Found")   
             current_player_move = get_game_player_moves(game.gameId)
             if current_player_move is None:
-                return "No Current Moves found",404
+                raise ResourceNotFoundException(message="No Current Moves found")   
 
             result = GamePlayerMovesSchema().dump(current_player_move)
             return jsonify(result)
-        except Exception as err:
-            print(err)
-            return "Internal Server Error",500
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
 
-def get_player_game_order(players,playerId):
-    return[x for x in players if x.playerId==playerId][0].playerGameOrder 
-
-def get_next_player_id(players,playerGameOrder):
-    return[x for x in players if x.playerGameOrder==playerGameOrder][0].playerId 
-
-def is_player_moves_status_valid(current_player_move,update_player_move):
-    return EXPECTED_GAME_MOVE_STATUS[current_player_move.gameMoveStatus] == update_player_move.gameMoveStatus
-
-
-def is_player_move_count_valid(current_player_move,update_player_move):
-    return current_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
-
-
-def is_player_valid(current_player_move,playerId):
-    return current_player_move.currentPlayerId == playerId

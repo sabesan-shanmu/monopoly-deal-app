@@ -3,24 +3,24 @@ from .schema import create_player_schema,PlayerSchema
 from monopoly.common import constants,enums
 from flask import request,jsonify
 from werkzeug.security import generate_password_hash,check_password_hash
-from marshmallow import ValidationError
-from sqlalchemy import and_,exc
 from monopoly.api.games.services import get_game_by_gamepasscode
 from .services import get_players_by_gameid,add_player,get_player_by_player_name
 from monopoly.auth import create_tokens
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
+from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
+from marshmallow import ValidationError
 
 class RegisterResource(Resource):
     def post(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
-                return {"errors": "Game Not Found"}, 404
+                raise ResourceNotFoundException(message="Game Not Found")    
 
             #Get all current players that are part of the game
             players = get_players_by_gameid(game.gameId)
             if len(players)>=constants.MAX_NUMBER_OF_PLAYERS or game.gameStatus != enums.GameStatus.WaitingToStart:
-                return {"errors": "No more players can join the game"}, 400
+                raise FieldValidationException(message="No more players can join the game")
             #create the player
             player = create_player_schema().load(request.get_json())
             player.gameId = game.gameId 
@@ -32,31 +32,29 @@ class RegisterResource(Resource):
             player_result = PlayerSchema().dump(player)
             result = create_tokens(player_result)
             return result,200
-
-        except ValidationError as error:
-            return {"errors": error.messages}, 400
-        except exc.IntegrityError:
-            return {"errors": "Player name already exists"}, 404
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
 class LoginResource(Resource):
     def post(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
-                return {"errors": "Game Not Found"}, 404
+                raise ResourceNotFoundException(message="Game Not Found")
             player = create_player_schema().load(request.get_json())
             playerFound = get_player_by_player_name(game.gameId,player.playerName)
             if playerFound is None:
-                return {"errors": "Player Not Found"}, 404
+                raise ResourceNotFoundException(message="Player Not Found")  
+
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):
                 player_result = PlayerSchema().dump(playerFound)
                 result = create_tokens(player_result)
                 return result, 200
             else:
-                return {"errors": "Player Not Found"}, 404
+                raise ResourceNotFoundException(message="Player Not Found")  
 
-        except ValidationError as error:
-            return {'errror':error.message},400
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 
 class RefreshResource(Resource):
     @jwt_refresh_token_required
