@@ -42,7 +42,7 @@ class CardTypes(Enum):
     Rent = 3
     Action = 4
 
-class GameCardStatus(Enum):
+class GameCardLocationStatus(Enum):
     IsNotDrawn = 0 # game cards no one owns
     IsOnHand = 1 # player cards owned by a player
     IsPlayedOnPropertyPile = 2 # game cards owned by player but can be shown on field that are owned by player
@@ -60,11 +60,14 @@ class GameMoveStatus(Enum):
     MoveInProgress = 1
     MoveComplete = 2
 
-
-
-''' 
-Rules for where the card can be played
-Rules for the action required on the card before turn can be completed
-Rules for 
-
- '''
+class ActionClassification(Enum):
+    NoActionRequiredMove= 1
+    SingleRentPlayerPaymentRequiredMove = 2
+    MultipleRentPlayerPaymentsRequiredMove = 3
+    GainCardsMove = 4
+    SinglePlayerPaymentRequiredMove = 5
+    MultiplePlayerPaymentsRequiredMove = 6
+    CancelActionMove = 7
+    SlyStealMove = 8
+    ForcedTradeMove = 9
+    DealBreakerMove = 10

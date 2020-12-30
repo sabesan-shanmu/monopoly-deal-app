@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 074792e6a988
+Revision ID: ce1eaeaa936f
 Revises: 
-Create Date: 2020-12-28 18:32:17.295567
+Create Date: 2020-12-30 01:44:34.749191
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '074792e6a988'
+revision = 'ce1eaeaa936f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
     sa.Column('actionType', sa.Enum('DealBreaker', 'ForcedDeal', 'SlyDeal', 'JustSayNo', 'DebtCollector', 'ItsMyBirthday', 'DoubleTheRent', 'House', 'Hotel', 'PassGo', name='actiontypes'), nullable=False),
+    sa.Column('transactionCost', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('actionCardId')
     )
     op.create_table('cash_card',
@@ -41,6 +42,15 @@ def upgrade():
     sa.UniqueConstraint('gameId'),
     sa.UniqueConstraint('gamePassCode'),
     sa.UniqueConstraint('name')
+    )
+    op.create_table('game_play_actions',
+    sa.Column('gamePlayActionId', sa.Integer(), nullable=False),
+    sa.Column('cardType', sa.Enum('Properties', 'Cash', 'Rent', 'Action', name='cardtypes'), nullable=False),
+    sa.Column('actionType', sa.Enum('DealBreaker', 'ForcedDeal', 'SlyDeal', 'JustSayNo', 'DebtCollector', 'ItsMyBirthday', 'DoubleTheRent', 'House', 'Hotel', 'PassGo', name='actiontypes'), nullable=True),
+    sa.Column('expectedGameCardLocation', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
+    sa.Column('moveClassification', sa.Enum('NoActionRequiredMove', 'SingleRentPlayerPaymentRequiredMove', 'MultipleRentPlayerPaymentsRequiredMove', 'GainCardsMove', 'SinglePlayerPaymentRequiredMove', 'MultiplePlayerPaymentsRequiredMove', 'CancelActionMove', 'SlyStealMove', 'ForcedTradeMove', 'DealBreakerMove', name='actionclassification'), nullable=True),
+    sa.PrimaryKeyConstraint('gamePlayActionId'),
+    sa.UniqueConstraint('gamePlayActionId')
     )
     op.create_table('properties_card',
     sa.Column('propertiesCardId', sa.Integer(), nullable=False),
@@ -122,16 +132,19 @@ def upgrade():
     sa.UniqueConstraint('rentTransactionId')
     )
     op.create_table('game_cards',
-    sa.Column('gameId', sa.Integer(), nullable=False),
-    sa.Column('cardId', sa.Integer(), nullable=False),
+    sa.Column('gameCardId', sa.Integer(), nullable=False),
+    sa.Column('gameId', sa.Integer(), nullable=True),
+    sa.Column('cardId', sa.Integer(), nullable=True),
     sa.Column('playerId', sa.Integer(), nullable=True),
-    sa.Column('cardStatus', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardstatus'), nullable=False),
+    sa.Column('cardStatus', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
     sa.Column('isCardRightSideUp', sa.Boolean(), nullable=False),
     sa.Column('housingPrimaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
     sa.ForeignKeyConstraint(['cardId'], ['cards.cardId'], ),
     sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['playerId'], ['player.playerId'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('gameId', 'cardId')
+    sa.PrimaryKeyConstraint('gameCardId'),
+    sa.UniqueConstraint('gameCardId'),
+    sa.UniqueConstraint('gameId', 'cardId', name='unique_game_card')
     )
     op.create_table('rent_payee_transaction',
     sa.Column('rentPayeeTransactionId', sa.Integer(), nullable=False),
@@ -157,6 +170,7 @@ def downgrade():
     op.drop_table('rent_card')
     op.drop_table('properties_color')
     op.drop_table('properties_card')
+    op.drop_table('game_play_actions')
     op.drop_table('game')
     op.drop_table('cash_card')
     op.drop_table('action_card')

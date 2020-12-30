@@ -11,7 +11,7 @@ def create_game_cards(game,players,cards):
         while len(cards)>0:
             selected_index = random.randint(0,len(cards)-1)
             selected_card = cards.pop(selected_index)
-            game_cards.append(GameCards(gameId=game.gameId,cardId=selected_card.cardId,cardStatus=Enum.GameCardStatus.IsNotDrawn))
+            game_cards.append(GameCards(gameId=game.gameId,cardId=selected_card.cardId,cardStatus=Enum.GameCardLocationStatus.IsNotDrawn))
         
         list_of_game_cards=list(range(0,len(game_cards)))
         for player in players:
@@ -19,7 +19,7 @@ def create_game_cards(game,players,cards):
                 selected_index = random.randint(0,len(list_of_game_cards)-1)
                 selected_game_card_id = list_of_game_cards.pop(selected_index)
                 game_cards[selected_game_card_id].playerId=player.playerId
-                game_cards[selected_game_card_id].cardStatus=Enum.GameCardStatus.IsOnHand
+                game_cards[selected_game_card_id].cardStatus=Enum.GameCardLocationStatus.IsOnHand
                 
         db.session.bulk_save_objects(game_cards)
         db.session.commit()
@@ -29,10 +29,20 @@ def create_game_cards(game,players,cards):
     
 
 def get_game_cards_in_play(gameId):
-    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsPlayedOnCashPile,Enum.GameCardStatus.IsPlayedOnPropertyPile,Enum.GameCardStatus.IsInPlay]))).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsPlayedOnCashPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsInPlay]))).all()
 
 def get_game_cards_on_hand(gameId,playerId):
-    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId==playerId,GameCards.cardStatus.in_([Enum.GameCardStatus.IsOnHand]))).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId==playerId,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsOnHand]))).all()
 
 def draw_game_cards(gameId,number):
-    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId is None,GameCards.cardStatus.in_([Enum.GameCardStatus.IsNotDrawn]))).limit(number).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gameId==gameId,GameCards.playerId is None,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
+
+
+def reshuffle_game_cards():
+    pass
+
+def discard_game_cards(gameCards):
+    pass
+
+def update_game_cards(gameCards):
+    pass

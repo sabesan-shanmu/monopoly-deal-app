@@ -13,21 +13,28 @@ from marshmallow import ValidationError
 class RegisterResource(Resource):
     def post(self,gamePassCode):
         try:
+            #Get game and all current players that are part of the game
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")    
 
-            #Get all current players that are part of the game
-            players = get_players_by_gameid(game.gameId)
-            if len(players)>=constants.MAX_NUMBER_OF_PLAYERS or game.gameStatus != enums.GameStatus.WaitingToStart:
+            
+            if len(game.players)>=constants.MAX_NUMBER_OF_PLAYERS or game.gameStatus != enums.GameStatus.WaitingToStart:
                 raise FieldValidationException(message="No more players can join the game")
+
+            
             #create the player
             player = create_player_schema().load(request.get_json())
             player.gameId = game.gameId 
             player.gamePassCode = game.gamePassCode 
             player.playerPassCode = generate_password_hash(player.playerPassCode)
             #evaluate their order based on other players' order
-            player.playerGameOrder = 1 if len(players) == 0  else max(p.playerGameOrder for p in players)+1
+            player.playerGameOrder = 1 if len(game.players) == 0  else max(p.playerGameOrder for p in game.players)+1
+
+            #check if user name exists
+            if len([x for x in game.players if x.playerName.lower() == player.playerName.lower()])>0:
+                 raise FieldValidationException(message="Player Name already exists")  
+
             add_player(player)
             player_result = PlayerSchema().dump(player)
             result = create_tokens(player_result)

@@ -38,18 +38,8 @@ class ActionCard(db.Model):
     name = db.Column(db.String,nullable=False)
     price= db.Column(db.Integer,nullable=False)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=False)
-
-
-class Player(db.Model):
-    __table_args__ = (
-        db.UniqueConstraint('gameId', 'playerName',name='unique_player'),
-    )
-    playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    playerPassCode = db.Column(db.String,nullable=False)
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=False)
-    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode"),nullable=False)
-    playerName = db.Column(db.String)
-    playerGameOrder = db.Column(db.Integer)
+    transactionCost= db.Column(db.Integer,nullable=True)
+    
 
    
 class Cards(db.Model):
@@ -64,20 +54,30 @@ class Cards(db.Model):
     rent = db.relationship(RentCard,primaryjoin=rentCardId==RentCard.rentCardId)
     action = db.relationship(ActionCard,primaryjoin=actionCardId==ActionCard.actionCardId)
 
-
-
-
 class GameCards(db.Model):
     __table_args__ = (
-        db.PrimaryKeyConstraint('gameId', 'cardId'),
+        db.UniqueConstraint('gameId', 'cardId',name='unique_game_card'),
     )
+    gameCardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
-    cardStatus = db.Column(db.Enum(Enum.GameCardStatus),nullable=False, default=Enum.GameCardStatus.IsNotDrawn)
-    isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=False)
+    cardStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
+    isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=True)
     housingPrimaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
+    card =  db.relationship(Cards,primaryjoin=cardId==Cards.cardId)  
 
+class Player(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('gameId', 'playerName',name='unique_player'),
+    )
+    playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    playerPassCode = db.Column(db.String,nullable=False)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=False)
+    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode"),nullable=False)
+    playerName = db.Column(db.String)
+    playerGameOrder = db.Column(db.Integer)
+    playerCards =  db.relationship(GameCards,primaryjoin=playerId==GameCards.playerId)  
 
 class Game(db.Model):
     gameId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
@@ -97,7 +97,22 @@ class GamePlayerMoves(db.Model):
     numberMovesPlayed = db.Column(db.Integer,nullable=False,default=0)
     gameTurn = db.Column(db.Integer,nullable=False,default=0)
     gameMoveStatus = db.Column(db.Enum(Enum.GameMoveStatus),nullable=False, default=Enum.GameMoveStatus.WaitingForPlayerToBeginMove)
-    
+"""    
+class GamePlayerActions(db.Model):
+    gamePlayerActionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
+    performedByPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_current_player_id',ondelete='CASCADE'))
+    gameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
+    moveClassification = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
+"""
+
+class GamePlayActions(db.Model):
+    gamePlayActionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    cardType = db.Column(db.Enum(Enum.CardTypes),nullable=False)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
+    expectedGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
+    moveClassification = db.Column(db.Enum(Enum.ActionClassification),nullable=True)
+
 class RentTransaction(db.Model):
     rentTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)

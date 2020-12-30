@@ -8,6 +8,7 @@ class ActionCardSchema(ma.Schema):
     name = fields.String(required=True)
     price= fields.Integer(required=True)
     actionType = EnumField(Enum.ActionTypes,by_value=True)
+    transactionCost = fields.Integer()
 
 class CashCardSchema(ma.Schema):
     price = fields.Integer(required=True)

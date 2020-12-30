@@ -1,17 +1,17 @@
 from monopoly import ma
 from marshmallow import fields,pre_dump
 from marshmallow_enum import EnumField
+from monopoly.api.cards.schema import CardSchema
 import monopoly.common.enums as Enum
 
 class GameCardSchema(ma.Schema):
+    gameCardId = fields.Integer()
     gameId = fields.Integer()
     cardId = fields.Integer()
     playerId = fields.Integer()
-    cardStatus = EnumField(Enum.GameCardStatus, by_value=True)
+    cardStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
     isCardRightSideUp = fields.Boolean()
-    links = ma.Hyperlinks(
-        {"card": ma.AbsoluteUrlFor("single_card_resource", cardId="<cardId>")}
-    )
+    card = fields.Nested(CardSchema)
 
 class GameBoardSchema(ma.Schema):
     playerId = fields.Integer()

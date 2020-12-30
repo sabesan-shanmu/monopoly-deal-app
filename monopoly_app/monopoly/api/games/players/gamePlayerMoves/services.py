@@ -1,6 +1,6 @@
 from monopoly.models import GamePlayerMoves,Player
 import monopoly.common.enums as Enum
-from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS
+from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS,EXPECTED_GAME_MOVE_STATUS,MAX_NUMBER_OF_MOVES
 from monopoly import db
 from sqlalchemy import exc
 
