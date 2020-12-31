@@ -1,12 +1,19 @@
 from flask import jsonify
-from flask_restx import Resource
+from flask_restx import Resource,Namespace
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.api.games.gameCards.services import get_game_cards_on_hand
 from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.api.games.services import get_game_by_gamepasscode
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
+from monopoly import flask_api
 
+
+
+player_cards_namespace = Namespace('Player Cards', description='List of cards that a player is holding')
+
+
+@player_cards_namespace.route('/')
 class ManyPlayerCardsResource(Resource):   
     @validate_gamepassCode
     @validate_player

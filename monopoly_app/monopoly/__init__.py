@@ -31,7 +31,7 @@ def create_app():
 
     
   
-    from . import routes
+    from . import namespaces
     from . import models
 
 

@@ -1,4 +1,4 @@
-from flask_restx import Resource
+from flask_restx import Resource,Namespace
 from flask import jsonify
 from .schema import GamePlayActionSchema
 from .services import get_game_play_actions,get_game_play_action
@@ -7,6 +7,10 @@ from monopoly.auth import validate_gamepassCode
 from monopoly.exceptions import ResourceNotFoundException
 
 
+game_play_action_namespace = Namespace('Game Play Actions', description='List of possible moves a player can perform')
+
+
+@game_play_action_namespace.route('/')
 class ManyGamePlayActionsResource(Resource):
  
     @validate_gamepassCode
@@ -15,6 +19,7 @@ class ManyGamePlayActionsResource(Resource):
         result = GamePlayActionSchema(many=True).dump(gamePlayActions)
         return jsonify(result)
 
+@game_play_action_namespace.route('/<int:gamePlayActionId>/')
 class SingleGamePlayActionResource(Resource):
    
     @validate_gamepassCode

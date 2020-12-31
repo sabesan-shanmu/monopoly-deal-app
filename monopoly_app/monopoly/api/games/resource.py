@@ -1,4 +1,4 @@
-from flask_restx import Resource
+from flask_restx import Resource,Namespace
 from flask import request,jsonify   
 from .schema import GameSchema,create_game_schema,update_game_schema
 from marshmallow import ValidationError
@@ -14,6 +14,10 @@ from monopoly.api.games.players.gamePlayerMoves.services import create_game_play
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 
 
+game_namespace = Namespace('Games', description='List of games that a user can join. Users can also create/update game that they\'re part of')
+
+
+@game_namespace.route('/<string:gamePassCode>/')
 class SingleGameResource(Resource):   
     @validate_gamepassCode
     def get(self,gamePassCode):
@@ -76,6 +80,7 @@ class SingleGameResource(Resource):
         except ValidationError as e:
             raise ResourceValidationException(e)
 
+@game_namespace.route('/')
 class MultipleGamesResource(Resource):
 
     def get(self):

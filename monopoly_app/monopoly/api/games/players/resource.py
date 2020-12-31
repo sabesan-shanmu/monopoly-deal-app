@@ -1,4 +1,4 @@
-from flask_restx import Resource
+from flask_restx import Resource,Namespace
 from .schema import create_player_schema,PlayerSchema
 from monopoly.common import constants,enums
 from flask import request,jsonify
@@ -10,6 +10,11 @@ from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
 
+
+players_namespace = Namespace('Players', description='Players can sign up or login to existing game')
+
+
+@players_namespace.route('/register/')
 class RegisterResource(Resource):
     def post(self,gamePassCode):
         try:
@@ -42,6 +47,7 @@ class RegisterResource(Resource):
         except ValidationError as e:
             raise ResourceValidationException(e)
 
+@players_namespace.route('/login/')
 class LoginResource(Resource):
     def post(self,gamePassCode):
         try:
@@ -63,6 +69,7 @@ class LoginResource(Resource):
         except ValidationError as e:
             raise ResourceValidationException(e)
 
+@players_namespace.route('/refresh/')
 class RefreshResource(Resource):
     @jwt_refresh_token_required
     def post(self,gamePassCode):

@@ -1,5 +1,5 @@
 
-from flask_restx import Resource
+from flask_restx import Resource,Namespace
 from flask import request,jsonify
 from marshmallow import ValidationError
 from .services import get_game_cards_in_play
@@ -9,6 +9,12 @@ from monopoly.auth import validate_gamepassCode
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
 
+
+
+game_cards_namespace = Namespace('Game Cards', description='Game cards that are in play on the board')
+
+
+@game_cards_namespace.route('/')
 class GameCardsResource(Resource):
     @validate_gamepassCode
     def get(self,gamePassCode):
