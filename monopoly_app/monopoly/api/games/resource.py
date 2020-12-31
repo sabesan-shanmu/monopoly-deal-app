@@ -11,7 +11,6 @@ from monopoly.api.games.players.services import get_players_by_gameid
 from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
-from monopoly.api.games.gameInPlayCard.services import create_game_in_play_card
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 
 
@@ -53,7 +52,6 @@ class SingleGameResource(Resource):
 
                     create_game_cards(gameFound,players,cards)
                     create_game_player_moves(gameFound)
-                    create_game_in_play_card(gameFound)
                     
                 except ValidationError as e:
                     raise ResourceValidationException(e)

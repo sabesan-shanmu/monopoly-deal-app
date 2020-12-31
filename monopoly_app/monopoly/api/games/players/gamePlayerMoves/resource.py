@@ -31,7 +31,7 @@ class GamePlayerMovesResource(Resource):
                 raise FieldValidationException(message="Invalid Game Status")
 
             if not is_player_valid(current_player_move,playerId):
-                raise FieldValidationException(message="Player not alowed to update")
+                raise FieldValidationException(message="Player not allowed to update")
 
             if (updated_player_move.gameMoveStatus == GameMoveStatus.WaitingForPlayerToBeginMove 
                 and current_player_move.numberMovesPlayed == MAX_NUMBER_OF_MOVES):

@@ -1,5 +1,5 @@
 from monopoly import create_app
-from monopoly.models import ActionCard,PropertiesCard,RentCard,CashCard,Cards,GamePlayActions
+from monopoly.models import ActionCard,PropertiesCard,RentCard,CashCard,Cards,GamePlayAction
 import monopoly.common.enums as Enum 
 from monopoly import db
 import random 
@@ -137,45 +137,33 @@ def create_rent_card():
 
 def create_game_play_actions():
     game_play_actions = [
-        GamePlayActions(gamePlayActionId=1,cardType=Enum.CardTypes.Properties,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=2,cardType=Enum.CardTypes.Properties,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),					
-        GamePlayActions(gamePlayActionId=3,cardType=Enum.CardTypes.Cash,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=4,cardType=Enum.CardTypes.Cash,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),				
-        GamePlayActions(gamePlayActionId=5,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=6,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=7,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.SingleRentPlayerPaymentRequiredMove),
-        GamePlayActions(gamePlayActionId=8,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultipleRentPlayerPaymentsRequiredMove),
-        GamePlayActions(gamePlayActionId=9,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.House,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=10,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.House,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=11,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.House,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=12,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.Hotel,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=13,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.Hotel,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=14,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.Hotel,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),	
-        GamePlayActions(gamePlayActionId=15,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.PassGo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.GainCardsMove),
-        GamePlayActions(gamePlayActionId=16,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.PassGo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=17,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.PassGo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=18,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=19,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=20,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.SingleRentPlayerPaymentRequiredMove),
-        GamePlayActions(gamePlayActionId=21,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultipleRentPlayerPaymentsRequiredMove),
-        GamePlayActions(gamePlayActionId=22,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ItsMyBirthday,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultiplePlayerPaymentsRequiredMove),
-        GamePlayActions(gamePlayActionId=23,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ItsMyBirthday,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=24,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ItsMyBirthday,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=25,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DebtCollector,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultiplePlayerPaymentsRequiredMove),
-        GamePlayActions(gamePlayActionId=26,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DebtCollector,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=27,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DebtCollector,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=28,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.JustSayNo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.CancelActionMove),
-        GamePlayActions(gamePlayActionId=29,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.JustSayNo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=30,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.JustSayNo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=31,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.SlyDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.SlyStealMove),
-        GamePlayActions(gamePlayActionId=32,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.SlyDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=33,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.SlyDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=34,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ForcedDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.ForcedTradeMove),
-        GamePlayActions(gamePlayActionId=35,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ForcedDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=36,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ForcedDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=37,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DealBreaker,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.DealBreakerMove),
-        GamePlayActions(gamePlayActionId=38,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DealBreaker,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove),
-        GamePlayActions(gamePlayActionId=39,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DealBreaker,expectedGameCardLocation=Enum.GameCardLocationStatus.IsDiscarded,moveClassification=Enum.ActionClassification.NoActionRequiredMove)
+        GamePlayAction(gamePlayActionId=1,cardType=Enum.CardTypes.Properties,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=2,cardType=Enum.CardTypes.Cash,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=3,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=4,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=5,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.SingleRentPlayerPaymentRequiredMove,tradeTypes=Enum.TradeTypes.ValueTrade),
+        GamePlayAction(gamePlayActionId=6,cardType=Enum.CardTypes.Rent,actionType=None,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultipleRentPlayerPaymentsRequiredMove,tradeTypes=Enum.TradeTypes.ValueTrade),
+        GamePlayAction(gamePlayActionId=7,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.House,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=8,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.House,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=9,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.Hotel,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=10,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.Hotel,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=11,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.PassGo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.GainCardsMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=12,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.PassGo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=13,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=14,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.SingleRentPlayerPaymentRequiredMove,tradeTypes=Enum.TradeTypes.ValueTrade),
+        GamePlayAction(gamePlayActionId=15,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DoubleTheRent,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultipleRentPlayerPaymentsRequiredMove,tradeTypes=Enum.TradeTypes.ValueTrade),
+        GamePlayAction(gamePlayActionId=16,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ItsMyBirthday,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultiplePlayerPaymentsRequiredMove,tradeTypes=Enum.TradeTypes.ValueTrade),
+        GamePlayAction(gamePlayActionId=17,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ItsMyBirthday,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=18,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DebtCollector,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.MultiplePlayerPaymentsRequiredMove,tradeTypes=Enum.TradeTypes.ValueTrade),
+        GamePlayAction(gamePlayActionId=19,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DebtCollector,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=20,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.JustSayNo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.CancelActionMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=21,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.JustSayNo,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=22,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.SlyDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.SlyStealMove,tradeTypes=Enum.TradeTypes.PropertyTrade),
+        GamePlayAction(gamePlayActionId=23,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.SlyDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=24,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ForcedDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.ForcedTradeMove,tradeTypes=Enum.TradeTypes.PropertyTrade),
+        GamePlayAction(gamePlayActionId=25,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.ForcedDeal,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None),
+        GamePlayAction(gamePlayActionId=26,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DealBreaker,expectedGameCardLocation=Enum.GameCardLocationStatus.IsInPlay,moveClassification=Enum.ActionClassification.DealBreakerMove,tradeTypes=Enum.TradeTypes.PropertyTrade),
+        GamePlayAction(gamePlayActionId=27,cardType=Enum.CardTypes.Action,actionType=Enum.ActionTypes.DealBreaker,expectedGameCardLocation=Enum.GameCardLocationStatus.IsPlayedOnCashPile,moveClassification=Enum.ActionClassification.NoActionRequiredMove,tradeTypes=None)
     ]
     return game_play_actions
 
@@ -194,7 +182,7 @@ def create_card():
         propertiesCards = create_properties_card()
         cashCards = create_cash_card()
         rentCards = create_rent_card()
-        #move classificatin list
+        #move classification list
         gamePlayActions = create_game_play_actions()
 
 
@@ -247,7 +235,7 @@ def create_card():
             db.session.query(PropertiesCard).delete()
             db.session.query(RentCard).delete()
             db.session.query(CashCard).delete()
-            db.session.query(GamePlayActions).delete()
+            db.session.query(GamePlayAction).delete()
             db.session.commit()
         except Exception as error:
             print(error)

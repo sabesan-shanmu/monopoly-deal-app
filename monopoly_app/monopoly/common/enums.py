@@ -59,6 +59,7 @@ class GameMoveStatus(Enum):
     WaitingForPlayerToBeginMove = 0
     MoveInProgress = 1
     MoveComplete = 2
+    SkipYourTurn = 3
 
 class ActionClassification(Enum):
     NoActionRequiredMove= 1
@@ -71,3 +72,7 @@ class ActionClassification(Enum):
     SlyStealMove = 8
     ForcedTradeMove = 9
     DealBreakerMove = 10
+
+class TradeTypes(Enum):
+    ValueTrade = 1 #Trade based off price of cards(ex: Rent,It's My Birthday,Debt Collector )
+    PropertyTrade = 2 #Trade based off property cards (ex:sly deal or forced deal)
