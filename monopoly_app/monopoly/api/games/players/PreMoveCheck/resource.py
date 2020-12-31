@@ -7,7 +7,7 @@ from monopoly.api.games.services import get_game_by_gamepasscode
 from monopoly.api.gamePlayActions.services import get_game_play_actions
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-from monopoly.api.games.players.PreMoveCheck.services import get_playable_cards
+from .services import get_playable_cards
 
 
 
