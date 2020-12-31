@@ -11,7 +11,7 @@ from marshmallow import ValidationError
 
 
 
-game_cards_namespace = Namespace('Game Cards', description='Game cards that are in play on the board')
+game_cards_namespace = Namespace('GameCards', description='Game cards that are in play on the board')
 
 
 @game_cards_namespace.route('/')

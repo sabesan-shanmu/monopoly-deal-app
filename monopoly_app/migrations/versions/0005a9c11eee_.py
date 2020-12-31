@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 98001f86d7bd
+Revision ID: 0005a9c11eee
 Revises: 
-Create Date: 2020-12-30 22:36:57.235342
+Create Date: 2020-12-31 03:06:02.111808
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '98001f86d7bd'
+revision = '0005a9c11eee'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -50,6 +50,7 @@ def upgrade():
     sa.Column('expectedGameCardLocation', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
     sa.Column('moveClassification', sa.Enum('NoActionRequiredMove', 'SingleRentPlayerPaymentRequiredMove', 'MultipleRentPlayerPaymentsRequiredMove', 'GainCardsMove', 'SinglePlayerPaymentRequiredMove', 'MultiplePlayerPaymentsRequiredMove', 'CancelActionMove', 'SlyStealMove', 'ForcedTradeMove', 'DealBreakerMove', name='actionclassification'), nullable=True),
     sa.Column('tradeTypes', sa.Enum('ValueTrade', 'PropertyTrade', name='tradetypes'), nullable=True),
+    sa.Column('isPreCheckRequired', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('gamePlayActionId'),
     sa.UniqueConstraint('gamePlayActionId')
     )

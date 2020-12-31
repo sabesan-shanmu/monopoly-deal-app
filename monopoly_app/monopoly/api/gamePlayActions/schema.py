@@ -13,5 +13,5 @@ class GamePlayActionSchema(ma.Schema):
     moveClassification = EnumField(Enum.ActionClassification,by_value=True)
     tradeTypes = EnumField(Enum.TradeTypes,by_value=True)
     links = ma.Hyperlinks(
-        {"self": ma.AbsoluteUrlFor("single_game_play_action_resource", gamePlayActionId="<gamePlayActionId>")}
+        {"self": ma.AbsoluteUrlFor("GamePlayActions_single_game_play_action_resource", gamePlayActionId="<gamePlayActionId>")}
     )

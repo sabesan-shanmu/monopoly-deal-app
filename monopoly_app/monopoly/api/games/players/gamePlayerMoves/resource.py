@@ -13,7 +13,7 @@ from marshmallow import ValidationError
 
 
 
-game_player_moves_namespace = Namespace('Game Player Moves', description='Resource to track the player moves')
+game_player_moves_namespace = Namespace('GamePlayerMoves', description='Resource to track the player moves')
 
 
 @game_player_moves_namespace.route('/')

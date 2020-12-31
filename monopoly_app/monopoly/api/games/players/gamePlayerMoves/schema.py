@@ -10,7 +10,7 @@ class GamePlayerMovesSchema(ma.Schema):
     gameTurn = fields.Integer()
     gameMoveStatus = EnumField(Enum.GameMoveStatus, by_value=True)
     links = ma.Hyperlinks(
-        {"card": ma.AbsoluteUrlFor("single_card_resource", cardId="<currentInPlayCardId>")}
+        {"card": ma.AbsoluteUrlFor("Cards_single_card_resource", cardId="<currentInPlayCardId>")}
     )
 
 class update_player_moves(ma.Schema):

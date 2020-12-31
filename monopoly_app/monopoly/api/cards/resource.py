@@ -9,7 +9,7 @@ from monopoly.exceptions import ResourceNotFoundException
 
 cards_namespace = Namespace('Cards', description='Monopoly Deal Playing Cards')
 
-@cards_namespace.route('/api/cards/')
+@cards_namespace.route('/')
 class ManyCardsResource(Resource):
  
     @validate_gamepassCode
@@ -18,7 +18,7 @@ class ManyCardsResource(Resource):
         result = CardSchema(many=True).dump(cards)
         return jsonify(result)
 
-@cards_namespace.route('/api/cards/<int:cardId>/')
+@cards_namespace.route('/<int:cardId>/')
 class SingleCardResource(Resource):
     
     @validate_gamepassCode

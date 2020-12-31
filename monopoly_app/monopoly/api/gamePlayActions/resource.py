@@ -7,7 +7,7 @@ from monopoly.auth import validate_gamepassCode
 from monopoly.exceptions import ResourceNotFoundException
 
 
-game_play_action_namespace = Namespace('Game Play Actions', description='List of possible moves a player can perform')
+game_play_action_namespace = Namespace('GamePlayActions', description='List of possible moves a player can perform')
 
 
 @game_play_action_namespace.route('/')

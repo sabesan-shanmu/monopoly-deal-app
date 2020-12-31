@@ -98,7 +98,9 @@ class GamePlayAction(db.Model):
     expectedGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
     moveClassification = db.Column(db.Enum(Enum.ActionClassification),nullable=True)
     tradeTypes = db.Column(db.Enum(Enum.TradeTypes),nullable=True)
+    isPreCheckRequired = db.Column(db.Boolean,nullable=False,default=False)
 
+    
 class GamePlayerMoves(db.Model):
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
     currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_player_moves_current_player_id',ondelete='CASCADE'))

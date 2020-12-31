@@ -35,7 +35,7 @@ class CardSchema(ma.Schema):
     rent = fields.Nested(RentCardSchema)
     cash = fields.Nested(CashCardSchema)
     links = ma.Hyperlinks(
-        {"self": ma.AbsoluteUrlFor("single_card_resource", cardId="<cardId>")}
+        {"self": ma.AbsoluteUrlFor("Cards_single_card_resource", cardId="<cardId>")}
     )
     # Remove None fields
     @post_dump
