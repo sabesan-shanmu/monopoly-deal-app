@@ -83,6 +83,7 @@ def database_error_handler(error):
 
 @flask_api.errorhandler(InternalServerError)
 @flask_api.errorhandler(ValueError)
+@flask_api.errorhandler(AttributeError)
 def internal_server_error_handler(error):
     return get_formatted_error("DEFAULT")
 

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0005a9c11eee
+Revision ID: 1d9df7b23fef
 Revises: 
-Create Date: 2020-12-31 03:06:02.111808
+Create Date: 2021-01-01 00:51:28.428923
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0005a9c11eee'
+revision = '1d9df7b23fef'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -48,7 +48,7 @@ def upgrade():
     sa.Column('cardType', sa.Enum('Properties', 'Cash', 'Rent', 'Action', name='cardtypes'), nullable=False),
     sa.Column('actionType', sa.Enum('DealBreaker', 'ForcedDeal', 'SlyDeal', 'JustSayNo', 'DebtCollector', 'ItsMyBirthday', 'DoubleTheRent', 'House', 'Hotel', 'PassGo', name='actiontypes'), nullable=True),
     sa.Column('expectedGameCardLocation', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
-    sa.Column('moveClassification', sa.Enum('NoActionRequiredMove', 'SingleRentPlayerPaymentRequiredMove', 'MultipleRentPlayerPaymentsRequiredMove', 'GainCardsMove', 'SinglePlayerPaymentRequiredMove', 'MultiplePlayerPaymentsRequiredMove', 'CancelActionMove', 'SlyStealMove', 'ForcedTradeMove', 'DealBreakerMove', name='actionclassification'), nullable=True),
+    sa.Column('moveClassification', sa.Enum('NoActionRequiredMove', 'SingleRentPlayerPaymentRequiredMove', 'MultipleRentPlayerPaymentsRequiredMove', 'GainCardsMove', 'SinglePlayerPaymentRequiredMove', 'MultiplePlayerPaymentsRequiredMove', 'CancelActionMove', 'SlyStealMove', 'ForcedTradeMove', 'DealBreakerMove', 'MustPlayDoubleTheRentMove', name='actionclassification'), nullable=True),
     sa.Column('tradeTypes', sa.Enum('ValueTrade', 'PropertyTrade', name='tradetypes'), nullable=True),
     sa.Column('isPreCheckRequired', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('gamePlayActionId'),

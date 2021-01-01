@@ -7,7 +7,8 @@ from monopoly.errors import get_formatted_error
 def create_tokens(player):
     result = {
         'accessToken':create_access_token(identity=player),
-        'refreshToken': create_refresh_token(identity=player)
+        'refreshToken': create_refresh_token(identity=player),
+        'playerId':player["playerId"]
     }
     return result
 
