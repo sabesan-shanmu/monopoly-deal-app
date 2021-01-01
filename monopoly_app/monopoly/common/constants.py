@@ -12,7 +12,8 @@ MAX_NUMBER_OF_MOVES = 3
 EXPECTED_GAME_MOVE_STATUS = {
     Enum.GameMoveStatus.WaitingForPlayerToBeginMove: Enum.GameMoveStatus.MoveInProgress,
     Enum.GameMoveStatus.MoveInProgress:Enum.GameMoveStatus.MoveComplete,
-    Enum.GameMoveStatus.MoveComplete:Enum.GameMoveStatus.WaitingForPlayerToBeginMove
+    Enum.GameMoveStatus.MoveComplete:Enum.GameMoveStatus.WaitingForPlayerToBeginMove,
+    Enum.GameMoveStatus.SkipYourTurn:Enum.GameMoveStatus.MoveComplete
 }
 
 

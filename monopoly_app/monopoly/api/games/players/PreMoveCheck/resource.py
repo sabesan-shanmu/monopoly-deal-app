@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_restx import Resource,Namespace
 from monopoly.auth import validate_gamepassCode,validate_player
-from monopoly.api.games.gameCards.services import get_game_cards_on_hand
+from monopoly.api.games.gameCards.services import get_game_cards_on_hand,get_game_cards_in_play
 from monopoly.api.games.services import get_game_by_gamepasscode
 from monopoly.api.gamePlayActions.services import get_game_play_actions
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException
@@ -25,8 +25,9 @@ class PreMoveCheck(Resource):
             
             player_cards_on_hand = get_game_cards_on_hand(gameFound.gameId,playerId)
             game_play_actions = get_game_play_actions()
-            
-            pre_move_check_list = get_pre_move_check_list(player_cards_on_hand,game_play_actions)
+            game_cards_in_play  = get_game_cards_in_play(gameFound.gameId)
+
+            pre_move_check_list = get_pre_move_check_list(player_cards_on_hand,game_cards_in_play,game_play_actions)
             result = PreMoveCheckSchema(many=True).dump(pre_move_check_list)
 
             return jsonify(result)

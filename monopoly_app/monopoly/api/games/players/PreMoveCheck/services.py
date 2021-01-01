@@ -2,7 +2,7 @@ import monopoly.common.enums as Enum
 from monopoly.exceptions import FieldValidationException
 
 
-def get_pre_move_check_list(player_cards_on_hand,game_play_actions):
+def get_pre_move_check_list(player_cards_on_hand,game_cards_in_play,game_play_actions):
     pre_move_check_list = []
 
     for player_card in player_cards_on_hand:
@@ -14,7 +14,7 @@ def get_pre_move_check_list(player_cards_on_hand,game_play_actions):
         preMoveCheck = PreMoveCheck(gameCardId=player_card.gameCardId)
 
         for possible_play_action in possible_play_actions:
-            if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(possible_play_action):
+            if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
                 preMoveCheck.add_precheck_card(possible_play_action)
             else:
                 preMoveCheck.add_precheck_card(possible_play_action)
@@ -34,36 +34,36 @@ class PreMoveCheck:
         self.possibleMoves.append(possiblePlayAction)
 
 
-def is_rent_playable():
+def is_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_house_or_hotel_playable():
+def is_house_or_hotel_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_double_the_rent_playable():
+def is_double_the_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_its_my_birthday_playable():
+def is_its_my_birthday_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_debt_collector_playable():
+def is_debt_collector_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_just_say_no_playable():
+def is_just_say_no_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_sly_deal_playable():
+def is_sly_deal_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_forced_deal_playable():
+def is_forced_deal_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
-def is_deal_breaker_playable():
+def is_deal_breaker_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return True
 
 
 
-def is_pre_check_condition_valid(possible_play_action):
+def is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
 
     pre_check_conditions = {
         (Enum.CardTypes.Rent,None,Enum.GameCardLocationStatus.IsInPlay):is_rent_playable,
@@ -78,6 +78,6 @@ def is_pre_check_condition_valid(possible_play_action):
         (Enum.CardTypes.Action,Enum.ActionTypes.DealBreaker,Enum.GameCardLocationStatus.IsInPlay):is_deal_breaker_playable
     }
     try:
-        return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.expectedGameCardLocation)]()
+        return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.expectedGameCardLocation)](player_cards_on_hand,game_cards_in_play,possible_play_action)
     except KeyError:
         raise FieldValidationException(message="Pre Check Condition not met. One or more of the specified conditions are not configured correctly.")
