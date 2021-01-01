@@ -3,6 +3,16 @@ from marshmallow import fields,post_dump
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
 
+class PropertiesColourSchema(ma.Schema):
+    colourId = EnumField(Enum.Colours,by_value=True)
+    onePairRentPrice = fields.Integer()
+    twoPairRentPrice = fields.Integer()
+    threePairRentPrice = fields.Integer()
+    fourPairRentPrice = fields.Integer()
+    numberNeededToCompleteSet = fields.Integer()
+
+
+
 
 class ActionCardSchema(ma.Schema):
     name = fields.String(required=True)
@@ -18,6 +28,8 @@ class RentCardSchema(ma.Schema):
     secondaryColourId = EnumField(Enum.Colours,by_value=True)
     payee = EnumField(Enum.Payee,by_value=True)
     price = fields.Integer(required=True)
+    primaryColourDetails = fields.Nested(PropertiesColourSchema)
+    secondaryColourDetails = fields.Nested(PropertiesColourSchema)
 
 
 class PropertiesCardSchema(ma.Schema):
@@ -25,6 +37,8 @@ class PropertiesCardSchema(ma.Schema):
     primaryColourId = EnumField(Enum.Colours,by_value=True)
     secondaryColourId = EnumField(Enum.Colours,by_value=True)
     price = fields.Integer(required=True)
+    primaryColourDetails = fields.Nested(PropertiesColourSchema)
+    secondaryColourDetails = fields.Nested(PropertiesColourSchema)
 
 
 class CardSchema(ma.Schema):

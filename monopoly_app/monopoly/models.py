@@ -5,21 +5,22 @@ from datetime import datetime
 from sqlalchemy import UniqueConstraint
 
 
+class PropertiesColour(db.Model):
+    colourId = db.Column(db.Enum(Enum.Colours),nullable=False,primary_key=True)
+    onePairRentPrice = db.Column(db.Integer,nullable=True)
+    twoPairRentPrice = db.Column(db.Integer,nullable=True)
+    threePairRentPrice = db.Column(db.Integer,nullable=True)
+    fourPairRentPrice = db.Column(db.Integer,nullable=True)
+    numberNeededToCompleteSet = db.Column(db.Integer,nullable=True)
+
 class PropertiesCard(db.Model):
     propertiesCardId = db.Column(db.Integer, primary_key=True,nullable=False)
     name = db.Column(db.String,nullable=False)
-    primaryColourId = db.Column(db.Enum(Enum.Colours),nullable=False)
-    secondaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
+    primaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
+    secondaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
     price= db.Column(db.Integer,nullable=False)
-
-
-class PropertiesColor(db.Model):
-    colorId = db.Column(db.Enum(Enum.Colours),nullable=False,primary_key=True)
-    onePairRentPrice = db.Column(db.Integer,nullable=False)
-    twoPairRentPrice = db.Column(db.Integer,nullable=False)
-    threePairRentPrice = db.Column(db.Integer,nullable=False)
-    fourPairRentPrice = db.Column(db.Integer,nullable=False)
-    numberNeededToCompleteSet = db.Column(db.Integer,nullable=False)
+    primaryColourDetails = db.relationship(PropertiesColour,primaryjoin=primaryColourId==PropertiesColour.colourId)
+    secondaryColourDetails = db.relationship(PropertiesColour,primaryjoin=secondaryColourId==PropertiesColour.colourId)
 
 class CashCard(db.Model):
     cashCardId = db.Column(db.Integer,primary_key=True,nullable=False)
@@ -28,10 +29,12 @@ class CashCard(db.Model):
 
 class RentCard(db.Model):
     rentCardId = db.Column(db.Integer,primary_key=True,nullable=False)
-    primaryColourId = db.Column(db.Enum(Enum.Colours),nullable=False)
-    secondaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
+    primaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
+    secondaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
     payee = db.Column(db.Enum(Enum.Payee),nullable=False)
     price= db.Column(db.Integer,nullable=False)
+    primaryColourDetails = db.relationship(PropertiesColour,primaryjoin=primaryColourId==PropertiesColour.colourId)
+    secondaryColourDetails = db.relationship(PropertiesColour,primaryjoin=secondaryColourId==PropertiesColour.colourId)
 
 class ActionCard(db.Model):
     actionCardId = db.Column(db.Integer,primary_key=True,nullable=False)
@@ -64,7 +67,7 @@ class GameCards(db.Model):
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
     isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=True)
-    housingPrimaryColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
+    assignedColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
     card =  db.relationship(Cards,primaryjoin=cardId==Cards.cardId)  
 
 class Player(db.Model):

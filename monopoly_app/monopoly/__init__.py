@@ -25,7 +25,7 @@ def create_app():
     ma.init_app(app)
     jwt.init_app(app)
     
-    flask_api.version = app.config['API_TITLE']
+    flask_api.title = app.config['API_TITLE']
     flask_api.version = app.config['API_VERSION']
     flask_api.init_app(app)
 

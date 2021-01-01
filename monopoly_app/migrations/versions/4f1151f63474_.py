@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 1d9df7b23fef
+Revision ID: 4f1151f63474
 Revises: 
-Create Date: 2021-01-01 00:51:28.428923
+Create Date: 2021-01-01 15:47:58.819384
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1d9df7b23fef'
+revision = '4f1151f63474'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -54,44 +54,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('gamePlayActionId'),
     sa.UniqueConstraint('gamePlayActionId')
     )
-    op.create_table('properties_card',
-    sa.Column('propertiesCardId', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(), nullable=False),
-    sa.Column('primaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=False),
-    sa.Column('secondaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
-    sa.Column('price', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('propertiesCardId')
-    )
-    op.create_table('properties_color',
-    sa.Column('colorId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=False),
-    sa.Column('onePairRentPrice', sa.Integer(), nullable=False),
-    sa.Column('twoPairRentPrice', sa.Integer(), nullable=False),
-    sa.Column('threePairRentPrice', sa.Integer(), nullable=False),
-    sa.Column('fourPairRentPrice', sa.Integer(), nullable=False),
-    sa.Column('numberNeededToCompleteSet', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('colorId')
-    )
-    op.create_table('rent_card',
-    sa.Column('rentCardId', sa.Integer(), nullable=False),
-    sa.Column('primaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=False),
-    sa.Column('secondaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
-    sa.Column('payee', sa.Enum('Single', 'All', name='payee'), nullable=False),
-    sa.Column('price', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('rentCardId')
-    )
-    op.create_table('cards',
-    sa.Column('cardId', sa.Integer(), nullable=False),
-    sa.Column('cardType', sa.Enum('Properties', 'Cash', 'Rent', 'Action', name='cardtypes'), nullable=True),
-    sa.Column('propertiesCardId', sa.Integer(), nullable=True),
-    sa.Column('cashCardId', sa.Integer(), nullable=True),
-    sa.Column('rentCardId', sa.Integer(), nullable=True),
-    sa.Column('actionCardId', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['actionCardId'], ['action_card.actionCardId'], ),
-    sa.ForeignKeyConstraint(['cashCardId'], ['cash_card.cashCardId'], ),
-    sa.ForeignKeyConstraint(['propertiesCardId'], ['properties_card.propertiesCardId'], ),
-    sa.ForeignKeyConstraint(['rentCardId'], ['rent_card.rentCardId'], ),
-    sa.PrimaryKeyConstraint('cardId'),
-    sa.UniqueConstraint('cardId')
+    op.create_table('properties_colour',
+    sa.Column('colourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=False),
+    sa.Column('onePairRentPrice', sa.Integer(), nullable=True),
+    sa.Column('twoPairRentPrice', sa.Integer(), nullable=True),
+    sa.Column('threePairRentPrice', sa.Integer(), nullable=True),
+    sa.Column('fourPairRentPrice', sa.Integer(), nullable=True),
+    sa.Column('numberNeededToCompleteSet', sa.Integer(), nullable=True),
+    sa.PrimaryKeyConstraint('colourId')
     )
     op.create_table('game_action_tracker',
     sa.Column('gameActionTrackerId', sa.Integer(), nullable=False),
@@ -129,20 +99,39 @@ def upgrade():
     sa.UniqueConstraint('gameId', 'playerName', name='unique_player'),
     sa.UniqueConstraint('playerId')
     )
-    op.create_table('game_cards',
-    sa.Column('gameCardId', sa.Integer(), nullable=False),
-    sa.Column('gameId', sa.Integer(), nullable=True),
-    sa.Column('cardId', sa.Integer(), nullable=True),
-    sa.Column('playerId', sa.Integer(), nullable=True),
-    sa.Column('cardStatus', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
-    sa.Column('isCardRightSideUp', sa.Boolean(), nullable=False),
-    sa.Column('housingPrimaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
-    sa.ForeignKeyConstraint(['cardId'], ['cards.cardId'], ),
-    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['playerId'], ['player.playerId'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('gameCardId'),
-    sa.UniqueConstraint('gameCardId'),
-    sa.UniqueConstraint('gameId', 'cardId', name='unique_game_card')
+    op.create_table('properties_card',
+    sa.Column('propertiesCardId', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=False),
+    sa.Column('primaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
+    sa.Column('secondaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
+    sa.Column('price', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['primaryColourId'], ['properties_colour.colourId'], ),
+    sa.ForeignKeyConstraint(['secondaryColourId'], ['properties_colour.colourId'], ),
+    sa.PrimaryKeyConstraint('propertiesCardId')
+    )
+    op.create_table('rent_card',
+    sa.Column('rentCardId', sa.Integer(), nullable=False),
+    sa.Column('primaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
+    sa.Column('secondaryColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
+    sa.Column('payee', sa.Enum('Single', 'All', name='payee'), nullable=False),
+    sa.Column('price', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['primaryColourId'], ['properties_colour.colourId'], ),
+    sa.ForeignKeyConstraint(['secondaryColourId'], ['properties_colour.colourId'], ),
+    sa.PrimaryKeyConstraint('rentCardId')
+    )
+    op.create_table('cards',
+    sa.Column('cardId', sa.Integer(), nullable=False),
+    sa.Column('cardType', sa.Enum('Properties', 'Cash', 'Rent', 'Action', name='cardtypes'), nullable=True),
+    sa.Column('propertiesCardId', sa.Integer(), nullable=True),
+    sa.Column('cashCardId', sa.Integer(), nullable=True),
+    sa.Column('rentCardId', sa.Integer(), nullable=True),
+    sa.Column('actionCardId', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['actionCardId'], ['action_card.actionCardId'], ),
+    sa.ForeignKeyConstraint(['cashCardId'], ['cash_card.cashCardId'], ),
+    sa.ForeignKeyConstraint(['propertiesCardId'], ['properties_card.propertiesCardId'], ),
+    sa.ForeignKeyConstraint(['rentCardId'], ['rent_card.rentCardId'], ),
+    sa.PrimaryKeyConstraint('cardId'),
+    sa.UniqueConstraint('cardId')
     )
     op.create_table('trade_transaction',
     sa.Column('tradeTransactionId', sa.Integer(), nullable=False),
@@ -158,6 +147,21 @@ def upgrade():
     sa.ForeignKeyConstraint(['sourcePlayerId'], ['player.playerId'], name='fk_trade_transaction_player_id', ondelete='CASCADE', use_alter=True),
     sa.PrimaryKeyConstraint('tradeTransactionId'),
     sa.UniqueConstraint('tradeTransactionId')
+    )
+    op.create_table('game_cards',
+    sa.Column('gameCardId', sa.Integer(), nullable=False),
+    sa.Column('gameId', sa.Integer(), nullable=True),
+    sa.Column('cardId', sa.Integer(), nullable=True),
+    sa.Column('playerId', sa.Integer(), nullable=True),
+    sa.Column('cardStatus', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
+    sa.Column('isCardRightSideUp', sa.Boolean(), nullable=False),
+    sa.Column('assignedColourId', sa.Enum('Any', 'Green', 'Brown', 'DarkBlue', 'LightBlue', 'Orange', 'Pink', 'Black', 'Red', 'Yellow', 'Neutral', name='colours'), nullable=True),
+    sa.ForeignKeyConstraint(['cardId'], ['cards.cardId'], ),
+    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['playerId'], ['player.playerId'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('gameCardId'),
+    sa.UniqueConstraint('gameCardId'),
+    sa.UniqueConstraint('gameId', 'cardId', name='unique_game_card')
     )
     op.create_table('trade_payee_transaction',
     sa.Column('tradePayeeTransactionId', sa.Integer(), nullable=False),
@@ -177,15 +181,15 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('trade_payee_transaction')
-    op.drop_table('trade_transaction')
     op.drop_table('game_cards')
+    op.drop_table('trade_transaction')
+    op.drop_table('cards')
+    op.drop_table('rent_card')
+    op.drop_table('properties_card')
     op.drop_table('player')
     op.drop_table('game_player_moves')
     op.drop_table('game_action_tracker')
-    op.drop_table('cards')
-    op.drop_table('rent_card')
-    op.drop_table('properties_color')
-    op.drop_table('properties_card')
+    op.drop_table('properties_colour')
     op.drop_table('game_play_action')
     op.drop_table('game')
     op.drop_table('cash_card')

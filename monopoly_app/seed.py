@@ -1,5 +1,5 @@
 from monopoly import create_app
-from monopoly.models import ActionCard,PropertiesCard,RentCard,CashCard,Cards,GamePlayAction
+from monopoly.models import ActionCard,PropertiesCard,RentCard,CashCard,Cards,GamePlayAction,PropertiesColour
 import monopoly.common.enums as Enum 
 from monopoly import db
 import random 
@@ -8,6 +8,21 @@ import random
 Purpose:Script for initial card data creation
 """
 
+def create_properties_colour():
+    propertiesColourCards =[
+        PropertiesColour(colourId=Enum.Colours.Green ,onePairRentPrice=2 ,twoPairRentPrice=4,threePairRentPrice=7,fourPairRentPrice=None,numberNeededToCompleteSet=3),
+        PropertiesColour(colourId=Enum.Colours.Brown ,onePairRentPrice=1 ,twoPairRentPrice=2,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=2),
+        PropertiesColour(colourId=Enum.Colours.DarkBlue ,onePairRentPrice=3 ,twoPairRentPrice=8,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=2),
+        PropertiesColour(colourId=Enum.Colours.LightBlue ,onePairRentPrice=1 ,twoPairRentPrice=2,threePairRentPrice=3,fourPairRentPrice=None,numberNeededToCompleteSet=3),
+        PropertiesColour(colourId=Enum.Colours.Orange ,onePairRentPrice=1 ,twoPairRentPrice=3,threePairRentPrice=5,fourPairRentPrice=None,numberNeededToCompleteSet=3),
+        PropertiesColour(colourId=Enum.Colours.Pink ,onePairRentPrice=1 ,twoPairRentPrice=2,threePairRentPrice=4,fourPairRentPrice=None,numberNeededToCompleteSet=3),
+        PropertiesColour(colourId=Enum.Colours.Black ,onePairRentPrice=1 ,twoPairRentPrice=2,threePairRentPrice=3,fourPairRentPrice=4,numberNeededToCompleteSet=4),
+        PropertiesColour(colourId=Enum.Colours.Red ,onePairRentPrice=2 ,twoPairRentPrice=3,threePairRentPrice=6,fourPairRentPrice=None,numberNeededToCompleteSet=3),
+        PropertiesColour(colourId=Enum.Colours.Yellow ,onePairRentPrice=2 ,twoPairRentPrice=4,threePairRentPrice=6,fourPairRentPrice=None,numberNeededToCompleteSet=3),
+        PropertiesColour(colourId=Enum.Colours.Neutral ,onePairRentPrice=1 ,twoPairRentPrice=2,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=2),
+        PropertiesColour(colourId=Enum.Colours.Any ,onePairRentPrice=None,twoPairRentPrice=None,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=None)
+    ]
+    return propertiesColourCards
 
 def create_action_cards():
     actionCards =[
@@ -184,7 +199,8 @@ def create_card():
         rentCards = create_rent_card()
         #move classification list
         gamePlayActions = create_game_play_actions()
-
+        #property colors list 
+        propertiesColours = create_properties_colour()
 
         while True:
             selected_index = random.randint(0,len(group_number_list)-1)
@@ -236,12 +252,14 @@ def create_card():
             db.session.query(RentCard).delete()
             db.session.query(CashCard).delete()
             db.session.query(GamePlayAction).delete()
+            db.session.query(PropertiesColour).delete()
             db.session.commit()
         except Exception as error:
             print(error)
             db.session.rollback()
     
         try:
+            db.session.bulk_save_objects(propertiesColours)
             db.session.bulk_save_objects(actionCards)
             db.session.bulk_save_objects(propertiesCards)
             db.session.bulk_save_objects(cashCards)
