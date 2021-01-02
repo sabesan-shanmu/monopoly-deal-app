@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 
 db = SQLAlchemy()
@@ -24,6 +25,7 @@ def create_app():
     migrate.init_app(app,db)
     ma.init_app(app)
     jwt.init_app(app)
+    cors = CORS(app, resources={r"*": {"origins": app.config["CROSS_ORIGINS"]}})
     
     flask_api.title = app.config['API_TITLE']
     flask_api.version = app.config['API_VERSION']
