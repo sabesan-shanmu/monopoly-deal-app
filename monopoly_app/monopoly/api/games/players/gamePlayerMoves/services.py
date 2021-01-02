@@ -1,11 +1,11 @@
 from monopoly.models import GamePlayerMoves,Player
 import monopoly.common.enums as Enum
-from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS,EXPECTED_GAME_MOVE_STATUS,MAX_NUMBER_OF_MOVES
 from monopoly import db
 from sqlalchemy import exc
 
-
-
+#player can only progress to complete if an action has been started
+def is_game_action_tracker_valid(current_player_move):
+    return False if current_player_move.gameMoveStatus == Enum.GameMoveStatus.MoveInProgress and current_player_move.gameActionTrackerId is None else True
 
 def get_player_game_order(players,playerId):
     return[x for x in players if x.playerId==playerId][0].playerGameOrder 
@@ -14,18 +14,22 @@ def get_next_player_id(players,playerGameOrder):
     return[x for x in players if x.playerGameOrder==playerGameOrder][0].playerId 
 
 def is_player_moves_status_valid(current_player_move,update_player_move):
-    return EXPECTED_GAME_MOVE_STATUS[current_player_move.gameMoveStatus] == update_player_move.gameMoveStatus
+    return len([ x for x in EXPECTED_GAME_MOVE_STATUS[current_player_move.gameMoveStatus] if x == update_player_move.gameMoveStatus])>0
 
 
 def is_player_move_count_valid(current_player_move,update_player_move):
-    return current_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
+    return current_player_move.gameMoveStatus == Enum.GameMoveStatus.MoveComplete 
 
 
 def is_player_valid(current_player_move,playerId):
     return current_player_move.currentPlayerId == playerId
 
-
-
+# current status -> new status 
+EXPECTED_GAME_MOVE_STATUS = {
+    Enum.GameMoveStatus.WaitingForPlayerToBeginMove: [Enum.GameMoveStatus.MoveInProgress],
+    Enum.GameMoveStatus.MoveInProgress:[Enum.GameMoveStatus.MoveComplete],
+    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.SkipYourTurn]
+}
 
 def create_game_player_moves(game):
     try:
@@ -43,9 +47,14 @@ def create_game_player_moves(game):
 def get_game_player_moves(gameId):
     return db.session.query(GamePlayerMoves).filter_by(gameId=gameId).first()
 
-def update_game_player_moves(gamePlayerMove):
+def update_game_player_moves(updateGamePlayerMove):
     try:
-        GamePlayerMoves.query.filter_by(gameId=gamePlayerMove.gameId).update(dict(gamePlayerMove))
+        gamePlayerMove = db.session.query(GamePlayerMoves).filter_by(gameId=updateGamePlayerMove.gameId).first()
+        gamePlayerMove.numberOfMovesPlayed =updateGamePlayerMove.numberOfMovesPlayed 
+        gamePlayerMove.totalGameMoveCount=updateGamePlayerMove.totalGameMoveCount
+        gamePlayerMove.gameMoveStatus=updateGamePlayerMove.gameMoveStatus
+        gamePlayerMove.currentPlayerId=updateGamePlayerMove.currentPlayerId
+        gamePlayerMove.gameActionTrackerId=updateGamePlayerMove.gameActionTrackerId
         db.session.commit()
         return gamePlayerMove
     except exc.IntegrityError:

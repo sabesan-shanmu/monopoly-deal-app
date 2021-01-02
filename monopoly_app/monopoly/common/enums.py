@@ -73,6 +73,8 @@ class ActionClassification(Enum):
     ForcedTradeMove = 9
     DealBreakerMove = 10
     MustPlayDoubleTheRentMove = 11
+    RotatingCardMove = 12
+    MovePropertyCardMove =13
 
 class TradeTypes(Enum):
     ValueTrade = 1 #Trade based off price of cards(ex: Rent,It's My Birthday,Debt Collector )

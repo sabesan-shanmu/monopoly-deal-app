@@ -98,29 +98,31 @@ class GamePlayAction(db.Model):
     gamePlayActionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     cardType = db.Column(db.Enum(Enum.CardTypes),nullable=False)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
+    currentGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
     expectedGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
     moveClassification = db.Column(db.Enum(Enum.ActionClassification),nullable=True)
     tradeTypes = db.Column(db.Enum(Enum.TradeTypes),nullable=True)
     isPreCheckRequired = db.Column(db.Boolean,nullable=False,default=False)
 
     
-class GamePlayerMoves(db.Model):
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
-    currentPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_player_moves_current_player_id',ondelete='CASCADE'))
-    numberMovesPlayed = db.Column(db.Integer,nullable=False,default=0)
-    gameTurn = db.Column(db.Integer,nullable=False,default=0)
-    gameMoveStatus = db.Column(db.Enum(Enum.GameMoveStatus),nullable=False, default=Enum.GameMoveStatus.WaitingForPlayerToBeginMove)
-  
 class GameActionTracker(db.Model):
     gameActionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     performedByPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_action_player_id',ondelete='CASCADE'))
-    numberMovesPlayed = db.Column(db.Integer,nullable=False,default=1)
-    gameTurn = db.Column(db.Integer,nullable=False,default=1)
+    isGameActionCompleted  = db.Column(db.Boolean,nullable=False,default=False)
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True, name='fk_game_Action_id'))
     tradeTransaction =  db.relationship("TradeTransaction")  
-  
+    gameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True)
 
+class GamePlayerMoves(db.Model):
+    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
+    currentPlayerId = db.Column(db.Integer,db.ForeignKey(Player.playerId))
+    numberOfMovesPlayed = db.Column(db.Integer,nullable=False,default=0)
+    totalGameMoveCount = db.Column(db.Integer,nullable=False,default=0)
+    gameMoveStatus = db.Column(db.Enum(Enum.GameMoveStatus),nullable=False, default=Enum.GameMoveStatus.WaitingForPlayerToBeginMove)
+    gameActionTrackerId = db.Column(db.Integer,db.ForeignKey(GameActionTracker.gameActionTrackerId),nullable=True)
+    gameActionTracker = db.relationship(GameActionTracker)
+    currentPlayer = db.relationship(Player,primaryjoin=currentPlayerId==Player.playerId)
 
 class TradeTransaction(db.Model):
     tradeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4f1151f63474
+Revision ID: ffb83df0ae92
 Revises: 
-Create Date: 2021-01-01 15:47:58.819384
+Create Date: 2021-01-02 12:33:41.375763
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4f1151f63474'
+revision = 'ffb83df0ae92'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -47,8 +47,9 @@ def upgrade():
     sa.Column('gamePlayActionId', sa.Integer(), nullable=False),
     sa.Column('cardType', sa.Enum('Properties', 'Cash', 'Rent', 'Action', name='cardtypes'), nullable=False),
     sa.Column('actionType', sa.Enum('DealBreaker', 'ForcedDeal', 'SlyDeal', 'JustSayNo', 'DebtCollector', 'ItsMyBirthday', 'DoubleTheRent', 'House', 'Hotel', 'PassGo', name='actiontypes'), nullable=True),
+    sa.Column('currentGameCardLocation', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
     sa.Column('expectedGameCardLocation', sa.Enum('IsNotDrawn', 'IsOnHand', 'IsPlayedOnPropertyPile', 'IsDiscarded', 'IsPlayedOnCashPile', 'IsInPlay', name='gamecardlocationstatus'), nullable=False),
-    sa.Column('moveClassification', sa.Enum('NoActionRequiredMove', 'SingleRentPlayerPaymentRequiredMove', 'MultipleRentPlayerPaymentsRequiredMove', 'GainCardsMove', 'SinglePlayerPaymentRequiredMove', 'MultiplePlayerPaymentsRequiredMove', 'CancelActionMove', 'SlyStealMove', 'ForcedTradeMove', 'DealBreakerMove', 'MustPlayDoubleTheRentMove', name='actionclassification'), nullable=True),
+    sa.Column('moveClassification', sa.Enum('NoActionRequiredMove', 'SingleRentPlayerPaymentRequiredMove', 'MultipleRentPlayerPaymentsRequiredMove', 'GainCardsMove', 'SinglePlayerPaymentRequiredMove', 'MultiplePlayerPaymentsRequiredMove', 'CancelActionMove', 'SlyStealMove', 'ForcedTradeMove', 'DealBreakerMove', 'MustPlayDoubleTheRentMove', 'RotatingCardMove', 'MovePropertyCardMove', name='actionclassification'), nullable=True),
     sa.Column('tradeTypes', sa.Enum('ValueTrade', 'PropertyTrade', name='tradetypes'), nullable=True),
     sa.Column('isPreCheckRequired', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('gamePlayActionId'),
@@ -62,29 +63,6 @@ def upgrade():
     sa.Column('fourPairRentPrice', sa.Integer(), nullable=True),
     sa.Column('numberNeededToCompleteSet', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('colourId')
-    )
-    op.create_table('game_action_tracker',
-    sa.Column('gameActionTrackerId', sa.Integer(), nullable=False),
-    sa.Column('gameId', sa.Integer(), nullable=True),
-    sa.Column('performedByPlayerId', sa.Integer(), nullable=True),
-    sa.Column('numberMovesPlayed', sa.Integer(), nullable=False),
-    sa.Column('gameTurn', sa.Integer(), nullable=False),
-    sa.Column('gamePlayActionId', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['gamePlayActionId'], ['game_play_action.gamePlayActionId'], name='fk_game_Action_id', use_alter=True),
-    sa.ForeignKeyConstraint(['performedByPlayerId'], ['player.playerId'], name='fk_game_action_player_id', ondelete='CASCADE', use_alter=True),
-    sa.PrimaryKeyConstraint('gameActionTrackerId'),
-    sa.UniqueConstraint('gameActionTrackerId')
-    )
-    op.create_table('game_player_moves',
-    sa.Column('gameId', sa.Integer(), nullable=True),
-    sa.Column('currentPlayerId', sa.Integer(), nullable=True),
-    sa.Column('numberMovesPlayed', sa.Integer(), nullable=False),
-    sa.Column('gameTurn', sa.Integer(), nullable=False),
-    sa.Column('gameMoveStatus', sa.Enum('WaitingForPlayerToBeginMove', 'MoveInProgress', 'MoveComplete', 'SkipYourTurn', name='gamemovestatus'), nullable=False),
-    sa.ForeignKeyConstraint(['currentPlayerId'], ['player.playerId'], name='fk_game_player_moves_current_player_id', ondelete='CASCADE', use_alter=True),
-    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('gameId')
     )
     op.create_table('player',
     sa.Column('playerId', sa.Integer(), nullable=False),
@@ -133,21 +111,6 @@ def upgrade():
     sa.PrimaryKeyConstraint('cardId'),
     sa.UniqueConstraint('cardId')
     )
-    op.create_table('trade_transaction',
-    sa.Column('tradeTransactionId', sa.Integer(), nullable=False),
-    sa.Column('gameActionTrackerId', sa.Integer(), nullable=True),
-    sa.Column('gameId', sa.Integer(), nullable=True),
-    sa.Column('isTransactionCompleted', sa.Boolean(), nullable=False),
-    sa.Column('sourcePlayerId', sa.Integer(), nullable=True),
-    sa.Column('payee', sa.Enum('Single', 'All', name='payee'), nullable=False),
-    sa.Column('total', sa.Integer(), nullable=True),
-    sa.Column('tradeTypes', sa.Enum('ValueTrade', 'PropertyTrade', name='tradetypes'), nullable=True),
-    sa.ForeignKeyConstraint(['gameActionTrackerId'], ['game_action_tracker.gameActionTrackerId'], ),
-    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['sourcePlayerId'], ['player.playerId'], name='fk_trade_transaction_player_id', ondelete='CASCADE', use_alter=True),
-    sa.PrimaryKeyConstraint('tradeTransactionId'),
-    sa.UniqueConstraint('tradeTransactionId')
-    )
     op.create_table('game_cards',
     sa.Column('gameCardId', sa.Integer(), nullable=False),
     sa.Column('gameId', sa.Integer(), nullable=True),
@@ -162,6 +125,47 @@ def upgrade():
     sa.PrimaryKeyConstraint('gameCardId'),
     sa.UniqueConstraint('gameCardId'),
     sa.UniqueConstraint('gameId', 'cardId', name='unique_game_card')
+    )
+    op.create_table('game_action_tracker',
+    sa.Column('gameActionTrackerId', sa.Integer(), nullable=False),
+    sa.Column('gameId', sa.Integer(), nullable=True),
+    sa.Column('performedByPlayerId', sa.Integer(), nullable=True),
+    sa.Column('isGameActionCompleted', sa.Boolean(), nullable=False),
+    sa.Column('gamePlayActionId', sa.Integer(), nullable=True),
+    sa.Column('gameCardId', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['gameCardId'], ['game_cards.gameCardId'], ),
+    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['gamePlayActionId'], ['game_play_action.gamePlayActionId'], name='fk_game_Action_id', use_alter=True),
+    sa.ForeignKeyConstraint(['performedByPlayerId'], ['player.playerId'], name='fk_game_action_player_id', ondelete='CASCADE', use_alter=True),
+    sa.PrimaryKeyConstraint('gameActionTrackerId'),
+    sa.UniqueConstraint('gameActionTrackerId')
+    )
+    op.create_table('game_player_moves',
+    sa.Column('gameId', sa.Integer(), nullable=True),
+    sa.Column('currentPlayerId', sa.Integer(), nullable=True),
+    sa.Column('numberOfMovesPlayed', sa.Integer(), nullable=False),
+    sa.Column('totalGameMoveCount', sa.Integer(), nullable=False),
+    sa.Column('gameMoveStatus', sa.Enum('WaitingForPlayerToBeginMove', 'MoveInProgress', 'MoveComplete', 'SkipYourTurn', name='gamemovestatus'), nullable=False),
+    sa.Column('gameActionTrackerId', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['currentPlayerId'], ['player.playerId'], ),
+    sa.ForeignKeyConstraint(['gameActionTrackerId'], ['game_action_tracker.gameActionTrackerId'], ),
+    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('gameId')
+    )
+    op.create_table('trade_transaction',
+    sa.Column('tradeTransactionId', sa.Integer(), nullable=False),
+    sa.Column('gameActionTrackerId', sa.Integer(), nullable=True),
+    sa.Column('gameId', sa.Integer(), nullable=True),
+    sa.Column('isTransactionCompleted', sa.Boolean(), nullable=False),
+    sa.Column('sourcePlayerId', sa.Integer(), nullable=True),
+    sa.Column('payee', sa.Enum('Single', 'All', name='payee'), nullable=False),
+    sa.Column('total', sa.Integer(), nullable=True),
+    sa.Column('tradeTypes', sa.Enum('ValueTrade', 'PropertyTrade', name='tradetypes'), nullable=True),
+    sa.ForeignKeyConstraint(['gameActionTrackerId'], ['game_action_tracker.gameActionTrackerId'], ),
+    sa.ForeignKeyConstraint(['gameId'], ['game.gameId'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['sourcePlayerId'], ['player.playerId'], name='fk_trade_transaction_player_id', ondelete='CASCADE', use_alter=True),
+    sa.PrimaryKeyConstraint('tradeTransactionId'),
+    sa.UniqueConstraint('tradeTransactionId')
     )
     op.create_table('trade_payee_transaction',
     sa.Column('tradePayeeTransactionId', sa.Integer(), nullable=False),
@@ -181,14 +185,14 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('trade_payee_transaction')
-    op.drop_table('game_cards')
     op.drop_table('trade_transaction')
+    op.drop_table('game_player_moves')
+    op.drop_table('game_action_tracker')
+    op.drop_table('game_cards')
     op.drop_table('cards')
     op.drop_table('rent_card')
     op.drop_table('properties_card')
     op.drop_table('player')
-    op.drop_table('game_player_moves')
-    op.drop_table('game_action_tracker')
     op.drop_table('properties_colour')
     op.drop_table('game_play_action')
     op.drop_table('game')
