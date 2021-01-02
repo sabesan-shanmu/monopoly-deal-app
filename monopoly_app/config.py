@@ -10,6 +10,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     API_VERSION = os.environ.get('API_VERSION')
     API_TITLE = os.environ.get('API_TITLE')
+    API_DOC = os.environ.get('DOCUMENTATION')
     JWT_ACCESS_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_ACCESS_TOKEN_EXPIRES')))
     JWT_REFRESH_TOKEN_EXPIRES=datetime.timedelta(seconds=int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
     PROPAGATE_EXCEPTIONS = True
