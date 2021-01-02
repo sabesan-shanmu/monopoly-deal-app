@@ -1,1 +1,1 @@
-web: gunicorn monopoly_deal.wsgi
+web: gunicorn monopoly.wsgi
