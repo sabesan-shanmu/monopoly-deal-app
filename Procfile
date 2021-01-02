@@ -1,1 +1,1 @@
-web: gunicorn monopoly.wsgi
+web: gunicorn app:app
