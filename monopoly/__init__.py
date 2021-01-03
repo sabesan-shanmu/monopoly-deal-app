@@ -14,7 +14,7 @@ flask_api = Api()
 jwt = JWTManager()
 
 def create_app():
-    app = Flask(__name__, static_folder="static/dist", template_folder="static")
+    app = Flask(__name__,template_folder="static")
 
     if app.config["ENV"] == "production":
         app.config.from_object('config.ProductionConfig')
