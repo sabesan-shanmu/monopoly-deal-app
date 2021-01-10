@@ -4,7 +4,7 @@ from monopoly.common import constants,enums
 from flask import request,jsonify
 from werkzeug.security import generate_password_hash,check_password_hash
 from monopoly.api.games.services import get_game_by_gamepasscode
-from .services import get_players_by_gameid,add_player,get_player_by_player_name
+from .services import get_players_by_gameid,add_player,get_player_by_player_name,is_player_allowed_to_join
 from monopoly.auth import create_tokens
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
@@ -24,7 +24,7 @@ class RegisterResource(Resource):
                 raise ResourceNotFoundException(message="Game Not Found")    
 
             
-            if len(game.players)>=constants.MAX_NUMBER_OF_PLAYERS or game.gameStatus != enums.GameStatus.WaitingToStart:
+            if is_player_allowed_to_join(game):
                 raise FieldValidationException(message="No more players can join the game")
 
             

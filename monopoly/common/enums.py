@@ -1,7 +1,8 @@
 from enum import Enum
 
-
-
+class GameMode(Enum):
+    RegularMode=1
+    ExtendedMode=2
 
 class Colours(Enum):
     Any=0

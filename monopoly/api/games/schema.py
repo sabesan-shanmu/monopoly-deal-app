@@ -10,7 +10,7 @@ from monopoly.api.games.players.schema import PlayerSchema
 
 class create_game_schema(ma.Schema):
     name=fields.Str(required=True,validate=Length(max=20,min=1))
-
+    gameMode =  EnumField(Enum.GameMode,required=True, by_value=True)
     @post_load
     def make_game(self, data, **kwargs):
         return Game(**data)

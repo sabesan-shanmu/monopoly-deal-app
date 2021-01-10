@@ -4,13 +4,15 @@ import monopoly.common.enums as Enum
 from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS
 from monopoly import db
 from sqlalchemy import exc,and_
+from monopoly.common import constants,enums
 
 def create_game_cards(game,players,cards):
     try:
         game_cards = []
-        while len(cards)>0:
-            selected_index = random.randint(0,len(cards)-1)
-            selected_card = cards.pop(selected_index)
+        full_list = cards if game.gameMode == enums.GameMode.RegularMode else [*cards,*cards]
+        while len(full_list)>0:
+            selected_index = random.randint(0,len(full_list)-1)
+            selected_card = full_list.pop(selected_index)
             game_cards.append(GameCards(gameId=game.gameId,cardId=selected_card.cardId,cardStatus=Enum.GameCardLocationStatus.IsNotDrawn))
         
         list_of_game_cards=list(range(0,len(game_cards)))

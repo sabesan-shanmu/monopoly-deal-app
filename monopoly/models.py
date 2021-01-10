@@ -85,6 +85,7 @@ class Player(db.Model):
 class Game(db.Model):
     gameId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gamePassCode = db.Column(db.String, unique=True,nullable=False,default=uuid.uuid4)
+    gameMode = db.Column(db.Enum(Enum.GameMode),nullable=False,default=Enum.GameMode.RegularMode)
     numberOfPlayers = db.Column(db.Integer,nullable=False,default=0)
     name = db.Column(db.String,nullable=False,unique=True)
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
