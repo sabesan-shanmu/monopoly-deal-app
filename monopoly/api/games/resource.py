@@ -2,7 +2,7 @@ from flask_restx import Resource,Namespace
 from flask import request,jsonify   
 from .schema import GameSchema,create_game_schema,update_game_schema
 from marshmallow import ValidationError
-from .services import get_games,get_game_by_gamepasscode,create_game,delete_game,update_game
+from .services import get_games,get_game_by_gamepasscode,create_game,delete_game,update_game,is_game_allowed_to_start
 import monopoly.common.enums as Enum
 import monopoly.common.constants as Constants
 from monopoly.api.cards.services import get_cards
@@ -51,7 +51,8 @@ class SingleGameResource(Resource):
                 try:
                     cards = get_cards()
                     players = get_players_by_gameid(gameFound.gameId)
-                    if len(players)< Constants.MIN_NUMBER_OF_PLAYERS:
+
+                    if not is_game_allowed_to_start(gameFound):
                         raise FieldValidationException(message="Not enough players to start the game")
 
                     create_game_cards(gameFound,players,cards)

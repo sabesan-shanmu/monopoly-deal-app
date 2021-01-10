@@ -10,7 +10,7 @@ from monopoly.api.games.players.schema import PlayerSchema
 
 class create_game_schema(ma.Schema):
     name=fields.Str(required=True,validate=Length(max=20,min=1))
-    gameMode =  EnumField(Enum.GameMode,required=True, by_value=True)
+    gameMode =EnumField(Enum.GameMode,required=True, by_value=True)
     @post_load
     def make_game(self, data, **kwargs):
         return Game(**data)
@@ -30,6 +30,7 @@ class GameSchema(ma.Schema):
     numberOfPlayers = fields.Int(required=True)
     name = fields.Str()
     currentPlayerId = fields.Int()
+    gameMode =  EnumField(Enum.GameMode, by_value=True)
     gameStatus = EnumField(Enum.GameStatus, by_value=True)
     createdUtcDate = fields.DateTime()
     players = fields.Nested(PlayerSchema,many=True)
