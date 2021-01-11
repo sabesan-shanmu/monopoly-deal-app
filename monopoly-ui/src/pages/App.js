@@ -1,9 +1,12 @@
 import './App.css';
+import GameSelect from '../components/GameSelect'
+import React from 'react';
 
 function App() {
   return (
-    <div>
-    </div>
+    <React.Fragment>
+      <GameSelect/>
+    </React.Fragment>
   );
 }
 
