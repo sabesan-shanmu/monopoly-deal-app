@@ -1,23 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.2242f12f.chunk.css",
-    "main.js": "/static/js/main.fb9d82b9.chunk.js",
-    "main.js.map": "/static/js/main.fb9d82b9.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.0d1663a7.js",
-    "runtime-main.js.map": "/static/js/runtime-main.0d1663a7.js.map",
+    "main.css": "/static/css/main.de9996ae.chunk.css",
+    "main.js": "/static/js/main.5558eee2.chunk.js",
+    "main.js.map": "/static/js/main.5558eee2.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.0a0aa11b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.0a0aa11b.js.map",
     "static/js/2.157e969d.chunk.js": "/static/js/2.157e969d.chunk.js",
     "static/js/2.157e969d.chunk.js.map": "/static/js/2.157e969d.chunk.js.map",
-    "static/js/3.5a62d9a4.chunk.js": "/static/js/3.5a62d9a4.chunk.js",
-    "static/js/3.5a62d9a4.chunk.js.map": "/static/js/3.5a62d9a4.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.2242f12f.chunk.css.map": "/static/css/main.2242f12f.chunk.css.map",
+    "static/css/main.de9996ae.chunk.css.map": "/static/css/main.de9996ae.chunk.css.map",
     "static/js/2.157e969d.chunk.js.LICENSE.txt": "/static/js/2.157e969d.chunk.js.LICENSE.txt",
-    "static/media/logo.52fdf10f.png": "/static/media/logo.52fdf10f.png"
+    "static/media/index.css": "/static/media/Kabel-Heavy.af99bdae.svg",
+    "static/media/main-logo.ba2d563f.png": "/static/media/main-logo.ba2d563f.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.0d1663a7.js",
+    "static/js/runtime-main.0a0aa11b.js",
     "static/js/2.157e969d.chunk.js",
-    "static/css/main.2242f12f.chunk.css",
-    "static/js/main.fb9d82b9.chunk.js"
+    "static/css/main.de9996ae.chunk.css",
+    "static/js/main.5558eee2.chunk.js"
   ]
 }
