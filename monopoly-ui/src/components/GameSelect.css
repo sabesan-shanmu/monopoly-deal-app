@@ -1,0 +1,20 @@
+.game-select__image{
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.game-select__content{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.game-select-content__button{
+    background-color:#C70000;
+    color:white;
+    width:200px;
+    font-size:30px;
+}
