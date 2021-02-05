@@ -1,7 +1,33 @@
+
 .monopoly-button{
     font-size:100px;
+    width:200px;
+    cursor: pointer;
+    border: none;
+}
+
+.monopoly-button--primary{
     background-color:#C70000;
     color:white;
-    width:200px;
+    border:1px solid white;
+    border-radius:6px;
+}
+
+.monopoly-button--primary:hover,
+.monopoly-button--primary:focus {
+    background-color:#a50000;
+}
+
+
+.monopoly-button--small {
+    font-size:15px;
+    width:100px;
+ }
+.monopoly-button--medium {
+    font-size:20px;
+    width:150px;
+}
+.monopoly-button--large {
     font-size:30px;
+    width:200px;
 }
