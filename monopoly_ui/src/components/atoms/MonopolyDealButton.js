@@ -4,12 +4,13 @@ import './MonopolyDealButton.css'
 
 
 
-export const MonopolyDealButton = ({size,label,...props }) => {
+export const MonopolyDealButton = ({size,label,disabled,...props }) => {
 
     return (
     <button
         type="button"
         className={['monopoly-button',`monopoly-button--${size}`].join(' ')}
+        disabled={disabled}
         {...props}
     >
         {label}
@@ -21,9 +22,10 @@ MonopolyDealButton.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  disabled:PropTypes.bool,
 };
 
 MonopolyDealButton.defaultProps = {
   size: 'large',
-  onClick: undefined,
+  disabled:false
 };

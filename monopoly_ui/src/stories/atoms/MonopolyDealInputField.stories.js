@@ -1,5 +1,5 @@
 import React from 'react'
-import {MonopolyDealInputField} from '../components/atoms/MonopolyDealInputField'
+import {MonopolyDealInputField} from '../../components/atoms/MonopolyDealInputField'
 
 
 export default  {
@@ -11,14 +11,16 @@ export default  {
 const Template = (args)=> <MonopolyDealInputField {...args} />
 
 
-export const Input = Template.bind({});
-Input.args = {
+export const Text = Template.bind({});
+Text.args = {
     label: 'Text:',
-    mode:'text'
+    mode:'text',
+    placeholder:'Enter Text'
 }
 
 export const Password = Template.bind({});
 Password.args = {
     label: 'Password:',
-    mode:'password'
+    mode:'password',
+    placeholder:'Enter password'
 }

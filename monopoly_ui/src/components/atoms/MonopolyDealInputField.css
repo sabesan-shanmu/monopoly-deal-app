@@ -1,4 +1,29 @@
 .container-input{
     display:flex;
     flex-direction: row;
+    flex-wrap: nowrap;
 }
+
+.container-input>label{
+    background-color: #dadace;
+    padding:3px;
+    border:1px solid black;
+}
+
+.container-input--small>input,
+.container-input--small>label
+{
+    font-size:15px;
+ }
+.container-input--medium>input,
+.container-input--medium>label
+{
+    font-size:20px;
+}
+.container-input--large>input,
+.container-input--large>label
+{
+    font-size:30px;
+}
+
+

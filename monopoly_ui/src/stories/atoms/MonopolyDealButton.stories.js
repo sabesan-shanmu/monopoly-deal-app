@@ -1,5 +1,5 @@
 import React from 'react'
-import {MonopolyDealButton} from '../components/atoms/MonopolyDealButton'
+import {MonopolyDealButton} from '../../components/atoms/MonopolyDealButton'
 
 
 export default {
