@@ -6,13 +6,8 @@
 }
 
 
-*{
-  font-family:'Kabel-Heavy';
-}
-
-
-
-html {
+html *{
   height: 100%;
   background-color: #D7BAAA;
+  font-family:'Kabel-Heavy';
 }

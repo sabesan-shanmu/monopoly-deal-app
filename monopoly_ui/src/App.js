@@ -5,12 +5,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import {MainLogoImage} from '../src/components/atoms/MainLogoImage'
 
 function App() {
   return (
-    <main>
-      
-    </main>
+    <MainLogoImage  />
   )
 }
 
