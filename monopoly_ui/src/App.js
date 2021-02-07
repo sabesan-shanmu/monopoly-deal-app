@@ -5,11 +5,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import {MainLogoImage} from '../src/components/atoms/MainLogoImage'
+import {GameTitleMenu} from '../src/components/molecules/GameTitleMenu'
 
 function App() {
   return (
-    <MainLogoImage  />
+    <GameTitleMenu  />
   )
 }
 

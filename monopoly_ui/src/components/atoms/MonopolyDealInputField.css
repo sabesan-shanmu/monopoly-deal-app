@@ -5,25 +5,16 @@
 }
 
 .container-input>label{
-    background-color: #dadace;
-    padding:3px;
+    background-color: #C70000;
     border:1px solid black;
+    color:white
 }
 
-.container-input--small>input,
-.container-input--small>label
-{
-    font-size:15px;
- }
-.container-input--medium>input,
-.container-input--medium>label
+.container-input>input,
+.container-input>label
 {
     font-size:20px;
-}
-.container-input--large>input,
-.container-input--large>label
-{
-    font-size:30px;
-}
+    padding:5px;
+ }
 
 

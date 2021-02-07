@@ -12,6 +12,5 @@ const Template = (args) => <MonopolyDealButton {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    label: 'Button',
-    size: 'large'
+    label: 'Button'
 }

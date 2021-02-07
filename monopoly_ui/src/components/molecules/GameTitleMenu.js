@@ -4,35 +4,27 @@ import {MainLogoImage} from '../atoms/MainLogoImage'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import './GameTitleMenu.css'
 
-export const GameTitleMenu = ({size})=> {
+export const GameTitleMenu = ()=> {
     
-    const primary = {
-        onclick:null,
+    const left = {
+        onClick:null,
         label:"New Game"
     }
-    const secondary ={
-        onclick:null,
+    const right ={
+        onClick:null,
         label:"Join Game"
     }
 
     return (
         <main className="game-title-menu-container">
-            <div class="game-title-menu-container__header">
-                <MainLogoImage size={size} />
+            <div className="game-title-menu-container__header">
+                <MainLogoImage  />
             </div>
-            <div class="game-title-menu-container__body">
-                <MonopolyDealButton size={size} {...primary} />
-                <MonopolyDealButton size={size} {...secondary} /> 
+            <div className="game-title-menu-container__body">
+                <MonopolyDealButton {...left} />
+                <MonopolyDealButton {...right} /> 
             </div>
         </main>
     )
 }
 
-GameTitleMenu.propTypes = {
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
-  };
-  
-GameTitleMenu.defaultProps = {
-    size: 'large',
-};
-  

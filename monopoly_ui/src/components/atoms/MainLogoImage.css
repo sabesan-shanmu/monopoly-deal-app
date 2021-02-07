@@ -1,9 +1,4 @@
-.monopoly-image--small {
-    width:200px;
- }
-.monopoly-image--medium {
-    width:300px;
+.monopoly-image{
+    width:100%;
 }
-.monopoly-image--large {
-    max-width:100%;
-}
+

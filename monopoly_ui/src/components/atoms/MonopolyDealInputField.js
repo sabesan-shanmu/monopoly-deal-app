@@ -4,11 +4,11 @@ import './MonopolyDealInputField.css'
 
 
 
-export const MonopolyDealInputField = ({ mode,size,label,maxLength,placeholder,...props }) => {
+export const MonopolyDealInputField = ({ mode,label,maxLength,placeholder,...props }) => {
     return (
-        <div className={['container-input',`container-input--${size}`].join(' ')} >
+        <div class="container-input" >
             <label for="monopoly-input" >{label}</label>
-            <input type={mode} id="monopoly-input"maxlength={maxLength} placeholder={placeholder}></input> 
+            <input type={mode} id="monopoly-input" maxlength={maxLength} placeholder={placeholder}></input> 
         </div>
     );
 };
@@ -16,14 +16,12 @@ export const MonopolyDealInputField = ({ mode,size,label,maxLength,placeholder,.
 
 
 MonopolyDealInputField.propTypes = {
-    size: PropTypes.oneOf(["small","medium","large"]),
     mode: PropTypes.oneOf(["text","password"]),
     label: PropTypes.string,
     maxLength:PropTypes.number
 };
 
 MonopolyDealInputField.defaultProps ={
-    size:"medium",
     mode:"Text",
     maxLength:10,
     placeholder:"text"

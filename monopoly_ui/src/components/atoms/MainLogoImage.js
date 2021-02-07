@@ -4,19 +4,12 @@ import PropTypes from 'prop-types';
 import './MainLogoImage.css'
 
 
-export const MainLogoImage = ({size}) => {
+export const MainLogoImage = () => {
     return (
-        <img className={`monopoly-image--${size}`} src={logo}/>
+        <img className="monopoly-image" src={logo}/>
     )
 }
 
 
-MainLogoImage.propTypes = {
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
-  };
-  
-MainLogoImage.defaultProps = {
-    size: 'large',
 
-};
   

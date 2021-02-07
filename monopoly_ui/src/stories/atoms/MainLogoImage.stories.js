@@ -10,9 +10,6 @@ export default {
 const Template = (args) => <MainLogoImage {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {
-    size: 'large'
-}
 
 
 

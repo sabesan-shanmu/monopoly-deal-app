@@ -13,7 +13,3 @@ const Template = (args) => <GameTitleMenu {...args} />;
 
 export const Default = Template.bind({})
 
-
-Default.args={
-    size:"large"
-}
