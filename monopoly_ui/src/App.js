@@ -5,11 +5,14 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import "./App.css"
 import {GameTitleMenu} from '../src/components/molecules/GameTitleMenu'
 
 function App() {
   return (
-    <GameTitleMenu  />
+    <div class="app-container">
+      <GameTitleMenu  />
+    </div>
   )
 }
 

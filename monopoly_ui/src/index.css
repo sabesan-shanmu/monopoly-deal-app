@@ -15,4 +15,11 @@ html{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  height:100%;
+  margin: 0;
+}
+
+body,#root{
+  height:100%;
+  margin: 0;
 }
