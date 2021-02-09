@@ -1,0 +1,18 @@
+.game-entry__row{
+    font-size:20px;
+    color:white;
+    min-height:200px;
+}
+
+.game-entry--row_name{
+    min-width:50px;
+    word-wrap: break-word;
+}
+
+.game-entry--row_status{
+    min-width:30px;
+}
+
+.game-entry--row_players{
+    min-width:10px;
+}

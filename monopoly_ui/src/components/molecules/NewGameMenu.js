@@ -26,10 +26,10 @@ export const NewGameMenu = () => {
 
     return (
         <main className="new-game-menu-container">
-            <div class="new-game-menu-container__header">
+            <div className="new-game-menu-container__header">
                 <MonopolyDealInputField {...gameinput} />
             </div>
-            <div class="new-game-menu-container__body">
+            <div className="new-game-menu-container__body">
                 <MonopolyDealButton  {...left} />
                 <MonopolyDealButton  {...right} /> 
             </div>

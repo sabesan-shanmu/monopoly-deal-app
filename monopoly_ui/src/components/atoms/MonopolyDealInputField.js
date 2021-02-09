@@ -6,7 +6,7 @@ import './MonopolyDealInputField.css'
 
 export const MonopolyDealInputField = ({ mode,label,maxLength,placeholder,...props }) => {
     return (
-        <div class="container-input" >
+        <div className="container-input" >
             <label for="monopoly-input" >{label}</label>
             <input type={mode} id="monopoly-input" maxlength={maxLength} placeholder={placeholder}></input> 
         </div>
