@@ -4,7 +4,7 @@ import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {MonopolyDealInputField} from '../atoms/MonopolyDealInputField'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-
+import img from "../../assets/img/modal-background.jpg";
 
 const StyledNewGameMenu = styled.main`
     display:flex;
@@ -12,7 +12,7 @@ const StyledNewGameMenu = styled.main`
     align-items:center;
     justify-content:center;
     padding: 10px;
-    background-image: url("../../assets/img/modal-background.jpg");
+    background-image: url(${img});
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -3,7 +3,7 @@ import {GameEntries} from './GameEntries'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-
+import img from "../../assets/img/modal-background.jpg";
 
 
 const StyledJoinGameMenu = styled.main`
@@ -12,7 +12,7 @@ const StyledJoinGameMenu = styled.main`
     align-items:center;
     justify-content:center;
     padding: 10px;
-    background-image: url("../../assets/img/modal-background.jpg");
+    background-image: url(${img});
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
