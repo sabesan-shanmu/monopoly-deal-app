@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../assets/img/main-logo.png'
+import logo from '../../assets/img/logo/main-logo.png'
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 

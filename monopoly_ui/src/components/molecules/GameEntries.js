@@ -28,7 +28,7 @@ const StyledGameEntries = styled.div`
         max-width: 250px;
     } 
 }`;
-
+/*TODO: Fixing header to the top */
 const StyledGameEntryColHeader = styled.div`
     background-color:#C70000;
     color:white;
@@ -62,11 +62,11 @@ export const GameEntries = ({games,onClick,...props}) => {
                 Number of Players
             </StyledGameEntryColHeader>
             <StyledGameEntryColHeader>
-                
+                {/* empty column header for button */}
             </StyledGameEntryColHeader>
             
             {games && games.map((game,key)=>
-                <React.Fragment>
+                <React.Fragment  key={key}>
                     <StyledGameEntryCell>
                         {game.title}
                     </StyledGameEntryCell>

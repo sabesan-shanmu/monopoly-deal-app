@@ -4,7 +4,7 @@ import {AudioPlayer} from '../../components/atoms/AudioPlayer'
 
 export default {
     component:AudioPlayer,
-    title:'Atoms/AudioPlayer',
+    title:'Atoms/Audio Player',
 }
 
 const Template = (args) => <AudioPlayer {...args} />;

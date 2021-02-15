@@ -4,7 +4,7 @@ import {MainLogoImage} from '../atoms/MainLogoImage'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-import img from "../../assets/img/modal-background.jpg";
+import img from "../../assets/img/backgrounds/modal-background.jpg";
 
 const StyledGameTitleMenu = styled.main`
     display:flex;

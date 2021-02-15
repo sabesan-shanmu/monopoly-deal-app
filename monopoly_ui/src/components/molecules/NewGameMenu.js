@@ -4,7 +4,7 @@ import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {MonopolyDealInputField} from '../atoms/MonopolyDealInputField'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-import img from "../../assets/img/modal-background.jpg";
+import img from "../../assets/img/backgrounds/modal-background.jpg";
 
 const StyledNewGameMenu = styled.main`
     display:flex;
@@ -72,13 +72,14 @@ export const NewGameMenu = () => {
 
     return (
         <StyledNewGameMenu>
-            <div className="new-game-menu-container__header">
-                <MonopolyDealInputField {...gameinput} />
-            </div>
+          
+            <MonopolyDealInputField {...gameinput} />
+
             <StyledGameTitleMenuBody>
                 <MonopolyDealButton  {...left} />
                 <MonopolyDealButton  {...right} /> 
             </StyledGameTitleMenuBody>
+            
         </StyledNewGameMenu>
     )
 }
