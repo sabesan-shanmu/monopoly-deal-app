@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request
 from flask_restx import Resource,Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -28,6 +28,10 @@ def create_app():
 
     @app.route('/')
     def index():
+        browser = request.user_agent.browser
+        version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
+        if (browser == 'msie' and version <= 11):
+            return render_template("unsupported.html")
         return render_template("index.html")
     
     
