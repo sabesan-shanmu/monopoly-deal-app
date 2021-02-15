@@ -1,12 +1,16 @@
 import React from 'react'
 import logo from '../../assets/img/main-logo.png'
 import PropTypes from 'prop-types';
-import './MainLogoImage.css'
+import styled from 'styled-components'
 
+
+const StyledMainLogoImage = styled.img`
+    width:100%;
+`;
 
 export const MainLogoImage = () => {
     return (
-        <img className="monopoly-image" src={logo}/>
+        <StyledMainLogoImage src={logo}/>
     )
 }
 

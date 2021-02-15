@@ -1,16 +1,26 @@
 import React,{useState,useEffect} from 'react';
-import './AudioPlayer.css'
 import MainThemeSong from '../../assets/audio/monopoly-theme.mp3'
 import MusicOnImg from  '../../assets/img/music-on.png'
 import MusicOffImg from  '../../assets/img/music-off.png'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+
+const StyledAudioPlayer = styled.img`
+    padding:10px;
+`;
+
 
 export const AudioPlayer = ({isPlaying})=> {
-    console.log(isPlaying)
-    const [audio] = useState(new Audio(MainThemeSong));
-    const [playMode, setPlayMode] = useState(isPlaying);
     
     
+    const getAudioObj = () =>{
+        const audioObj = new Audio(MainThemeSong);
+        audioObj.loop=true;
+        return audioObj;
+    }
+
+
     const togglePlay = () =>{
         if(playMode)
             audio.play();
@@ -18,10 +28,15 @@ export const AudioPlayer = ({isPlaying})=> {
             audio.pause();
     }
 
+    
+    const [audio] = useState(getAudioObj());
+    const [playMode, setPlayMode] = useState(isPlaying);
+    
+    
 
     togglePlay();
     return (
-        <img className="audio-player-image" src={playMode?MusicOnImg:MusicOffImg} onClick={()=>setPlayMode(!playMode)} />
+        <StyledAudioPlayer src={playMode?MusicOnImg:MusicOffImg} onClick={()=>setPlayMode(!playMode)} />
     )
 }
 
