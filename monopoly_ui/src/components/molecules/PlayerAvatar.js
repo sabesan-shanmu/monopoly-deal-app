@@ -8,18 +8,18 @@ import { CharacterImage } from '../atoms/CharacterImage';
 const getBackGroundColour=(imageId)=>{
 
     const background = {
-        1:"#bf1818",
-        2:"#171616ad",
-        3:"#5f1818",
-        4:"#f3da05",
-        5:"#ffc107",
-        6:"#8bc34a",
-        7:"#ff9800",
-        8:"#99d5f1",
-        9:"#f5f5f5",
-        10:"#ca47ca",
-        11:"#5e93d6",
-        12:"#735757c9"
+        1:"#FF2323BF",
+        2:"#C4A8FF",
+        3:"#D12531",
+        4:"#FCE029",
+        5:"#E19720",
+        6:"#8BC34A",
+        7:"#F26F03",
+        8:"#4C92CC",
+        9:"#F5F5F5",
+        10:"#CA47CA",
+        11:"#3366CC",
+        12:"#B87A1B"
     };
     return background[imageId];
 }
