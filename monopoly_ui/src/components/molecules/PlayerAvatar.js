@@ -12,14 +12,14 @@ const getBackGroundColour=(imageId)=>{
         2:"#C4A8FF",
         3:"#D12531",
         4:"#FCE029",
-        5:"#E19720",
+        5:"#B87A1B",
         6:"#8BC34A",
-        7:"#F26F03",
+        7:"#F97E3A",
         8:"#4C92CC",
-        9:"#F5F5F5",
+        9:"#ECE3E3",
         10:"#CA47CA",
         11:"#3366CC",
-        12:"#B87A1B"
+        12:"#FAD61D"
     };
     return background[imageId];
 }
