@@ -26,13 +26,7 @@ def create_app():
     ma.init_app(app)
     jwt.init_app(app)
 
-    @app.route('/')
-    def index():
-        browser = request.user_agent.browser
-        version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
-        if (browser == 'msie' and version <= 11):
-            return render_template("unsupported.html")
-        return render_template("index.html")
+  
     
     
     flask_api.title = app.config['API_TITLE']
