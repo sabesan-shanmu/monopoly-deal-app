@@ -7,6 +7,7 @@ from monopoly.common.enums import GameCardLocationStatus
 class create_player_schema(ma.Schema):
     playerName = fields.String(required=True)
     playerPassCode = fields.String(required=True)
+    imageId = fields.Integer(required=True)
     @post_load
     def make_player(self, data, **kwargs):
         return Player(**data)
@@ -19,6 +20,7 @@ class PlayerSchema(ma.Schema):
     playerGameOrder = fields.Integer()
     gamePassCode = fields.String()
     numberOfCardsOnHand = fields.Integer()
+    imageId = fields.Integer(required=True)
     playerCards =fields.Nested(GameCardSchema,many=True)
     @post_dump
     def update_number_of_cards_on_hand(self, data, many, **kwargs):

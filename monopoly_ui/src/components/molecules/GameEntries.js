@@ -22,7 +22,7 @@ const StyledGameEntries = styled.div`
         font-size:18px;
         max-width: 450px;
     }
-  
+    
     @media ${device.mobile} { 
         font-size:12px;
         max-width: 250px;
@@ -43,13 +43,24 @@ const StyledGameEntryCell = styled.div`
     padding: 4px;
 `;
 
+const StyledNoGameRow = styled.div`
+    border:1px solid black;
+    background-color: white;
+    color:black;
+    padding: 4px;
+    grid-column: 1 / span 4;
+    display:grid;
+    justify-content:center;
+`;
+
 export const GameEntries = ({games,onClick,...props}) => {
 
 
     const select = {
         onClick:null,
-        label:"Join"
+        label:"Select"
     }
+
     return (
         <StyledGameEntries>
             <StyledGameEntryColHeader>
@@ -81,6 +92,13 @@ export const GameEntries = ({games,onClick,...props}) => {
                     </StyledGameEntryCell>    
                 </React.Fragment>
             )} 
+            {games && games.length == 0 &&
+                <React.Fragment>
+                    <StyledNoGameRow>
+                        No Games
+                    </StyledNoGameRow>
+                </React.Fragment>
+            }
             
         </StyledGameEntries>
     )

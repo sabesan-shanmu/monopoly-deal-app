@@ -1,6 +1,5 @@
 import React from "react"
 import {PlayerAvatar} from '../../components/molecules/PlayerAvatar'
-import {NewGameMenu} from '../../components/molecules/NewGameMenu'
 
 
 export default{ 

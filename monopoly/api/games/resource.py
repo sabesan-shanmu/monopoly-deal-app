@@ -19,7 +19,8 @@ game_namespace = Namespace('Games', description='List of games that a user can j
 
 @game_namespace.route('/<string:gamePassCode>/')
 class SingleGameResource(Resource):   
-    @validate_gamepassCode
+    
+
     def get(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)

@@ -18,7 +18,7 @@ const getBackGroundColour=(imageId)=>{
         8:"#4C92CC",
         9:"#ECE3E3",
         10:"#CA47CA",
-        11:"#3366CC",
+        11:"#A9A9A9",
         12:"#FAD61D"
     };
     return background[imageId];
@@ -31,6 +31,8 @@ const StyledPlayerAvatar = styled.section`
     grid-template-columns: 2fr 1fr;
     background-color:${({imageId})=>getBackGroundColour(imageId)};
     background-size: cover;
+    border: 2px solid black;
+    border-radius: 5px;
 `;
 
 export const PlayerAvatar = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,...props}) => { 

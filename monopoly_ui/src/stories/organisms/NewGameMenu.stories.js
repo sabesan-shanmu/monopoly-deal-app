@@ -1,11 +1,11 @@
 import React from "react"
-import {NewGameMenu} from '../../components/molecules/NewGameMenu'
+import {NewGameMenu} from '../../components/organisms/NewGameMenu'
 
 
 
 export default{ 
     component:NewGameMenu,
-    title:'Molecules/ New Game Menu'
+    title:'Organisms/ New Game Menu'
 }
 
 const Template = (args) => <NewGameMenu {...args} />;

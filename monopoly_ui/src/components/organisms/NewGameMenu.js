@@ -4,34 +4,9 @@ import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {MonopolyDealInputField} from '../atoms/MonopolyDealInputField'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-import img from "../../assets/img/backgrounds/modal-background.jpg";
+import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
 
-const StyledNewGameMenu = styled.main`
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content:center;
-    padding: 10px;
-    background-image: url(${img});
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border:2px solid black;
-    border-radius:5px;
-    height:250px;
-    @media ${device.desktop} {
-        max-width: 600px;
-    }
-      
-    @media ${device.tablet} { 
-        
-        max-width: 450px;
-    }
-  
-    @media ${device.mobile} { 
-        max-width: 300px;
-    } 
-`;
+
 
 
 const StyledGameTitleMenuBody = styled.div`
@@ -69,9 +44,8 @@ export const NewGameMenu = () => {
     }
     
 
-
     return (
-        <StyledNewGameMenu>
+        <StyledMenuContainer>
           
             <MonopolyDealInputField {...gameinput} />
 
@@ -80,7 +54,7 @@ export const NewGameMenu = () => {
                 <MonopolyDealButton  {...right} /> 
             </StyledGameTitleMenuBody>
             
-        </StyledNewGameMenu>
+        </StyledMenuContainer>
     )
 }
 

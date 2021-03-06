@@ -73,9 +73,11 @@ class GameCards(db.Model):
 class Player(db.Model):
     __table_args__ = (
         db.UniqueConstraint('gameId', 'playerName',name='unique_player'),
+        db.UniqueConstraint('gameId', 'imageId',name='unique_image'),
     )
     playerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     playerPassCode = db.Column(db.String,nullable=False)
+    imageId = db.Column(db.Integer,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId"),nullable=False)
     gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode"),nullable=False)
     playerName = db.Column(db.String)

@@ -3,36 +3,8 @@ import PropTypes from 'prop-types';
 import {MainLogoImage} from '../atoms/MainLogoImage'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
-import {device} from "../../common/devices"; 
-import img from "../../assets/img/backgrounds/modal-background.jpg";
+import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
 
-const StyledGameTitleMenu = styled.main`
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content:center;
-    padding: 10px;
-    background-image: url(${img});
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border:2px solid black;
-    border-radius:5px;
-    height:250px;
-
-    @media ${device.desktop} {
-        max-width: 600px;
-    }
-      
-    @media ${device.tablet} { 
-        
-        max-width: 450px;
-    }
-  
-    @media ${device.mobile} { 
-        max-width: 300px;
-    } 
-`;
 
 
 const StyledGameTitleMenuBody = styled.div`
@@ -59,7 +31,7 @@ export const GameTitleMenu = ()=> {
     }
 
     return (
-        <StyledGameTitleMenu>
+        <StyledMenuContainer>
             
             <MainLogoImage  />
         
@@ -68,7 +40,7 @@ export const GameTitleMenu = ()=> {
                 <MonopolyDealButton {...right} /> 
             </StyledGameTitleMenuBody>
             
-        </StyledGameTitleMenu>
+        </StyledMenuContainer>
     )
 }
 

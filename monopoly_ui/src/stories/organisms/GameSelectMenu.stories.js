@@ -1,15 +1,15 @@
 import React from "react"
-import {JoinGameMenu} from '../../components/molecules/JoinGameMenu'
+import {SelectGameMenu} from '../../components/organisms/SelectGameMenu'
 
 
 
 export default{ 
-    component:JoinGameMenu,
-    title:'Molecules/ Join Game Menu'
+    component:SelectGameMenu,
+    title:'Organisms/ Select Game Menu'
 }
 
 
-const Template = (args) => <JoinGameMenu {...args} />;
+const Template = (args) => <SelectGameMenu {...args} />;
 
 export const Default = Template.bind({})
 
