@@ -1,11 +1,9 @@
 import React from 'react'
+import {GameTitleMenu} from '../components/organisms/GameTitleMenu'
 
 export const Home = () =>{
     return (
-        <h1>
-            Home
-        </h1>
+            <GameTitleMenu/>
     )
 }
-
 
