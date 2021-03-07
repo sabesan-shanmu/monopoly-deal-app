@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start watch-css -s ./src",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "build": "react-scripts build && rimraf build/**/*.map",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
