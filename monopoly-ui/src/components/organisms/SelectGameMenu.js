@@ -13,17 +13,17 @@ const StyledJoinGameMenuBody = styled.div`
 `;
 
 
-export const SelectGameMenu = ({games,...props}) => { 
+export const SelectGameMenu = ({games,gameEntriesOnClick,backOnSelectt,...props}) => { 
     
     const back = {
-        onClick:null,
+        onClick:backOnSelectt,
         label:"Go Back"
     }
 
     return (
         <StyledMenuContainer>
             
-            <GameEntries games={games} onClick={null} /> 
+            <GameEntries games={games} onClick={gameEntriesOnClick} /> 
             
             <StyledJoinGameMenuBody>
                 <MonopolyDealButton {...back} />
