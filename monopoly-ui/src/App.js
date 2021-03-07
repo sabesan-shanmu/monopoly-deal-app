@@ -10,7 +10,7 @@ import {Game} from './pages/Game'
 
 function App() {
   return (
-    <div class="app-container">
+    <div className="app-container">
       <Router>
         <Switch>
         <Route path="/:gamePassCode">
