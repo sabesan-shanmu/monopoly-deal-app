@@ -26,7 +26,7 @@ const getBackGroundColour=(imageId)=>{
 
 
 
-const StyledPlayerAvatar = styled.section`
+const StyledPlayerCharacter = styled.section`
     display:grid;
     grid-template-columns: 2fr 1fr;
     background-color:${({imageId})=>getBackGroundColour(imageId)};
@@ -35,22 +35,22 @@ const StyledPlayerAvatar = styled.section`
     border-radius: 5px;
 `;
 
-export const PlayerAvatar = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,...props}) => { 
+export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,...props}) => { 
 
     return (
-        <StyledPlayerAvatar imageId={imageId}>
+        <StyledPlayerCharacter imageId={imageId}>
             <CharacterImage imageId={imageId}/>
             <div>
                 <div>Player Name:{playerName}</div>
                 <div>Game Order:{playerGameOrder}</div>
                 <div>{/** add {numberOfCardsOnHand} of Cards  */}</div>
             </div>   
-        </StyledPlayerAvatar>
+        </StyledPlayerCharacter>
     )
 }
 
 
-PlayerAvatar.propTypes = {
+PlayerCharacter.propTypes = {
     playerName:PropTypes.string,
     playerGameOrder:PropTypes.oneOf(["1","2","3","4","5","6","7","8","9","10","11","12"]),
     imageId:PropTypes.oneOf(["1","2","3","4","5","6","7","8","9","10","11","12"])

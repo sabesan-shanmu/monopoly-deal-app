@@ -18,19 +18,19 @@ export const StyledMenuContainer = styled.main`
     border-radius:5px;
     
 
-    @media ${device.desktop} {
+    @media ${device.desktop}{
         max-width: 600px;
-        height:350px;
+        max-height:350px;
     }
       
-    @media ${device.tablet} { 
+    @media ${device.tablet}{ 
         max-width: 450px;
-        height:250px;
+        max-height:250px;
     }
   
-    @media ${device.mobile} { 
+    @media ${device.mobile}{ 
         max-width: 300px;
-        height:200px;
+        max-height:200px;
     } 
 `;
 

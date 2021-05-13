@@ -9,62 +9,62 @@ from marshmallow.exceptions import ValidationError
 
 MONOPOLY_ERRORS = {
     "EXPIRED_TOKEN_ERROR":{
-        "code": 401,
+        "statusCode": 401,
         "name":"ExpiredTokenError",
         "message":"Access Token has expired."
     },
     "INVALID_TOKEN_ERROR":{
-        "code": 401,
+        "statusCode": 401,
         "name":"InvalidTokenError",
         "message":"Invalid Token."
     },
     "MISSING_TOKEN_ERROR":{
-        "code": 401,
+        "statusCode": 401,
         "name":"MissingTokenError",
         "message":"Missing Token."
     },
     "MISSING_REFRESH_TOKEN_ERROR":{
-        "code": 401,
+        "statusCode": 401,
         "name":"RefreshTokenError",
         "message":"Fresh Token Required."
     },
     "REVOKED_TOKEN_ERROR":{
-        "code": 401,
+        "statusCode": 401,
         "name":"ExpiredTokenError",
         "message":"Token Has been revoked."
     },
     "CARD_NOT_FOUND_ERROR":{
-        "code": 400,
+        "statusCode": 400,
         "name":"GameCodeMismatchError",
         "message":"Game Code in Token does not match requested resource."
     },
     "GAME_CODE_MISMATCH_ERROR":{
-        "code": 400,
+        "statusCode": 400,
         "name":"GameCodeMismatchError",
         "message":"Game Code in Token does not match requested resource."
     },
     "PLAYER_ID_MISMATCH_ERROR":{
-        "code": 400,
+        "statusCode": 400,
         "name":"PlayerIdMismatchError",
         "message":"Player Id in Token does not match requested resource."
     },
     "RESOURCE_NOT_FOUND_ERROR":{
-        "code":400,
+        "statusCode":400,
         "name":"NotFoundError",
         "message":"Request Resource is not found."
     },
     "VALIDATION_ERROR":{
-        "code": 404,
+        "statusCode": 404,
         "name":"ValidationError",
         "message":"Validation Error(s)"
     },
     "DB_ERROR":{
-        "code":500,
+        "statusCode":500,
         "name":"DatabaseError",
         "message":"An unexpected error has occured."
     },
     "DEFAULT": {
-        "code": 500,
+        "statusCode": 500,
         "name":"InternalServer",
         "message":"An unexpected error has occured."
     },
@@ -74,6 +74,7 @@ def get_formatted_error(errorType,**kwargs):
     error = MONOPOLY_ERRORS.get(errorType)
     msg = kwargs.get('message', None)
     error["message"] = msg if msg is not None else error["message"]
+    error["code"] = "TBD"
     return error,error.get("code")
 
 @flask_api.errorhandler(DBAPIError)

@@ -35,7 +35,12 @@ class GameSchema(ma.Schema):
     createdUtcDate = fields.DateTime()
     players = fields.Nested(PlayerSchema,many=True)
     links = ma.Hyperlinks(
-        {"self": ma.AbsoluteUrlFor("Games_single_game_resource", gamePassCode="<gamePassCode>")}
+        {
+            "self": ma.AbsoluteUrlFor("Games_single_game_resource", gamePassCode="<gamePassCode>"),
+            "register": ma.AbsoluteUrlFor("Players_register_resource", gamePassCode="<gamePassCode>"),
+            "login": ma.AbsoluteUrlFor("Players_login_resource", gamePassCode="<gamePassCode>"),
+            "gameCards": ma.AbsoluteUrlFor("GameCards_game_cards_resource", gamePassCode="<gamePassCode>")
+        }
     )
     @post_dump
     def update_number_of_players(self, data, many, **kwargs):

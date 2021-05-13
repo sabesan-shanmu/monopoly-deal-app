@@ -11,7 +11,7 @@ const StyledCharacterImage = styled.img`
 export const CharacterImage = ({imageId}) => {
     console.log(imageId);
     return (
-        <StyledCharacterImage src={`../../assets/img/avatar/avatar-${imageId}.png`}/>
+        <StyledCharacterImage src={`../../assets/img/character/avatar-${imageId}.png`}/>
     )
 }
 

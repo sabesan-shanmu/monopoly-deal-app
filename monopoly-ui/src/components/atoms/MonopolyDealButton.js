@@ -6,6 +6,7 @@ import {device} from "../../common/devices";
 const StyledMonopolyDealButton = styled.button`
     border: none;
     background-color:#C70000;
+    
     color:white;
     border:1px solid white;
     border-radius:6px;
