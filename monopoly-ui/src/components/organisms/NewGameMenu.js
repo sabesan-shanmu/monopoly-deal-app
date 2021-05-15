@@ -25,7 +25,7 @@ const StyledGameTitleMenuBody = styled.div`
 
 
 
-export const NewGameMenu = () => {
+export const NewGameMenu = ({cancelOnClick,createOnClick}) => {
 
     const gameinput = {
         mode: "text",
@@ -34,12 +34,12 @@ export const NewGameMenu = () => {
         placeholder:"Enter Name..."
     }
 
-    const left = {
-        onClick:null,
+    const cancel = {
+        onClick:cancelOnClick,
         label:"Cancel"
     }
-    const right = {
-        onClick:null,
+    const create = {
+        onClick:createOnClick,
         label:"Create"
     }
     
@@ -50,8 +50,8 @@ export const NewGameMenu = () => {
             <MonopolyDealInputField {...gameinput} />
 
             <StyledGameTitleMenuBody>
-                <MonopolyDealButton  {...left} />
-                <MonopolyDealButton  {...right} /> 
+                <MonopolyDealButton  {...cancel} />
+                <MonopolyDealButton  {...create} /> 
             </StyledGameTitleMenuBody>
             
         </StyledMenuContainer>

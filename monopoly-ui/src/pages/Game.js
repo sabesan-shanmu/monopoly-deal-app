@@ -1,5 +1,5 @@
 import React from 'react'
-import {JoinGame} from'./JoinGame'
+import {SelectGame} from'./SelectGame'
 import {GameBoard} from './GameBoard'
 import {
     BrowserRouter as Router,
@@ -15,7 +15,7 @@ export const Game = () =>{
             <Router>
                 <Switch>
                     <Route path="/:gamePassCode/join-game">
-                        <JoinGame/>
+                        <SelectGame/>
                     </Route>
                     <Route path="/:gamePassCode/game-board">
                         <GameBoard/>

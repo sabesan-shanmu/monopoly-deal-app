@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import "./App.css"
 import {Home} from './pages/Home'
+import {NewGame} from './pages/NewGame'
+import {SelectGame} from './pages/SelectGame'
 import {Game} from './pages/Game'
 
 function App() {
@@ -13,8 +15,11 @@ function App() {
     <div className="app-container">
       <Router>
         <Switch>
-        <Route path="/:gamePassCode">
-              <Game/>
+          <Route path="/new-game">
+              <NewGame />
+          </Route>
+          <Route path="/select-game">
+              <SelectGame />
           </Route>
           <Route path="/">
               <Home/>

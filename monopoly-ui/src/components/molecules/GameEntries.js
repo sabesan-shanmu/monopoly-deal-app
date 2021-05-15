@@ -55,7 +55,7 @@ const StyledNoGameRow = styled.div`
 
 export const GameEntries = ({games,onClick,...props}) => {
 
-x
+
     const select = {
         onClick:null,
         label:"Select"

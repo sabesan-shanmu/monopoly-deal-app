@@ -19,15 +19,15 @@ const StyledGameTitleMenuBody = styled.div`
     }
 `;
 
-export const GameTitleMenu = ({newGameOnClick,joinGameOnClick})=> {
+export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
     
     const newGame = {
         onClick:newGameOnClick,
         label:"New Game"
     }
-    const joinGame ={
-        onClick:joinGameOnClick,
-        label:"Join Game"
+    const selectGame ={
+        onClick:selectGameOnClick,
+        label:"Select Game"
     }
 
     return (
@@ -37,7 +37,7 @@ export const GameTitleMenu = ({newGameOnClick,joinGameOnClick})=> {
         
             <StyledGameTitleMenuBody>
                 <MonopolyDealButton {...newGame} />
-                <MonopolyDealButton {...joinGame} /> 
+                <MonopolyDealButton {...selectGame} /> 
             </StyledGameTitleMenuBody>
             
         </StyledMenuContainer>
