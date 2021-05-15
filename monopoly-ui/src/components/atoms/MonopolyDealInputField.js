@@ -49,7 +49,7 @@ const StyledInput = styled.div`
 export const MonopolyDealInputField = ({ mode,label,maxLength,placeholder,...props }) => {
     return (
         <StyledInput className="container-input" >
-            <label for="monopoly-input" >{label}</label>
+            <label htmlFor="monopoly-input" >{label}</label>
             <input type={mode} id="monopoly-input" maxLength={maxLength} placeholder={placeholder}></input> 
         </StyledInput>
     );
