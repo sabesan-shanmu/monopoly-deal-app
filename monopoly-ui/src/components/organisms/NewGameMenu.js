@@ -30,6 +30,7 @@ export const NewGameMenu = ({cancelOnClick,createOnClick}) => {
     const gameinput = {
         mode: "text",
         label: "Game",
+        minLength:2,
         maxLength:30,
         placeholder:"Enter Name..."
     }

@@ -46,11 +46,14 @@ const StyledInput = styled.div`
 
 
 
-export const MonopolyDealInputField = ({ mode,label,maxLength,placeholder,...props }) => {
+export const MonopolyDealInputField = ({ mode,label,maxLength,minLength,isRequired,placeholder,...props }) => {
+
+    
     return (
         <StyledInput className="container-input" >
             <label htmlFor="monopoly-input" >{label}</label>
-            <input type={mode} id="monopoly-input" maxLength={maxLength} placeholder={placeholder}></input> 
+            <input type={mode} id="monopoly-input" maxLength={maxLength} minLength={minLength} placeholder={placeholder} required={isRequired}>
+            </input> 
         </StyledInput>
     );
 };
@@ -60,11 +63,15 @@ export const MonopolyDealInputField = ({ mode,label,maxLength,placeholder,...pro
 MonopolyDealInputField.propTypes = {
     mode: PropTypes.oneOf(["text","password"]),
     label: PropTypes.string,
-    maxLength:PropTypes.number
+    maxLength:PropTypes.number,
+    minLength:PropTypes.number,
+    isRequired:PropTypes.bool
 };
 
 MonopolyDealInputField.defaultProps ={
     mode:"Text",
     maxLength:10,
-    placeholder:"text"
+    minLength:2,
+    placeholder:"text",
+    isRequired:true
 } 

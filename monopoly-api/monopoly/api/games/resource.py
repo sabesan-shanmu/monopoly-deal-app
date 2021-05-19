@@ -12,7 +12,7 @@ from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
-
+from werkzeug.exceptions import BadRequest
 
 game_namespace = Namespace('Games', description='List of games that a user can join. Users can also create/update game that they\'re part of')
 

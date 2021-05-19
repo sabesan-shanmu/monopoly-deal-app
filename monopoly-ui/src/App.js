@@ -18,7 +18,7 @@ function App() {
           <Route path="/new-game">
               <NewGame />
           </Route>
-          <Route path="/select-game">
+          <Route path="/games-list">
               <SelectGame />
           </Route>
           <Route path="/">

@@ -74,8 +74,7 @@ def get_formatted_error(errorType,**kwargs):
     error = MONOPOLY_ERRORS.get(errorType)
     msg = kwargs.get('message', None)
     error["message"] = msg if msg is not None else error["message"]
-    error["code"] = "TBD"
-    return error,error.get("code")
+    return error,error.get("statusCode")
 
 @flask_api.errorhandler(DBAPIError)
 @flask_api.errorhandler(SQLAlchemyError)

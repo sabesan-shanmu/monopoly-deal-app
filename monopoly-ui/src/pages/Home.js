@@ -8,7 +8,7 @@ export const Home = () =>{
 
     const gameTitleMenu = {
         newGameOnClick:()=>{history.push('/new-game')},
-        selectGameOnClick: ()=>{history.push('/select-game')}
+        selectGameOnClick: ()=>{history.push('/games-list')}
     }
 
     return (
