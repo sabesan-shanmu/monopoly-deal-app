@@ -4,6 +4,7 @@ import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
 import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
 
+
 const StyledJoinGameMenuBody = styled.div`
     display: flex;
     flex-flow:row wrap;
@@ -13,17 +14,18 @@ const StyledJoinGameMenuBody = styled.div`
 `;
 
 
-export const SelectGameMenu = ({games,gameEntriesOnClick,backOnSelect,...props}) => { 
+export const SelectGameMenu = ({games,backOnSelect,gameEntriesOnClick,...props}) => { 
     
     const back = {
         onClick:backOnSelect,
         label:"Go Back"
     }
 
+
     return (
         <StyledMenuContainer>
             
-            <GameEntries games={games} onClick={gameEntriesOnClick} /> 
+            <GameEntries games={games} gameEntriesOnClick={gameEntriesOnClick} /> 
             
             <StyledJoinGameMenuBody>
                 <MonopolyDealButton {...back} />

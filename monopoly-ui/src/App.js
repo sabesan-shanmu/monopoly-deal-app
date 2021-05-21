@@ -7,14 +7,21 @@ import {
 import "./App.css"
 import {Home} from './pages/Home'
 import {NewGame} from './pages/NewGame'
+import {JoinGame} from './pages/JoinGame'
+import {GameBoard} from './pages/GameBoard'
 import {SelectGame} from './pages/SelectGame'
-import {Game} from './pages/Game'
 
 function App() {
   return (
     <div className="app-container">
       <Router>
         <Switch>
+          <Route path="/:gamePassCode/game-board">
+              <GameBoard/>
+          </Route>
+          <Route path="/:gamePassCode/join-game">
+              <JoinGame/>
+          </Route>
           <Route path="/new-game">
               <NewGame />
           </Route>

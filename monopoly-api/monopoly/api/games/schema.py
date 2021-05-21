@@ -39,6 +39,7 @@ class GameSchema(ma.Schema):
             "self": ma.AbsoluteUrlFor("Games_single_game_resource", gamePassCode="<gamePassCode>"),
             "register": ma.AbsoluteUrlFor("Players_register_resource", gamePassCode="<gamePassCode>"),
             "login": ma.AbsoluteUrlFor("Players_login_resource", gamePassCode="<gamePassCode>"),
+            "refresh": ma.AbsoluteUrlFor("Players_refresh_resource", gamePassCode="<gamePassCode>"),
             "gameCards": ma.AbsoluteUrlFor("GameCards_game_cards_resource", gamePassCode="<gamePassCode>")
         }
     )

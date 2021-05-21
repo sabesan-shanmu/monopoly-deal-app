@@ -53,11 +53,11 @@ const StyledNoGameRow = styled.div`
     justify-content:center;
 `;
 
-export const GameEntries = ({games,onClick,...props}) => {
+export const GameEntries = ({games,gameEntriesOnClick,...props}) => {
 
 
-    const select = {
-        onClick:null,
+    const selectGame = {
+        onClick:gameEntriesOnClick,
         label:"Select"
     }
 
@@ -88,7 +88,7 @@ export const GameEntries = ({games,onClick,...props}) => {
                         {game.numberOfPlayers}
                     </StyledGameEntryCell>    
                     <StyledGameEntryCell>
-                        <MonopolyDealButton {...select} />
+                        <MonopolyDealButton {...selectGame} />
                     </StyledGameEntryCell>    
                 </React.Fragment>
             )} 

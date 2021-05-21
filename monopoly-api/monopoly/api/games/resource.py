@@ -101,3 +101,4 @@ class MultipleGamesResource(Resource):
             return jsonify(result)
         except ValidationError as e:
             raise ResourceValidationException(e)
+       

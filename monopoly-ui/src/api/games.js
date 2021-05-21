@@ -1,14 +1,31 @@
-import 'axios'
-import {config} from '../common/config'
+import {apiClient} from './client'
 
 
-async const getGames = () =>{
+export async const gamesService = {
 
-    return axios({
-        method: 'GET',
-        url: '/games',
-        baseUrl:config.apiUri,
-        timeout:config.apiTimeout,
-      });
-
+  getGames:() => {
+    return await apiClient.get('/api/games');
+  },
+  createGame:()=>{
+    return await apiClient.post('/api/games');
+  }
+  
 }
+
+export async const gameService = {
+  getGame:() => {
+    return await apiClient.get('/api/games');
+  },
+  updateGame:()=>{
+    return await apiClient.post('/api/games');
+  },
+  deleteGame:()=>{
+    return await apiClient.delete('/api/games');
+  }
+}
+
+
+
+
+
+

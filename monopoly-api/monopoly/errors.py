@@ -1,8 +1,8 @@
 from flask import jsonify
 from monopoly import flask_api
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
-from sqlalchemy.exc import DBAPIError,SQLAlchemyError
-from werkzeug.exceptions import InternalServerError
+from sqlalchemy.exc import DBAPIError,SQLAlchemyError,IntegrityError
+from werkzeug.exceptions import InternalServerError,NotFound
 from marshmallow.exceptions import ValidationError
 
 
@@ -34,7 +34,7 @@ MONOPOLY_ERRORS = {
         "message":"Token Has been revoked."
     },
     "CARD_NOT_FOUND_ERROR":{
-        "statusCode": 400,
+        "statusCode": 404,
         "name":"GameCodeMismatchError",
         "message":"Game Code in Token does not match requested resource."
     },
@@ -49,7 +49,7 @@ MONOPOLY_ERRORS = {
         "message":"Player Id in Token does not match requested resource."
     },
     "RESOURCE_NOT_FOUND_ERROR":{
-        "statusCode":400,
+        "statusCode":404,
         "name":"NotFoundError",
         "message":"Request Resource is not found."
     },
@@ -57,6 +57,11 @@ MONOPOLY_ERRORS = {
         "statusCode": 404,
         "name":"ValidationError",
         "message":"Validation Error(s)"
+    },
+    "DB_INTEGRIY_ERROR":{
+        "statusCode":500,
+        "name":"DBIntegrityError",
+        "message":"One or more of your data fields violates data integrity"
     },
     "DB_ERROR":{
         "statusCode":500,
@@ -76,6 +81,10 @@ def get_formatted_error(errorType,**kwargs):
     error["message"] = msg if msg is not None else error["message"]
     return error,error.get("statusCode")
 
+@flask_api.errorhandler(IntegrityError)
+def database_integrity_error_handler(error):
+    return get_formatted_error("DB_INTEGRIY_ERROR")
+
 @flask_api.errorhandler(DBAPIError)
 @flask_api.errorhandler(SQLAlchemyError)
 def database_error_handler(error):
@@ -92,6 +101,9 @@ def internal_server_error_handler(error):
 def bad_resource_error_handler(error):
     return get_formatted_error("RESOURCE_NOT_FOUND_ERROR",message=error.message)
 
+@flask_api.app.errorhandler(NotFound)
+def not_found_error_handler(error):
+    return get_formatted_error("RESOURCE_NOT_FOUND_ERROR",message=error.description)
 
 """
 TODO:Figure out why handler message wont override Validation Error exception message. ResourceValidationException and FieldValidationException are
