@@ -9,13 +9,13 @@ const transform = keyframes`
     transform: scale(1, 1);
   }
   25%{
-    transform: scale(1.5, 1.5);
+    transform: scale(1.2, 1.2);
   }
   50%{
-    transform: scale(2, 2);
+    transform: scale(1.3, 1.3);
   }
   75%{
-    transform: scale(1.5, 1.5);
+    transform: scale(1.2, 1.2);
   }
   100%{
     transform: scale(1, 1);
