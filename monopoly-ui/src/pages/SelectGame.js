@@ -10,7 +10,7 @@ export const SelectGame = () =>{
     const gameEntriesOnClick = (e)=>{history.push('/')}
 
     
-    const [games,setGamesList] = useState([]);
+    const [games,setGamesList] = useState(null);
 
 
     

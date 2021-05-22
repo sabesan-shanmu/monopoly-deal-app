@@ -4,19 +4,39 @@ import styled,{keyframes} from 'styled-components'
 
 
 
-const StyledLoaderText = styled.h1`
-    
+const transform = keyframes`
+  0%{
+    transform: scale(1, 1);
+  }
+  25%{
+    transform: scale(1.5, 1.5);
+  }
+  50%{
+    transform: scale(2, 2);
+  }
+  75%{
+    transform: scale(1.5, 1.5);
+  }
+  100%{
+    transform: scale(1, 1);
+  }
 `;
 
+const StyledLoaderContainer = styled.div`
+    animation: ${transform} 3s linear infinite;
+`;
 
+const StyledLoaderText = styled.div`
+    font-size:20px;
+`;
 
 
 export const MonopolySpinner = () => {
     return (
-        <React.Fragment>
+        <StyledLoaderContainer>
             <img src={logo}/>
             <StyledLoaderText>Loading....</StyledLoaderText>
-        </React.Fragment>
+        </StyledLoaderContainer>
     )
 }
 
