@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
 import {device} from "../../common/devices";
+import {GameStatusEnum} from "../../common/constants"
 
 
 const StyledGameEntries = styled.div`
@@ -79,10 +80,10 @@ export const GameEntries = ({games,gameEntriesOnClick,...props}) => {
             {games && games.map((game,key)=>
                 <React.Fragment  key={key}>
                     <StyledGameEntryCell>
-                        {game.title}
+                        {game.name}
                     </StyledGameEntryCell>
                     <StyledGameEntryCell>
-                        {game.gameStatus}
+                        {GameStatusEnum[game.gameStatus]}
                     </StyledGameEntryCell>
                     <StyledGameEntryCell>
                         {game.numberOfPlayers}

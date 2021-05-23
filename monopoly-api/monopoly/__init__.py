@@ -5,6 +5,7 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from monopoly.middleware import Middleware
+from flask_cors import CORS, cross_origin
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -25,6 +26,7 @@ def create_app():
     ma.init_app(app)
     jwt.init_app(app)
     app.wsgi_app = Middleware(app.wsgi_app)
+    cors = CORS(app)
   
     
     
