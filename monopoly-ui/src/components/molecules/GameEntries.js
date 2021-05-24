@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
+import {GameStatus} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices";
-import {GameStatusEnum} from "../../common/constants"
 
 
 const StyledGameEntries = styled.div`
@@ -83,7 +83,7 @@ export const GameEntries = ({games,gameEntriesOnClick,...props}) => {
                         {game.name}
                     </StyledGameEntryCell>
                     <StyledGameEntryCell>
-                        {GameStatusEnum[game.gameStatus]}
+                        <GameStatus gameStatus={game.gameStatus} />   
                     </StyledGameEntryCell>
                     <StyledGameEntryCell>
                         {game.numberOfPlayers}

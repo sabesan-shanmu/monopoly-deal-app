@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
-import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
+import {StyledMenuContainerForm} from "../atoms/StyledMenuContainerForm";
 
 
 
@@ -30,14 +30,14 @@ export const JoinGameMenu = ()=> {
     }
 
     return (
-        <StyledMenuContainer>
+        <StyledMenuContainerForm>
         
             <StyledGameTitleMenuBody>
                 <MonopolyDealButton {...left} />
                 <MonopolyDealButton {...right} /> 
             </StyledGameTitleMenuBody>
             
-        </StyledMenuContainer>
+        </StyledMenuContainerForm>
     )
 }
 

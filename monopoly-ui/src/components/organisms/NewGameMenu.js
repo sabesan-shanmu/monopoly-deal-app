@@ -1,10 +1,11 @@
-import React from 'react'
+import React,{useRef} from 'react'
 import PropTypes from 'prop-types'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {MonopolyDealInputField} from '../atoms/MonopolyDealInputField'
+import {MonopolyMessageField} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
+import {StyledMenuContainerForm} from "../atoms/StyledMenuContainerForm";
 
 
 
@@ -23,39 +24,18 @@ const StyledGameTitleMenuBody = styled.div`
 `;
 
 
+export const NewGameMenu = ({gameInputText,cancelBtn,createBtn,gameForm}) => {
 
-
-export const NewGameMenu = ({cancelOnClick,createOnClick}) => {
-
-    const gameinput = {
-        mode: "text",
-        label: "Game",
-        minLength:2,
-        maxLength:30,
-        placeholder:"Enter Name..."
-    }
-
-    const cancel = {
-        onClick:cancelOnClick,
-        label:"Cancel"
-    }
-    const create = {
-        onClick:createOnClick,
-        label:"Create"
-    }
-    
-
+   
     return (
-        <StyledMenuContainer>
-          
-            <MonopolyDealInputField {...gameinput} />
-
-            <StyledGameTitleMenuBody>
-                <MonopolyDealButton  {...cancel} />
-                <MonopolyDealButton  {...create} /> 
-            </StyledGameTitleMenuBody>
-            
-        </StyledMenuContainer>
+        <StyledMenuContainerForm {...gameForm}>
+                <MonopolyDealInputField {...gameInputText} />
+                
+                <StyledGameTitleMenuBody>
+                    <MonopolyDealButton  {...cancelBtn} />
+                    <MonopolyDealButton  {...createBtn} /> 
+                </StyledGameTitleMenuBody>
+        </StyledMenuContainerForm>
     )
 }
 

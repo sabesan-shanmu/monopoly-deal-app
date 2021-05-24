@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {MainLogoImage} from '../atoms/MainLogoImage'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
-import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
+import {StyledMenuContainerForm} from "../atoms/StyledMenuContainerForm";
 
 
 
@@ -31,7 +31,7 @@ export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
     }
 
     return (
-        <StyledMenuContainer>
+        <StyledMenuContainerForm>
             
             <MainLogoImage  />
         
@@ -40,7 +40,7 @@ export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
                 <MonopolyDealButton {...selectGame} /> 
             </StyledGameTitleMenuBody>
             
-        </StyledMenuContainer>
+        </StyledMenuContainerForm>
     )
 }
 

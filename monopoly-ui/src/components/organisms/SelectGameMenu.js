@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {GameEntries} from '../molecules/GameEntries'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
-import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
+import {StyledMenuContainerForm} from "../atoms/StyledMenuContainerForm";
 import {MonopolySpinner} from  '../atoms/MonopolySpinner'
 import {GamesContext} from '../../context/GamesContext'
 
@@ -15,12 +15,9 @@ const StyledJoinGameMenuBody = styled.div`
 `;
 
 
-export const SelectGameMenu = ({backOnSelect,...props}) => { 
+export const SelectGameMenu = ({backBtn,...props}) => { 
     
-    const back = {
-        onClick:backOnSelect,
-        label:"Go Back"
-    }
+   
 
     const {games} = useContext(GamesContext);
 
@@ -30,12 +27,12 @@ export const SelectGameMenu = ({backOnSelect,...props}) => {
                 <MonopolySpinner/>
             }
             {games &&
-                <StyledMenuContainer>
+                <StyledMenuContainerForm>
                     <GameEntries games={games}  />   
                     <StyledJoinGameMenuBody>
-                        <MonopolyDealButton {...back} />
+                        <MonopolyDealButton {...backBtn} />
                     </StyledJoinGameMenuBody>
-                </StyledMenuContainer>
+                </StyledMenuContainerForm>
             }
         </React.Fragment>       
     )

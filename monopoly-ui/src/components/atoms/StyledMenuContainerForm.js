@@ -4,7 +4,7 @@ import {device} from "../../common/devices";
 import img from "../../assets/img/backgrounds/modal-background.jpg";
 
 
-export const StyledMenuContainer = styled.main`
+export const StyledMenuContainerForm = styled.form`
     display:flex;
     flex-direction: column;
     align-items:center;

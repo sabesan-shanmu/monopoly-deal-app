@@ -6,14 +6,16 @@ import {GamesContextProvider} from '../context/GamesContext'
 export const SelectGame = () =>{
 
     const history = useHistory();
-    const backOnSelect = ()=>{history.push('/')}
-    
+    const backBtn = {
+        onClick:()=>{history.push('/')},
+        label:"Go Back"
+    }
    
     
     
     return (
         <GamesContextProvider>
-            <SelectGameMenu backOnSelect={backOnSelect}  />
+            <SelectGameMenu backBtn={backBtn}  />
         </GamesContextProvider>
     )
 }
