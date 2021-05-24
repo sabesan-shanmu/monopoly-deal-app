@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {getGames} from './actions/games';
+import {getGames} from '../api/games';
 
 export const GamesContext = React.createContext();
 
