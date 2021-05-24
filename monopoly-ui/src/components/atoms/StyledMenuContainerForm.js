@@ -16,7 +16,7 @@ export const StyledMenuContainerForm = styled.form`
     background-size: cover;
     border:2px solid black;
     border-radius:5px;
-    
+    height:60%;
 
     @media ${device.desktop}{
         max-width: 600px;
