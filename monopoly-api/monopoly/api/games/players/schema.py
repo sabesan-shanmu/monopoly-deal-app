@@ -1,12 +1,13 @@
 from monopoly import ma
 from marshmallow import fields,validate,post_load,post_dump
+from marshmallow.validate import Length
 from monopoly.models import Player
 from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.common.enums import GameCardLocationStatus
 
 class create_player_schema(ma.Schema):
-    playerName = fields.String(required=True)
-    playerPassCode = fields.String(required=True)
+    playerName = fields.String(required=True,validate=Length(max=20,min=1))
+    playerPassCode = fields.String(required=True,validate=Length(max=10,min=8))
     imageId = fields.Integer(required=True)
     @post_load
     def make_player(self, data, **kwargs):

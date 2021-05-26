@@ -15,30 +15,62 @@ const StyledInput = styled.div`
         color:white
     }
 
-    @media ${device.desktop} {
-        &>input,
+    @media ${device.xlarge} {
+        &>input
+        {
+            font-size:20px;
+            padding:2px;
+            width:160px;
+        }
         &>label
         {
             font-size:20px;
             padding:2px;
+            width:80px;
         }
     }
 
-    @media ${device.tablet} { 
-        &>input,
+    @media ${device.large} { 
+        &>input
+        {
+            font-size:18px;
+            padding:2px;
+            width:120px;
+        }
         &>label
         {
             font-size:18px;
             padding:2px;
+            width:60px;
         }
     }
-  
-    @media ${device.mobile} { 
-        &>input,
+    @media ${device.medium} { 
+        &>input
+        {
+            font-size:18px;
+            padding:2px;
+            width:125px;
+        }
         &>label
         {
-            font-size:12px;
+            
+            font-size:18px;
             padding:2px;
+            width:60px;
+        }
+    }
+    @media ${device.small} { 
+        &>input
+        {
+            font-size:8px;
+            padding:2px;
+            width:100px;
+        }
+        &>label
+        {
+            font-size:8px;
+            padding:2px;
+            width:50px;
         }
     }
 

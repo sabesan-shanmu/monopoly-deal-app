@@ -5,7 +5,7 @@ import {MonopolyDealInputField} from '../atoms/MonopolyDealInputField'
 import {MonopolyMessageField} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
-import {StyledMenuContainerForm} from "../atoms/StyledMenuContainerForm";
+import {StyledMenuForm} from "../atoms/StyledMenuForm";
 
 
 
@@ -28,14 +28,14 @@ export const NewGameMenu = ({gameInputText,cancelBtn,createBtn,gameForm}) => {
 
    
     return (
-        <StyledMenuContainerForm {...gameForm}>
+            <StyledMenuForm {...gameForm}>
                 <MonopolyDealInputField {...gameInputText} />
                 
                 <StyledGameTitleMenuBody>
                     <MonopolyDealButton  {...cancelBtn} />
                     <MonopolyDealButton  {...createBtn} /> 
                 </StyledGameTitleMenuBody>
-        </StyledMenuContainerForm>
+            </StyledMenuForm>
     )
 }
 

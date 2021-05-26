@@ -4,7 +4,7 @@ import {device} from "../../common/devices";
 import img from "../../assets/img/backgrounds/modal-background.jpg";
 
 
-export const StyledMenuContainerForm = styled.form`
+export const StyledMenuContainer = styled.div`
     display:flex;
     flex-direction: column;
     align-items:center;
@@ -18,17 +18,22 @@ export const StyledMenuContainerForm = styled.form`
     border-radius:5px;
     height:60%;
 
-    @media ${device.desktop}{
+    @media ${device.xlarge}{
         max-width: 600px;
         max-height:350px;
     }
       
-    @media ${device.tablet}{ 
+    @media ${device.large}{ 
         max-width: 450px;
         max-height:250px;
     }
   
-    @media ${device.mobile}{ 
+    @media ${device.medium}{ 
+        max-width: 450px;
+        max-height:250px;
+    }
+
+    @media ${device.small}{ 
         max-width: 300px;
         max-height:200px;
     } 

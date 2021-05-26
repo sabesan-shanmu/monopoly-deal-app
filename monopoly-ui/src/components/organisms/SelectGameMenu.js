@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {GameEntries} from '../molecules/GameEntries'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
-import {StyledMenuContainerForm} from "../atoms/StyledMenuContainerForm";
+import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
 import {MonopolySpinner} from  '../atoms/MonopolySpinner'
 import {GamesContext} from '../../context/GamesContext'
 
@@ -27,12 +27,12 @@ export const SelectGameMenu = ({backBtn,...props}) => {
                 <MonopolySpinner/>
             }
             {games &&
-                <StyledMenuContainerForm>
+                <StyledMenuContainer>
                     <GameEntries games={games}  />   
                     <StyledJoinGameMenuBody>
                         <MonopolyDealButton {...backBtn} />
                     </StyledJoinGameMenuBody>
-                </StyledMenuContainerForm>
+                </StyledMenuContainer>
             }
         </React.Fragment>       
     )

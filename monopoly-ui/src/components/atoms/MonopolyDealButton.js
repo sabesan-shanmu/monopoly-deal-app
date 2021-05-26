@@ -17,18 +17,18 @@ const StyledMonopolyDealButton = styled.button`
       cursor:not-allowed;
       opacity:0.6
     }
-    @media ${device.desktop} {
+    @media ${device.xlarge} {
       font-size:20px;
       min-width:150px;
     }
     
-    @media ${device.tablet} { 
+    @media ${device.medium} { 
       font-size:15px;
       min-width:80px;
     }
 
-    @media ${device.mobile} { 
-      font-size:12px;
+    @media ${device.small} { 
+      font-size:8px;
       min-width:60px;
     }
 `;

@@ -4,7 +4,7 @@ import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {GameStatus} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices";
-
+import {useHistory} from 'react-router-dom'
 
 const StyledGameEntries = styled.div`
 {
@@ -14,18 +14,18 @@ const StyledGameEntries = styled.div`
     overflow-y: scroll;
     
 
-    @media ${device.desktop} {
+    @media ${device.xlarge} {
         font-size:20px;
         max-width: 600px;
     }
       
-    @media ${device.tablet} { 
+    @media ${device.medium} { 
         font-size:18px;
         max-width: 450px;
     }
     
-    @media ${device.mobile} { 
-        font-size:12px;
+    @media ${device.small} { 
+        font-size:8px;
         max-width: 250px;
     } 
 }`;
@@ -54,13 +54,9 @@ const StyledNoGameRow = styled.div`
     justify-content:center;
 `;
 
-export const GameEntries = ({games,gameEntriesOnClick,...props}) => {
+export const GameEntries = ({games,...props}) => {
 
-
-    const selectGame = {
-        onClick:gameEntriesOnClick,
-        label:"Select"
-    }
+    const history = useHistory();
 
     return (
         <StyledGameEntries>
@@ -89,7 +85,7 @@ export const GameEntries = ({games,gameEntriesOnClick,...props}) => {
                         {game.numberOfPlayers}
                     </StyledGameEntryCell>    
                     <StyledGameEntryCell>
-                        <MonopolyDealButton {...selectGame} />
+                        <MonopolyDealButton label="Select" onClick={()=>{history.push(`${game.gamePassCode}/join-game`)}} />
                     </StyledGameEntryCell>    
                 </React.Fragment>
             )} 
