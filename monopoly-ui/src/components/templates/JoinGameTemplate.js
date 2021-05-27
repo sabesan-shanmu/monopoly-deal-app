@@ -4,11 +4,23 @@ import {StyledMenuForm} from "../atoms/StyledMenuForm";
 import {LoginPlayerMenu} from "../organisms/LoginPlayerMenu"
 import {RegisterPlayerMenu} from "../organisms/RegisterPlayerMenu"
 import {MonopolyDealButton} from "../atoms/MonopolyDealButton"
+import {device} from '../../common/devices'
 import styled from 'styled-components'
 
 
 const StyledSpan = styled.div`
-    font-size: 20px;
+
+    @media ${device.xlarge} {
+        font-size:20px;
+    }
+    
+    @media ${device.medium} { 
+        font-size:15px;
+    }
+
+    @media ${device.small} { 
+        font-size:8px;
+    }
 `
 
 
