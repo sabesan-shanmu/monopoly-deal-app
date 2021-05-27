@@ -1,8 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import PropTypes from 'prop-types';
 import {StyledMenuForm} from "../atoms/StyledMenuForm";
 import {LoginPlayerMenu} from "../organisms/LoginPlayerMenu"
-
+import {RegisterPlayerMenu} from "../organisms/RegisterPlayerMenu"
+import {ToggleSwitch} from "../atoms/ToggleSwitch";
 import styled from 'styled-components'
 
 
@@ -11,23 +12,36 @@ const StyledSpan = styled.div`
 `
 
 
-export const JoinGameTemplate = (joinGameMenu)=> {
+export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInput,passwordInput,characterSelectionDropdown,imageId})=> {
    
    
 
     return (
-        <StyledMenuForm>
-        
+            <React.Fragment>
+                {isRegisterScreenVisible && 
+                    <StyledMenuForm>
+                        <RegisterPlayerMenu
+                            cancelBtn={cancelBtn}
+                            registerBtn={registerBtn}
+                            userNameInput={userNameInput}
+                            passwordInput={passwordInput}
+                            characterSelectionDropdown={characterSelectionDropdown}
+                            imageId={imageId}
+                        />
+                    </StyledMenuForm>
+                }
+                {!isRegisterScreenVisible && 
+                    <StyledMenuForm>
+                        <LoginPlayerMenu 
+                            cancelBtn={cancelBtn}
+                            loginBtn={loginBtn}
+                            userNameInput={userNameInput}
+                            passwordInput={passwordInput}
+                        />
+                    </StyledMenuForm>
+                }
+            </React.Fragment>
 
-            <StyledSpan>--OR--</StyledSpan>
-            <LoginPlayerMenu 
-                cancelBtn={joinGameMenu.cancelBtn}
-                loginBtn={joinGameMenu.loginBtn}
-                userNameInput={joinGameMenu.userNameInput}
-                passwordInput={joinGameMenu.passwordInput}
-            />
-            
-        </StyledMenuForm>
     )
 }
 

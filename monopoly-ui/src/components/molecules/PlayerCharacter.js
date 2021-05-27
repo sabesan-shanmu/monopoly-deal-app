@@ -3,33 +3,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import {device} from "../../common/devices";
 import { CharacterImage } from '../atoms/CharacterImage';
+import {getBackgroundColour} from '../../common/ImageHelpers'
 
 
-const getBackGroundColour=(imageId)=>{
-
-    const background = {
-        1:"#FF2323BF",
-        2:"#C4A8FF",
-        3:"#D12531",
-        4:"#FCE029",
-        5:"#B87A1B",
-        6:"#8BC34A",
-        7:"#F97E3A",
-        8:"#4C92CC",
-        9:"#ECE3E3",
-        10:"#CA47CA",
-        11:"#A9A9A9",
-        12:"#FAD61D"
-    };
-    return background[imageId];
-}
 
 
 
 const StyledPlayerCharacter = styled.section`
     display:grid;
     grid-template-columns: 2fr 1fr;
-    background-color:${({imageId})=>getBackGroundColour(imageId)};
+    background-color:${({imageId})=>getBackgroundColour(imageId)};
     background-size: cover;
     border: 2px solid black;
     border-radius: 5px;

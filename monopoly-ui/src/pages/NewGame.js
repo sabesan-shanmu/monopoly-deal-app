@@ -35,8 +35,7 @@ export const NewGame = () => {
                 setIsLoading(true)
                 createGame(gameInput)
                     .then((resp)=>{     
-                        console.log(resp.data);
-                        setIsLoading(false)
+                        history.push(`/${resp.data.gamePassCode}/join-game`);
                     })
                     .catch((error)=>{
                         console.error(error)
