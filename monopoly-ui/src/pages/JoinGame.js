@@ -57,6 +57,14 @@ export const JoinGame = () =>{
             label:"Login",
             type:"submit"
         },
+        toggletoRegisterBtn:{
+            onClick:()=>{setIsRegisterScreenVisible(!isRegisterScreenVisible)},
+            label:"Register new Player"
+        },
+        toggleToLoginBtn:{
+            onClick:()=>{setIsRegisterScreenVisible(!isRegisterScreenVisible)},
+            label:"Login using existing Player"
+        },
         isRegisterScreenVisible:isRegisterScreenVisible,
         imageId:imageId
     };

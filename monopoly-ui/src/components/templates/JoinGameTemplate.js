@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {StyledMenuForm} from "../atoms/StyledMenuForm";
 import {LoginPlayerMenu} from "../organisms/LoginPlayerMenu"
 import {RegisterPlayerMenu} from "../organisms/RegisterPlayerMenu"
-import {ToggleSwitch} from "../atoms/ToggleSwitch";
+import {MonopolyDealButton} from "../atoms/MonopolyDealButton"
 import styled from 'styled-components'
 
 
@@ -12,14 +12,15 @@ const StyledSpan = styled.div`
 `
 
 
-export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInput,passwordInput,characterSelectionDropdown,imageId})=> {
+export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInput,passwordInput,characterSelectionDropdown,imageId,toggletoRegisterBtn,toggleToLoginBtn})=> {
    
    
 
     return (
             <React.Fragment>
                 {isRegisterScreenVisible && 
-                    <StyledMenuForm>
+    
+                    <StyledMenuForm>   
                         <RegisterPlayerMenu
                             cancelBtn={cancelBtn}
                             registerBtn={registerBtn}
@@ -28,16 +29,24 @@ export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,reg
                             characterSelectionDropdown={characterSelectionDropdown}
                             imageId={imageId}
                         />
+                        <StyledSpan>--OR--</StyledSpan>
+                        <MonopolyDealButton {...toggleToLoginBtn} />
                     </StyledMenuForm>
+                      
+                    
                 }
                 {!isRegisterScreenVisible && 
+                    
                     <StyledMenuForm>
+                        
                         <LoginPlayerMenu 
                             cancelBtn={cancelBtn}
                             loginBtn={loginBtn}
                             userNameInput={userNameInput}
                             passwordInput={passwordInput}
                         />
+                        <StyledSpan>--OR--</StyledSpan>
+                        <MonopolyDealButton {...toggletoRegisterBtn} />
                     </StyledMenuForm>
                 }
             </React.Fragment>
