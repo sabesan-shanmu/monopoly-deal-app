@@ -23,14 +23,14 @@ const StyledLoginFooter = styled.div`
     }
 `;
 
-export const LoginPlayerMenu = ({cancelBtn,loginBtn,userNameInput,passwordInput}) =>{
+export const LoginPlayerMenu = ({cancelBtn,loginBtn,userNameInputText,passwordInputText}) =>{
 
 
     return (
         <React.Fragment>
                     <StyledLoginHeader>
-                        <MonopolyDealInputField {...userNameInput}/>
-                        <MonopolyDealInputField {...passwordInput}/>
+                        <MonopolyDealInputField {...userNameInputText}/>
+                        <MonopolyDealInputField {...passwordInputText}/>
                     </StyledLoginHeader>
                     <StyledLoginFooter>
                         <MonopolyDealButton {...cancelBtn} />

@@ -27,14 +27,14 @@ const StyledLoginFooter = styled.div`
     }
 `;
 
-export const RegisterPlayerMenu = ({cancelBtn,registerBtn,userNameInput,passwordInput,characterSelectionDropdown,imageId}) =>{
+export const RegisterPlayerMenu = ({cancelBtn,registerBtn,userNameInputText,passwordInputText,characterSelectionDropdown,imageId}) =>{
 
 
     return (
         <React.Fragment>
                     <StyledLoginHeader>
-                        <MonopolyDealInputField {...userNameInput}/>
-                        <MonopolyDealInputField {...passwordInput}/>
+                        <MonopolyDealInputField {...userNameInputText}/>
+                        <MonopolyDealInputField {...passwordInputText}/>
                         <MonopolyDealDropdown {...characterSelectionDropdown}/>
                         <CharacterImage imageId={imageId}></CharacterImage>
                     </StyledLoginHeader>

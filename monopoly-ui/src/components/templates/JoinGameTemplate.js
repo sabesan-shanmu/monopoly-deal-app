@@ -24,7 +24,7 @@ const StyledSpan = styled.div`
 `
 
 
-export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInput,passwordInput,characterSelectionDropdown,imageId,toggletoRegisterBtn,toggleToLoginBtn})=> {
+export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInputText,passwordInputText,characterSelectionDropdown,imageId,toggletoRegisterBtn,toggleToLoginBtn,registerForm,loginForm})=> {
    
    
 
@@ -32,12 +32,12 @@ export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,reg
             <React.Fragment>
                 {isRegisterScreenVisible && 
     
-                    <StyledMenuForm>   
+                    <StyledMenuForm {...registerForm}>   
                         <RegisterPlayerMenu
                             cancelBtn={cancelBtn}
                             registerBtn={registerBtn}
-                            userNameInput={userNameInput}
-                            passwordInput={passwordInput}
+                            userNameInputText={userNameInputText}
+                            passwordInputText={passwordInputText}
                             characterSelectionDropdown={characterSelectionDropdown}
                             imageId={imageId}
                         />
@@ -49,13 +49,13 @@ export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,reg
                 }
                 {!isRegisterScreenVisible && 
                     
-                    <StyledMenuForm>
+                    <StyledMenuForm {...loginForm}>
                         
                         <LoginPlayerMenu 
                             cancelBtn={cancelBtn}
                             loginBtn={loginBtn}
-                            userNameInput={userNameInput}
-                            passwordInput={passwordInput}
+                            userNameInputText={userNameInputText}
+                            passwordInputText={passwordInputText}
                         />
                         <StyledSpan>--OR--</StyledSpan>
                         <MonopolyDealButton {...toggletoRegisterBtn} />
