@@ -92,7 +92,7 @@ export const JoinGame = () =>{
         }
     };
 
-    console.log(joinGameTemplate);
+
     return (
         <React.Fragment>
         {isLoading &&

@@ -3,24 +3,45 @@ import {NewGameMenu} from '../components/organisms/NewGameMenu'
 import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 import {useHistory} from 'react-router-dom'
 import {createGame} from '../api/games'
+import {getGameModesList} from '../common/GameHelpers'
 
 export const NewGame = () => {
     
     const history = useHistory();
-    const [gameInput,setGameInput] = useState(null)
+
     const [isLoading,setIsLoading] = useState(false)
+    const [formInput,setFormInput] = useState(
+        {
+            gameNameInput:null,
+            gameMode:null
+        }
+    )
+
 
     const newGameMenu = {
         gameInputText: {
             mode: "text",
             label: "Game",
-            value:gameInput,
+            value:formInput.gameNameInput,
             minLength:2,
             maxLength:30,
             placeholder:"Enter Name...",
             onChange:(e)=>{
-                setGameInput(e.target.value);
+                setFormInput(prevState => {
+                    return { ...prevState, gameNameInput: e.target.value }
+                  });
             }
+        },
+        gameModeDropdown: {
+            label: "Mode",
+            placeholder:"Select Game Mode...",
+            selected:formInput.gameMode,
+            onChange:(e)=>{
+                setFormInput(prevState => {
+                    return { ...prevState, gameMode: parseInt(e.target.value) }
+                  });
+            },
+            options:getGameModesList()
         },
         cancelBtn:{
             onClick:()=>{history.push('/')},
@@ -33,13 +54,13 @@ export const NewGame = () => {
         gameForm:{
             onSubmit:(e)=>{
                 setIsLoading(true)
-                createGame(gameInput)
+                createGame(formInput)
                     .then((resp)=>{     
                         console.log(resp.data);
                         history.push(`/${resp.data.gamePassCode}/join-game`);
                     })
                     .catch((error)=>{
-                        console.error(error)
+                        console.error(error.response.data);
                         setIsLoading(false)
                     })
 

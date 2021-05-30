@@ -1,14 +1,14 @@
-import {axiosInstance} from './axiosInstance'
+import axiosInstance from './axiosInstance'
 
 
 export async function getGames() {
     return await axiosInstance.get('/api/games/');
 };
   
-export async function createGame(gameInput) {
+export async function createGame(game) {
     const data ={
-        name:gameInput,
-        gameMode:1,//Todo:eventually move to expanded mode
+        name:game.gameNameInput,
+        gameMode:game.gameMode
     }
     return await axiosInstance.post('/api/games/',data);
   };

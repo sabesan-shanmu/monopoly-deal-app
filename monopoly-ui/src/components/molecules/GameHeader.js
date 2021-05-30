@@ -23,6 +23,9 @@ export const GameHeader = () => {
    
     return (
         <StyledHeader>
+             <div>                
+                <MonopolyDealButton label="Logout" />
+            </div>
             <div>                
                 <MonopolyDealButton label="Logout" />
             </div>

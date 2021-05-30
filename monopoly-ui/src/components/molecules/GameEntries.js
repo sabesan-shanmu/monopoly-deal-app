@@ -5,6 +5,7 @@ import {GameStatus} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices";
 import {useHistory} from 'react-router-dom'
+import {getTotalNumberofExpecctedPlayers} from '../../common/GameHelpers'
 
 const StyledGameEntries = styled.div`
 {
@@ -82,7 +83,7 @@ export const GameEntries = ({games,...props}) => {
                         <GameStatus gameStatus={game.gameStatus} />   
                     </StyledGameEntryCell>
                     <StyledGameEntryCell>
-                        {game.numberOfPlayers}
+                        {game.numberOfPlayers}/{getTotalNumberofExpecctedPlayers(game.gameMode)}
                     </StyledGameEntryCell>    
                     <StyledGameEntryCell>
                         <MonopolyDealButton label="Select" onClick={()=>{history.push(`${game.gamePassCode}/join-game`)}} />
