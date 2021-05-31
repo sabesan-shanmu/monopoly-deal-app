@@ -22,6 +22,14 @@ const StyledInput = styled.div`
             padding:2px;
             width:160px;
         }
+        &>input::placeholder,
+        &>input::-webkit-input-placeholder ,
+        &>input::-moz-placeholder,
+        &>input:-ms-input-placeholder,
+        &>input:-moz-placeholder
+        {
+            line-height:20px;
+        }
         &>label
         {
             font-size:20px;
@@ -37,6 +45,14 @@ const StyledInput = styled.div`
             padding:2px;
             width:120px;
         }
+        &>input::placeholder,
+        &>input::-webkit-input-placeholder ,
+        &>input::-moz-placeholder,
+        &>input:-ms-input-placeholder,
+        &>input:-moz-placeholder
+        {
+            line-height:18px;
+        }
         &>label
         {
             font-size:18px;
@@ -50,6 +66,14 @@ const StyledInput = styled.div`
             font-size:18px;
             padding:2px;
             width:125px;
+        }
+        &>input::placeholder,
+        &>input::-webkit-input-placeholder ,
+        &>input::-moz-placeholder,
+        &>input:-ms-input-placeholder,
+        &>input:-moz-placeholder
+        {
+            line-height:18px;
         }
         &>label
         {
@@ -65,6 +89,14 @@ const StyledInput = styled.div`
             font-size:8px;
             padding:2px;
             width:100px;
+        }
+        &>input::placeholder,
+        &>input::-webkit-input-placeholder ,
+        &>input::-moz-placeholder,
+        &>input:-ms-input-placeholder,
+        &>input:-moz-placeholder
+        {
+            line-height:8px;
         }
         &>label
         {
