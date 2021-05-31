@@ -54,7 +54,8 @@ export const JoinGame = () =>{
                     return { ...prevState, imageId: e.target.value }
                   });
             },
-            options:getImageList()
+            options:getImageList(),
+            required:'required'
         },
         cancelBtn:{
             onClick:()=>{history.push('/games-list')},

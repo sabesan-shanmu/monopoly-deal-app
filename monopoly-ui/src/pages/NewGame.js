@@ -41,7 +41,8 @@ export const NewGame = () => {
                     return { ...prevState, gameMode: parseInt(e.target.value) }
                   });
             },
-            options:getGameModesList()
+            options:getGameModesList(),
+            required:'required'
         },
         cancelBtn:{
             onClick:()=>{history.push('/')},
