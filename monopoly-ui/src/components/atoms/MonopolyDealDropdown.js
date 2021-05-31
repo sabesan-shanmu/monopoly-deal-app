@@ -62,13 +62,13 @@ const StyledInput = styled.div`
     @media ${device.small} { 
         &>select
         {
-            font-size:8px;
+            font-size:12px;
             padding:2px;
             width:108px;
         }
         &>label
         {
-            font-size:8px;
+            font-size:12px;
             padding:2px;
             width:50px;
         }

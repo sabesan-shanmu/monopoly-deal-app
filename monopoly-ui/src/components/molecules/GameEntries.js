@@ -26,8 +26,8 @@ const StyledGameEntries = styled.div`
     }
     
     @media ${device.small} { 
-        font-size:8px;
-        max-width: 250px;
+        font-size:12px;
+        max-width: 300px;
     } 
 }`;
 /*TODO: Fixing header to the top */

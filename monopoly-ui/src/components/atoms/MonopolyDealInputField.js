@@ -21,12 +21,9 @@ const StyledInput = styled.div`
             font-size:20px;
             padding:2px;
             width:160px;
+            line-height:20px;
         }
-        &>input::placeholder,
-        &>input::-webkit-input-placeholder ,
-        &>input::-moz-placeholder,
-        &>input:-ms-input-placeholder,
-        &>input:-moz-placeholder
+        &>input::placeholder
         {
             line-height:20px;
         }
@@ -44,12 +41,9 @@ const StyledInput = styled.div`
             font-size:18px;
             padding:2px;
             width:120px;
+            line-height:18px;
         }
-        &>input::placeholder,
-        &>input::-webkit-input-placeholder ,
-        &>input::-moz-placeholder,
-        &>input:-ms-input-placeholder,
-        &>input:-moz-placeholder
+        &>input::placeholder
         {
             line-height:18px;
         }
@@ -66,12 +60,9 @@ const StyledInput = styled.div`
             font-size:18px;
             padding:2px;
             width:125px;
+            line-height:18px;
         }
-        &>input::placeholder,
-        &>input::-webkit-input-placeholder ,
-        &>input::-moz-placeholder,
-        &>input:-ms-input-placeholder,
-        &>input:-moz-placeholder
+        &>input::placeholder
         {
             line-height:18px;
         }
@@ -86,21 +77,18 @@ const StyledInput = styled.div`
     @media ${device.small} { 
         &>input
         {
-            font-size:8px;
+            font-size:12px;
             padding:2px;
             width:100px;
+            line-height:12px;
         }
-        &>input::placeholder,
-        &>input::-webkit-input-placeholder ,
-        &>input::-moz-placeholder,
-        &>input:-ms-input-placeholder,
-        &>input:-moz-placeholder
+        &>input::placeholder
         {
-            line-height:8px;
+            line-height:12px;
         }
         &>label
         {
-            font-size:8px;
+            font-size:12px;
             padding:2px;
             width:50px;
         }

@@ -19,7 +19,7 @@ const StyledSpan = styled.div`
     }
 
     @media ${device.small} { 
-        font-size:8px;
+        font-size:12px;
     }
 `
 
