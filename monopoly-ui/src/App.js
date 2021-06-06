@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } from "react-router-dom";
 import "./App.css"
 import {Home} from './pages/Home'
@@ -16,21 +17,15 @@ function App() {
     <div className="app-container">
       <Router>
         <Switch>
-          <Route path="/:gamePassCode/game-board">
-              <GameBoard/>
-          </Route>
-          <Route path="/:gamePassCode/join-game">
-              <JoinGame/>
-          </Route>
-          <Route path="/new-game">
-              <NewGame />
-          </Route>
-          <Route path="/games-list">
-              <SelectGame />
-          </Route>
-          <Route path="/">
-              <Home/>
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/:gamePassCode/game-board"  component={GameBoard}/>
+          <Route exact path="/:gamePassCode/join-game" component={JoinGame} />
+          <Route exact path="/new-game" component={NewGame} />
+          <Route exact path="/games-list" component={SelectGame} />
+          <Route path="*" render={()=>{
+              //TODO:check if user is authenticated
+              return <Redirect path="/" />
+          }} />
         </Switch>
       </Router>
     </div>

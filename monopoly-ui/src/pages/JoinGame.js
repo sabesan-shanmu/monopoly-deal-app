@@ -36,7 +36,7 @@ export const JoinGame = () =>{
             mode: "password",
             label: "Password",
             value:formInput.passwordInput,
-            minLength:8,
+            minLength:5,
             maxLength:10,
             placeholder:"Enter Password...",
             onChange:(e)=>{

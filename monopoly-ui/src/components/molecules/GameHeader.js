@@ -13,8 +13,7 @@ const StyledHeader = styled.header`
     flex-direction: column;
     min-height: 35px;
     padding:5px;
-    background-image: url(${img});
-    background-size: cover;
+    
     &>div{
         text-align:right;
     }

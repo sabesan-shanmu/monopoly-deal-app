@@ -19,6 +19,11 @@ const StyledGameTitleMenuBody = styled.div`
     }
 `;
 
+const StyledFooter= styled.a`
+    margin-top:5px;
+    color:white;
+`
+
 export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
     
     const newGame = {
@@ -40,6 +45,7 @@ export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
                 <MonopolyDealButton {...selectGame} /> 
             </StyledGameTitleMenuBody>
             
+            <StyledFooter target="_blank" href="http://monopolydealrules.com">How To Play</StyledFooter>
         </StyledMenuContainer>
     )
 }
