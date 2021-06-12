@@ -31,7 +31,7 @@ def create_app():
     jwt.init_app(app)
     app.wsgi_app = Middleware(app.wsgi_app)
     cors = CORS(app)
-    #session.init_app(app)
+    session.init_app(app)
     
     
     flask_api.title = app.config['API_TITLE']
