@@ -1,5 +1,5 @@
 from flask_restx import Resource,Namespace
-from flask import request,jsonify,session,make_response 
+from flask import request,jsonify 
 from .schema import GameSchema,create_game_schema,update_game_schema
 from marshmallow import ValidationError
 from .services import get_games,get_game_by_gamepasscode,create_game,delete_game,update_game,is_game_allowed_to_start
@@ -89,8 +89,6 @@ class MultipleGamesResource(Resource):
     def get(self):
         try:
             games = get_games()
-            
-            set_session('session-id','test')
             result= GameSchema(many=True).dump(games)
             return jsonify(result)
         except ValidationError as e:

@@ -44,7 +44,7 @@ class RegisterResource(Resource):
             add_player(player)
             player_result = PlayerSchema().dump(player)
             result = create_tokens(player_result)
-            set_session(gamePassCode,player.playerId)     
+           
             return result,200
         except ValidationError as e:
             raise ResourceValidationException(e)
@@ -64,7 +64,6 @@ class LoginResource(Resource):
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):
                 player_result = PlayerSchema().dump(playerFound)
                 result = create_tokens(player_result)
-                set_session("test",player.playerId)    
                 return result, 200  
             else:
                 raise ResourceNotFoundException(message="Player Not Found")  
