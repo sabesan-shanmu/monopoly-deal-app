@@ -86,7 +86,13 @@ export const GameEntries = ({games,...props}) => {
                         {game.numberOfPlayers}/{getTotalNumberofExpecctedPlayers(game.gameMode)}
                     </StyledGameEntryCell>    
                     <StyledGameEntryCell>
-                        <MonopolyDealButton label="Select" onClick={()=>{history.push(`${game.gamePassCode}/join-game`)}} />
+                        <MonopolyDealButton label="Select" onClick={()=>{
+                            history.push(
+                                {
+                                    pathname: `${game.gamePassCode}/join-game`,
+                                    state:game
+                                }
+                            )}} />
                     </StyledGameEntryCell>    
                 </React.Fragment>
             )} 

@@ -102,9 +102,9 @@ export const MonopolyDealInputField = ({ mode,label,maxLength,minLength,isRequir
 
     
     return (
-        <StyledInput className="container-input" >
-            <label htmlFor="monopoly-input" >{label}</label>
-            <input type={mode} id="monopoly-input" maxLength={maxLength} minLength={minLength} placeholder={placeholder} required={isRequired} {...props}>
+        <StyledInput>
+            <label>{label}</label>
+            <input type={mode} maxLength={maxLength} minLength={minLength} placeholder={placeholder} required={isRequired} {...props}>
             </input> 
         </StyledInput>
     );

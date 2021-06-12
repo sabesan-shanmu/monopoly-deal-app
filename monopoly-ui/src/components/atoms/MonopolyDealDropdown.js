@@ -78,16 +78,16 @@ const StyledInput = styled.div`
 
 
 
-export const MonopolyDealDropdown = ({label,placeholder,selected,options,...props }) => {
+export const MonopolyDealDropdown = ({label,placeholder,value,options,...props }) => {
 
     
     return (
         <StyledInput className="container-ddl" >
             <label htmlFor="monopoly-ddl" >{label}</label>
-            <select id="monopoly-ddl" {...props}>
+            <select id="monopoly-ddl" value={value} {...props}>
                 <option value="">{placeholder}</option>
                 {options && options.map((option,key)=>
-                     <option key={option.value} value={option.value} selected={option.value==selected}>{option.text}</option>
+                     <option key={option.value} value={option.value} >{option.text}</option>
                 )}
             </select> 
         </StyledInput>

@@ -4,16 +4,18 @@ import {useHistory} from 'react-router-dom'
 import {getImageList} from '../common/ImageHelpers'
 import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 
-export const JoinGame = () =>{
-
+export const JoinGame = (props) =>{
+    
+    const selectedGame = props.location.state;
+    console.log(selectedGame);
     const history = useHistory();
     const [isRegisterScreenVisible,setIsRegisterScreenVisible] = useState(true);
     const [isLoading,setIsLoading] = useState(false)
     const [formInput,setFormInput] = useState(
         {
-            userNameInput:null,
-            passwordInput:null,
-            imageId:null
+            userNameInput:"",
+            passwordInput:"",
+            imageId:""
         }
     )
 
@@ -48,7 +50,7 @@ export const JoinGame = () =>{
         characterSelectionDropdown: {
             label: "Character",
             placeholder:"Select Character...",
-            selected:formInput.imageId,
+            value:formInput.imageId,
             onChange:(e)=>{
                 setFormInput(prevState => {
                     return { ...prevState, imageId: e.target.value }
@@ -70,11 +72,16 @@ export const JoinGame = () =>{
             type:"submit"
         },
         toggletoRegisterBtn:{
-            onClick:()=>{setIsRegisterScreenVisible(!isRegisterScreenVisible)},
+            onClick:()=>{
+                setIsRegisterScreenVisible(!isRegisterScreenVisible)
+            },
             label:"Sign Up new Player"
         },
         toggleToLoginBtn:{
-            onClick:()=>{setIsRegisterScreenVisible(!isRegisterScreenVisible)},
+            onClick:()=>{
+                setIsRegisterScreenVisible(!isRegisterScreenVisible)
+
+            },
             label:"Sign In as existing Player"
         },
         isRegisterScreenVisible:isRegisterScreenVisible,

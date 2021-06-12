@@ -1,4 +1,6 @@
 from flask import Flask,render_template,request
+import flask.scaffold
+flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
 from flask_restx import Resource,Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -6,12 +8,14 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from monopoly.middleware import Middleware
 from flask_cors import CORS, cross_origin
+from flask_session import Session
 
 db = SQLAlchemy()
 migrate = Migrate()
 ma = Marshmallow()
 flask_api = Api()
 jwt = JWTManager()
+session = Session()
 
 def create_app():
     app = Flask(__name__,template_folder="static")
@@ -26,12 +30,8 @@ def create_app():
     ma.init_app(app)
     jwt.init_app(app)
     app.wsgi_app = Middleware(app.wsgi_app)
-    cors = CORS(app,resources={
-        r"/*": {
-            "origins": "*"
-        }
-    })
-  
+    cors = CORS(app)
+    session.init_app(app)
     
     
     flask_api.title = app.config['API_TITLE']

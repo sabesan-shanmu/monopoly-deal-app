@@ -13,6 +13,8 @@ import {GameBoard} from './pages/GameBoard'
 import {SelectGame} from './pages/SelectGame'
 
 function App() {
+  //session call
+  
   return (
     <div className="app-container">
       <Router>

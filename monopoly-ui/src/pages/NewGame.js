@@ -12,8 +12,8 @@ export const NewGame = () => {
     const [isLoading,setIsLoading] = useState(false)
     const [formInput,setFormInput] = useState(
         {
-            gameNameInput:null,
-            gameMode:null
+            gameNameInput:"",
+            gameMode:""
         }
     )
 
@@ -35,7 +35,7 @@ export const NewGame = () => {
         gameModeDropdown: {
             label: "Mode",
             placeholder:"Select Game Mode...",
-            selected:formInput.gameMode,
+            value:formInput.gameMode,
             onChange:(e)=>{
                 setFormInput(prevState => {
                     return { ...prevState, gameMode: parseInt(e.target.value) }

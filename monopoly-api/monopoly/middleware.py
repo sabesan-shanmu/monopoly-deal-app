@@ -15,6 +15,8 @@ class Middleware():
 
         def overwrite_start_response(status, response_headers):
             response_headers.append((self.flask_header_name, request_id_header))
+            response_headers.append(('Access-Control-Allow-Credentials', 'true'))
+            #response_headers.append(('Set-Cookie','cross-site-cookie=bar; SameSite=None; Secure'))
             return start_response(status, response_headers)
 
         return self.app(environ, overwrite_start_response)

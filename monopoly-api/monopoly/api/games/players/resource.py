@@ -9,6 +9,7 @@ from monopoly.auth import create_tokens
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
+from monopoly.loginSession import set_session
 
 
 players_namespace = Namespace('Players', description='Players can sign up or login to existing game')
@@ -24,7 +25,7 @@ class RegisterResource(Resource):
                 raise ResourceNotFoundException(message="Game Not Found")    
 
             
-            if is_player_allowed_to_join(game):
+            if not is_player_allowed_to_join(game):
                 raise FieldValidationException(message="No more players can join the game")
 
             
@@ -43,6 +44,7 @@ class RegisterResource(Resource):
             add_player(player)
             player_result = PlayerSchema().dump(player)
             result = create_tokens(player_result)
+            set_session(gamePassCode,player.playerId)     
             return result,200
         except ValidationError as e:
             raise ResourceValidationException(e)
@@ -62,7 +64,8 @@ class LoginResource(Resource):
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):
                 player_result = PlayerSchema().dump(playerFound)
                 result = create_tokens(player_result)
-                return result, 200
+                set_session("test",player.playerId)    
+                return result, 200  
             else:
                 raise ResourceNotFoundException(message="Player Not Found")  
 
