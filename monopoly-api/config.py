@@ -16,6 +16,7 @@ class Config:
     JWT_REFRESH_TOKEN_EXPIRES=datetime.timedelta(hours=int(os.environ.get('JWT_REFRESH_TOKEN_EXPIRES')))
     PROPAGATE_EXCEPTIONS = True
     ERROR_404_HELP = False
+    SESSION_COOKIE_NAME = "MONOPOLY-DEAL"
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SESSION_TYPE = os.environ.get('SESSION_TYPE')

@@ -1,5 +1,5 @@
 from flask_restx import Resource,Namespace
-from flask import request,jsonify 
+from flask import request,jsonify,make_response
 from .schema import GameSchema,create_game_schema,update_game_schema
 from marshmallow import ValidationError
 from .services import get_games,get_game_by_gamepasscode,create_game,delete_game,update_game,is_game_allowed_to_start
@@ -13,7 +13,8 @@ from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from werkzeug.exceptions import BadRequest
-from monopoly.loginSession import set_session
+from flask import session
+
 
 game_namespace = Namespace('Games', description='List of games that a user can join. Users can also create/update game that they\'re part of')
 

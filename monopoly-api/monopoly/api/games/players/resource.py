@@ -9,7 +9,7 @@ from monopoly.auth import create_tokens
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-from monopoly.loginSession import set_session
+
 
 
 players_namespace = Namespace('Players', description='Players can sign up or login to existing game')
