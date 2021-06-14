@@ -1,7 +1,7 @@
 from flask_restx import Resource,Namespace
 from .schema import create_player_schema,PlayerSchema
 from monopoly.common import constants,enums
-from flask import request,jsonify
+from flask import request,jsonify,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from monopoly.api.games.services import get_game_by_gamepasscode,is_player_allowed_to_join
 from .services import get_players_by_gameid,add_player,get_player_by_player_name
@@ -42,7 +42,12 @@ class RegisterResource(Resource):
                  raise FieldValidationException(message="Player Name already exists")  
 
             add_player(player)
+          
             player_result = PlayerSchema().dump(player)
+            
+            session["gamePassCode"] = player_result["gamePassCode"]
+            session["playerName"] = player_result["playerName"]
+            
             result = create_tokens(player_result)
            
             return result,200
@@ -64,6 +69,8 @@ class LoginResource(Resource):
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):
                 player_result = PlayerSchema().dump(playerFound)
                 result = create_tokens(player_result)
+                session["gamePassCode"] = player_result["gamePassCode"]
+                session["playerName"] = player_result["playerName"]
                 return result, 200  
             else:
                 raise ResourceNotFoundException(message="Player Not Found")  

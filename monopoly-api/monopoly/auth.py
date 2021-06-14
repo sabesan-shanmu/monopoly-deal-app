@@ -1,4 +1,4 @@
-from flask import jsonify,request
+from flask import jsonify,request,session
 from flask_jwt_extended import create_access_token,create_refresh_token,verify_jwt_in_request,get_jwt_identity
 from functools import wraps
 from monopoly import jwt
@@ -7,8 +7,7 @@ from monopoly.errors import get_formatted_error
 def create_tokens(player):
     result = {
         'accessToken':create_access_token(identity=player),
-        'refreshToken': create_refresh_token(identity=player),
-        'playerId':player["playerId"]
+        'refreshToken': create_refresh_token(identity=player)
     }
     return result
 
@@ -33,7 +32,7 @@ def validate_player(func):
         verify_jwt_in_request()
         identity = get_jwt_identity()
         expectedPlayerId = identity.get("playerId", None)        
-        actualPlayerId = kwargs.get("playerId", None)
+        actualPlayerId = session.get("playerId", None)
         if expectedPlayerId != actualPlayerId:
             return get_formatted_error("PLAYER_ID_MISMATCH_ERROR")
 
