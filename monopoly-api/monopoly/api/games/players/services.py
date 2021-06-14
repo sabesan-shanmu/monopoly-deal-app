@@ -7,7 +7,10 @@ def get_players_by_gameid(gameId):
 
 def get_player_by_player_name(gameId,playerName):
     return db.session.query(Player).filter(and_(Player.playerName.ilike(playerName),Player.gameId==gameId)).first()
-            
+
+def get_player_by_player_id(gameId,playerId):            
+    return db.session.query(Player).filter(and_(Player.playerId==playerId,Player.gameId==gameId)).first()
+
 
 def add_player(player):
     try:

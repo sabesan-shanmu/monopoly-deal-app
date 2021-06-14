@@ -45,8 +45,8 @@ class RegisterResource(Resource):
           
             player_result = PlayerSchema().dump(player)
             
-            session["gamePassCode"] = player_result["gamePassCode"]
-            session["playerName"] = player_result["playerName"]
+            session["gameId"] = game.gameId
+            session["playerId"] = player_result["playerId"]
             
             result = create_tokens(player_result)
            
@@ -69,8 +69,8 @@ class LoginResource(Resource):
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):
                 player_result = PlayerSchema().dump(playerFound)
                 result = create_tokens(player_result)
-                session["gamePassCode"] = player_result["gamePassCode"]
-                session["playerName"] = player_result["playerName"]
+                session["gameId"] = game.gameId
+                session["playerId"] = player_result["playerId"]
                 return result, 200  
             else:
                 raise ResourceNotFoundException(message="Player Not Found")  
