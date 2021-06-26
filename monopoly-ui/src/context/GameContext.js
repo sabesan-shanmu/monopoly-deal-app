@@ -1,6 +1,5 @@
-import React,{useReducer,useState,createContext,useEffect} from 'react'
+import React,{useReducer,createContext} from 'react'
 import {ActionTypes} from "../common/constants";
-import {getGame,createGame} from '../api/gamesApi';
 
 export const GameContext = createContext();
 
@@ -13,7 +12,7 @@ const gameInitState = {
 const gameReducer = (state,action)=>{
     switch(action.type){
         case ActionTypes.CreateResource:
-          return {...state,game:action.game,errors:action.errors};
+          return {...state,game:action.game};
         case ActionTypes.GetResource:
           break;
     }

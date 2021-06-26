@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance'
 
 
-export const gamesApi = {
+export const playersApi = {
   register:(registerUrl,data)=>{
       return axiosInstance.post(registerUrl,data);
   },

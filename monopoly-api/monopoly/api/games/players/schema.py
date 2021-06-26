@@ -6,8 +6,8 @@ from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.common.enums import GameCardLocationStatus
 
 class create_player_schema(ma.Schema):
-    playerName = fields.String(required=True,validate=Length(max=20,min=1))
-    playerPassCode = fields.String(required=True,validate=Length(max=10,min=8))
+    playerName = fields.String(required=True,validate=Length(max=20,min=3))
+    playerPassCode = fields.String(required=True,validate=Length(max=10,min=3))
     imageId = fields.Integer(required=True)
     @post_load
     def make_player(self, data, **kwargs):

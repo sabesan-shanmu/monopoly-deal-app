@@ -7,32 +7,30 @@ import {
 } from "react-router-dom";
 import "./App.css"
 import {GameContextProvider} from './context/GameContext'
+import {PlayerContext, PlayerContextProvider} from './context/PlayerContext'
 import {Home} from './pages/Home'
 import {NewGame} from './pages/NewGame'
-import {JoinGame} from './pages/JoinGame'
-import {GameBoard} from './pages/GameBoard'
 import {SelectGame} from './pages/SelectGame'
+import {SelectedGame} from './pages/SelectedGame'
 
 function App() {
-  //session call
+ 
 
   return (
     <div className="app-container">
+      
        <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <GameContextProvider>
-                <Route exact path="/:gamePassCode/game-board"  component={GameBoard}/>
-                <Route exact path="/:gamePassCode/join-game" component={JoinGame} />
-               
+          <PlayerContextProvider>
+            <Route exact path="/" component={Home} />
+            <GameContextProvider>
+                  <Route path={["/:gamePassCode/game-board", "/:gamePassCode/join-game"]}  render={({match}) => (
+                        <SelectedGame gamePassCode={match.params.gamePassCode}/>
+                  )}/>   
                   <Route exact path="/new-game" component={NewGame} />
                   <Route exact path="/games-list" component={SelectGame} />
-                
-          </GameContextProvider>
-          <Route path="*" render={()=>{
-              //TODO:check if user is authenticated
-              return <Redirect path="/" />
-          }} />
+            </GameContextProvider>
+          </PlayerContextProvider>
         </Switch>
       </Router>
     </div>

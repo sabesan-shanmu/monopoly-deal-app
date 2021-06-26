@@ -11,7 +11,7 @@ export const SelectGame = () =>{
         label:"Go Back"
     }
    
-    
+    console.log("blah");
     
     return (
         <GamesListContextProvider>

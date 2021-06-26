@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom'
 import {getImageList} from '../common/ImageHelpers'
 import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 import {GameContext} from '../context/GameContext'
+import {playersApi} from '../api/playersApi'
 
 export const JoinGame = (props) =>{
     
@@ -13,8 +14,8 @@ export const JoinGame = (props) =>{
     const [isLoading,setIsLoading] = useState(false)
     const [formInput,setFormInput] = useState(
         {
-            userNameInput:"",
-            passwordInput:"",
+            playerName:"",
+            playerPassCode:"",
             imageId:""
         }
     )
@@ -24,26 +25,26 @@ export const JoinGame = (props) =>{
         userNameInputText: {
             mode: "text",
             label: "Username",
-            value:formInput.userNameInput,
-            minLength:1,
+            value:formInput.playerName,
+            minLength:3,
             maxLength:20,
             placeholder:"Enter Username...",
             onChange:(e)=>{
                 setFormInput(prevState => {
-                    return { ...prevState, userNameInput: e.target.value }
+                    return { ...prevState, playerName: e.target.value }
                   });
             }
         },
         passwordInputText: {
             mode: "password",
             label: "Password",
-            value:formInput.passwordInput,
-            minLength:5,
+            value:formInput.playerPassCode,
+            minLength:3,
             maxLength:10,
             placeholder:"Enter Password...",
             onChange:(e)=>{
                 setFormInput(prevState => {
-                    return { ...prevState, passwordInput: e.target.value }
+                    return { ...prevState, playerPassCode: e.target.value }
                   });
             }
         },
@@ -60,7 +61,7 @@ export const JoinGame = (props) =>{
             required:'required'
         },
         cancelBtn:{
-            onClick:()=>{history.push('/games-list')},
+            onClick:()=>{history.push('/')},
             label:"Cancel"
         },
         registerBtn:{
@@ -89,12 +90,26 @@ export const JoinGame = (props) =>{
         registerForm:{
             onSubmit:(e)=>{
                 setIsLoading(true)
+                playersApi.register(gameState.game.links.register,formInput)
+                    .then(function(success){
+                        console.log(success.data);  
+                    })
+                    .catch(function(error){
+                        console.log(error.response.data);
+                    })
                 e.preventDefault();
             }
         },
         loginForm:{
             onSubmit:(e)=>{
                 setIsLoading(true)
+                playersApi.register(gameState.game.links.register,formInput)
+                    .then(function(success){
+                        console.log(success.data);  
+                    })
+                    .catch(function(error){
+                        console.log(error.response.data);
+                    })
                 e.preventDefault();
             }
         }
