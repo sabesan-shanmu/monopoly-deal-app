@@ -1,13 +1,13 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {JoinGameTemplate} from '../components/templates/JoinGameTemplate'
 import {useHistory} from 'react-router-dom'
 import {getImageList} from '../common/ImageHelpers'
 import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
+import {GameContext} from '../context/GameContext'
 
 export const JoinGame = (props) =>{
     
-    const selectedGame = props.location.state;
-    console.log(selectedGame);
+    const {gameState, gameDispatch} = useContext(GameContext);
     const history = useHistory();
     const [isRegisterScreenVisible,setIsRegisterScreenVisible] = useState(true);
     const [isLoading,setIsLoading] = useState(false)

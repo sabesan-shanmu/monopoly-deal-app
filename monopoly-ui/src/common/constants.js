@@ -1,5 +1,13 @@
 
-
+export const ActionTypes = {
+    GetAllResources:1,
+    GetResource:2,
+    CreateResource:3,
+    AddResource:4,
+    UpdateResource:5,
+    DeleteResource:6,
+    LoadResource:7
+}
 
 export const GameStatusEnum = {
     WaitingToStart:0,

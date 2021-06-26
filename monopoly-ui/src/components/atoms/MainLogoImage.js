@@ -9,7 +9,7 @@ const StyledMainLogoImage = styled.img`
 `;
 
 export const MainLogoImage = () => {
-    console.log(logo);
+
     return (
         <StyledMainLogoImage src={logo}/>
     )

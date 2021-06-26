@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {SelectGameMenu} from '../components/organisms/SelectGameMenu'
 import {useHistory} from 'react-router-dom'
-import {GamesContextProvider} from '../context/GamesContext'
+import {GamesListContextProvider} from '../context/GamesListContext'
  
 export const SelectGame = () =>{
 
@@ -14,9 +14,9 @@ export const SelectGame = () =>{
     
     
     return (
-        <GamesContextProvider>
+        <GamesListContextProvider>
             <SelectGameMenu backBtn={backBtn}  />
-        </GamesContextProvider>
+        </GamesListContextProvider>
     )
 }
 

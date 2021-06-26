@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import PropTypes from 'prop-types'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {GameStatus} from '../atoms/GameStatus'
@@ -6,6 +6,8 @@ import styled from 'styled-components'
 import {device} from "../../common/devices";
 import {useHistory} from 'react-router-dom'
 import {getTotalNumberofExpecctedPlayers} from '../../common/GameHelpers'
+import {GameContext} from '../../context/GameContext'
+import {ActionTypes} from "../../common/constants"
 
 const StyledGameEntries = styled.div`
 {
@@ -58,6 +60,7 @@ const StyledNoGameRow = styled.div`
 export const GameEntries = ({games,...props}) => {
 
     const history = useHistory();
+    const {gameState,gameDispatch} = useContext(GameContext);
 
     return (
         <StyledGameEntries>
@@ -87,12 +90,9 @@ export const GameEntries = ({games,...props}) => {
                     </StyledGameEntryCell>    
                     <StyledGameEntryCell>
                         <MonopolyDealButton label="Select" onClick={()=>{
-                            history.push(
-                                {
-                                    pathname: `${game.gamePassCode}/join-game`,
-                                    state:game
-                                }
-                            )}} />
+                                gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
+                                history.push(`/${game.gamePassCode}/join-game`);
+                            }} />
                     </StyledGameEntryCell>    
                 </React.Fragment>
             )} 

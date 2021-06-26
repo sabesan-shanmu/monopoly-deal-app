@@ -1,18 +1,22 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {NewGameMenu} from '../components/organisms/NewGameMenu'
 import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 import {useHistory} from 'react-router-dom'
-import {createGame} from '../api/games'
 import {getGameModesList} from '../common/GameHelpers'
+import {GameContext} from  '../context/GameContext'
+import {ActionTypes} from '../common/constants'
+import {gamesApi} from '../api/gamesApi'
 
 export const NewGame = () => {
     
     const history = useHistory();
 
+    const {gameState,gameDispatch} = useContext(GameContext);
     const [isLoading,setIsLoading] = useState(false)
+
     const [formInput,setFormInput] = useState(
         {
-            gameNameInput:"",
+            name:"",
             gameMode:""
         }
     )
@@ -22,13 +26,13 @@ export const NewGame = () => {
         gameInputText: {
             mode: "text",
             label: "Game",
-            value:formInput.gameNameInput,
+            value:formInput.name,
             minLength:2,
             maxLength:30,
             placeholder:"Enter Name...",
             onChange:(e)=>{
                 setFormInput(prevState => {
-                    return { ...prevState, gameNameInput: e.target.value }
+                    return { ...prevState, name: e.target.value }
                   });
             }
         },
@@ -54,17 +58,16 @@ export const NewGame = () => {
         },
         gameForm:{
             onSubmit:(e)=>{
-                setIsLoading(true)
-                createGame(formInput)
-                    .then((resp)=>{     
-                        console.log(resp.data);
-                        history.push(`/${resp.data.gamePassCode}/join-game`);
+                
+                gamesApi.post(formInput)
+                    .then((success)=>{   
+                        console.log(success.data);  
+                        gameDispatch({type:ActionTypes.CreateResource,game:success.data});
+                        history.push(`/${success.data.gamePassCode}/join-game`);
                     })
                     .catch((error)=>{
-                        console.error(error.response.data);
-                        setIsLoading(false)
+                        console.log(error.response.data);
                     })
-
                 e.preventDefault();
             },
         }

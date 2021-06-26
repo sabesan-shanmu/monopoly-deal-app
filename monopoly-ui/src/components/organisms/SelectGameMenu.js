@@ -4,7 +4,7 @@ import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import styled from 'styled-components'
 import {StyledMenuContainer} from "../atoms/StyledMenuContainer";
 import {MonopolySpinner} from  '../atoms/MonopolySpinner'
-import {GamesContext} from '../../context/GamesContext'
+import {GamesListContext} from '../../context/GamesListContext'
 
 const StyledJoinGameMenuBody = styled.div`
     display: flex;
@@ -18,17 +18,17 @@ const StyledJoinGameMenuBody = styled.div`
 export const SelectGameMenu = ({backBtn,...props}) => { 
     
    
-
-    const {games} = useContext(GamesContext);
+    
+    const {gamesListState} = useContext(GamesListContext);
 
     return (
         <React.Fragment>
-            {!games &&
+            {gamesListState.isLoading &&
                 <MonopolySpinner/>
             }
-            {games &&
+            {!gamesListState.isLoading &&
                 <StyledMenuContainer>
-                    <GameEntries games={games}  />   
+                    <GameEntries games={gamesListState.games}  />   
                     <StyledJoinGameMenuBody>
                         <MonopolyDealButton {...backBtn} />
                     </StyledJoinGameMenuBody>
