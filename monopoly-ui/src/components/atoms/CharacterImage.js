@@ -26,8 +26,8 @@ const StyledCharacterImage = styled.img`
     background-size: cover;
 
     @media ${device.xlarge} { 
-        width:60px;
-        height:60px;
+        width:80px;
+        height:80px;
     }
 
     @media ${device.large} { 

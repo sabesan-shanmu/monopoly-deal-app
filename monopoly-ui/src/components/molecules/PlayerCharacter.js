@@ -16,17 +16,17 @@ const StyledPlayerCharacter = styled.section`
     background-size: cover;
     border: 2px solid black;
     border-radius: 5px;
-    max-width: 300px;
+    max-width: 350px;
     @media ${device.xlarge} {
         font-size:20px;
       }
-      @media ${device.medium} { 
+    @media ${device.medium} { 
         font-size:15px;
-      }
+    }
   
-      @media ${device.small} { 
+    @media ${device.small} { 
         font-size:8px;
-      }
+    }
 `;
 
 export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,...props}) => { 
@@ -37,7 +37,7 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
             <div>
                 <div>Player Name:{playerName}</div>
                 <div>Game Order:{playerGameOrder}</div>
-                <div>{/** add {numberOfCardsOnHand} of Cards  */}</div>
+                <div># of Cards:{numberOfCardsOnHand}</div>
             </div>   
         </StyledPlayerCharacter>
     )
@@ -46,7 +46,7 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
 
 PlayerCharacter.propTypes = {
     playerName:PropTypes.string,
-    playerGameOrder:PropTypes.oneOf(["1","2","3","4","5","6","7","8","9","10","11","12"]),
-    imageId:PropTypes.oneOf(["1","2","3","4","5","6","7","8","9","10","11","12"])
+    playerGameOrder:PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
+    imageId:PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
 };
 

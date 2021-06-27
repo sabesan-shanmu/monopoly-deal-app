@@ -27,6 +27,8 @@ const playerReducer = (state,action)=>{
     switch(action.type){
         case ActionTypes.AddResource:
           return {...state,player:action.player};
+          case ActionTypes.DeleteResource:
+          return {...state,player:null,errors:null};
         case ActionTypes.GetResource:
           return {...state};
     }
