@@ -8,18 +8,7 @@ export const PlayerContext = createContext();
 
 
 const playerInitState = {
-    player:{
-        playerName:null,
-        playerId:null,
-        imageId:null,
-        playerGameOrder:null,
-        accessTokenExpirationInSeconds:null,
-        refreshTokenExpirationInSeconds:null,
-        accessToken:null,
-        refreshToken:null,
-        gamePassCode:null,
-        numberOfCardsOnHand:null
-    },
+    player:null,
     errors:null
 };
 

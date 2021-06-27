@@ -20,7 +20,7 @@ class Config:
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SESSION_TYPE = os.environ.get('SESSION_TYPE')
-    SESSION_PERMANENT = False
+    SESSION_PERMANENT = True
     PERMANENT_SESSION_LIFETIME = datetime.timedelta(hours = int(os.environ.get('PERMANENT_SESSION_LIFETIME')))
 
 
