@@ -99,7 +99,7 @@ export const JoinGame = (props) =>{
                         console.log(success.data);
                         const playerData = getDecodedPlayer(success.data);
                         playerDispatch({type:ActionTypes.AddResource,player:playerData});
-                        history.push(`/${playerData.player.gamePassCode}/game-board`);
+                        history.push(`/${playerData.gamePassCode}/game-board`);
                     })
                     .catch(function(error){
                         console.log(error.response.data);
@@ -116,7 +116,7 @@ export const JoinGame = (props) =>{
                         console.log(success.data);  
                         const playerData = getDecodedPlayer(success.data);
                         playerDispatch({type:ActionTypes.AddResource,player:playerData});
-                        history.push(`/${playerData.player.gamePassCode}/game-board`);
+                        history.push(`/${playerData.gamePassCode}/game-board`);
                     })
                     .catch(function(error){
                         console.log(error.response.data);

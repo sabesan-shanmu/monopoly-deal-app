@@ -17,7 +17,8 @@ const playerInitState = {
         refreshTokenExpirationInSeconds:null,
         accessToken:null,
         refreshToken:null,
-        gamePassCode:null
+        gamePassCode:null,
+        numberOfCardsOnHand:null
     },
     errors:null
 };
@@ -45,10 +46,12 @@ export const PlayerContextProvider = ({children}) => {
             console.log(success.data);
             const playerData = getDecodedPlayer(success.data);
             playerDispatch({type:ActionTypes.AddResource,player:playerData});
-            history.push(`/${playerData.player.gamePassCode}/game-board`);
+            history.push(`/${playerData.gamePassCode}/game-board`);
         })
         .catch(function(error){
             console.log(error.response.data);
+            if(history.location.pathname.indexOf("game-board")>-1)
+                history.push(history.location.pathname.replace("game-board","join-game"));
         });
     },[]);
     

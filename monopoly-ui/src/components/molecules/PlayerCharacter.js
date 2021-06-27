@@ -11,11 +11,22 @@ import {getBackgroundColour} from '../../common/ImageHelpers'
 
 const StyledPlayerCharacter = styled.section`
     display:grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     background-color:${({imageId})=>getBackgroundColour(imageId)};
     background-size: cover;
     border: 2px solid black;
     border-radius: 5px;
+    max-width: 300px;
+    @media ${device.xlarge} {
+        font-size:20px;
+      }
+      @media ${device.medium} { 
+        font-size:15px;
+      }
+  
+      @media ${device.small} { 
+        font-size:8px;
+      }
 `;
 
 export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,...props}) => { 

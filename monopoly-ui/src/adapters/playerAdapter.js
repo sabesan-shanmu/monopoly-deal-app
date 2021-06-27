@@ -8,16 +8,15 @@ export const getDecodedPlayer = (data) =>{
     const refreshTokenPayload = jwt_decode(refreshToken);
 
     return {
-        player:{
-            playerName:accessTokenPayload.identity.playerName,
-            playerId:accessTokenPayload.identity.playerId,
-            imageId:accessTokenPayload.identity.imageId,
-            gamePassCode:accessTokenPayload.identity.gamePassCode,
-            playerGameOrder:accessTokenPayload.identity.playerGameOrder,
-            accessTokenExpirationInSeconds:accessTokenPayload.exp,
-            refreshTokenExpirationInSeconds:refreshTokenPayload.exp,
-            accessToken:accessToken,
-            refreshToken:refreshToken
-        },
+        playerName:accessTokenPayload.identity.playerName,
+        playerId:accessTokenPayload.identity.playerId,
+        imageId:accessTokenPayload.identity.imageId,
+        gamePassCode:accessTokenPayload.identity.gamePassCode,
+        playerGameOrder:accessTokenPayload.identity.playerGameOrder,
+        numberOfCardsOnHand:accessTokenPayload.identity.numberOfCardsOnHand,
+        accessTokenExpirationInSeconds:accessTokenPayload.exp,
+        refreshTokenExpirationInSeconds:refreshTokenPayload.exp,
+        accessToken:accessToken,
+        refreshToken:refreshToken
     }
 }

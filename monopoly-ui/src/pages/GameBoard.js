@@ -1,10 +1,12 @@
 import React from 'react'
+import {GameBoardTemplate} from '../components/templates/GameBoardTemplate'
 
 export const GameBoard = () =>{
+
     return (
-        <h1>
-            GameBoard
-        </h1>
+       
+        <GameBoardTemplate/>
+        
     )
 }
 

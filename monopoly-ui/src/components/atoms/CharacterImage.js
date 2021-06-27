@@ -25,19 +25,24 @@ const StyledCharacterImage = styled.img`
     background-color:${({imageId})=>getBackgroundColour(imageId)};
     background-size: cover;
 
+    @media ${device.xlarge} { 
+        width:60px;
+        height:60px;
+    }
+
     @media ${device.large} { 
-        width:80px;
-        height:80px;
+        width:50px;
+        height:50px;
     }
 
     @media ${device.medium} { 
-        width:70px;
-        height:70px;
+        width:40px;
+        height:40px;
     }
 
     @media ${device.small} { 
-        width:50px;
-        height:50px;
+        width:30px;
+        height:30px;
     }
 `;
 
@@ -46,7 +51,7 @@ const StyledCharacterImage = styled.img`
 export const CharacterImage = ({imageId}) => {
     
     const getImage = (imageId) =>{
-        switch(imageId)
+        switch(imageId.toString())
         {
             case "1":
                 return avatar1;
