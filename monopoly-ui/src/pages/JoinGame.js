@@ -61,7 +61,7 @@ export const JoinGame = (props) =>{
             required:'required'
         },
         cancelBtn:{
-            onClick:()=>{history.push('/')},
+            onClick:()=>{history.push('/games-list')},
             label:"Cancel"
         },
         registerBtn:{
