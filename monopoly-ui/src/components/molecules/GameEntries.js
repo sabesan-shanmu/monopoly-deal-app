@@ -93,7 +93,7 @@ export const GameEntries = ({games,...props}) => {
                             onClick={()=>{
                                 gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
                                 history.push(`/${game.gamePassCode}/join-game`);
-                            }} disabled={game.numberOfPlayers==getTotalNumberofExpectedPlayers(game.gameMode)}
+                            }} 
                             />
                     </StyledGameEntryCell>    
                 </React.Fragment>
