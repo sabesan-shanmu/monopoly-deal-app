@@ -46,15 +46,19 @@ export const GameBoardHeader = () =>{
     }
 
     return (
-        <StyledGameHeader>
-            <PlayerCharacter
-                {...player}
+        <React.Fragment>
+        {player &&
+            <StyledGameHeader>
+                <PlayerCharacter
+                    {...player}
 
-            />
-            <MonopolyDealButton
-                {...logoutBtn}
-            />
-        </StyledGameHeader>
+                />
+                <MonopolyDealButton
+                    {...logoutBtn}
+                />
+            </StyledGameHeader>
+        }
+        </React.Fragment>
     )
 }
 
