@@ -10,10 +10,11 @@ import {GameBoard} from './GameBoard'
 import {MonopolySpinner} from '../components/atoms/MonopolySpinner'
 import {gamesApi} from '../api/gamesApi'
 import {GameContext} from '../context/GameContext'
+import {useHistory} from 'react-router-dom'
 
 export const SelectedGame = ({gamePassCode}) => {
     
-
+    const history = useHistory();
     const {gameState, gameDispatch} = useContext(GameContext);
     
     useEffect(()=>{
@@ -24,6 +25,7 @@ export const SelectedGame = ({gamePassCode}) => {
                 gameDispatch({type:ActionTypes.CreateResource,game:success.data});
             }).catch((error)=>{
                 console.log(error.response.data);
+                history.push('/games-list');
             })
         }
 

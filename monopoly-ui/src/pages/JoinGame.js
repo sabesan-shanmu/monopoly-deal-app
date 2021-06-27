@@ -4,11 +4,15 @@ import {useHistory} from 'react-router-dom'
 import {getImageList} from '../common/ImageHelpers'
 import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 import {GameContext} from '../context/GameContext'
+import {PlayerContext} from '../context/PlayerContext'
 import {playersApi} from '../api/playersApi'
+import {ActionTypes} from '../common/constants'
+import {getDecodedPlayer} from '../adapters/playerAdapter'
 
 export const JoinGame = (props) =>{
     
     const {gameState, gameDispatch} = useContext(GameContext);
+    const {playerState, playerDispatch} = useContext(PlayerContext);
     const history = useHistory();
     const [isRegisterScreenVisible,setIsRegisterScreenVisible] = useState(true);
     const [isLoading,setIsLoading] = useState(false)
@@ -92,10 +96,14 @@ export const JoinGame = (props) =>{
                 setIsLoading(true)
                 playersApi.register(gameState.game.links.register,formInput)
                     .then(function(success){
-                        console.log(success.data);  
+                        console.log(success.data);
+                        const playerData = getDecodedPlayer(success.data);
+                        playerDispatch({type:ActionTypes.AddResource,player:playerData});
+                        history.push(`/${playerData.player.gamePassCode}/game-board`);
                     })
                     .catch(function(error){
                         console.log(error.response.data);
+                        setIsLoading(false);
                     })
                 e.preventDefault();
             }
@@ -106,9 +114,13 @@ export const JoinGame = (props) =>{
                 playersApi.register(gameState.game.links.register,formInput)
                     .then(function(success){
                         console.log(success.data);  
+                        const playerData = getDecodedPlayer(success.data);
+                        playerDispatch({type:ActionTypes.AddResource,player:playerData});
+                        history.push(`/${playerData.player.gamePassCode}/game-board`);
                     })
                     .catch(function(error){
                         console.log(error.response.data);
+                        setIsLoading(false);
                     })
                 e.preventDefault();
             }
