@@ -22,7 +22,7 @@ export const getGameMode = (gameMode) => {
     return gameModesList[gameMode];
 } 
 
-export const getTotalNumberofExpecctedPlayers = (gameMode)=>{
+export const getTotalNumberofExpectedPlayers = (gameMode)=>{
     
     const gameModesList = {
         1:MaxNumOFPlayers.MAX_NUMBER_OF_PLAYERS_BASIC_MODE,

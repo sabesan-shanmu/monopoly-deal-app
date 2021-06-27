@@ -36,7 +36,7 @@ const StyledMonopolyDealButton = styled.button`
 
 
 export const MonopolyDealButton = ({label,disabled,...props }) => {
-
+  
     return (
     <StyledMonopolyDealButton
         type="button"

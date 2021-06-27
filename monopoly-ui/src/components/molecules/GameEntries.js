@@ -5,7 +5,7 @@ import {GameStatus} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices";
 import {useHistory} from 'react-router-dom'
-import {getTotalNumberofExpecctedPlayers} from '../../common/GameHelpers'
+import {getTotalNumberofExpectedPlayers} from '../../common/GameHelpers'
 import {GameContext} from '../../context/GameContext'
 import {ActionTypes} from "../../common/constants"
 
@@ -86,13 +86,15 @@ export const GameEntries = ({games,...props}) => {
                         <GameStatus gameStatus={game.gameStatus} />   
                     </StyledGameEntryCell>
                     <StyledGameEntryCell>
-                        {game.numberOfPlayers}/{getTotalNumberofExpecctedPlayers(game.gameMode)}
+                        {game.numberOfPlayers}/{getTotalNumberofExpectedPlayers(game.gameMode)}
                     </StyledGameEntryCell>    
                     <StyledGameEntryCell>
-                        <MonopolyDealButton label="Select" onClick={()=>{
+                        <MonopolyDealButton label="Select" 
+                            onClick={()=>{
                                 gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
                                 history.push(`/${game.gamePassCode}/join-game`);
-                            }} />
+                            }} disabled={game.numberOfPlayers==getTotalNumberofExpectedPlayers(game.gameMode)}
+                            />
                     </StyledGameEntryCell>    
                 </React.Fragment>
             )} 
