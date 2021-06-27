@@ -111,7 +111,7 @@ export const JoinGame = (props) =>{
         loginForm:{
             onSubmit:(e)=>{
                 setIsLoading(true)
-                playersApi.register(gameState.game.links.register,formInput)
+                playersApi.login(gameState.game.links.login,{playerName:formInput.playerName,playerPassCode:formInput.playerPassCode})
                     .then(function(success){
                         console.log(success.data);  
                         const playerData = getDecodedPlayer(success.data);

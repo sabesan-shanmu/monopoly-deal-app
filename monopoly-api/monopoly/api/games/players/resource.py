@@ -1,5 +1,5 @@
 from flask_restx import Resource,Namespace
-from .schema import create_player_schema,PlayerSchema
+from .schema import PlayerSchema,login_player_schema,register_player_schema
 from monopoly.common import constants,enums
 from flask import request,jsonify,session
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -30,7 +30,7 @@ class RegisterResource(Resource):
 
             
             #create the player
-            player = create_player_schema().load(request.get_json())
+            player = register_player_schema().load(request.get_json())
             player.gameId = game.gameId 
             player.gamePassCode = game.gamePassCode 
             player.playerPassCode = generate_password_hash(player.playerPassCode)
@@ -61,7 +61,7 @@ class LoginResource(Resource):
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")
-            player = create_player_schema().load(request.get_json())
+            player = login_player_schema().load(request.get_json())
             playerFound = get_player_by_player_name(game.gameId,player.playerName)
             if playerFound is None:
                 raise ResourceNotFoundException(message="Player Not Found")  
