@@ -22,7 +22,7 @@ const StyledCharacterImage = styled.img`
     height:100px;
     border: 2px solid black;
     border-radius: 5px;
-    background-color:${({imageId})=>getBackgroundColour(imageId)};
+    background-color:${({imageId})=>getBackgroundColour(imageId,"primary")};
     background-size: cover;
 
     @media ${device.xlarge} { 

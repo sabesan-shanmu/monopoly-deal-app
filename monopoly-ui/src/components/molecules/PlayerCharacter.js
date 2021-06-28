@@ -12,7 +12,8 @@ import {getBackgroundColour} from '../../common/ImageHelpers'
 const StyledPlayerCharacter = styled.section`
     display:grid;
     grid-template-columns: 1fr 1fr;
-    background-color:${({imageId})=>getBackgroundColour(imageId)};
+    background-color:${({imageId})=>getBackgroundColour(imageId,"secondary")};
+    color:${({imageId})=>getBackgroundColour(imageId,"text")};
     background-size: cover;
     border: 2px solid black;
     border-radius: 5px;
@@ -26,6 +27,9 @@ const StyledPlayerCharacter = styled.section`
   
     @media ${device.small} { 
         font-size:8px;
+    }
+    &>img{
+        margin:2px;
     }
 `;
 
