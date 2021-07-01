@@ -84,6 +84,9 @@ class Player(db.Model):
     playerCards =  db.relationship(GameCards,primaryjoin=playerId==GameCards.playerId)  
 
 class Game(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('name',name='unique_game'),
+    )
     gameId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gamePassCode = db.Column(db.String, unique=True,nullable=False,default=uuid.uuid4)
     gameMode = db.Column(db.Enum(Enum.GameMode),nullable=False,default=Enum.GameMode.RegularMode)

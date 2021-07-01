@@ -17,7 +17,8 @@ export const NewGame = () => {
     const [formInput,setFormInput] = useState(
         {
             name:"",
-            gameMode:""
+            gameMode:"",
+            errors:null
         }
     )
 
@@ -25,10 +26,10 @@ export const NewGame = () => {
     const newGameMenu = {
         gameInputText: {
             mode: "text",
-            label: "Game",
+            label: "Name",
             value:formInput.name,
-            minLength:2,
-            maxLength:30,
+            minLength:0,
+            maxLength:40,
             placeholder:"Enter Name...",
             onChange:(e)=>{
                 setFormInput(prevState => {
@@ -58,8 +59,11 @@ export const NewGame = () => {
         },
         gameForm:{
             onSubmit:(e)=>{
-                
-                gamesApi.post(formInput)
+                const data = {
+                    name:formInput.name,
+                    gameMode:formInput.gameMode
+                };
+                gamesApi.post(data)
                     .then((success)=>{   
                         console.log(success.data);  
                         gameDispatch({type:ActionTypes.CreateResource,game:success.data});
@@ -67,10 +71,14 @@ export const NewGame = () => {
                     })
                     .catch((error)=>{
                         console.log(error.response.data);
+                        setFormInput(prevState => {
+                            return { ...prevState, errors:error.response.data }
+                          });
                     })
                 e.preventDefault();
             },
-        }
+        },
+        errors:formInput.errors
     };
     
 

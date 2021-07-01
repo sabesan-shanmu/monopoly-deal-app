@@ -2,7 +2,7 @@ import React from 'react'
 import {MonopolyDealButton} from './../atoms/MonopolyDealButton'
 import {MonopolyDealInputField} from './../atoms/MonopolyDealInputField'
 import styled from 'styled-components'
-
+import { FormError } from '../atoms/FormError'
 
 const StyledLoginHeader = styled.div`  
     &>div{
@@ -23,7 +23,7 @@ const StyledLoginFooter = styled.div`
     }
 `;
 
-export const LoginPlayerMenu = ({cancelBtn,loginBtn,userNameInputText,passwordInputText}) =>{
+export const LoginPlayerMenu = ({cancelBtn,loginBtn,userNameInputText,passwordInputText,errors}) =>{
 
 
     return (
@@ -31,6 +31,9 @@ export const LoginPlayerMenu = ({cancelBtn,loginBtn,userNameInputText,passwordIn
                     <StyledLoginHeader>
                         <MonopolyDealInputField {...userNameInputText}/>
                         <MonopolyDealInputField {...passwordInputText}/>
+                        {errors &&
+                            <FormError errors={errors}/>
+                        }  
                     </StyledLoginHeader>
                     <StyledLoginFooter>
                         <MonopolyDealButton {...cancelBtn} />

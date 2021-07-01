@@ -3,7 +3,7 @@ import {MonopolyDealButton} from './../atoms/MonopolyDealButton'
 import {MonopolyDealInputField} from './../atoms/MonopolyDealInputField'
 import {MonopolyDealDropdown} from './../atoms/MonopolyDealDropdown'
 import {CharacterImage} from './../atoms/CharacterImage'
-
+import { FormError } from '../atoms/FormError'
 import styled from 'styled-components'
 
 
@@ -27,7 +27,7 @@ const StyledLoginFooter = styled.div`
     }
 `;
 
-export const RegisterPlayerMenu = ({cancelBtn,registerBtn,userNameInputText,passwordInputText,characterSelectionDropdown,imageId}) =>{
+export const RegisterPlayerMenu = ({cancelBtn,registerBtn,userNameInputText,passwordInputText,characterSelectionDropdown,imageId,errors}) =>{
 
 
     return (
@@ -37,6 +37,9 @@ export const RegisterPlayerMenu = ({cancelBtn,registerBtn,userNameInputText,pass
                         <MonopolyDealInputField {...passwordInputText}/>
                         <MonopolyDealDropdown {...characterSelectionDropdown}/>
                         <CharacterImage imageId={imageId}></CharacterImage>
+                        {errors &&
+                            <FormError errors={errors}/>
+                        } 
                     </StyledLoginHeader>
                     <StyledLoginFooter>
                         <MonopolyDealButton {...cancelBtn} />

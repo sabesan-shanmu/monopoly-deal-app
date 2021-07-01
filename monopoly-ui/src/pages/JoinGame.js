@@ -20,7 +20,8 @@ export const JoinGame = (props) =>{
         {
             playerName:"",
             playerPassCode:"",
-            imageId:""
+            imageId:"",
+            errors:null
         }
     )
 
@@ -94,7 +95,7 @@ export const JoinGame = (props) =>{
         registerForm:{
             onSubmit:(e)=>{
                 setIsLoading(true)
-                playersApi.register(gameState.game.links.register,formInput)
+                playersApi.register(gameState.game.links.register,{playerName:formInput.playerName,playerPassCode:formInput.playerPassCode,imageId:formInput.imageId})
                     .then(function(success){
                         console.log(success.data);
                         const playerData = getDecodedPlayer(success.data);
@@ -104,6 +105,9 @@ export const JoinGame = (props) =>{
                     .catch(function(error){
                         console.log(error.response.data);
                         setIsLoading(false);
+                        setFormInput(prevState => {
+                            return { ...prevState, errors:error.response.data}
+                        });
                     })
                 e.preventDefault();
             }
@@ -121,10 +125,14 @@ export const JoinGame = (props) =>{
                     .catch(function(error){
                         console.log(error.response.data);
                         setIsLoading(false);
+                        setFormInput(prevState => {
+                            return { ...prevState, errors:error.response.data}
+                        });
                     })
                 e.preventDefault();
             }
-        }
+        },
+        errors:formInput.errors
     };
 
 

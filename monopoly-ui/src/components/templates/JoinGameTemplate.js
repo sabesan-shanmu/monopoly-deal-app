@@ -24,7 +24,7 @@ const StyledSpan = styled.div`
 `
 
 
-export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInputText,passwordInputText,characterSelectionDropdown,imageId,toggletoRegisterBtn,toggleToLoginBtn,registerForm,loginForm})=> {
+export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,registerBtn,userNameInputText,passwordInputText,characterSelectionDropdown,imageId,toggletoRegisterBtn,toggleToLoginBtn,registerForm,loginForm,errors})=> {
    
    
 
@@ -40,6 +40,7 @@ export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,reg
                             passwordInputText={passwordInputText}
                             characterSelectionDropdown={characterSelectionDropdown}
                             imageId={imageId}
+                            errors={errors}
                         />
                         <StyledSpan>--OR--</StyledSpan>
                         <MonopolyDealButton {...toggleToLoginBtn} />
@@ -56,6 +57,7 @@ export const JoinGameTemplate = ({isRegisterScreenVisible,cancelBtn,loginBtn,reg
                             loginBtn={loginBtn}
                             userNameInputText={userNameInputText}
                             passwordInputText={passwordInputText}
+                            errors={errors}
                         />
                         <StyledSpan>--OR--</StyledSpan>
                         <MonopolyDealButton {...toggletoRegisterBtn} />

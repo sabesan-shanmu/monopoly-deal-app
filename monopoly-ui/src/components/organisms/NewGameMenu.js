@@ -7,6 +7,7 @@ import {MonopolyMessageField} from '../atoms/GameStatus'
 import styled from 'styled-components'
 import {device} from "../../common/devices"; 
 import {StyledMenuForm} from "../atoms/StyledMenuForm";
+import { FormError } from '../atoms/FormError'
 
 
 const StyledNewGameHeader = styled.div`  
@@ -31,7 +32,7 @@ const StyledGameTitleMenuBody = styled.div`
 `;
 
 
-export const NewGameMenu = ({gameInputText,cancelBtn,createBtn,gameForm,gameModeDropdown}) => {
+export const NewGameMenu = ({gameInputText,cancelBtn,createBtn,gameForm,gameModeDropdown,errors}) => {
 
    
     return (
@@ -39,6 +40,9 @@ export const NewGameMenu = ({gameInputText,cancelBtn,createBtn,gameForm,gameMode
                 <StyledNewGameHeader>
                     <MonopolyDealInputField {...gameInputText} />
                     <MonopolyDealDropdown {...gameModeDropdown} />
+                    {errors &&
+                        <FormError errors={errors}/>
+                    }   
                 </StyledNewGameHeader>
                 <StyledGameTitleMenuBody>
                     <MonopolyDealButton  {...cancelBtn} />
