@@ -23,7 +23,7 @@ const constructMessage = (errors) =>{
     console.log(errors);
     switch(errors.name){
         case "ValidationError":
-            return Array.isArray(errors.message)? 
+            return typeof errors.message === 'object' && errors.message !== null? 
             Object.keys(errors.message).map(error=>error+":"+errors.message[error].join(",") ).join(" ")
             :errors.message;
         case "DBIntegrityError":
