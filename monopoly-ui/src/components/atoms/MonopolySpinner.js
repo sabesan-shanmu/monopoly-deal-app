@@ -28,7 +28,6 @@ const StyledLoaderContainer = styled.div`
 
 const StyledLoaderText = styled.div`
     font-size:1.35em;
-    line-height: 1.35em;
 `;
 
 

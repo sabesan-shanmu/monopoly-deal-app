@@ -28,8 +28,8 @@ export const NewGame = () => {
             mode: "text",
             label: "Name",
             value:formInput.name,
-            minLength:0,
-            maxLength:40,
+            minLength:1,
+            maxLength:20,
             placeholder:"Enter Name...",
             onChange:(e)=>{
                 setFormInput(prevState => {

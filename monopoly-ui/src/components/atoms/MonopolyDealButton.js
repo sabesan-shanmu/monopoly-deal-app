@@ -13,7 +13,6 @@ const StyledMonopolyDealButton = styled.button`
     cursor: pointer;
     padding:5px;
     font-size:1.35em;
-    line-height: 1.35em;
     &:disabled{
       cursor:not-allowed;
       opacity:0.6

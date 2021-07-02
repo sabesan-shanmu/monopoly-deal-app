@@ -13,12 +13,10 @@ const StyledInput = styled.div`
         border:1px solid black;
         color:white;
         font-size:1.35em;
-        line-height: 1.35em;
     }
     &>input
     {
         font-size:1.35em;
-        line-height: 1.35em;
         height: 1.35em;
         width:100%;        
         box-sizing: content-box;
