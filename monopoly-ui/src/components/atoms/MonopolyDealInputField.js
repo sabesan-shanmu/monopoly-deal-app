@@ -26,7 +26,7 @@ const StyledInput = styled.div`
     }
 
     &>input::placeholder,
-    &>input::-webkit-input-placeholder {;
+    &>input::-webkit-input-placeholder {
         height: 1.35em;
     }
     &>input:-ms-input-placeholder {
