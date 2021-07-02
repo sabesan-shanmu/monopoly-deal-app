@@ -25,6 +25,15 @@ const StyledInput = styled.div`
         box-sizing: content-box;
         text-overflow: ellipsis;
     }
+
+    &>input::placeholder,
+    &>input::-webkit-input-placeholder {;
+        height: 1.35em;
+    }
+    &>input:-ms-input-placeholder {
+        height: 1.35em;
+    }
+
     @media ${device.xlarge} {
         &>label
         {
