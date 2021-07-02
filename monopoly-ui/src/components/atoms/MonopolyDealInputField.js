@@ -19,6 +19,7 @@ const StyledInput = styled.div`
     {
         font-size:1.35em;
         line-height: 1.35em;
+        height: 1.35em;
         padding:2px;
         width:100%;        
         box-sizing: content-box;
