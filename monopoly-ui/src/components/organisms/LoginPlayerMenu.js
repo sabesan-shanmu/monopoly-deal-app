@@ -20,6 +20,7 @@ const StyledLoginFooter = styled.div`
     &>button{
         flex:2;
         max-width:200px;
+        margin:2px;
     }
 `;
 

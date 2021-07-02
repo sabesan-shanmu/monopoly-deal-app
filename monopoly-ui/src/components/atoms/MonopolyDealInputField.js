@@ -21,6 +21,7 @@ const StyledInput = styled.div`
         line-height: 1.35em;
         padding:2px;
         width:100%;
+        box-sizing:border-box;
     }
     @media ${device.xlarge} {
         &>label
