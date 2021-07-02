@@ -8,69 +8,45 @@ const StyledInput = styled.div`
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    
     &>label{
         background-color: #C70000;
         border:1px solid black;
-        color:white
+        color:white;
+        font-size:1.35em;
+        line-height: 1.35em;
     }
-
+    &>select
+    {
+        font-size:1.35em;
+        line-height:1.35em;
+        padding:2px;  
+        width:100%; 
+    }
     @media ${device.xlarge} {
-        &>select
-        {
-            font-size:20px;
-            padding:2px;
-            width:168px;
-        }
         &>label
         {
-            font-size:20px;
-            padding:2px;
-            width:80px;
+            width:160px;
         }
     }
 
     @media ${device.large} { 
-        &>select
-        {
-            font-size:18px;
-            padding:2px;
-            width:128px;
-        }
         &>label
         {
-            font-size:18px;
-            padding:2px;
-            width:60px;
+            width:130px;
         }
     }
     @media ${device.medium} { 
-        &>select
-        {
-            font-size:18px;
-            padding:2px;
-            width:133px;
-        }
         &>label
         {
-            
-            font-size:18px;
-            padding:2px;
-            width:60px;
+            width:120px;
         }
+
     }
     @media ${device.small} { 
-        &>select
-        {
-            font-size:12px;
-            padding:2px;
-            width:108px;
-        }
         &>label
         {
-            font-size:12px;
-            padding:2px;
-            width:50px;
+
+            width:100px;
         }
     }
 

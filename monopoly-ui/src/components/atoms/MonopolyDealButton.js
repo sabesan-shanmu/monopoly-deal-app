@@ -6,31 +6,19 @@ import {device} from "../../common/devices";
 const StyledMonopolyDealButton = styled.button`
     border: none;
     background-color:#C70000;
-    max-height:35px;
+    //max-height:35px;
     color:white;
     border:1px solid white;
     border-radius:6px;
     cursor: pointer;
     padding:5px;
-
+    font-size:1.35em;
+    line-height: 1.35em;
     &:disabled{
       cursor:not-allowed;
       opacity:0.6
     }
-    @media ${device.xlarge} {
-      font-size:20px;
-      min-width:150px;
-    }
-    
-    @media ${device.medium} { 
-      font-size:15px;
-      min-width:80px;
-    }
 
-    @media ${device.small} { 
-      font-size:8px;
-      min-width:60px;
-    }
 `;
 
 

@@ -11,9 +11,9 @@ const StyledHeader = styled.header`
     width: 100%;
     display: flex;
     flex-direction: column;
-    min-height: 35px;
     padding:5px;
-    
+    font-size:1.35em;
+    line-height: 1.35em;
     &>div{
         text-align:right;
     }

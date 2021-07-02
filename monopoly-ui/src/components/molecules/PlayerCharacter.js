@@ -18,16 +18,7 @@ const StyledPlayerCharacter = styled.section`
     border: 2px solid black;
     border-radius: 5px;
     max-width: 350px;
-    @media ${device.xlarge} {
-        font-size:20px;
-      }
-    @media ${device.medium} { 
-        font-size:15px;
-    }
-  
-    @media ${device.small} { 
-        font-size:8px;
-    }
+
     &>img{
         margin:2px;
     }

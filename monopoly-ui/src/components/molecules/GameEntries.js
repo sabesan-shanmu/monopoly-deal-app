@@ -18,18 +18,18 @@ const StyledGameEntries = styled.div`
     
 
     @media ${device.xlarge} {
-        font-size:20px;
-        max-width: 600px;
+        //font-size:20px;
+        //max-width: 600px;
     }
       
     @media ${device.medium} { 
-        font-size:18px;
-        max-width: 450px;
+        //font-size:18px;
+        //max-width: 450px;
     }
     
     @media ${device.small} { 
-        font-size:12px;
-        max-width: 300px;
+        //font-size:12px;
+        //max-width: 300px;
     } 
 }`;
 /*TODO: Fixing header to the top */
@@ -38,9 +38,17 @@ const StyledGameEntryColHeader = styled.div`
     color:white;
     border:1px solid white;
     padding: 4px;
+    font-size:1.35em;
 `;
 
 const StyledGameEntryCell = styled.div`
+    border:1px solid black;
+    background-color: white;
+    color:black;
+    padding: 4px;
+    font-size:1.35em;
+`;  
+const StyledGameSelectionCell = styled.div`
     border:1px solid black;
     background-color: white;
     color:black;
@@ -88,14 +96,14 @@ export const GameEntries = ({games,...props}) => {
                     <StyledGameEntryCell>
                         {game.numberOfPlayers}/{getTotalNumberofExpectedPlayers(game.gameMode)}
                     </StyledGameEntryCell>    
-                    <StyledGameEntryCell>
+                    <StyledGameSelectionCell>
                         <MonopolyDealButton label="Select" 
                             onClick={()=>{
                                 gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
                                 history.push(`/${game.gamePassCode}/join-game`);
                             }} 
                             />
-                    </StyledGameEntryCell>    
+                    </StyledGameSelectionCell>    
                 </React.Fragment>
             )} 
             {games && games.length == 0 &&

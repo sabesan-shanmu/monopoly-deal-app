@@ -17,10 +17,9 @@ const getBackgroundColour = (gameStatus)=>{
 
 
 const StyledMesssageField = styled.div`
-    
     color: #fff;
     border: 1px solid #fff;
-    padding: 5px;
+    padding: 2px;
     text-align: center;
     background-color:${(props) => getBackgroundColour(props.gameStatus)};
 `

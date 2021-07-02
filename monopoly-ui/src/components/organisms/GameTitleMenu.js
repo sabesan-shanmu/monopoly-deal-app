@@ -22,6 +22,8 @@ const StyledGameTitleMenuBody = styled.div`
 const StyledFooter= styled.a`
     margin-top:5px;
     color:white;
+    font-size:1.35em;
+    line-height: 1.35em;
 `
 
 export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {

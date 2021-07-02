@@ -8,90 +8,51 @@ const StyledInput = styled.div`
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    
     &>label{
         background-color: #C70000;
         border:1px solid black;
-        color:white
+        color:white;
+        font-size:1.35em;
+        line-height: 1.35em;
     }
-
+    &>input
+    {
+        font-size:1.35em;
+        line-height: 1.35em;
+        padding:2px;
+        width:100%;
+    }
     @media ${device.xlarge} {
-        &>input
-        {
-            font-size:20px;
-            padding:2px;
-            width:160px;
-            line-height:20px;
-        }
-        &>input::placeholder
-        {
-            line-height:20px;
-        }
         &>label
         {
-            font-size:20px;
-            padding:2px;
-            width:80px;
+            width:160px;
         }
+
+
     }
 
     @media ${device.large} { 
-        &>input
-        {
-            font-size:18px;
-            padding:2px;
-            width:120px;
-            line-height:18px;
-        }
-        &>input::placeholder
-        {
-            line-height:18px;
-        }
         &>label
         {
-            font-size:18px;
-            padding:2px;
-            width:60px;
+
+            width:130px;
         }
+
     }
     @media ${device.medium} { 
-        &>input
-        {
-            font-size:18px;
-            padding:2px;
-            width:125px;
-            line-height:18px;
-        }
-        &>input::placeholder
-        {
-            line-height:18px;
-        }
         &>label
         {
-            
-            font-size:18px;
-            padding:2px;
-            width:60px;
+
+            width:120px;
         }
+
     }
     @media ${device.small} { 
-        &>input
-        {
-            font-size:12px;
-            padding:2px;
-            width:100px;
-            line-height:12px;
-        }
-        &>input::placeholder
-        {
-            line-height:12px;
-        }
         &>label
         {
-            font-size:12px;
-            padding:2px;
-            width:50px;
+            width:100px;
         }
+
     }
 
 `;

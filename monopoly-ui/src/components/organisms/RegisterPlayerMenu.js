@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 const StyledLoginHeader = styled.div`  
     text-align: center;
+    width:100%;
     &>div{
         margin-bottom:5px;
     }

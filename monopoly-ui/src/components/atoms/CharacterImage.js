@@ -18,32 +18,12 @@ import {getBackgroundColour} from '../../common/ImageHelpers'
 import {device} from "../../common/devices";
 
 const StyledCharacterImage = styled.img`
-    width:100px;
     height:100px;
+    width:100px;
     border: 2px solid black;
     border-radius: 5px;
     background-color:${({imageId})=>getBackgroundColour(imageId,"primary")};
     background-size: cover;
-
-    @media ${device.xlarge} { 
-        width:80px;
-        height:80px;
-    }
-
-    @media ${device.large} { 
-        width:50px;
-        height:50px;
-    }
-
-    @media ${device.medium} { 
-        width:40px;
-        height:40px;
-    }
-
-    @media ${device.small} { 
-        width:30px;
-        height:30px;
-    }
 `;
 
 
