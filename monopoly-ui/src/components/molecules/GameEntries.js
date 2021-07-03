@@ -39,6 +39,7 @@ const StyledGameEntryColHeader = styled.div`
     border:1px solid white;
     padding: 4px;
     font-size:1.35em;
+    word-break: break-word;
 `;
 
 const StyledGameEntryCell = styled.div`
@@ -47,6 +48,7 @@ const StyledGameEntryCell = styled.div`
     color:black;
     padding: 4px;
     font-size:1.35em;
+    word-break: break-word;
 `;  
 const StyledGameSelectionCell = styled.div`
     border:1px solid black;

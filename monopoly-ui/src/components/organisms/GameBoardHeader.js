@@ -11,7 +11,7 @@ import {ActionTypes} from '../../common/constants'
 
 const StyledGameHeader = styled.div`
     display:grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: 2fr 1fr;
     align-items: center;
     top:0;
     position:fixed;   

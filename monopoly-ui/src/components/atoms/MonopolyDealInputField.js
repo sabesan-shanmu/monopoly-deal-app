@@ -11,13 +11,16 @@ const StyledInput = styled.div`
     &>label{
         background-color: #C70000;
         border:1px solid black;
+        text-align:center;
         color:white;
         font-size:1.35em;
+        height: 1.35em;
     }
     &>input
     {
         font-size:1.35em;
         height: 1.35em;
+        line-height: 1.95em;
         width:100%;        
         box-sizing: content-box;
         text-overflow: ellipsis;
@@ -26,9 +29,11 @@ const StyledInput = styled.div`
     &>input::placeholder,
     &>input::-webkit-input-placeholder {
         height: 1.35em;
+        line-height: 1.95em;
     }
     &>input:-ms-input-placeholder {
         height: 1.35em;
+        line-height: 1.95em;
     }
 
     @media ${device.xlarge} {

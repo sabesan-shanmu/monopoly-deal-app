@@ -10,6 +10,10 @@ import styled from 'styled-components'
 
 const StyledSpan = styled.div`
     font-size:1.35em;
+    line-height:1.35em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 

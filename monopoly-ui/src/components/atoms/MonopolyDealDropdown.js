@@ -13,14 +13,18 @@ const StyledInput = styled.div`
         border:1px solid black;
         color:white;
         font-size:1.35em;
+        height: 1.35em;
+        text-align:center;
     }
     &>select
     {
         font-size:1.35em;
-        height: 1.35em;
+        line-height: 1.35em;
         width:100%; 
         box-sizing: content-box;
         text-overflow: ellipsis;
+        -webkit-appearance:menulist-button;
+       
     }
     @media ${device.xlarge} {
         &>label
@@ -32,21 +36,20 @@ const StyledInput = styled.div`
     @media ${device.large} { 
         &>label
         {
-            width:130px;
+           width:130px;
         }
     }
     @media ${device.medium} { 
         &>label
         {
-            width:120px;
+           width:120px;
         }
 
     }
     @media ${device.small} { 
         &>label
         {
-
-            width:100px;
+           width:100px;
         }
     }
 

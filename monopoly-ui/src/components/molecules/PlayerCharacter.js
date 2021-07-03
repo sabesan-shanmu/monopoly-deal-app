@@ -18,7 +18,9 @@ const StyledPlayerCharacter = styled.section`
     border: 2px solid black;
     border-radius: 5px;
     max-width: 350px;
-
+    
+    font-size:0.95em;
+    line-height:1.35em;
     &>img{
         margin:2px;
     }
