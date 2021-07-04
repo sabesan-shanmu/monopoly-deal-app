@@ -12,27 +12,22 @@ import {ActionTypes} from "../../common/constants"
 const StyledGameEntries = styled.div`
 {
     display:grid;
-    grid-template-columns: 2fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr;
     cursor: pointer;
+    grid-template-areas: 
+    'header'
+    'content';
     overflow-y: scroll;
-    
-
-    @media ${device.xlarge} {
-        //font-size:20px;
-        //max-width: 600px;
-    }
-      
-    @media ${device.medium} { 
-        //font-size:18px;
-        //max-width: 450px;
-    }
-    
-    @media ${device.small} { 
-        //font-size:12px;
-        //max-width: 300px;
-    } 
 }`;
-/*TODO: Fixing header to the top */
+/*HEADER*/
+const StyledHeader = styled.div`
+    grid-area: header;
+    display:grid;
+    grid-template-columns: 2fr 2fr 2fr 1fr;
+    position: sticky;
+    top: 0;
+`;
+
 const StyledGameEntryColHeader = styled.div`
     background-color:#C70000;
     color:white;
@@ -40,6 +35,13 @@ const StyledGameEntryColHeader = styled.div`
     padding: 4px;
     font-size:1.35em;
     word-break: break-word;
+`;
+/*Content*/
+const StyledContent = styled.div`
+    grid-area: content;
+    display:grid;
+    grid-template-columns: 2fr 2fr 2fr 1fr;
+    max-height:300px;
 `;
 
 const StyledGameEntryCell = styled.div`
@@ -67,6 +69,7 @@ const StyledNoGameRow = styled.div`
     justify-content:center;
 `;
 
+
 export const GameEntries = ({games,...props}) => {
 
     const history = useHistory();
@@ -74,48 +77,48 @@ export const GameEntries = ({games,...props}) => {
 
     return (
         <StyledGameEntries>
-            <StyledGameEntryColHeader>
-                Game Name
-            </StyledGameEntryColHeader>
-            <StyledGameEntryColHeader>
-                Game Status
-            </StyledGameEntryColHeader>
-            <StyledGameEntryColHeader>
-                Number of Players
-            </StyledGameEntryColHeader>
-            <StyledGameEntryColHeader>
-                {/* empty column header for button */}
-            </StyledGameEntryColHeader>
-            
-            {games && games.map((game,key)=>
-                <React.Fragment  key={key}>
-                    <StyledGameEntryCell>
-                        {game.name}
-                    </StyledGameEntryCell>
-                    <StyledGameEntryCell>
-                        <GameStatus gameStatus={game.gameStatus} />   
-                    </StyledGameEntryCell>
-                    <StyledGameEntryCell>
-                        {game.numberOfPlayers}/{getTotalNumberofExpectedPlayers(game.gameMode)}
-                    </StyledGameEntryCell>    
-                    <StyledGameSelectionCell>
-                        <MonopolyDealButton label="Select" 
-                            onClick={()=>{
-                                gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
-                                history.push(`/${game.gamePassCode}/join-game`);
-                            }} 
-                            />
-                    </StyledGameSelectionCell>    
-                </React.Fragment>
-            )} 
-            {games && games.length == 0 &&
-                <React.Fragment>
+            <StyledHeader>
+                <StyledGameEntryColHeader>
+                    Game Name
+                </StyledGameEntryColHeader>
+                <StyledGameEntryColHeader>
+                    Game Status
+                </StyledGameEntryColHeader>
+                <StyledGameEntryColHeader>
+                    Number of Players
+                </StyledGameEntryColHeader>
+                <StyledGameEntryColHeader>
+                    {/* empty column header for button */}
+                </StyledGameEntryColHeader>
+            </StyledHeader>
+            <StyledContent>
+                {games && games.map((game,key)=>
+                    <React.Fragment  key={key}>  
+                        <StyledGameEntryCell>
+                            {game.name}
+                        </StyledGameEntryCell>
+                        <StyledGameEntryCell>
+                            <GameStatus gameStatus={game.gameStatus} />   
+                        </StyledGameEntryCell>
+                        <StyledGameEntryCell>
+                            {game.numberOfPlayers}/{getTotalNumberofExpectedPlayers(game.gameMode)}
+                        </StyledGameEntryCell>    
+                        <StyledGameSelectionCell>
+                            <MonopolyDealButton label="Select" 
+                                onClick={()=>{
+                                    gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
+                                    history.push(`/${game.gamePassCode}/join-game`);
+                                }} 
+                                />
+                        </StyledGameSelectionCell>  
+                    </React.Fragment>
+                )} 
+                {games && games.length == 0 &&
                     <StyledNoGameRow>
                         No Games
                     </StyledNoGameRow>
-                </React.Fragment>
-            }
-            
+                }   
+            </StyledContent>          
         </StyledGameEntries>
     )
 }
