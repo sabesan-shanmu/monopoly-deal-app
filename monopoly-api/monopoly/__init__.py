@@ -7,8 +7,9 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from monopoly.middleware import Middleware
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_session import Session
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -16,6 +17,8 @@ ma = Marshmallow()
 flask_api = Api()
 jwt = JWTManager()
 session = Session()
+cors = CORS()
+socketio = SocketIO(cors_allowed_origins="*")
 
 def create_app():
     app = Flask(__name__,template_folder="static")
@@ -30,8 +33,9 @@ def create_app():
     ma.init_app(app)
     jwt.init_app(app)
     app.wsgi_app = Middleware(app.wsgi_app)
-    cors = CORS(app)
+    cors.init_app(app,origins=[app.config['MONOPOLY_UI_URL']])
     session.init_app(app)
+    socketio.init_app(app,cors_allowed_origins=app.config['MONOPOLY_UI_URL'])
     
     
     flask_api.title = app.config['API_TITLE']

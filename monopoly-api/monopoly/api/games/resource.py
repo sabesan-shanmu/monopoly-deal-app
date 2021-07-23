@@ -14,6 +14,7 @@ from monopoly.api.games.players.gamePlayerMoves.services import create_game_play
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from werkzeug.exceptions import BadRequest
 from flask import session
+import monopoly.notifications.games as gamesNotification
 
 
 game_namespace = Namespace('Games', description='List of games that a user can join. Users can also create/update game that they\'re part of')
@@ -100,6 +101,8 @@ class MultipleGamesResource(Resource):
             game = create_game_schema().load(request.get_json()) 
             create_game(game)
             result = GameSchema().dump(game)
+
+            gamesNotification.publish_game_create_event(result)
             return jsonify(result)
         except ValidationError as e:
             raise ResourceValidationException(e)

@@ -30,6 +30,7 @@ class ProductionConfig(Config):
     JWT_SECRET_KEY= os.environ.get("PROD_JWT_SECRET_KEY")
     SESSION_REDIS = redis.from_url(os.environ.get('PROD_REDISCLOUD_URL'))
     SECRET_KEY = os.environ.get("PROD_REDIS_SECRET_KEY")
+    MONOPOLY_UI_URL= os.environ.get("PROD_MONOPOLY_UI_URL")
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -37,3 +38,4 @@ class DevelopmentConfig(Config):
     JWT_SECRET_KEY= os.environ.get("DEV_JWT_SECRET_KEY")
     SESSION_REDIS = redis.from_url(os.environ.get('DEV_REDISCLOUD_URL'))
     SECRET_KEY = os.environ.get("DEV_REDIS_SECRET_KEY")
+    MONOPOLY_UI_URL = os.environ.get("DEV_MONOPOLY_UI_URL")
