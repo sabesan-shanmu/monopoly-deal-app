@@ -8,7 +8,11 @@ export const SocketContext = createContext();
 export const SocketContextProvider  = ({children}) => {
 
     
-    const socket = io.connect(process.env.REACT_APP_API_BASE_URL);
+    const socket = io.connect(process.env.REACT_APP_API_BASE_URL,
+        {
+            transports: ['websocket']
+        }
+    );
     
     socket.on("connect_error", (error) => {
         console.log(`connect_error due to ${error.message}`);

@@ -35,7 +35,7 @@ def create_app():
     app.wsgi_app = Middleware(app.wsgi_app)
     cors.init_app(app,origins=[app.config['MONOPOLY_UI_URL']])
     session.init_app(app)
-    socketio.init_app(app,cors_allowed_origins=app.config['MONOPOLY_UI_URL'])
+    socketio.init_app(app,cors_allowed_origins=app.config['MONOPOLY_UI_URL'],async_mode=None)
     
     
     flask_api.title = app.config['API_TITLE']
