@@ -18,7 +18,7 @@ flask_api = Api()
 jwt = JWTManager()
 session = Session()
 cors = CORS()
-socketio = SocketIO(cors_allowed_origins="*")
+socketio = SocketIO()
 
 def create_app():
     app = Flask(__name__,template_folder="static")
