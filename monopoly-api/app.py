@@ -1,6 +1,6 @@
-from monopoly import create_app
+from monopoly import create_app,socketio
 
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=app.config["DEBUG"])
+    socketio.run(app,debug=app.config["DEBUG"])

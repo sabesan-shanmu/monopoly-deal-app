@@ -63,6 +63,7 @@ export const NewGame = () => {
                     name:formInput.name,
                     gameMode:formInput.gameMode
                 };
+                setIsLoading(true)
                 gamesApi.post(data)
                     .then((success)=>{   
                         console.log(success.data);  
@@ -70,6 +71,7 @@ export const NewGame = () => {
                         history.push(`/${success.data.gamePassCode}/join-game`);
                     })
                     .catch((error)=>{
+                        setIsLoading(false)
                         console.log(error.response.data);
                         setFormInput(prevState => {
                             return { ...prevState, errors:error.response.data }
