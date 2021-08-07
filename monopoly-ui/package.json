@@ -23,7 +23,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start-dev": "serve -s build",
+    "start-dev":"serve -s build",
     "start": "react-scripts start watch-css -s ./src",
     "build": "react-scripts build && rimraf build/**/*.map",
     "test": "react-scripts test",
