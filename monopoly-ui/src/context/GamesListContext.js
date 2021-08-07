@@ -21,7 +21,7 @@ const gamesListReducer = (state,action)=>{
         case ActionTypes.CreateResource:
             if(!state.games)
                 return {...state}
-            console.log(`searching game:${action.data.gamePassCode}`)
+            console.log(`searching game:${action.data.gamePassCode}`);
             const foundIndex = state.games.findIndex(game=>{return game.gamePassCode == action.data.gamePassCode });
             const games = [];
             if(foundIndex>-1)
@@ -39,7 +39,7 @@ const gamesListReducer = (state,action)=>{
 
 export const GamesListContextProvider = ({children}) => {
 
-    const [gamesListState,gamesListDispatch] = useReducer(gamesListReducer,gamesListInitState)
+    const [gamesListState,gamesListDispatch] = useReducer(gamesListReducer,gamesListInitState);
     const {socket} = useContext(SocketContext); 
 
    
@@ -48,8 +48,8 @@ export const GamesListContextProvider = ({children}) => {
 
           
         socket.on("create_game", (created_game) => {
-            console.log("created_game fired!")
-            console.log(created_game)
+            console.log("created_game fired!");
+            console.log(created_game);
             gamesListDispatch({type:ActionTypes.CreateResource,data:created_game});
         });
     
