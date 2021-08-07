@@ -48,6 +48,8 @@ export const GamesListContextProvider = ({children}) => {
 
           
         socket.on("create_game", (created_game) => {
+            console.log("created_game fired!")
+            console.log(created_game)
             gamesListDispatch({type:ActionTypes.CreateResource,data:created_game});
         });
     
