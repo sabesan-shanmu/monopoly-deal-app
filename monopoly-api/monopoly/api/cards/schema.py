@@ -2,6 +2,7 @@ from monopoly import ma
 from marshmallow import fields,post_dump
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
+from monopoly.common.helpers import url_overwrite
 
 class PropertiesColourSchema(ma.Schema):
     colourId = EnumField(Enum.Colours,by_value=True)
@@ -49,7 +50,7 @@ class CardSchema(ma.Schema):
     rent = fields.Nested(RentCardSchema)
     cash = fields.Nested(CashCardSchema)
     links = ma.Hyperlinks(
-        {"self": ma.AbsoluteUrlFor("Cards_single_card_resource", cardId="<cardId>")}
+        {"self": url_overwrite("Cards_single_card_resource", cardId="<cardId>")}
     )
     # Remove None fields
     @post_dump

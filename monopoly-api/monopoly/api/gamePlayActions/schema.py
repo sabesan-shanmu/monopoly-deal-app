@@ -2,7 +2,7 @@ from monopoly import ma
 from marshmallow import fields
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
-
+from monopoly.common.helpers import url_overwrite
 
 
 class GamePlayActionSchema(ma.Schema):
@@ -13,5 +13,5 @@ class GamePlayActionSchema(ma.Schema):
     moveClassification = EnumField(Enum.ActionClassification,by_value=True)
     tradeTypes = EnumField(Enum.TradeTypes,by_value=True)
     links = ma.Hyperlinks(
-        {"self": ma.AbsoluteUrlFor("GamePlayActions_single_game_play_action_resource", gamePlayActionId="<gamePlayActionId>")}
+        {"self": url_overwrite("GamePlayActions_single_game_play_action_resource", gamePlayActionId="<gamePlayActionId>")}
     )

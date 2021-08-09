@@ -5,7 +5,7 @@ import monopoly.common.enums as Enum
 from monopoly import ma
 from monopoly.models import Game
 from monopoly.api.games.players.schema import PlayerSchema
-
+from monopoly.common.helpers import url_overwrite
 
 
 class create_game_schema(ma.Schema):
@@ -36,11 +36,11 @@ class GameSchema(ma.Schema):
     players = fields.Nested(PlayerSchema,many=True)
     links = ma.Hyperlinks(
         {
-            "self": ma.AbsoluteUrlFor("Games_single_game_resource", gamePassCode="<gamePassCode>"),
-            "register": ma.AbsoluteUrlFor("Players_register_resource", gamePassCode="<gamePassCode>"),
-            "login": ma.AbsoluteUrlFor("Players_login_resource", gamePassCode="<gamePassCode>"),
-            "refresh": ma.AbsoluteUrlFor("Players_refresh_resource", gamePassCode="<gamePassCode>"),
-            "gameCards": ma.AbsoluteUrlFor("GameCards_game_cards_resource", gamePassCode="<gamePassCode>")
+            "self":url_overwrite("Games_single_game_resource", gamePassCode="<gamePassCode>"),
+            "register": url_overwrite("Players_register_resource", gamePassCode="<gamePassCode>"),
+            "login": url_overwrite("Players_login_resource", gamePassCode="<gamePassCode>"),
+            "refresh": url_overwrite("Players_refresh_resource", gamePassCode="<gamePassCode>"),
+            "gameCards": url_overwrite("GameCards_game_cards_resource", gamePassCode="<gamePassCode>")
         }
     )
     @post_dump
