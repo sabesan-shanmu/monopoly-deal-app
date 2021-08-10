@@ -11,13 +11,13 @@ import {getBackgroundColour} from '../../common/ImageHelpers'
 
 const StyledPlayerCharacter = styled.section`
     display:grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     background-color:${({imageId})=>getBackgroundColour(imageId,"secondary")};
     color:${({imageId})=>getBackgroundColour(imageId,"text")};
     background-size: cover;
     border: 2px solid black;
     border-radius: 5px;
-    max-width: 350px;
+    max-width: 270px;
     
     font-size:0.95em;
     line-height:1.35em;
@@ -34,7 +34,6 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
             <div>
                 <div>Player Name:{playerName}</div>
                 <div>Game Order:{playerGameOrder}</div>
-                <div># of Cards:{numberOfCardsOnHand}</div>
             </div>   
         </StyledPlayerCharacter>
     )

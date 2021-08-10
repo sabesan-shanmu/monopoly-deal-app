@@ -5,7 +5,7 @@ import monopoly.common.enums as Enum
 from monopoly import ma
 from monopoly.models import Game
 from monopoly.api.games.players.schema import PlayerSchema
-from monopoly.common.helpers import url_overwrite
+from monopoly.common.utils import url_overwrite
 
 
 class create_game_schema(ma.Schema):

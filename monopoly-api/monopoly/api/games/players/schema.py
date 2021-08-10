@@ -4,6 +4,8 @@ from marshmallow.validate import Length
 from monopoly.models import Player
 from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.common.enums import GameCardLocationStatus
+from marshmallow_enum import EnumField
+import monopoly.common.enums as Enum
 
 class register_player_schema(ma.Schema):
     playerName = fields.String(required=True,validate=Length(max=20,min=3))
@@ -28,7 +30,8 @@ class PlayerSchema(ma.Schema):
     gamePassCode = fields.String()
     numberOfCardsOnHand = fields.Integer()
     imageId = fields.Integer(required=True)
-    playerCards =fields.Nested(GameCardSchema,many=True)
+    voteStatusId = EnumField(Enum, by_value=True)
+    playerCards = fields.Nested(GameCardSchema,many=True)
     @post_dump
     def update_number_of_cards_on_hand(self, data, many, **kwargs):
         data["numberOfCardsOnHand"] = len([x for x in data["playerCards"] if x["cardStatus"]==GameCardLocationStatus.IsOnHand.value])

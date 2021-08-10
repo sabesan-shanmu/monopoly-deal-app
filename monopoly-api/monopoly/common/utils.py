@@ -1,4 +1,4 @@
-from monopoly import ma
+from monopoly import ma 
 
 #TODO: this is temporary , will need to figure out why gunicron resolves https url as http
 def url_overwrite(endpoint,**kwargs):

@@ -81,6 +81,7 @@ class Player(db.Model):
     gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode"),nullable=False)
     playerName = db.Column(db.String)
     playerGameOrder = db.Column(db.Integer)
+    voteStatusId = db.Column(db.Enum(Enum.VoteStatus),default=Enum.VoteStatus.Undecided)
     playerCards =  db.relationship(GameCards,primaryjoin=playerId==GameCards.playerId)  
 
 class Game(db.Model):

@@ -2,7 +2,7 @@ from monopoly import ma
 from marshmallow import fields
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
-from monopoly.common.helpers import url_overwrite
+from monopoly.common.utils import url_overwrite
 
 
 class GamePlayActionSchema(ma.Schema):

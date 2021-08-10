@@ -2,7 +2,8 @@ from monopoly import ma
 from marshmallow import fields,post_dump
 from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
-from monopoly.common.helpers import url_overwrite
+from monopoly.common.utils import url_overwrite
+from flask import current_app
 
 class PropertiesColourSchema(ma.Schema):
     colourId = EnumField(Enum.Colours,by_value=True)
