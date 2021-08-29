@@ -22,7 +22,7 @@ const StyledMesssageField = styled.div`
     padding: 2px;
     text-align: center;
     background-color:${(props) => getBackgroundColour(props.gameStatus)};
-    height: 1.35em;
+    
 `
 
 export const GameStatus = ({gameStatus})=> {

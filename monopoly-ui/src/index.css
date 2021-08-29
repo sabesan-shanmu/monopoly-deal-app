@@ -5,9 +5,16 @@
   font-style:normal;
 }
 
+@font-face {
+  font-family:"Staatliches-Regular";
+  src:url("./assets/fonts/Staatliches-Regular.ttf") format("truetype");
+  font-weight:normal;
+  font-style:normal;
+}
+
 
 *{
-  font-family:'Kabel-Heavy';
+  font-family:'Staatliches-Regular';
 }
 html{
   background-image: url("./assets/img/backgrounds/main-background.jpg");

@@ -12,7 +12,7 @@ import {ActionTypes} from "../../common/constants"
 const StyledGameEntries = styled.div`
 {
     display:grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr 2fr 2fr 1fr;
     cursor: pointer;
     grid-template-areas: 
     'header'
@@ -35,6 +35,8 @@ const StyledGameEntryColHeader = styled.div`
     padding: 4px;
     font-size:1.35em;
     word-break: break-word;
+    position: sticky;
+    top: 0;
 `;
 /*Content*/
 const StyledContent = styled.div`
@@ -77,7 +79,7 @@ export const GameEntries = ({games,...props}) => {
 
     return (
         <StyledGameEntries>
-            <StyledHeader>
+            
                 <StyledGameEntryColHeader>
                     Game Name
                 </StyledGameEntryColHeader>
@@ -90,8 +92,7 @@ export const GameEntries = ({games,...props}) => {
                 <StyledGameEntryColHeader>
                     {/* empty column header for button */}
                 </StyledGameEntryColHeader>
-            </StyledHeader>
-            <StyledContent>
+        
                 {games && games.map((game,key)=>
                     <React.Fragment  key={key}>  
                         <StyledGameEntryCell>
@@ -117,8 +118,7 @@ export const GameEntries = ({games,...props}) => {
                     <StyledNoGameRow>
                         No Games
                     </StyledNoGameRow>
-                }   
-            </StyledContent>          
+                }       
         </StyledGameEntries>
     )
 }
