@@ -30,7 +30,7 @@ export const NewGame = () => {
             value:formInput.name,
             minLength:1,
             maxLength:20,
-            placeholder:"Enter Name...",
+            placeholder:"Enter Game Name...",
             onChange:(e)=>{
                 setFormInput(prevState => {
                     return { ...prevState, name: e.target.value }

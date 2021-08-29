@@ -32,6 +32,7 @@ export const SelectedGame = ({gamePassCode}) => {
     },[])
 
     return (
+        
         <React.Fragment>
             {!gameState.game &&
                 <MonopolySpinner/>

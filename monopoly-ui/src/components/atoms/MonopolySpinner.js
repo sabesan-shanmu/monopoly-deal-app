@@ -24,6 +24,9 @@ const transform = keyframes`
 
 const StyledLoaderContainer = styled.div`
     animation: ${transform} 3s linear infinite;
+    align-self:center;
+    justify-self:center;
+    grid-area: content;
 `;
 
 const StyledLoaderText = styled.div`

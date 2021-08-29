@@ -12,14 +12,12 @@ import {ActionTypes} from '../../common/constants'
 const StyledGameHeader = styled.div`
     display:grid;
     grid-template-columns: 2fr 1fr;
-    align-items: center;
-    top:0;
-    position:fixed;   
+    align-items: flex-start; 
     width:100%; 
-    
     &>button{
         justify-self: end;
     }
+    grid-area: header;
 `
 
 export const GameBoardHeader = () =>{

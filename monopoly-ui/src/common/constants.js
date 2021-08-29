@@ -19,3 +19,9 @@ export const MaxNumOFPlayers = {
     MAX_NUMBER_OF_PLAYERS_BASIC_MODE:5,
     MAX_NUMBER_OF_PLAYERS_EXTENDED_MODE:10
 }
+
+export const VoteStatusEnum = {
+    Undecided:0,
+    Accepted:1,
+    Declined:2
+}

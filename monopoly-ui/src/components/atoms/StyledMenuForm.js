@@ -17,6 +17,9 @@ export const StyledMenuForm = styled.form`
     border:2px solid black;
     border-radius:5px;
     max-height: 400px;
+    justify-self:center;
+    align-self: center;
+    grid-area: content;
 `;
 
 

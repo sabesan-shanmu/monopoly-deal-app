@@ -9,6 +9,7 @@ import {getBackgroundColour} from '../../common/ImageHelpers'
 
 
 
+
 const StyledPlayerCharacter = styled.section`
     display:grid;
     grid-template-columns: 1fr 2fr;
@@ -18,7 +19,7 @@ const StyledPlayerCharacter = styled.section`
     border: 2px solid black;
     border-radius: 5px;
     max-width: 270px;
-    
+    align-items: center;
     font-size:0.95em;
     line-height:1.35em;
     &>img{

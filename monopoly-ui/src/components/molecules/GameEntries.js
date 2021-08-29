@@ -14,19 +14,8 @@ const StyledGameEntries = styled.div`
     display:grid;
     grid-template-columns: 2fr 2fr 2fr 1fr;
     cursor: pointer;
-    grid-template-areas: 
-    'header'
-    'content';
     overflow-y: scroll;
 }`;
-/*HEADER*/
-const StyledHeader = styled.div`
-    grid-area: header;
-    display:grid;
-    grid-template-columns: 2fr 2fr 2fr 1fr;
-    position: sticky;
-    top: 0;
-`;
 
 const StyledGameEntryColHeader = styled.div`
     background-color:#C70000;
@@ -38,13 +27,7 @@ const StyledGameEntryColHeader = styled.div`
     position: sticky;
     top: 0;
 `;
-/*Content*/
-const StyledContent = styled.div`
-    grid-area: content;
-    display:grid;
-    grid-template-columns: 2fr 2fr 2fr 1fr;
-    max-height:300px;
-`;
+
 
 const StyledGameEntryCell = styled.div`
     border:1px solid black;
