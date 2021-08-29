@@ -23,6 +23,7 @@ const StyledPlayerEntryColHeader = styled.div`
     word-break: break-word;
     position: sticky;
     top: 0;
+    z-index:1;
 `;
 
 
@@ -33,6 +34,7 @@ const StyledPlayerEntryCell = styled.div`
     padding: 4px;
     font-size:1.35em;
     word-break: break-word;
+   
 `;  
 
 
@@ -47,7 +49,7 @@ export const GameWaitingRoom = ({players,...props}) => {
                     Players
                 </StyledPlayerEntryColHeader>
                 <StyledPlayerEntryColHeader>
-                    Player Vote Status
+                    Player Readiness
                 </StyledPlayerEntryColHeader>
                        
                 {players && players.map((player,key)=>

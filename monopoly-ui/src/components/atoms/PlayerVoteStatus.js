@@ -35,7 +35,7 @@ const StyledDiv = styled.div`
     align-items: center;
     word-break: normal;
     opacity:${(props) => isSelected(props)};
-
+    
 `;
 
 
@@ -44,7 +44,7 @@ export const PlayerVoteStatus = ({voteStatusId}) => {
     return (
         <React.Fragment>
             {voteStatusList.map((vote,key)=>
-                <StyledDiv selectedVoteStatusId={voteStatusId} voteStatusId={vote.value}>
+                <StyledDiv key={key} selectedVoteStatusId={voteStatusId} voteStatusId={vote.value}>
                     {vote.name} <img src={vote.image} />
                 </StyledDiv>            
             )} 
