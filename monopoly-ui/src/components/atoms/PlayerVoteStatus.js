@@ -7,12 +7,35 @@ import {VoteStatusEnum} from '../../common/constants'
 
 
 
+const voteStatusList = [
+    {
+        name:"Not Ready",
+        image:cancelImg,
+        value:VoteStatusEnum.Declined
+    },
+    {
+        name:"Undecided",
+        image:undecidedImg,
+        value:VoteStatusEnum.Undecided
+    },
+    {
+        name:"Ready",
+        image:checkedImg,
+        value:VoteStatusEnum.Accepted
+    }
 
+]
+
+const isSelected = ({selectedVoteStatusId,voteStatusId}) =>{
+    return selectedVoteStatusId == voteStatusId ?"1":"0.4"
+}
 
 const StyledDiv = styled.div`
-display: flex;
-align-items: center;
-word-break: normal;
+    display: flex;
+    align-items: center;
+    word-break: normal;
+    opacity:${(props) => isSelected(props)};
+
 `;
 
 
@@ -20,22 +43,11 @@ export const PlayerVoteStatus = ({voteStatusId}) => {
     console.log(voteStatusId);
     return (
         <React.Fragment>
-            {voteStatusId == VoteStatusEnum.Declined &&
-                <StyledDiv>
-                    Not Ready <img src={cancelImg} />
-                </StyledDiv>
-            }
-            {voteStatusId == VoteStatusEnum.Undecided &&
-                <StyledDiv>
-                    Undecided <img src={undecidedImg} />
-                </StyledDiv>
-            }
-            {voteStatusId == VoteStatusEnum.Accepted &&
-                <StyledDiv>
-                    Ready <img src={checkedImg} />
-                </StyledDiv>
-            }
+            {voteStatusList.map((vote,key)=>
+                <StyledDiv selectedVoteStatusId={voteStatusId} voteStatusId={vote.value}>
+                    {vote.name} <img src={vote.image} />
+                </StyledDiv>            
+            )} 
         </React.Fragment>
     )
 }
-
