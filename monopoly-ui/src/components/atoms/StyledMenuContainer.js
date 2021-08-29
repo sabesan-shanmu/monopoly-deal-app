@@ -16,6 +16,7 @@ export const StyledMenuContainer = styled.div`
     background-size: cover;
     border:2px solid black;
     border-radius:5px;
+    max-height: 400px;
 `;
 
 
