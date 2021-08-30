@@ -46,7 +46,7 @@ export const GameWaitingRoom = ({players,...props}) => {
         <StyledPlayerEntries>
             
                 <StyledPlayerEntryColHeader>
-                    Name
+                    Players
                 </StyledPlayerEntryColHeader>
                 <StyledPlayerEntryColHeader>
                     Vote Status
