@@ -11,7 +11,6 @@ export const NewGame = () => {
     
     const history = useHistory();
 
-    const {gameState,gameDispatch} = useContext(GameContext);
     const [isLoading,setIsLoading] = useState(false)
 
     const [formInput,setFormInput] = useState(
@@ -66,8 +65,7 @@ export const NewGame = () => {
                 setIsLoading(true)
                 gamesApi.post(data)
                     .then((success)=>{   
-                        console.log(success.data);  
-                        gameDispatch({type:ActionTypes.CreateResource,game:success.data});
+                        console.log(success.data); 
                         history.push(`/${success.data.gamePassCode}/join-game`);
                     })
                     .catch((error)=>{

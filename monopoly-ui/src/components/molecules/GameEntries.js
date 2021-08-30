@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import {device} from "../../common/devices";
 import {useHistory} from 'react-router-dom'
 import {getTotalNumberofExpectedPlayers} from '../../common/GameHelpers'
-import {GameContext} from '../../context/GameContext'
 import {ActionTypes} from "../../common/constants"
 
 const StyledGameEntries = styled.div`
@@ -58,7 +57,6 @@ const StyledNoGameRow = styled.div`
 export const GameEntries = ({games,...props}) => {
 
     const history = useHistory();
-    const {gameState,gameDispatch} = useContext(GameContext);
 
     return (
         <StyledGameEntries>
@@ -90,7 +88,6 @@ export const GameEntries = ({games,...props}) => {
                         <StyledGameSelectionCell>
                             <MonopolyDealButton label="Select" 
                                 onClick={()=>{
-                                    gameDispatch({type:ActionTypes.CreateResource,game:game,errors:null});
                                     history.push(`/${game.gamePassCode}/join-game`);
                                 }} 
                                 />

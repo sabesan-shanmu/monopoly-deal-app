@@ -25,13 +25,14 @@ function App() {
               <Switch>
                 <PlayerContextProvider>
                   <Route exact path="/" component={Home} />
-                  <GameContextProvider>
+                  
                         <Route path={["/:gamePassCode/game-board", "/:gamePassCode/join-game"]}  render={({match}) => (
+                          <GameContextProvider>
                               <SelectedGame gamePassCode={match.params.gamePassCode}/>
+                          </GameContextProvider>
                         )}/>   
                         <Route exact path="/new-game" component={NewGame} />
-                        <Route exact path="/games-list" component={SelectGame} />
-                  </GameContextProvider>
+                        <Route exact path="/games-list" component={SelectGame} />  
                 </PlayerContextProvider>
               </Switch>
             </Router>
