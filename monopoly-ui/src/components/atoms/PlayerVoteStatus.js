@@ -35,12 +35,12 @@ const StyledDiv = styled.div`
     align-items: center;
     word-break: normal;
     opacity:${(props) => isSelected(props)};
-    
+
 `;
 
 
 export const PlayerVoteStatus = ({voteStatusId}) => {
-    console.log(voteStatusId);
+    
     return (
         <React.Fragment>
             {voteStatusList.map((vote,key)=>

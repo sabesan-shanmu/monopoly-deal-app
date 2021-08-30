@@ -32,18 +32,23 @@ export const PlayerContextProvider = ({children}) => {
     const history = useHistory();
 
     useEffect(()=>{
+        let isMounted = true
         sessionsApi.get()
         .then(function(success){
             console.log(success.data);
-            const playerData = getDecodedPlayer(success.data);
-            playerDispatch({type:ActionTypes.CreateResource,player:playerData});
-            history.push(`/${playerData.gamePassCode}/game-board`);
+            if(isMounted){
+                const playerData = getDecodedPlayer(success.data);
+                playerDispatch({type:ActionTypes.CreateResource,player:playerData});
+                history.push(`/${playerData.gamePassCode}/game-board`);
+            }
         })
         .catch(function(error){
             console.log(error.response.data);
             if(history.location.pathname.indexOf("game-board")>-1)
                 history.push(history.location.pathname.replace("game-board","join-game"));
         });
+
+        return () => { isMounted = false }; 
     },[]);
     
     return (

@@ -102,7 +102,7 @@ class MultipleGamesResource(Resource):
             create_game(game)
             result = GameSchema().dump(game)
 
-            gamesNotification.publish_game_create_event(result)
+            gamesNotification.publish_game_create_event_to_all(result)
             return jsonify(result)
         except ValidationError as e:
             raise ResourceValidationException(e)

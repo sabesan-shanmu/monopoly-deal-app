@@ -66,7 +66,7 @@ export const MonopolyDealDropdown = ({label,placeholder,value,options,...props }
             <select id="monopoly-ddl" value={value} {...props}>
                 <option value="">{placeholder}</option>
                 {options && options.map((option,key)=>
-                     <option key={option.value} value={option.value} >{option.text}</option>
+                     <option key={option.value} value={option.value} {...option}>{option.text}</option>
                 )}
             </select> 
         </StyledInput>

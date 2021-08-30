@@ -66,7 +66,7 @@ export const getBackgroundColour=(imageId,type)=>{
 }
 
 
-export const  getImageList = () => {
+export const  getImageList = (playersList) => {
 
 
     const imageList = [
@@ -83,6 +83,13 @@ export const  getImageList = () => {
         {value:11,text:'Rocket Raccoon'},
         {value:12,text:'Pikachu'},
     ];
+    const filteredList = imageList.map(image=>{
+        return {
+            ...image,
+            disabled:playersList.findIndex(p=> p.imageId==image.value)>-1
+        };
 
-    return imageList;
+    });
+    
+    return filteredList;
 } 

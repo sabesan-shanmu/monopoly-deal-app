@@ -62,7 +62,7 @@ export const JoinGame = (props) =>{
                     return { ...prevState, imageId: e.target.value }
                   });
             },
-            options:getImageList(),
+            options:getImageList(gameState.game.players),
             required:'required'
         },
         cancelBtn:{

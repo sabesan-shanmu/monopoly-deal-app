@@ -9,7 +9,8 @@ from monopoly.auth import create_tokens
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-
+import monopoly.notifications.games as gamesNotification
+from monopoly.api.games.schema import GameSchema
 
 
 players_namespace = Namespace('Players', description='Players can sign up or login to existing game')
@@ -41,6 +42,10 @@ class RegisterResource(Resource):
             if len([x for x in game.players if x.playerName.lower() == player.playerName.lower()])>0:
                  raise FieldValidationException(message="Player Name already exists")  
 
+            #check if imageId exists
+            if len([x for x in game.players if x.imageId == player.imageId])>0:
+                 raise FieldValidationException(message="Character Image already exists")  
+
             add_player(player)
           
             player_result = PlayerSchema().dump(player)
@@ -48,6 +53,12 @@ class RegisterResource(Resource):
             session["gameId"] = game.gameId
             session["playerId"] = player_result["playerId"]
             
+            #publish updated game
+            update_game = get_game_by_gamepasscode(gamePassCode)
+            update_game_result = GameSchema().dump(update_game)
+            gamesNotification.publish_game_update_event_to_all(update_game_result)            
+            gamesNotification.publish_game_update_event_to_room(update_game_result)
+
             result = create_tokens(player_result)
            
             return result,200
@@ -71,6 +82,13 @@ class LoginResource(Resource):
                 result = create_tokens(player_result)
                 session["gameId"] = game.gameId
                 session["playerId"] = player_result["playerId"]
+
+                #publish updated game
+                update_game = get_game_by_gamepasscode(gamePassCode)
+                update_game_result = GameSchema().dump(update_game)
+                gamesNotification.publish_game_update_event_to_all(update_game_result)
+                gamesNotification.publish_game_update_event_to_room(update_game_result)
+
                 return result, 200  
             else:
                 raise ResourceNotFoundException(message="Player Not Found")  
