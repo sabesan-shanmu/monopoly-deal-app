@@ -91,7 +91,7 @@ class LoginResource(Resource):
 
                 return result, 200  
             else:
-                raise ResourceNotFoundException(message="Player Not Found")  
+                raise ResourceNotFoundException(message="Incorrect Password")  
 
         except ValidationError as e:
             raise ResourceValidationException(e)

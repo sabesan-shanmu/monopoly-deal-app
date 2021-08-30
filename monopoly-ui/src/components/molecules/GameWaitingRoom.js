@@ -46,10 +46,10 @@ export const GameWaitingRoom = ({players,...props}) => {
         <StyledPlayerEntries>
             
                 <StyledPlayerEntryColHeader>
-                    Players
+                    Name
                 </StyledPlayerEntryColHeader>
                 <StyledPlayerEntryColHeader>
-                    Player Readiness
+                    Vote Status
                 </StyledPlayerEntryColHeader>
                        
                 {players && players.map((player,key)=>
