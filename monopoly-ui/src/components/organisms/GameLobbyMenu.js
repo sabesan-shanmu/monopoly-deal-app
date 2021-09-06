@@ -31,7 +31,7 @@ export const GameLobbyMenu = () =>{
         },
         playerVoteStatus:{
             flexDirection:"row",
-            voteStatusId:playerState.player.voteStatusId,
+            voteStatusId:playerState.player?.voteStatusId,
             onChange:(e)=>{
                 console.log(e.target.value);
                 playersApi.vote(gameState.game.links.vote,playerState.player.accessToken,{voteStatusId:parseInt(e.target.value)})
