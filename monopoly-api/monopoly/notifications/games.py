@@ -8,4 +8,4 @@ def publish_game_update_event_to_all(game):
 
 
 def publish_game_update_event_to_room(game):
-    socketio.send(game, to=game["gamePassCode"])
+    socketio.emit('update_game_'+game["gamePassCode"],game)

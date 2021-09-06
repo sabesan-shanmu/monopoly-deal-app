@@ -128,6 +128,13 @@ class VoteResource(Resource):
             
             player_result = PlayerSchema().dump(playerFound)
 
+            #publish updated game
+            update_game = get_game_by_gamepasscode(gamePassCode)
+            update_game_result = GameSchema().dump(update_game)
+            gamesNotification.publish_game_update_event_to_all(update_game_result)
+            gamesNotification.publish_game_update_event_to_room(update_game_result)
+
+
             
             result = create_tokens(player_result)
             return result,200
