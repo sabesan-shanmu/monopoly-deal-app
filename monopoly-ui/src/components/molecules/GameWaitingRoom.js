@@ -41,6 +41,7 @@ const StyledPlayerEntryCell = styled.div`
 
 export const GameWaitingRoom = ({players,...props}) => {
 
+    players = players.sort((a, b) => (a.playerGameOrder > b.playerGameOrder) ? 1 : -1)
 
     return (
         <StyledPlayerEntries>
