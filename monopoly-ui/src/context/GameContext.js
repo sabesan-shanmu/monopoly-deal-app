@@ -14,9 +14,11 @@ const gameInitState = {
 
 const gameReducer = (state,action)=>{
     switch(action.type){
-        case ActionTypes.CreateResource:
+        case ActionTypes.GetResource:
           return {...state,game:action.game};
-       case ActionTypes.DeleteResource:
+        case ActionTypes.UpdateResource:
+            return {...state,game:action.game};
+        case ActionTypes.DeleteResource:
           return {...state,game:null};
     }
 
@@ -30,17 +32,25 @@ export const GameContextProvider = ({children}) => {
   
   useEffect(()=>{
     let isMounted = true;
-    
+    const gamePassCode = children.props.gamePassCode;    
 
     gamesApi.get(children.props.gamePassCode).then((success)=>{
       console.log(success.data);
       if(isMounted)
-        gameDispatch({type:ActionTypes.CreateResource,game:success.data});
+        gameDispatch({type:ActionTypes.GetResource,game:success.data});
     }).catch((error)=>{
       console.log(error.response.data);
       history.push('/games-list');
-    })
+    });
     
+    socket.on(`update_game_${gamePassCode}`, (update_game) => {
+      
+      console.log("update_game fired!");
+      console.log(update_game);
+      if(isMounted)
+        gameDispatch({type:ActionTypes.UpdateResource,game:update_game});
+    });
+
 
     return () =>{
       isMounted = false
