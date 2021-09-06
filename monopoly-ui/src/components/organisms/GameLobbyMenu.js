@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import {playersApi} from '../../api/playersApi'
 import { ActionTypes } from '../../common/constants'
 import {getDecodedPlayer} from "../../adapters/playerAdapter"
+import { MonopolySpinner } from '../atoms/MonopolySpinner'
 
 
 const GameLobbyMenuContainer = styled.div`
@@ -51,12 +52,19 @@ export const GameLobbyMenu = () =>{
 
 
     return (
-        <GameLobbyMenuContainer>
-            <StyledMenuContainer>
-                <PlayerVoteMenu  {...playerVoteMenu}/>
-                <GameWaitingRoom players={gameState.game.players}  />    
-            </StyledMenuContainer>
-        </GameLobbyMenuContainer>
+        <React.Fragment>
+            {!playerState.player &&
+                <MonopolySpinner/>
+            }
+            {playerState.player &&
+                <GameLobbyMenuContainer>
+                    <StyledMenuContainer>
+                        <PlayerVoteMenu  {...playerVoteMenu}/>
+                        <GameWaitingRoom players={gameState.game.players}  />    
+                    </StyledMenuContainer>
+                </GameLobbyMenuContainer>
+            }
+        </React.Fragment>    
     )
 }
 
