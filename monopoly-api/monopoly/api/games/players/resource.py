@@ -1,16 +1,18 @@
 from flask_restx import Resource,Namespace
-from .schema import PlayerSchema,login_player_schema,register_player_schema
+from .schema import PlayerSchema,login_player_schema,register_player_schema,vote_player_schema
 from monopoly.common import constants,enums
 from flask import request,jsonify,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from monopoly.api.games.services import get_game_by_gamepasscode,is_player_allowed_to_join
-from .services import get_players_by_gameid,add_player,get_player_by_player_name
-from monopoly.auth import create_tokens
+from .services import get_players_by_gameid,add_player,update_player,get_player_by_player_name,get_player_by_player_id
+from monopoly.auth import create_tokens,validate_gamepassCode,validate_player
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
 import monopoly.notifications.games as gamesNotification
 from monopoly.api.games.schema import GameSchema
+from collections import namedtuple
+
 
 
 players_namespace = Namespace('Players', description='Players can sign up or login to existing game')
@@ -103,4 +105,33 @@ class RefreshResource(Resource):
         current_user = get_jwt_identity()
         result = create_tokens(current_user)
         return result,200
+
+
+@players_namespace.route('/vote/')
+class VoteResource(Resource):
+    @validate_gamepassCode
+    @validate_player
+    def post(self,gamePassCode):
+        try:
+            current_user = get_jwt_identity()
+            player_vote = vote_player_schema().load(request.get_json());
+            game = get_game_by_gamepasscode(gamePassCode)
+            if game is None:
+                raise ResourceNotFoundException(message="Game Not Found")
+            
+            playerFound = get_player_by_player_id(game.gameId,current_user["playerId"])
+            if playerFound is None:
+                raise ResourceNotFoundException(message="Player Not Found")  
+
+            playerFound.voteStatusId = player_vote.voteStatusId
+            update_player(playerFound)
+            
+            player_result = PlayerSchema().dump(playerFound)
+
+            
+            result = create_tokens(player_result)
+            return result,200
+
+        except ValidationError as e:
+            raise ResourceValidationException(e)
 

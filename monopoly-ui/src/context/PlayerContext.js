@@ -15,11 +15,13 @@ const playerInitState = {
 const playerReducer = (state,action)=>{
     switch(action.type){
         case ActionTypes.CreateResource:
-          return {...state,player:action.player};
-          case ActionTypes.DeleteResource:
-          return {...state,player:null,errors:null};
+            return {...state,player:action.player};
+        case ActionTypes.DeleteResource:
+            return {...state,player:null,errors:null};
+        case ActionTypes.UpdateResource:
+            return {...state,player:action.player};
         case ActionTypes.GetResource:
-          return {...state};
+            return {...state};
     }
 
 }

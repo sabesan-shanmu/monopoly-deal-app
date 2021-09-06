@@ -7,6 +7,9 @@ export const playersApi = {
   },
   login:(loginUrl,data)=>{
       return axiosInstance.post(loginUrl,data);
+  },
+  vote:(voteUrl,accessToken,data)=>{
+    return axiosInstance.post(voteUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}});
   }  
 }
   

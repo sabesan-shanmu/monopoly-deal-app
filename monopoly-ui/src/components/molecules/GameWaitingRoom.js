@@ -58,7 +58,7 @@ export const GameWaitingRoom = ({players,...props}) => {
                             <PlayerCharacter {...player}/>
                         </StyledPlayerEntryCell>
                         <StyledPlayerEntryCell>
-                            <PlayerVoteStatus voteStatusId={player.voteStatusId} />
+                            <PlayerVoteStatus voteStatusId={player.voteStatusId} flexDirection="column" disabled />
                         </StyledPlayerEntryCell>
                     </React.Fragment>
                 )}   

@@ -22,6 +22,11 @@ class login_player_schema(ma.Schema):
     def make_player(self, data, **kwargs):
         return Player(**data)
 
+class vote_player_schema(ma.Schema):
+    voteStatusId = EnumField(Enum.VoteStatus, by_value=True,required=True)
+    @post_load
+    def make_player(self, data, **kwargs):
+        return Player(**data)
 
 class PlayerSchema(ma.Schema):
     playerId = fields.Integer()
@@ -30,12 +35,15 @@ class PlayerSchema(ma.Schema):
     gamePassCode = fields.String()
     numberOfCardsOnHand = fields.Integer()
     imageId = fields.Integer(required=True)
-    voteStatusId = EnumField(Enum, by_value=True)
+    voteStatusId = EnumField(Enum.VoteStatus, by_value=True)
     playerCards = fields.Nested(GameCardSchema,many=True)
     @post_dump
     def update_number_of_cards_on_hand(self, data, many, **kwargs):
         data["numberOfCardsOnHand"] = len([x for x in data["playerCards"] if x["cardStatus"]==GameCardLocationStatus.IsOnHand.value])
         del data['playerCards']
         return data
+    @post_load
+    def make_player(self, data, **kwargs):
+        return Player(**data)
 
 
