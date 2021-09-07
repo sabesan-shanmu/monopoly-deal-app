@@ -10,7 +10,10 @@ export const gamesApi = {
     get:(gamePassCode)=>{
         return axiosInstance.get(`/api/games/${gamePassCode}/`);
     },  
-    post:(data)=>{
+    postAll:(data)=>{
         return axiosInstance.post('/api/games/',data);
-    }  
+    },
+    post:(gameUrl,accessToken,data)=>{
+        return axiosInstance.post(gameUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}});
+    }   
 }

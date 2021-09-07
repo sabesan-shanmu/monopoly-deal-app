@@ -2,7 +2,6 @@ import React,{useContext} from 'react'
 import {PlayerCharacter} from '../molecules/PlayerCharacter'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {PlayerContext} from '../../context/PlayerContext'
-import {GameContext} from '../../context/GameContext'
 import {sessionsApi} from "../../api/sessionsApi"
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
@@ -23,7 +22,7 @@ const StyledGameHeader = styled.div`
 export const GameBoardHeader = () =>{
 
     const {playerState,playerDispatch} = useContext(PlayerContext);
-    //const {gameState,gameDispatch} = useContext(GameContext);
+
     const history = useHistory();
     const player = playerState.player;
 

@@ -41,13 +41,13 @@ def update_game(game):
 
 
 def is_game_allowed_to_start(game):
-    if game.gameStatus == enums.GameStatus.WaitingToStart and ((game.gameMode == enums.GameMode.RegularMode and len(game.players) >= constants.MIN_NUMBER_OF_PLAYERS_BASIC_MODE) or (game.gameMode == enums.GameMode.ExtendedMode and len(game.players) >= constants.MIN_NUMBER_OF_PLAYERS_EXTENDED_MODE)):
+    if game.gameStatus.value == enums.GameStatus.WaitingToStart.value and ((game.gameMode.value == enums.GameMode.RegularMode.value and len(game.players) >= constants.MIN_NUMBER_OF_PLAYERS_BASIC_MODE) or (game.gameMode.value == enums.GameMode.ExtendedMode.value and len(game.players) >= constants.MIN_NUMBER_OF_PLAYERS_EXTENDED_MODE)):
         return True
     else:
         return False    
 
 def is_player_allowed_to_join(game):
-    if game.gameStatus == enums.GameStatus.WaitingToStart and ((game.gameMode == enums.GameMode.RegularMode and len(game.players) < constants.MAX_NUMBER_OF_PLAYERS_BASIC_MODE) or (game.gameMode == enums.GameMode.ExtendedMode and len(game.players) < constants.MAX_NUMBER_OF_PLAYERS_EXTENDED_MODE)):
+    if game.gameStatus.value == enums.GameStatus.WaitingToStart.value and ((game.gameMode.value == enums.GameMode.RegularMode.value and len(game.players) < constants.MAX_NUMBER_OF_PLAYERS_BASIC_MODE) or (game.gameMode.value == enums.GameMode.ExtendedMode.value and len(game.players) < constants.MAX_NUMBER_OF_PLAYERS_EXTENDED_MODE)):
         return True
     else:
         return False    

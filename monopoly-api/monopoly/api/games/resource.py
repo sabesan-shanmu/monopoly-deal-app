@@ -66,8 +66,15 @@ class SingleGameResource(Resource):
                     raise ResourceValidationException(e)
             
             gameFound = update_game(game)
-            result = GameSchema().dump(gameFound)
-            return jsonify(result)
+            update_game_result = GameSchema().dump(gameFound)
+
+            
+            #publish game updatess
+            gamesNotification.publish_game_update_event_to_all(update_game_result)            
+            gamesNotification.publish_game_update_event_to_room(update_game_result)
+
+
+            return jsonify(update_game_result)
         except ValidationError as e:
             raise ResourceValidationException(e)
 

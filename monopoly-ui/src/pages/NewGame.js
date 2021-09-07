@@ -63,7 +63,7 @@ export const NewGame = () => {
                     gameMode:formInput.gameMode
                 };
                 setIsLoading(true)
-                gamesApi.post(data)
+                gamesApi.postAll(data)
                     .then((success)=>{   
                         console.log(success.data); 
                         history.push(`/${success.data.gamePassCode}/join-game`);

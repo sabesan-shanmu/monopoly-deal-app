@@ -9,7 +9,7 @@ from monopoly.common import constants,enums
 def create_game_cards(game,players,cards):
     try:
         game_cards = []
-        full_list = cards if game.gameMode == enums.GameMode.RegularMode else [*cards,*cards]
+        full_list = cards if game.gameMode.value == enums.GameMode.RegularMode.value else [*cards,*cards]
         while len(full_list)>0:
             selected_index = random.randint(0,len(full_list)-1)
             selected_card = full_list.pop(selected_index)

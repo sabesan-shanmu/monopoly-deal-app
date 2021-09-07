@@ -21,6 +21,7 @@ export const StartGameScreen = ({mainStartGameFirstLabel,startGameBtn,mainStartG
     const showMainStartMessage = playersTotal == readytoStartTotal && currentPlayer.playerGameOrder == 1;
     const showStartMessage = playersTotal == readytoStartTotal && currentPlayer.playerGameOrder != 1;
     let startGameBody;
+
     if(showMainStartMessage)
         startGameBody=<React.Fragment>
             <MonopolyDealLabel {...mainStartGameFirstLabel} />
@@ -31,7 +32,8 @@ export const StartGameScreen = ({mainStartGameFirstLabel,startGameBtn,mainStartG
         startGameBody=<MonopolyDealLabel {...waitingForPlayerOneLabel} />
     else
         startGameBody=<MonopolyDealLabel {...waitingforAllPlayersLabel} />
-    return (
+    
+        return (
         <StartGameContainer>
             {startGameBody}
         </StartGameContainer>
