@@ -6,7 +6,11 @@ import styled from 'styled-components'
 const StyledLabel = styled.label`
     &[type="h1"]{
         font-size:30px;
-    }   
+    }  
+    
+    &[type="h2"]{
+        font-size:20px;
+    }    
 `  
 
 

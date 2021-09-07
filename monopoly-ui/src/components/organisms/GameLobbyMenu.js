@@ -9,6 +9,7 @@ import {playersApi} from '../../api/playersApi'
 import { ActionTypes } from '../../common/constants'
 import {getDecodedPlayer} from "../../adapters/playerAdapter"
 import { MonopolySpinner } from '../atoms/MonopolySpinner'
+import {StartGameScreen} from '../molecules/StartGameScreen'
 
 
 const GameLobbyMenuContainer = styled.div`
@@ -50,6 +51,30 @@ export const GameLobbyMenu = () =>{
         }
     };
 
+    const startGameScreen = {
+        mainStartGameFirstLabel:{
+            text:"Click",
+            type:"h2"
+        },
+        startGameBtn:{
+            label:"Start Game"
+        },
+        mainStartGameSecondLabel:{
+            text:"to begin",
+            type:"h2"
+        },
+        waitingForPlayerOneLabel:{
+            text:`${gameState?.game?.players?.find(t=>t.playerGameOrder == 1).playerName} must click Start Game`,
+            type:"h2"
+        },
+        waitingforAllPlayersLabel:{
+            text:"All Players must click Ready",
+            type:"h2"
+        },
+        players:gameState.game.players,
+        currentPlayer:playerState.player
+    }
+
 
     return (
         <React.Fragment>
@@ -60,6 +85,7 @@ export const GameLobbyMenu = () =>{
                 <GameLobbyMenuContainer>
                     <StyledMenuContainer>
                         <PlayerVoteMenu  {...playerVoteMenu}/>
+                        <StartGameScreen {...startGameScreen} />
                         <GameWaitingRoom players={gameState.game.players}  />    
                     </StyledMenuContainer>
                 </GameLobbyMenuContainer>
