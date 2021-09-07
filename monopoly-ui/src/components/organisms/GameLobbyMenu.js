@@ -42,9 +42,7 @@ export const GameLobbyMenu = () =>{
                 })
                 .catch(function(error){
                     console.log(error.response.data);
-                    setFormInput(prevState => {
-                        return { ...prevState, errors:error.response.data}
-                    });
+                    setFormInput({errors:error.response.data});
                     setIsLoading(false);
                 })
             e.preventDefault();
@@ -61,6 +59,7 @@ export const GameLobbyMenu = () =>{
             voteStatusId:playerState.player?.voteStatusId,
             onChange:(e)=>{
                 console.log(e.target.value);
+                setFormInput({errors:null});
                 playersApi.vote(gameState.game.links.vote,playerState.player.accessToken,{voteStatusId:parseInt(e.target.value)})
                     .then(function(success){
                         console.log(success.data);
