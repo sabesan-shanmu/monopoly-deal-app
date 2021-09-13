@@ -1,6 +1,7 @@
 from monopoly.models import Player
 from monopoly import db
 from sqlalchemy import and_,exc
+from monopoly.common.enums import VoteStatus
 
 def get_players_by_gameid(gameId):
     return db.session.query(Player).filter_by(gameId=gameId).all()
@@ -33,4 +34,5 @@ def update_player(player):
         db.session.rollback()
         raise
 
-          
+def have_all_players_accepted(players):
+    return len([player for player in players if player.voteStatusId != VoteStatus.Accepted]) == 0

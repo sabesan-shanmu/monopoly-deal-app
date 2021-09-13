@@ -7,7 +7,7 @@ import monopoly.common.enums as Enum
 import monopoly.common.constants as Constants
 from monopoly.api.cards.services import get_cards
 from monopoly.api.games.gameCards.services import create_game_cards
-from monopoly.api.games.players.services import get_players_by_gameid
+from monopoly.api.games.players.services import get_players_by_gameid,have_all_players_accepted
 from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
@@ -58,6 +58,10 @@ class SingleGameResource(Resource):
 
                     if not is_game_allowed_to_start(gameFound):
                         raise FieldValidationException(message="Not enough players to start the game")
+
+
+                    if not have_all_players_accepted(players):
+                        raise FieldValidationException(message="All Players have not clicked ready")
 
                     create_game_cards(gameFound,players,cards)
                     create_game_player_moves(gameFound)
