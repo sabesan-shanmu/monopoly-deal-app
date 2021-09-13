@@ -54,9 +54,9 @@ def create_action_cards():
         ActionCard(actionCardId=26,name="Pass Go",price=1,actionType=Enum.ActionTypes.PassGo),
         ActionCard(actionCardId=27,name="Sly Deal",price=3,actionType=Enum.ActionTypes.SlyDeal),
         ActionCard(actionCardId=28,name="Pass Go",price=1,actionType=Enum.ActionTypes.PassGo),
-        ActionCard(actionCardId=29,name="House 3",price=3,actionType=Enum.ActionTypes.House),
-        ActionCard(actionCardId=30,name="House 3",price=3,actionType=Enum.ActionTypes.House),
-        ActionCard(actionCardId=31,name="Hotel 4",price=4,actionType=Enum.ActionTypes.Hotel),
+        ActionCard(actionCardId=29,name="House",price=3,actionType=Enum.ActionTypes.House),
+        ActionCard(actionCardId=30,name="House",price=3,actionType=Enum.ActionTypes.House),
+        ActionCard(actionCardId=31,name="Hotel",price=4,actionType=Enum.ActionTypes.Hotel),
         ActionCard(actionCardId=32,name="Pass Go",price=1,actionType=Enum.ActionTypes.PassGo),
         ActionCard(actionCardId=33,name="Pass Go",price=1,actionType=Enum.ActionTypes.PassGo),
         ActionCard(actionCardId=34,name="Sly Deal",price=3,actionType=Enum.ActionTypes.SlyDeal)
@@ -67,6 +67,7 @@ def create_properties_card():
     propertiesCards = [
         PropertiesCard(propertiesCardId=1,name="Baltic Aveue",primaryColourId=Enum.Colours.Brown,secondaryColourId=None,price=1),
         PropertiesCard(propertiesCardId=2,name="Property Wild Card",primaryColourId=Enum.Colours.Brown,secondaryColourId=Enum.Colours.LightBlue,price=1),
+        PropertiesCard(propertiesCardId=3,name="B. & O. Railroad",primaryColourId=Enum.Colours.Black,secondaryColourId=None,price=2),
         PropertiesCard(propertiesCardId=4,name="Property Wild Card",primaryColourId=Enum.Colours.Green,secondaryColourId=Enum.Colours.Black,price=4),
         PropertiesCard(propertiesCardId=5,name="Oriental Avenue",primaryColourId=Enum.Colours.LightBlue,secondaryColourId=None,price=1),
         PropertiesCard(propertiesCardId=6,name="Mediterranean Avenue",primaryColourId=Enum.Colours.Brown,secondaryColourId=None,price=1),
