@@ -48,6 +48,7 @@ class ActionCard(db.Model):
 class Cards(db.Model):
     cardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     cardType =  db.Column(db.Enum(Enum.CardTypes))
+    cardImageUrl = db.Column(db.String)
     propertiesCardId = db.Column(db.Integer,db.ForeignKey("properties_card.propertiesCardId"))
     cashCardId = db.Column(db.Integer,db.ForeignKey("cash_card.cashCardId"))
     rentCardId = db.Column(db.Integer,db.ForeignKey("rent_card.rentCardId"))
