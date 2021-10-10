@@ -46,6 +46,7 @@ class PropertiesCardSchema(ma.Schema):
 class CardSchema(ma.Schema):
     cardId = fields.Integer(required=True)
     cardType = EnumField(Enum.CardTypes, by_value=True)
+    cardImageUrl = fields.String(required=True)
     action = fields.Nested(ActionCardSchema)
     properties = fields.Nested(PropertiesCardSchema)
     rent = fields.Nested(RentCardSchema)
