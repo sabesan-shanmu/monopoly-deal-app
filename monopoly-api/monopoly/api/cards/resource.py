@@ -12,7 +12,7 @@ cards_namespace = Namespace('Cards', description='Monopoly Deal Playing Cards')
 @cards_namespace.route('/')
 class ManyCardsResource(Resource):
  
-    @validate_gamepassCode
+    
     def get(self):
         cards = get_cards()
         result = CardSchema(many=True).dump(cards)
@@ -21,7 +21,6 @@ class ManyCardsResource(Resource):
 @cards_namespace.route('/<int:cardId>/')
 class SingleCardResource(Resource):
     
-    @validate_gamepassCode
     def get(self,cardId):
         card = get_card(cardId)
         if card is None:
