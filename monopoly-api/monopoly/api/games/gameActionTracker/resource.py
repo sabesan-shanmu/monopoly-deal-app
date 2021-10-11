@@ -2,8 +2,8 @@ from flask_restx import Resource,Namespace
 from flask import request,jsonify   
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.api.games.services import get_game_by_gamepasscode
-from monopoly.api.games.players.gamePlayerMoves.services import is_player_valid
-from monopoly.api.games.players.gamePlayerMoves.services import get_game_player_moves,update_game_player_moves
+from monopoly.api.games.gamePlayerMoves.services import is_player_valid
+from monopoly.api.games.gamePlayerMoves.services import get_game_player_moves,update_game_player_moves
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
 from .services import get_game_action_tracker,get_game_action_trackers

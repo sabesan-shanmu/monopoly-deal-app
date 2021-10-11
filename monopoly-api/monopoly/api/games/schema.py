@@ -40,8 +40,9 @@ class GameSchema(ma.Schema):
             "register": url_overwrite("Players_register_resource", gamePassCode="<gamePassCode>"),
             "login": url_overwrite("Players_login_resource", gamePassCode="<gamePassCode>"),
             "refresh": url_overwrite("Players_refresh_resource", gamePassCode="<gamePassCode>"),
-            "gameCards": url_overwrite("GameCards_game_cards_resource", gamePassCode="<gamePassCode>"),
             "vote": url_overwrite("Players_vote_resource", gamePassCode="<gamePassCode>"),
+            "gameCards": url_overwrite("GameCards_game_cards_resource", gamePassCode="<gamePassCode>"),
+            "playerCards": url_overwrite("PlayerCards_many_player_cards_resource", gamePassCode="<gamePassCode>"),
         }
     )
     @post_dump

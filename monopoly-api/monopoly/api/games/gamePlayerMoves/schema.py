@@ -4,7 +4,7 @@ from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
 from monopoly.models import GamePlayerMoves
 from monopoly.api.games.players.schema import PlayerSchema
-from monopoly.api.games.players.gameActionTracker.schema import GameActionTrackerSchema
+from monopoly.api.games.gameActionTracker.schema import GameActionTrackerSchema
 
 class GamePlayerMovesSchema(ma.Schema):
     numberOfMovesPlayed = fields.Integer()

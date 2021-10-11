@@ -10,7 +10,7 @@ from monopoly.api.games.gameCards.services import create_game_cards
 from monopoly.api.games.players.services import get_players_by_gameid,have_all_players_accepted
 from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
-from monopoly.api.games.players.gamePlayerMoves.services import create_game_player_moves
+from monopoly.api.games.gamePlayerMoves.services import create_game_player_moves
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from werkzeug.exceptions import BadRequest
 from flask import session
