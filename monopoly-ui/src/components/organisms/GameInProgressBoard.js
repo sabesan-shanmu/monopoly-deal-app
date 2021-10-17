@@ -1,9 +1,11 @@
 import React from 'react'
+import { CurrentPlayerCardsOnHand } from './CurrentPlayerCardsOnHand'
+import { InProgressBoardContainer } from '../atoms/InProgressBoardContainer'
 
 export const GameInProgressBoard = () => {
     return (
-        <h1>
-            Under Construction
-        </h1>
+        <InProgressBoardContainer>
+            <CurrentPlayerCardsOnHand/>
+        </InProgressBoardContainer>
     )
 }

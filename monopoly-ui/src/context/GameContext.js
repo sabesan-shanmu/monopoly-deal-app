@@ -34,7 +34,7 @@ export const GameContextProvider = ({children}) => {
     let isMounted = true;
     const gamePassCode = children.props.gamePassCode;    
 
-    gamesApi.get(children.props.gamePassCode).then((success)=>{
+    gamesApi.get(gamePassCode).then((success)=>{
       console.log(success.data);
       if(isMounted)
         gameDispatch({type:ActionTypes.GetResource,game:success.data});
