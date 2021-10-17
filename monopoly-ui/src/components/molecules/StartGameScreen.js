@@ -12,6 +12,7 @@ const StartGameContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    color:white;
 ` 
 export const StartGameScreen = ({mainStartGameFirstLabel,startGameBtn,mainStartGameSecondLabel,waitingForPlayerOneLabel,waitingforAllPlayersLabel,currentPlayer,players}) =>{
     
