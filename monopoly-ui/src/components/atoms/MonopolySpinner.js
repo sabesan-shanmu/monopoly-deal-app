@@ -27,6 +27,7 @@ const StyledLoaderContainer = styled.div`
     align-self:center;
     justify-self:center;
     grid-area: content;
+    color:white;
 `;
 
 const StyledLoaderText = styled.div`
