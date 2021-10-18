@@ -15,7 +15,7 @@ export const InProgressBoardFooter = styled.footer`
     border:5px solid black;
     border-radius:10px;
     display:flex;
-    flex-direction:row;
-    overflow-x:auto;
+    flex-direction:column;
+    grid-template-rows: 1fr 2fr;
 `;
 

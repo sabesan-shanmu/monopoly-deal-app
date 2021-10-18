@@ -4,12 +4,35 @@ import { PlayerContext } from '../../context/PlayerContext';
 import { playerCardsApi } from '../../api/playerCardsApi';
 import { InProgressBoardFooter } from '../atoms/InProgressBoardFooter';
 import { MonopolyCard } from '../atoms/MonopolyCard';
+import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
+import styled from 'styled-components';
+
+const FooterTitleContainer = styled.div`
+    display:flex;
+    flex-direction:row;
+    color:white;
+    align-self: center;
+`;
+
+
+const FooterCardsContainer = styled.div`
+    display:flex;
+    flex-direction:row;
+    overflow-x:auto;
+`;
+
 
 export const CurrentPlayerCardsOnHand = ()=> {
 
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const [playerCards,setPlayerCards] = useState([])
+    
+    const footerTitleLabel = {
+        text:"-My Cards on Hand-",
+        type:"h2"
+    };
+
     useEffect(()=>{
         playerCardsApi.get(gameState.game.links.playerCards,playerState.player.accessToken)
         .then(function(success){
@@ -24,9 +47,15 @@ export const CurrentPlayerCardsOnHand = ()=> {
     
     return (
         <InProgressBoardFooter>
-             {playerCards && playerCards.map((playerCard,key)=>
+            <FooterTitleContainer>
+                <MonopolyDealLabel {...footerTitleLabel} />    
+            </FooterTitleContainer>
+            <FooterCardsContainer>
+            {playerCards && playerCards.map((playerCard,key)=>
                 <MonopolyCard gameCard={playerCard} key={key} />
              )}
+            </FooterCardsContainer> 
+           
         </InProgressBoardFooter>
     )
 }
