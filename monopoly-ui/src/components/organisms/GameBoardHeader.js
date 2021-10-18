@@ -6,26 +6,38 @@ import {sessionsApi} from "../../api/sessionsApi"
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
 import {ActionTypes} from '../../common/constants'
+import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel'
+import { GameContext } from '../../context/GameContext'
 
 
 const StyledGameHeader = styled.div`
     display:grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: flex-start; 
     width:100%; 
     &>button{
         justify-self: end;
     }
+    &>label{
+        text-align: center;
+    }
     grid-area: header;
+    color:white;
 `
 
 export const GameBoardHeader = () =>{
 
     const {playerState,playerDispatch} = useContext(PlayerContext);
+    const {gameState,gameDispatch} = useContext(GameContext);
 
     const history = useHistory();
     const player = playerState.player;
+    const game = gameState.game;
 
+    const gameTitleLabel = {
+        text:`Game Name: ${game.name}`,
+        type:"h2"
+    };
 
     const logoutBtn = {
         onClick:()=>{
@@ -48,6 +60,10 @@ export const GameBoardHeader = () =>{
             <StyledGameHeader>
                 <PlayerCharacter
                     {...player}
+
+                />
+                 <MonopolyDealLabel
+                    {...gameTitleLabel}
 
                 />
                 <MonopolyDealButton
