@@ -29,7 +29,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
     const [playerCards,setPlayerCards] = useState([])
     
     const footerTitleLabel = {
-        text:"-My Cards on Hand-",
+        text:"-My Cards On Hand-",
         type:"h2"
     };
 
