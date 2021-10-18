@@ -19,6 +19,7 @@ const FooterCardsContainer = styled.div`
     display:flex;
     flex-direction:row;
     overflow-x:auto;
+    align-self: center;
 `;
 
 
@@ -29,7 +30,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
     const [playerCards,setPlayerCards] = useState([])
     
     const footerTitleLabel = {
-        text:"-My Cards On Hand-",
+        text:"My Cards On Hand",
         type:"h2"
     };
 
