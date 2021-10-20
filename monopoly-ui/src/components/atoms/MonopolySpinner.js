@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../../assets/img/spinner.png'
 import styled,{keyframes} from 'styled-components'
-
+import {device} from "../../common/devices";
 
 
 const transform = keyframes`
@@ -34,11 +34,24 @@ const StyledLoaderText = styled.div`
     font-size:1.35em;
 `;
 
+const StyledSpinner = styled.img`
+ 
+
+  @media ${device.medium} { 
+    height:80%;
+    width:80%;
+  }
+  @media ${device.small} { 
+    height:70%;
+    width:70%;
+  }
+`
+
 
 export const MonopolySpinner = () => {
     return (
         <StyledLoaderContainer>
-            <img src={logo}/>
+            <StyledSpinner src={logo}/>
             <StyledLoaderText>Loading....</StyledLoaderText>
         </StyledLoaderContainer>
     )

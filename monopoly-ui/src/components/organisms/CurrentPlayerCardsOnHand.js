@@ -9,7 +9,6 @@ import styled from 'styled-components';
 
 const FooterTitleContainer = styled.div`
     display:flex;
-    flex-direction:row;
     color:white;
     align-self: center;
 `;
@@ -17,9 +16,12 @@ const FooterTitleContainer = styled.div`
 
 const FooterCardsContainer = styled.div`
     display:flex;
-    flex-direction:row;
     overflow-x:auto;
     align-self: center;
+    &>img{
+        margin:10px;
+    }
+    width:inherit;
 `;
 
 

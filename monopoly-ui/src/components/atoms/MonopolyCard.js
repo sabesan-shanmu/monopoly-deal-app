@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { device } from '../../common/devices';
 
 const StyledCard = styled.img`
-    
-    margin:10px;
+
     @media ${device.xlarge} {
         height:250px;
     }
@@ -23,7 +22,7 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard}) => {
+export const MonopolyCard = ({gameCard,onSelect}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     console.log(isLoaded);
     return (
