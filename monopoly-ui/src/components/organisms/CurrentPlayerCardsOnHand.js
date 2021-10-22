@@ -6,11 +6,17 @@ import { InProgressBoardFooter } from '../atoms/InProgressBoardFooter';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import styled from 'styled-components';
+import maximizeIcon from '../../assets/img/maximize.png'
+import minimizeIcon from '../../assets/img/minimize.png'
 
 const FooterTitleContainer = styled.div`
     display:flex;
     color:white;
     align-self: center;
+    &>label{
+        padding-right:10px;
+    }
+
 `;
 
 
@@ -30,6 +36,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const [playerCards,setPlayerCards] = useState([])
+    const [isFooterVisible,setIsFooterVisible] = useState(true);
     
     const footerTitleLabel = {
         text:"My Cards On Hand",
@@ -47,18 +54,31 @@ export const CurrentPlayerCardsOnHand = ()=> {
             setPlayerCards([]);
         })
     },[])
+
+    const getIcon = ()=> {
+        return isFooterVisible?
+        (
+            <img src={minimizeIcon}/>
+        ):
+        (
+            <img src={maximizeIcon}/>
+        );
+    }
+
     
     return (
         <InProgressBoardFooter>
-            <FooterTitleContainer>
+            <FooterTitleContainer onClick={()=>setIsFooterVisible(!isFooterVisible)} >
                 <MonopolyDealLabel {...footerTitleLabel} />    
+                {getIcon()}
             </FooterTitleContainer>
-            <FooterCardsContainer>
-            {playerCards && playerCards.map((playerCard,key)=>
-                <MonopolyCard gameCard={playerCard} key={key} />
-             )}
-            </FooterCardsContainer> 
-           
+            {isFooterVisible &&
+                <FooterCardsContainer>
+                {playerCards && playerCards.map((playerCard,key)=>
+                    <MonopolyCard gameCard={playerCard} key={key} />
+                )}
+                </FooterCardsContainer> 
+            }
         </InProgressBoardFooter>
     )
 }

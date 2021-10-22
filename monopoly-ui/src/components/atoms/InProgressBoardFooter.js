@@ -16,5 +16,6 @@ export const InProgressBoardFooter = styled.footer`
     border-radius:10px;
     display:inline-flex;
     flex-direction:column;
+    
 `;
 

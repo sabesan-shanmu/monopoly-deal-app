@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { device } from '../../common/devices';
 
 const StyledCard = styled.img`
-
+    cursor:pointer;
+    border:3px solid black;
     @media ${device.xlarge} {
         height:250px;
     }
