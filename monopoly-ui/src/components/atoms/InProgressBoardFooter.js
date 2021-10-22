@@ -4,7 +4,7 @@ import img from "../../assets/img/backgrounds/modal-background.jpg";
 
 
 export const InProgressBoardFooter = styled.footer`
-    position: absolute;
+    position: ${props => props.isFooterVisible ? "absolute" : "sticky"};
     bottom: 0;
     width:90%;
     padding: 5px;

@@ -67,7 +67,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
 
     
     return (
-        <InProgressBoardFooter>
+        <InProgressBoardFooter isFooterVisible={isFooterVisible}>
             <FooterTitleContainer onClick={()=>setIsFooterVisible(!isFooterVisible)} >
                 <MonopolyDealLabel {...footerTitleLabel} />    
                 {getIcon()}
