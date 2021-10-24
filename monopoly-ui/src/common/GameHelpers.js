@@ -99,12 +99,12 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
                     GameBlockEnum.TopFarLeft,
                     GameBlockEnum.TopLeft,
                     GameBlockEnum.TopRight,
-                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopFarRight,
                     GameBlockEnum.MiddleFarRight,
                     GameBlockEnum.BottomRight
                 ],
-                drawPile:GameBlockEnum.TopMiddleCentre,
-                activePile:GameBlockEnum.BottomMiddleCentre
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
             };
         case 8:
             return {
@@ -113,13 +113,13 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
                     GameBlockEnum.TopFarLeft,
                     GameBlockEnum.TopLeft,
                     GameBlockEnum.TopRight,
-                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopFarRight,
                     GameBlockEnum.MiddleFarRight,
                     GameBlockEnum.BottomRight,
                     GameBlockEnum.BottomLeft
                 ],
-                drawPile:GameBlockEnum.TopMiddleCentre,
-                activePile:GameBlockEnum.BottomMiddleCentre
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
             };
         case 9:
             return {
@@ -128,14 +128,14 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
                     GameBlockEnum.TopFarLeft,
                     GameBlockEnum.TopLeft,
                     GameBlockEnum.TopRight,
-                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopFarRight,
                     GameBlockEnum.MiddleFarRight,
                     GameBlockEnum.BottomFarRight,
                     GameBlockEnum.BottomRight,
                     GameBlockEnum.BottomLeft
                 ],
-                drawPile:GameBlockEnum.TopMiddleCentre,
-                activePile:GameBlockEnum.BottomMiddleCentre
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
             };
         case 10:
             return {
@@ -144,15 +144,15 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
                     GameBlockEnum.TopFarLeft,
                     GameBlockEnum.TopLeft,
                     GameBlockEnum.TopRight,
-                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopFarRight,
                     GameBlockEnum.MiddleFarRight,
                     GameBlockEnum.BottomFarRight,
                     GameBlockEnum.BottomRight,
                     GameBlockEnum.BottomLeft,
                     GameBlockEnum.BottomFarLeft
                 ],
-                drawPile:GameBlockEnum.TopMiddleCentre,
-                activePile:GameBlockEnum.BottomMiddleCentre
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
             };
     }
     
