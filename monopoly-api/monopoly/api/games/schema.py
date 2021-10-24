@@ -43,6 +43,7 @@ class GameSchema(ma.Schema):
             "vote": url_overwrite("Players_vote_resource", gamePassCode="<gamePassCode>"),
             "gameCards": url_overwrite("GameCards_game_cards_resource", gamePassCode="<gamePassCode>"),
             "playerCards": url_overwrite("PlayerCards_many_player_cards_resource", gamePassCode="<gamePassCode>"),
+            "gameMoves": url_overwrite("GamePlayerMoves_game_player_moves_resource", gamePassCode="<gamePassCode>"),
         }
     )
     @post_dump

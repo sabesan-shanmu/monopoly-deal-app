@@ -73,7 +73,7 @@ const StyledCard = styled.img`
 
 export const MonopolyCard = ({gameCard,onSelect,cardType}) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    console.log(isLoaded);
+   
     return (
         <React.Fragment>
                     {cardType == CardTypeEnum.FaceUpCard && 

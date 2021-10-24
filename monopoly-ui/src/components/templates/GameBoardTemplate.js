@@ -5,7 +5,7 @@ import { GameStatusEnum } from '../../common/constants'
 import { GameInProgressBoard} from '../organisms/GameInProgressBoard'
 import { GameContext } from '../../context/GameContext'
 import { PlayerContext } from '../../context/PlayerContext'
-
+import { GameMoveContextProvider } from '../../context/GameMoveContext'
 
 export const GameBoardTemplate = ()=> {
     const {gameState,gameDispatch} = useContext(GameContext);
@@ -15,13 +15,15 @@ export const GameBoardTemplate = ()=> {
         <React.Fragment>
             {playerState.player && 
                 <React.Fragment>
-                    <GameBoardHeader/>
-                    {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
-                        <GameLobbyMenu/>
-                    }
-                    {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
-                        <GameInProgressBoard/>
-                    }
+                    <GameMoveContextProvider>
+                        <GameBoardHeader/>
+                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
+                            <GameLobbyMenu/>
+                        }
+                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
+                            <GameInProgressBoard/>
+                        }
+                    </GameMoveContextProvider>
                 </React.Fragment>
             }
         </React.Fragment>

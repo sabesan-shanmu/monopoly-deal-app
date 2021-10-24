@@ -27,9 +27,7 @@ const StyledPlayerBlock = styled.div`
 
 export const PlayerBlock = ({blockName,player,blockType}) => {
     
-    console.log(blockName);
-    console.log(player);
-
+   
     const playerBlock = {...player,isGameBoard:true};
     
     return (
