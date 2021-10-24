@@ -59,9 +59,6 @@ class Cards(db.Model):
     action = db.relationship(ActionCard,primaryjoin=actionCardId==ActionCard.actionCardId)
 
 class GameCards(db.Model):
-    __table_args__ = (
-        db.UniqueConstraint('gameId', 'cardId',name='unique_game_card'),
-    )
     gameCardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
