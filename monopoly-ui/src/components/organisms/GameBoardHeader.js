@@ -31,7 +31,7 @@ export const GameBoardHeader = () =>{
     const {gameState,gameDispatch} = useContext(GameContext);
 
     const history = useHistory();
-    const player = playerState.player;
+    const player = {...playerState.player,isGameBoard:false};
     const game = gameState.game;
 
     const gameTitleLabel = {
@@ -59,8 +59,7 @@ export const GameBoardHeader = () =>{
         {player &&
             <StyledGameHeader>
                 <PlayerCharacter
-                    {...player}
-
+                    {...player} 
                 />
                  <MonopolyDealLabel
                     {...gameTitleLabel}

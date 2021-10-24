@@ -1,4 +1,4 @@
-import {MaxNumOFPlayers} from  './constants'
+import {MaxNumOFPlayers,GameBlockEnum,GameBlockTypeEnum} from  './constants'
 
 export const  getGameModesList = () => {
 
@@ -31,4 +31,145 @@ export const getTotalNumberofExpectedPlayers = (gameMode)=>{
    
     return gameModesList[gameMode];
 
+}
+export const getActiveGameBlocks = (numberofPlayers) =>{
+
+    
+    switch(numberofPlayers)
+    {
+        case 2:
+            return {
+                playersBlock:[
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopFarRight
+                ],
+                drawPile:GameBlockEnum.TopLeft,
+                activePile:GameBlockEnum.TopRight
+            };
+        case 3:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.MiddleFarRight
+                ],
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
+            };
+        case 4:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.MiddleFarRight
+                ],
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
+            };
+        case 5:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomRight
+                ],
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
+            };
+        case 6:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomRight,
+                    GameBlockEnum.BottomLeft
+                ],
+                drawPile:GameBlockEnum.MiddleLeft,
+                activePile:GameBlockEnum.MiddleRight
+            };
+        case 7:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomRight
+                ],
+                drawPile:GameBlockEnum.TopMiddleCentre,
+                activePile:GameBlockEnum.BottomMiddleCentre
+            };
+        case 8:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomRight,
+                    GameBlockEnum.BottomLeft
+                ],
+                drawPile:GameBlockEnum.TopMiddleCentre,
+                activePile:GameBlockEnum.BottomMiddleCentre
+            };
+        case 9:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomFarRight,
+                    GameBlockEnum.BottomRight,
+                    GameBlockEnum.BottomLeft
+                ],
+                drawPile:GameBlockEnum.TopMiddleCentre,
+                activePile:GameBlockEnum.BottomMiddleCentre
+            };
+        case 10:
+            return {
+                playersBlock:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.TopLeft,
+                    GameBlockEnum.TopRight,
+                    GameBlockEnum.TopFarLeft,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomFarRight,
+                    GameBlockEnum.BottomRight,
+                    GameBlockEnum.BottomLeft,
+                    GameBlockEnum.BottomFarLeft
+                ],
+                drawPile:GameBlockEnum.TopMiddleCentre,
+                activePile:GameBlockEnum.BottomMiddleCentre
+            };
+    }
+    
+}
+
+
+export const getBlockProperty = (blockName,players,activeBlocks) =>{
+
+    const blockType = activeBlocks.playersBlock.includes(blockName)?GameBlockTypeEnum.PlayerBlock:
+                activeBlocks.drawPile.includes(blockName)?GameBlockTypeEnum.DrawCardsBlock:
+                activeBlocks.activePile.includes(blockName)?GameBlockTypeEnum.ActiveCardsBlock:null;
+    console.log(blockType);
+    const blockNumber = activeBlocks.playersBlock.findIndex(t=>t == blockName)+1;
+    
+    return {
+        blockName:blockName,
+        player:blockType == GameBlockTypeEnum.PlayerBlock?players.find(t=>t.playerGameOrder == blockNumber):null,
+        blockType:blockType
+    };
 }

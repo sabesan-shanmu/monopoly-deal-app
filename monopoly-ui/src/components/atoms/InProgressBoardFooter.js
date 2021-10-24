@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import img from "../../assets/img/backgrounds/modal-background.jpg";
+import modalBackgroundImg from "../../assets/img/backgrounds/modal-background.jpg";
 
 
 export const InProgressBoardFooter = styled.footer`
-    position: ${props => props.isFooterVisible ? "absolute" : "sticky"};
+    position: ${props => props.isFooterVisible ? "sticky" : "sticky"};
     bottom: 0;
-    width:90%;
+    width:95%;
     padding: 5px;
-    background-image: url(${img});
+    background-image: url(${modalBackgroundImg});
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

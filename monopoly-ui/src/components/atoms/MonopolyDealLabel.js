@@ -11,6 +11,9 @@ const StyledLabel = styled.label`
     &[type="h2"]{
         font-size:20px;
     }    
+    &[type="h4"]{
+        font-size:15px;
+    }    
 `  
 
 

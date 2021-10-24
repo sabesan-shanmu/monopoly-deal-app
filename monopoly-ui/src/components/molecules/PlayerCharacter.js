@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import {device} from "../../common/devices";
 import { CharacterImage } from '../atoms/CharacterImage';
 import {getBackgroundColour} from '../../common/ImageHelpers'
-
-
+import { MonopolyCard } from '../atoms/MonopolyCard';
+import { CardTypeEnum } from '../../common/constants';
 
 
 
@@ -27,7 +27,10 @@ const StyledPlayerCharacter = styled.section`
     }
 `;
 
-export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,...props}) => { 
+export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=true,...props}) => { 
+
+
+    const cards = [...Array(numberOfCardsOnHand).keys()]
 
     return (
         <StyledPlayerCharacter imageId={imageId}>
@@ -35,6 +38,11 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
             <div>
                 <div>Player Name:{playerName}</div>
                 <div>Game Order:{playerGameOrder}</div>
+                {isGameBoard &&
+                    cards.map((card,key)=>
+                        <MonopolyCard  cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
+                    )
+                }
             </div>   
         </StyledPlayerCharacter>
     )

@@ -1,16 +1,64 @@
 import React,{useState} from 'react'
-import styled from 'styled-components'
+import styled,{keyframes} from 'styled-components'
 import { device } from '../../common/devices';
+import { CardTypeEnum } from '../../common/constants';
+import faceDownCardImg from '../../assets/img/face-down-card.jpg' 
 
-const StyledCard = styled.img`
+
+
+const bounce = keyframes`
+    20% { transform:translateY(-7%); }
+    40% { transform:translateY(0%); }
+    40% { transform:translateY(-7%); }
+    60% { transform:translateY(0%); }
+    80% { transform:translateY(-7%); }
+    100% { transform:translateY(0%); }
+`;
+const StyledMiniCard = styled.img`
+    &:hover {
+        animation: ${bounce} 1.3s linear infinite;
+    }
     cursor:pointer;
-    border:3px solid black;
+    border:1px solid black;
+    height:30px;  
+    margin:2px;
+`;
+
+
+
+const StyledNoCard = styled.div`
+    width:127px;
+    opactiy:0.5;
+    background: rgba(0,0,0,0.3);
     @media ${device.xlarge} {
-        height:250px;
+        height:200px;
     }
 
     @media ${device.large} { 
-        height:250px;
+        height:200px;
+    }
+    @media ${device.medium} { 
+        height:200px;
+
+    }
+    @media ${device.small} { 
+        height:150px;  
+    }
+`;
+
+const StyledCard = styled.img`
+
+    &:hover {
+        animation: ${bounce} 1.3s linear infinite;
+    }
+    cursor:pointer;
+    border:3px solid black;
+    @media ${device.xlarge} {
+        height:200px;
+    }
+
+    @media ${device.large} { 
+        height:200px;
     }
     @media ${device.medium} { 
         height:200px;
@@ -23,17 +71,28 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onSelect}) => {
+export const MonopolyCard = ({gameCard,onSelect,cardType}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     console.log(isLoaded);
     return (
         <React.Fragment>
-                <StyledCard src={gameCard.card.cardImageUrl}
-                    style={{ visibility: isLoaded ? "visible" : "hidden" }}
-                    onLoad={() => {
-                        setIsLoaded(true);
-                    }}
-                />
+                    {cardType == CardTypeEnum.FaceUpCard && 
+                        <StyledCard src={gameCard.card.cardImageUrl}
+                            style={{ visibility: isLoaded ? "visible" : "hidden" }}
+                            onLoad={() => {
+                                setIsLoaded(true);
+                            }}
+                        />
+                    }
+                    {cardType ==CardTypeEnum.MiniFaceDownCard &&
+                        <StyledMiniCard src={faceDownCardImg} />
+                    }
+                    {cardType ==CardTypeEnum.FaceDownCard &&
+                        <StyledCard src={faceDownCardImg} />
+                    }
+                    {cardType ==CardTypeEnum.PlaceholderCard &&
+                        <StyledNoCard />
+                    }
         </React.Fragment>
     )
 }

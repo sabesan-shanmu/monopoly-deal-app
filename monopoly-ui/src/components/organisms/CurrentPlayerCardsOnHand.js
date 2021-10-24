@@ -8,6 +8,8 @@ import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import styled from 'styled-components';
 import maximizeIcon from '../../assets/img/maximize.png'
 import minimizeIcon from '../../assets/img/minimize.png'
+import { CardTypeEnum } from '../../common/constants';
+
 
 const FooterTitleContainer = styled.div`
     display:flex;
@@ -75,7 +77,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
             {isFooterVisible &&
                 <FooterCardsContainer>
                 {playerCards && playerCards.map((playerCard,key)=>
-                    <MonopolyCard gameCard={playerCard} key={key} />
+                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} />
                 )}
                 </FooterCardsContainer> 
             }
