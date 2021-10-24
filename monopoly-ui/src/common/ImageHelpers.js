@@ -42,8 +42,8 @@ export const getBackgroundColour=(imageId,type)=>{
             text:"#000000"
         },
         9:{
-            primary:"#FFFFFF",
-            secondary:"#ECE3E3",
+            primary:"#768cdb",
+            secondary:"#ff6522",
             text:"#000000"
         },
         10:{
@@ -78,7 +78,7 @@ export const  getImageList = (playersList) => {
         {value:6,text:'Mike Wazowski'},
         {value:7,text:'Tigger'},
         {value:8,text:'Genie'},
-        {value:9,text:'Olaf'},
+        {value:9,text:'Crash Bandicoot'},
         {value:10,text:'Joker'},
         {value:11,text:'Rocket Raccoon'},
         {value:12,text:'Pikachu'},

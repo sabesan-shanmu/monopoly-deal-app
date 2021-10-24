@@ -27,7 +27,7 @@ const StyledPlayerCharacter = styled.section`
     }
 `;
 
-export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=true,...props}) => { 
+export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,...props}) => { 
 
 
     const cards = [...Array(numberOfCardsOnHand).keys()]
@@ -39,8 +39,11 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
                 <div>Player Name:{playerName}</div>
                 <div>Game Order:{playerGameOrder}</div>
                 {isGameBoard &&
+                    <div>Cards on Hand:</div>
+                } 
+                {isGameBoard &&
                     cards.map((card,key)=>
-                        <MonopolyCard  cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
+                        <MonopolyCard cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
                     )
                 }
             </div>   

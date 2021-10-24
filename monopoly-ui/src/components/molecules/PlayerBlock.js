@@ -29,12 +29,15 @@ export const PlayerBlock = ({blockName,player,blockType}) => {
     
     console.log(blockName);
     console.log(player);
+
+    const playerBlock = {...player,isGameBoard:true};
+    
     return (
         <StyledPlayerBlock blockType={blockType}>
               {blockType == GameBlockTypeEnum.PlayerBlock  &&
                     <React.Fragment>
                         <PlayerCharacter
-                            {...player}
+                            {...playerBlock}
                         />
                     </React.Fragment>
               }

@@ -8,6 +8,7 @@ import {useHistory} from 'react-router-dom'
 import {ActionTypes} from '../../common/constants'
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel'
 import { GameContext } from '../../context/GameContext'
+import { MessageHeader } from '../atoms/MessageHeader'
 
 
 const StyledGameHeader = styled.div`
@@ -18,7 +19,7 @@ const StyledGameHeader = styled.div`
     &>button{
         justify-self: end;
     }
-    &>label{
+    &>div{
         text-align: center;
     }
     grid-area: header;
@@ -31,7 +32,7 @@ export const GameBoardHeader = () =>{
     const {gameState,gameDispatch} = useContext(GameContext);
 
     const history = useHistory();
-    const player = {...playerState.player,isGameBoard:false};
+    const player = {...playerState.player};
     const game = gameState.game;
 
     const gameTitleLabel = {
@@ -61,10 +62,14 @@ export const GameBoardHeader = () =>{
                 <PlayerCharacter
                     {...player} 
                 />
-                 <MonopolyDealLabel
-                    {...gameTitleLabel}
+                <div>
+                    <MonopolyDealLabel
+                            {...gameTitleLabel}
 
-                />
+                    />
+                    <MessageHeader/>
+                </div>
+             
                 <MonopolyDealButton
                     {...logoutBtn}
                 />
