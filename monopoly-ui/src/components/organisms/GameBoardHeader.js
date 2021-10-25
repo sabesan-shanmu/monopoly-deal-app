@@ -9,7 +9,7 @@ import {ActionTypes} from '../../common/constants'
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel'
 import { GameContext } from '../../context/GameContext'
 import { MessageHeader } from '../atoms/MessageHeader'
-
+import { GameMoveContext } from '../../context/GameMoveContext'
 
 const StyledGameHeader = styled.div`
     display:grid;
@@ -30,9 +30,9 @@ export const GameBoardHeader = () =>{
 
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const {gameState,gameDispatch} = useContext(GameContext);
+    const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
 
     const history = useHistory();
-    const player = {...playerState.player};
     const game = gameState.game;
 
     const gameTitleLabel = {
@@ -57,17 +57,21 @@ export const GameBoardHeader = () =>{
 
     return (
         <React.Fragment>
-        {player &&
+        {playerState.player &&
             <StyledGameHeader>
                 <PlayerCharacter
-                    {...player} 
+                    {...playerState.player} 
                 />
                 <div>
                     <MonopolyDealLabel
                             {...gameTitleLabel}
 
                     />
-                    <MessageHeader/>
+                    {gameMoveState.gameMove &&
+                        <MessageHeader
+                            {...gameMoveState.gameMove}
+                        />
+                    }
                 </div>
              
                 <MonopolyDealButton

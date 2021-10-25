@@ -11,7 +11,8 @@ from monopoly.common.enums import GameMoveStatus
 from monopoly.common.constants import MAX_NUMBER_OF_MOVES
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-
+from flask_jwt_extended import get_jwt_identity
+import monopoly.notifications.gameMoves as gameMovesNotification
 
 
 
@@ -22,8 +23,10 @@ game_player_moves_namespace = Namespace('GamePlayerMoves', description='Resource
 class GamePlayerMovesResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def post(self,gamePassCode,playerId):
+    def post(self,gamePassCode):
         try:
+
+            identity = get_jwt_identity()
             updated_player_move = update_player_moves().load(request.get_json())
             
             game = get_game_by_gamepasscode(gamePassCode)
@@ -38,7 +41,7 @@ class GamePlayerMovesResource(Resource):
             if not is_player_moves_status_valid(current_player_move,updated_player_move):
                 raise FieldValidationException(message="Invalid Game Status")
 
-            if not (is_player_valid(current_player_move,playerId) and is_player_valid(updated_player_move,playerId)):
+            if not (is_player_valid(current_player_move,identity["playerId"]) and is_player_valid(updated_player_move,identity["playerId"])):
                 raise FieldValidationException(message="Player not allowed to update")
 
             if not is_game_action_tracker_valid(current_player_move):
@@ -61,13 +64,17 @@ class GamePlayerMovesResource(Resource):
             
             gamePlayerMove = update_game_player_moves(updated_player_move)
 
-            result = GamePlayerMovesSchema().dump(gamePlayerMove)
-            return jsonify(result)
+            updated_game_moves_result = GamePlayerMovesSchema().dump(gamePlayerMove)
+            
+            #publish created game move 
+            gameMovesNotification.publish_game_create_event_to_room(gamePassCode,updated_game_moves_result)
+
+            return jsonify(updated_game_moves_result)
         except ValidationError as e:
             raise ResourceValidationException(e)
             
     @validate_gamepassCode
-    def get(self,gamePassCode,playerId):
+    def get(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:

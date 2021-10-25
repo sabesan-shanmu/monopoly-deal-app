@@ -164,7 +164,7 @@ export const getBlockProperty = (blockName,players,activeBlocks) =>{
     const blockType = activeBlocks.playersBlock.includes(blockName)?GameBlockTypeEnum.PlayerBlock:
                 activeBlocks.drawPile.includes(blockName)?GameBlockTypeEnum.DrawCardsBlock:
                 activeBlocks.activePile.includes(blockName)?GameBlockTypeEnum.ActiveCardsBlock:null;
-    console.log(blockType);
+   
     const blockNumber = activeBlocks.playersBlock.findIndex(t=>t == blockName)+1;
     
     return {

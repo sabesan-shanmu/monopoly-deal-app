@@ -54,3 +54,12 @@ export const CardTypeEnum = {
     MiniFaceDownCard:3,
     PlaceholderCard:4
 }
+
+export const MAX_NUMBER_OF_MOVES = 3
+
+export const GameMoveStatusEnum = { 
+    WaitingForPlayerToBeginMove:0,
+    MoveInProgress:1,
+    MoveComplete:2,
+    SkipYourTurn:3
+}

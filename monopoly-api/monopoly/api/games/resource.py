@@ -11,10 +11,12 @@ from monopoly.api.games.players.services import get_players_by_gameid,have_all_p
 from sqlalchemy import exc
 from monopoly.auth import validate_gamepassCode
 from monopoly.api.games.gamePlayerMoves.services import create_game_player_moves
+from monopoly.api.games.gamePlayerMoves.schema import GamePlayerMovesSchema
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from werkzeug.exceptions import BadRequest
 from flask import session
 import monopoly.notifications.games as gamesNotification
+import monopoly.notifications.gameMoves as gameMovesNotification
 
 
 game_namespace = Namespace('Games', description='List of games that a user can join. Users can also create/update game that they\'re part of')
@@ -64,7 +66,12 @@ class SingleGameResource(Resource):
                         raise FieldValidationException(message="All Players have not clicked ready")
 
                     create_game_cards(gameFound,players,cards)
-                    create_game_player_moves(gameFound)
+
+                    gamePlayerMoves=create_game_player_moves(gameFound)
+                    created_game_moves_result = GamePlayerMovesSchema().dump(gamePlayerMoves)
+                    
+                    #publish created game move 
+                    gameMovesNotification.publish_game_create_event_to_room(gamePassCode,created_game_moves_result)
                     
                 except ValidationError as e:
                     raise ResourceValidationException(e)
@@ -73,10 +80,11 @@ class SingleGameResource(Resource):
             update_game_result = GameSchema().dump(gameFound)
 
             
-            #publish game updatess
+            #publish game updates
             gamesNotification.publish_game_update_event_to_all(update_game_result)            
             gamesNotification.publish_game_update_event_to_room(update_game_result)
 
+           
 
             return jsonify(update_game_result)
         except ValidationError as e:

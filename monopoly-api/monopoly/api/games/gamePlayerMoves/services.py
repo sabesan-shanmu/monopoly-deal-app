@@ -40,6 +40,7 @@ def create_game_player_moves(game):
         )
         db.session.add(gamePlayerMoves)
         db.session.commit()
+        return gamePlayerMoves
     except exc.IntegrityError:
         db.session.rollback()
         raise
