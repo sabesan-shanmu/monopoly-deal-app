@@ -14,18 +14,22 @@ const StyledMessageHeader = styled.div`
 
 export const MessageHeader = ({currentPlayer,gameActionTracker,gameMoveStatus,numberOfMovesPlayed,totalGameMoveCount}) => {
 
+    const getCount =(numberOfMovesPlayed) =>{
+        return numberOfMovesPlayed==1?"1st":numberOfMovesPlayed==2?"2nd":numberOfMovesPlayed==3?"3rd":"";
+    }
+
     console.log(currentPlayer);
     return (
         <React.Fragment>
             <StyledMessageHeader imageId={currentPlayer.imageId}>
                 {gameMoveStatus==GameMoveStatusEnum.WaitingForPlayerToBeginMove &&
                     <React.Fragment>
-                        Waiting for {currentPlayer.playerName} to make Move # {(numberOfMovesPlayed+1)} 
+                        Waiting for {currentPlayer.playerName} to make {getCount(numberOfMovesPlayed+1)} move
                     </React.Fragment>
                 }
                 {gameMoveStatus==GameMoveStatusEnum.MoveInProgress &&
                     <React.Fragment>
-                        {currentPlayer.playerName} : Move # {(numberOfMovesPlayed+1)} in progress...
+                        {currentPlayer.playerName}'s {getCount(numberOfMovesPlayed+1)} move is in progress...
                     </React.Fragment>
                 }
             </StyledMessageHeader>
