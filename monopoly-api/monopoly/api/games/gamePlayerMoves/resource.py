@@ -59,7 +59,7 @@ class GamePlayerMovesResource(Resource):
                 updated_player_move.numberOfRounds +=1
 
             
-            updated_player_move.numberOfMovesPlayed = 1 if current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES else (current_player_move.numberOfMovesPlayed + 1)
+            updated_player_move.numberOfMovesPlayed = 0 if current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES else (current_player_move.numberOfMovesPlayed + 1)
 
             
             gamePlayerMove = update_game_player_moves(updated_player_move)
