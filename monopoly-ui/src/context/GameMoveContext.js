@@ -56,7 +56,7 @@ export const GameMoveContextProvider = ({children}) => {
     
              
         socket.on(`update_game_moves_${gameState.game.gamePassCode}`, (update_game_moves) => {
-            console.log(`update_game_moves_${gameState.game.gamePassCode}`);
+            console.log(`update_game_moves_${gameState.game.gamePassCode} fired!`);
             console.log(update_game_moves);
             if(isMounted)
                 gameMoveDispatch({type:ActionTypes.UpdateResource,gameMove:update_game_moves});

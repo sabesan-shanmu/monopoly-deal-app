@@ -7,6 +7,7 @@ import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { CardTypeEnum } from '../../common/constants';
 import {GameMoveContext} from '../../context/GameMoveContext'
 import {PlayerContext} from '../../context/PlayerContext'
+import { GameMoveStatusEnum } from '../../common/constants';
 
 
 const StyledDrawPile = styled.div`
@@ -27,14 +28,17 @@ const StyledPlayerBlock = styled.div`
     color:white;
 `;
 
+
+
 export const PlayerBlock = ({blockName,player,blockType}) => {
     
-    const {gameMove,gameMoveDipatch} = useContext(GameMoveContext)
-    
+    const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
+    const {playerState,playerDispatch} = useContext(PlayerContext);
     const playerBlock = {...player,isGameBoard:true};
+
+    const isPlayerDrawingCard = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState?.player?.playerId 
+    && gameMoveState?.gameMove?.gameMoveStatus == GameMoveStatusEnum.DrawTwoCardsInProgress;
     
-
-
     return (
         <StyledPlayerBlock blockType={blockType}>
               {blockType == GameBlockTypeEnum.PlayerBlock  &&
@@ -46,14 +50,14 @@ export const PlayerBlock = ({blockName,player,blockType}) => {
               }
               {blockType == GameBlockTypeEnum.DrawCardsBlock &&
                     <StyledDrawPile>  
-                        <MonopolyCard cardType={CardTypeEnum.FaceDownCard}/>
+                        <MonopolyCard cardType={CardTypeEnum.FaceDownCard}  isPlayerDrawingCard={isPlayerDrawingCard} />
                         <MonopolyDealLabel type="h4" text="Draw Card Pile"/>
                     </StyledDrawPile>
                   
               }
                {blockType == GameBlockTypeEnum.ActiveCardsBlock &&
                     <StyledDrawPile>  
-                        <MonopolyCard cardType={CardTypeEnum.PlaceholderCard} />
+                        <MonopolyCard cardType={CardTypeEnum.PlaceholderCard}  />
                         <MonopolyDealLabel type="h4" text="Card In Play Pile"/>
                     </StyledDrawPile>
                   

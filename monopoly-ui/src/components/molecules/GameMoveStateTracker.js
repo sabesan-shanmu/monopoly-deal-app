@@ -18,31 +18,6 @@ const StyledStartChoiceHeader = styled.div`
     }
 `;
 
-const getMoveState = (numberOfMovesPlayed,gameMoveStatus)=>{
-   
-    const states = {
-        0:{
-            [GameMoveStatusEnum.WaitingForPlayerToBeginMove]:'StartTurnOrSkipTurn',
-            [GameMoveStatusEnum.DrawTwoCardsInProgress]:'Draw2Progress',
-            [GameMoveStatusEnum.MoveInProgress]:'GameActionInProgress',
-            [GameMoveStatusEnum.MoveComplete]:'GameActionComplete',
-        },
-        1:{
-            [GameMoveStatusEnum.WaitingForPlayerToBeginMove]:'StartTurnOrSkipTurn',
-            [GameMoveStatusEnum.MoveInProgress]:'GameActionInProgress',
-            [GameMoveStatusEnum.MoveComplete]:'GameActionComplete',
-        },
-        2:{
-            [GameMoveStatusEnum.WaitingForPlayerToBeginMove]:'StartTurnOrSkipTurn',
-            [GameMoveStatusEnum.MoveInProgress]:'GameActionInProgress',
-            [GameMoveStatusEnum.MoveComplete]:'GameActionComplete', 
-        }
-    }
-
-    return {
-
-    } 
-}
 
 export const GameMoveStateTracker = ({gameMove,game,player})=>{
     console.log({gameMove,game,player});
@@ -52,7 +27,21 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     
     
     const drawCardsBtn = {
-        label:"Start Turn"
+        label:"Start Turn",
+        onClick:(e)=>{
+            let payload = {
+                gameMoveStatus:GameMoveStatusEnum.DrawTwoCardsInProgress,
+                currentPlayerId:gameMove.currentPlayer.playerId
+            };
+
+            gameMoveApi.patch(game.links.gameMoves,player.accessToken,payload)
+            .then(function(success){
+                console.log(success.data);
+            })
+            .catch(function(error){
+                console.log(error.response.data);
+            })
+        }
     }
     
     const skipTurnBtn = {
