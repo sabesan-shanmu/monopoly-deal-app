@@ -7,6 +7,7 @@ import {MAX_NUMBER_OF_MOVES,GameMoveStatusEnum} from '../../common/constants'
 const StyledMessageHeader = styled.div`
     margin-top:5px;
     background-color:${({imageId})=>getBackgroundColour(imageId,"secondary")};
+    color:${({imageId})=>getBackgroundColour(imageId,"text")};
     border: 2px solid black;
     border-radius:2px;
 `

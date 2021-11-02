@@ -53,7 +53,7 @@ export const getBackgroundColour=(imageId,type)=>{
         },
         11:{
             primary:"#586091",
-            secondary:"#D35D33",
+            secondary:"#716D9DBF",
             text:"#000000"
         },
         12:{
