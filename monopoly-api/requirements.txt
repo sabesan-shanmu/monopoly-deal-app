@@ -13,7 +13,7 @@ Flask-Cors==3.0.9
 Flask-JWT-Extended==3.24.1
 flask-marshmallow==0.13.0
 Flask-Migrate==2.5.3
-flask-restx==0.5.1
+flask-restx==0.2.0
 Flask-Script==2.0.6
 Flask-SeaSurf==0.3.0
 Flask-Session==0.3.2
@@ -44,7 +44,7 @@ psycopg2==2.8.5
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
-pycryptodome==3.6.6
+pycryptodome==3.4.3
 PyJWT==1.7.1
 pyparsing==2.4.7
 Pyrebase==3.0.27
