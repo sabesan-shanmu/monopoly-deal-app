@@ -10,7 +10,7 @@ export const SocketContextProvider  = ({children}) => {
     
     const socket = io.connect(process.env.REACT_APP_API_BASE_URL,
         {
-            transports: ['websocket']
+           
         }
     );
     
