@@ -52,7 +52,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     
     
     const drawCardsBtn = {
-        label:"Draw 2 Cards"
+        label:"Start Turn"
     }
     
     const skipTurnBtn = {
