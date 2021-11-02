@@ -8,24 +8,25 @@ from monopoly.exceptions import ResourceNotFoundException,ResourceValidationExce
 from marshmallow import ValidationError
 from .services import get_pre_move_check_list
 from .schema import PreMoveCheckSchema
+from flask_jwt_extended import get_jwt_identity
 
-
-pre_move_check_namespace = Namespace('Pre-Move Check', description='Resource to check which cards are playable based on cards on hand')
+pre_move_check_namespace = Namespace('PreMoveCheck', description='Resource to check which cards are playable based on cards on hand')
 
 
 @pre_move_check_namespace.route('/')
-class PreMoveCheck(Resource):   
+class PreMoveCheckResource(Resource):   
     @validate_gamepassCode
     @validate_player
-    def post(self,gamePassCode,playerId):
+    def get(self,gamePassCode):
         try:
+            identity = get_jwt_identity()
             gameFound = get_game_by_gamepasscode(gamePassCode)
             if gameFound is None:
                 raise ResourceNotFoundException(message="Game Not Found")
             
-            player_cards_on_hand = get_game_cards_on_hand(gameFound.gameId,playerId)
+            player_cards_on_hand = get_game_cards_on_hand(gameFound.gamePassCode,identity["playerId"])
             game_play_actions = get_game_play_actions()
-            game_cards_in_play  = get_game_cards_in_play(gameFound.gameId)
+            game_cards_in_play  = get_game_cards_in_play(gameFound.gamePassCode)
 
             pre_move_check_list = get_pre_move_check_list(player_cards_on_hand,game_cards_in_play,game_play_actions)
             result = PreMoveCheckSchema(many=True).dump(pre_move_check_list)

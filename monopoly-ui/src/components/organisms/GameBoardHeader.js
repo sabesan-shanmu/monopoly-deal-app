@@ -9,6 +9,7 @@ import {ActionTypes} from '../../common/constants'
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel'
 import { GameContext } from '../../context/GameContext'
 import { MessageHeader } from '../atoms/MessageHeader'
+import { GameMoveStateTracker } from '../molecules/GameMoveStateTracker'
 import { GameMoveContext } from '../../context/GameMoveContext'
 
 const StyledGameHeader = styled.div`
@@ -16,6 +17,7 @@ const StyledGameHeader = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     align-items: flex-start; 
     width:100%; 
+    border: 5px solid black;
     &>button{
         justify-self: end;
     }
@@ -31,7 +33,7 @@ export const GameBoardHeader = () =>{
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const {gameState,gameDispatch} = useContext(GameContext);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
-
+  
     const history = useHistory();
     const game = gameState.game;
 
@@ -68,9 +70,18 @@ export const GameBoardHeader = () =>{
 
                     />
                     {gameMoveState.gameMove &&
-                        <MessageHeader
-                            {...gameMoveState.gameMove}
-                        />
+                        <React.Fragment>
+                            <MessageHeader
+                                {...gameMoveState.gameMove}
+                            />
+                            {gameMoveState.gameMove.currentPlayer.playerId == playerState.player.playerId  &&
+                                <GameMoveStateTracker
+                                    gameMove={gameMoveState.gameMove}
+                                    game={game}
+                                    player={playerState.player}
+                                />
+                            }
+                        </React.Fragment>
                     }
                 </div>
              

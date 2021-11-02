@@ -23,7 +23,7 @@ game_player_moves_namespace = Namespace('GamePlayerMoves', description='Resource
 class GamePlayerMovesResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def post(self,gamePassCode):
+    def patch(self,gamePassCode):
         try:
 
             identity = get_jwt_identity()
@@ -51,16 +51,18 @@ class GamePlayerMovesResource(Resource):
             updated_player_move.totalGameMoveCount = current_player_move.totalGameMoveCount
             updated_player_move.gameActionTrackerId = current_player_move.gameActionTrackerId
             updated_player_move.gameId = current_player_move.gameId
-
-            if (updated_player_move.gameMoveStatus == GameMoveStatus.WaitingForPlayerToBeginMove 
+           
+            if (updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
                 and current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES) or updated_player_move.gameMoveStatus == GameMoveStatus.SkipYourTurn:
                 currentPlayerGameOrder = get_player_game_order(game.players,current_player_move.currentPlayerId)
                 updated_player_move.currentPlayerId = get_next_player_id(game.players,1) if len(game.players) == currentPlayerGameOrder else get_next_player_id(game.players,currentPlayerGameOrder+1) 
-                updated_player_move.numberOfRounds +=1
+                updated_player_move.totalGameMoveCount +=1
+                updated_player_move.numberOfMovesPlayed = 0
+                updated_player_move.gameMoveStatus = GameMoveStatus.WaitingForPlayerToBeginMove
+            else:
+                updated_player_move.numberOfMovesPlayed = current_player_move.numberOfMovesPlayed + 1               
 
-            
-            updated_player_move.numberOfMovesPlayed = 0 if current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES else (current_player_move.numberOfMovesPlayed + 1)
-
+        
             
             gamePlayerMove = update_game_player_moves(updated_player_move)
 

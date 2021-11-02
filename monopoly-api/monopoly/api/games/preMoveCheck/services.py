@@ -35,34 +35,36 @@ class PreMoveCheck:
 
 
 def is_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_house_or_hotel_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    #can only be played if a full set exists
+
+    return False
 
 def is_double_the_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_its_my_birthday_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_debt_collector_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_just_say_no_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_sly_deal_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_forced_deal_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_deal_breaker_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_rotate_or_move_property_available(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return True
+    return False
 
 def is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
 

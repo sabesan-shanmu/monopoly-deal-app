@@ -8,7 +8,7 @@ from monopoly.exceptions import ResourceNotFoundException,ResourceValidationExce
 from marshmallow import ValidationError
 from .services import get_game_action_tracker,get_game_action_trackers
 from .schema import GameActionTrackerSchema,create_game_action_tracker,update_game_action_tracker
-
+from flask_jwt_extended import get_jwt_identity
 
 
 
@@ -20,9 +20,9 @@ game_action_tracker_namespace = Namespace('GameActionTracker', description='Reso
 class ManyGameActionTrackerResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def post(self,gamePassCode,playerId):
+    def post(self,gamePassCode):
         try:
-        
+            identity = get_jwt_identity()
             game_action_tracker = create_game_action_tracker().load(request.get_json())
 
             game = get_game_by_gamepasscode(gamePassCode)
@@ -33,7 +33,7 @@ class ManyGameActionTrackerResource(Resource):
             if current_player_move is None:
                 raise ResourceNotFoundException(message="No Current Moves found")
 
-            if current_player_move.playerId != playerId or game_action_tracker.playerId != playerId:
+            if current_player_move.playerId != identity["playerId"] or game_action_tracker.playerId != identity["playerId"]:
                 raise FieldValidationException(message="Requested player is unable to start an action.")
             elif current_player_move.gameActionTrackerId is not None:
                 raise FieldValidationException(message="Unable to start a new action while an action is in progress.")
@@ -49,7 +49,7 @@ class ManyGameActionTrackerResource(Resource):
     
     @validate_gamepassCode
     @validate_player
-    def get(self,gamePassCode,playerId):
+    def get(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)     
             if game is None:
@@ -67,8 +67,9 @@ class ManyGameActionTrackerResource(Resource):
 class SingleGameActionTrackerResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def post(self,gamePassCode,playerId,gameActionTrackerId):
+    def put(self,gamePassCode,gameActionTrackerId):
         try:
+            identity = get_jwt_identity()
             game_action_tracker = update_game_action_tracker().load(request.get_json())
             game = get_game_by_gamepasscode(gamePassCode)             
             if game is None:
@@ -78,7 +79,7 @@ class SingleGameActionTrackerResource(Resource):
             if current_player_move is None:
                 raise ResourceNotFoundException(message="No Current Moves found")
 
-            if current_player_move.playerId != playerId:
+            if current_player_move.playerId != identity["playerId"]:
                 raise FieldValidationException(message="Requested player is unable to start an action.")
 
         except ValidationError as e:
@@ -86,7 +87,7 @@ class SingleGameActionTrackerResource(Resource):
 
     @validate_gamepassCode
     @validate_player
-    def get(self,gamePassCode,playerId,gameActionTrackerId):
+    def get(self,gamePassCode,gameActionTrackerId):
         try:
             game = get_game_by_gamepasscode(gamePassCode)     
             if game is None:

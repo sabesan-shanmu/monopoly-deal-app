@@ -16,6 +16,7 @@ const StyledPlayerCharacter = styled.section`
     background-color:${({imageId})=>getBackgroundColour(imageId,"secondary")};
     color:${({imageId})=>getBackgroundColour(imageId,"text")};
     background-size: cover;
+    word-break: break-word;
     border: 2px solid black;
     border-radius: 5px;
     max-width: 270px;

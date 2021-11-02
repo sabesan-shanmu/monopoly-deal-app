@@ -1,10 +1,12 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { PlayerCharacter } from './PlayerCharacter'
 import styled from 'styled-components'
 import { GameBlockTypeEnum } from '../../common/constants';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { CardTypeEnum } from '../../common/constants';
+import {GameMoveContext} from '../../context/GameMoveContext'
+import {PlayerContext} from '../../context/PlayerContext'
 
 
 const StyledDrawPile = styled.div`
@@ -27,9 +29,12 @@ const StyledPlayerBlock = styled.div`
 
 export const PlayerBlock = ({blockName,player,blockType}) => {
     
-   
+    const {gameMove,gameMoveDipatch} = useContext(GameMoveContext)
+    
     const playerBlock = {...player,isGameBoard:true};
     
+
+
     return (
         <StyledPlayerBlock blockType={blockType}>
               {blockType == GameBlockTypeEnum.PlayerBlock  &&

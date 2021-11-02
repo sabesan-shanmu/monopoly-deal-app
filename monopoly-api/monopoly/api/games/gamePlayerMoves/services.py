@@ -13,8 +13,10 @@ def get_player_game_order(players,playerId):
 def get_next_player_id(players,playerGameOrder):
     return[x for x in players if x.playerGameOrder==playerGameOrder][0].playerId 
 
-def is_player_moves_status_valid(current_player_move,update_player_move):
-    return len([ x for x in EXPECTED_GAME_MOVE_STATUS[current_player_move.gameMoveStatus] if x == update_player_move.gameMoveStatus])>0
+def is_player_moves_status_valid(current_player_move,updated_player_move): 
+    return len([ x for x in EXPECTED_GAME_MOVE_STATUS[current_player_move.gameMoveStatus] if x == updated_player_move.gameMoveStatus])>0 \
+        and len([ x for x in ALLOWED_MOVE_STATUS[current_player_move.numberOfMovesPlayed] if x == current_player_move.gameMoveStatus])>0 
+
 
 
 def is_player_move_count_valid(current_player_move,update_player_move):
@@ -26,9 +28,15 @@ def is_player_valid(current_player_move,playerId):
 
 # current status -> new status 
 EXPECTED_GAME_MOVE_STATUS = {
-    Enum.GameMoveStatus.WaitingForPlayerToBeginMove: [Enum.GameMoveStatus.MoveInProgress],
+    Enum.GameMoveStatus.WaitingForPlayerToBeginMove: [Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.SkipYourTurn],
+    Enum.GameMoveStatus.DrawTwoCardsInProgress:[Enum.GameMoveStatus.MoveInProgress],
     Enum.GameMoveStatus.MoveInProgress:[Enum.GameMoveStatus.MoveComplete],
-    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.SkipYourTurn]
+    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove]
+}
+ALLOWED_MOVE_STATUS = {
+    0:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete],
+    1:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete],
+    2:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete]
 }
 
 def create_game_player_moves(game):

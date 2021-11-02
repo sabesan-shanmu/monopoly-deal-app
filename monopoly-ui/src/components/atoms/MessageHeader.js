@@ -22,6 +22,7 @@ export const MessageHeader = ({currentPlayer,gameActionTracker,gameMoveStatus,nu
     return (
         <React.Fragment>
             <StyledMessageHeader imageId={currentPlayer.imageId}>
+
                 {gameMoveStatus==GameMoveStatusEnum.WaitingForPlayerToBeginMove &&
                     <React.Fragment>
                         Waiting for {currentPlayer.playerName} to make {getCount(numberOfMovesPlayed+1)} move
@@ -30,6 +31,16 @@ export const MessageHeader = ({currentPlayer,gameActionTracker,gameMoveStatus,nu
                 {gameMoveStatus==GameMoveStatusEnum.MoveInProgress &&
                     <React.Fragment>
                         {currentPlayer.playerName}'s {getCount(numberOfMovesPlayed+1)} move is in progress...
+                    </React.Fragment>
+                }
+                {gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress &&
+                    <React.Fragment>
+                        {currentPlayer.playerName} drawing 2 cards
+                    </React.Fragment>
+                }
+                {gameMoveStatus==GameMoveStatusEnum.MoveComplete &&
+                    <React.Fragment>
+                        {currentPlayer.playerName} completed {getCount(numberOfMovesPlayed)} moves
                     </React.Fragment>
                 }
             </StyledMessageHeader>

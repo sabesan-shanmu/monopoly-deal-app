@@ -25,7 +25,7 @@ class ManyPlayerCardsResource(Resource):
             gameFound = get_game_by_gamepasscode(gamePassCode)
             if gameFound is None:
                 raise ResourceNotFoundException(message="Game Not Found")
-            playerCards = get_game_cards_on_hand(gameFound.gameId,identity["playerId"])
+            playerCards = get_game_cards_on_hand(gameFound.gamePassCode,identity["playerId"])
             result = GameCardSchema(many=True).dump(playerCards)
             return jsonify(result)
         except ValidationError as e:

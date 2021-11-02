@@ -59,7 +59,8 @@ export const MAX_NUMBER_OF_MOVES = 3
 
 export const GameMoveStatusEnum = { 
     WaitingForPlayerToBeginMove:0,
-    MoveInProgress:1,
-    MoveComplete:2,
-    SkipYourTurn:3
+    DrawTwoCardsInProgress:1,
+    MoveInProgress:2,
+    MoveComplete:3,
+    SkipYourTurn:4
 }

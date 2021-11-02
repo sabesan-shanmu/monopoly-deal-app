@@ -10,7 +10,7 @@ const StyledMonopolyDealButton = styled.button`
     color:white;
     border:1px solid white;
     border-radius:6px;
-    cursor: pointer;
+    cursor:pointer;
     padding:5px;
     font-size:1.35em;
     line-height:1.35em;

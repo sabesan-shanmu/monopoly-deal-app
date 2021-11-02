@@ -60,7 +60,7 @@ class Cards(db.Model):
 
 class GameCards(db.Model):
     gameCardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
+    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
