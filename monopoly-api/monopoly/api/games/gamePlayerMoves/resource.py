@@ -56,7 +56,7 @@ class GamePlayerMovesResource(Resource):
     
             #move to the next player since player completed their turn or skipped their turn
             if (updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
-                and current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES-1) or updated_player_move.gameMoveStatus == GameMoveStatus.SkipYourTurn:
+                and current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES) or updated_player_move.gameMoveStatus == GameMoveStatus.SkipYourTurn:
                 currentPlayerGameOrder = get_player_game_order(game.players,current_player_move.currentPlayerId)
                 updated_player_move.currentPlayerId = get_next_player_id(game.players,1) if len(game.players) == currentPlayerGameOrder else get_next_player_id(game.players,currentPlayerGameOrder+1) 
                 updated_player_move.totalGameMoveCount +=1
