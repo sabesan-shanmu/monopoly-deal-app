@@ -36,7 +36,7 @@ export const MessageHeader = ({currentPlayer,gameActionTracker,gameMoveStatus,nu
                 }
                 {gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress &&
                     <React.Fragment>
-                        {currentPlayer.playerName} is drawing 2 cards
+                        {currentPlayer.playerName} click on Draw Card Pile to draw 2 cards
                     </React.Fragment>
                 }
                 {gameMoveStatus==GameMoveStatusEnum.MoveComplete &&
