@@ -16,7 +16,6 @@ const StyledGameHeader = styled.div`
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: flex-start; 
-    width:100%; 
     border: 5px solid black;
     &>button{
         justify-self: end;
