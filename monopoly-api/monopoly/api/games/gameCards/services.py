@@ -37,7 +37,7 @@ def get_game_cards_on_hand(gamePassCode,playerId):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsOnHand]))).all()
 
 def draw_game_cards(gamePassCode,number):
-    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId is None,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId == None,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
 
 
 def reshuffle_game_cards():

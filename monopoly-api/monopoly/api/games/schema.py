@@ -45,6 +45,7 @@ class GameSchema(ma.Schema):
             "playerCards": url_overwrite("PlayerCards_many_player_cards_resource", gamePassCode="<gamePassCode>"),
             "gameMoves": url_overwrite("GamePlayerMoves_game_player_moves_resource", gamePassCode="<gamePassCode>"),
             "preMoveCheck": url_overwrite("PreMoveCheck_pre_move_check_resource", gamePassCode="<gamePassCode>"),
+            "drawCards": url_overwrite("DrawCards_draw_cards_resource", gamePassCode="<gamePassCode>"),
         }
     )
     @post_dump

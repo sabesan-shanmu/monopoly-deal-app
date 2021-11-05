@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import maximizeIcon from '../../assets/img/maximize.png'
 import minimizeIcon from '../../assets/img/minimize.png'
 import { CardTypeEnum } from '../../common/constants';
+import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext';
 
 
 const FooterTitleContainer = styled.div`
@@ -37,25 +38,17 @@ export const CurrentPlayerCardsOnHand = ()=> {
 
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
+    const {currentPlayerCardsState,currentPlayerCardsStateDispatch} = useContext(CurrentPlayerCardsContext);
     const [playerCards,setPlayerCards] = useState([])
     const [isFooterVisible,setIsFooterVisible] = useState(true);
     
+    console.log(currentPlayerCardsState);
+
     const footerTitleLabel = {
         text:"My Cards On Hand",
         type:"h2"
     };
-
-    useEffect(()=>{
-        playerCardsApi.get(gameState.game.links.playerCards,playerState.player.accessToken)
-        .then(function(success){
-            console.log(success.data);
-            setPlayerCards(success.data);
-        })
-        .catch(function(error){
-            console.log(error.response.data);
-            setPlayerCards([]);
-        })
-    },[])
+    
 
     const getIcon = ()=> {
         return isFooterVisible?
@@ -76,7 +69,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
             </FooterTitleContainer>
             {isFooterVisible &&
                 <FooterCardsContainer>
-                {playerCards && playerCards.map((playerCard,key)=>
+                {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
                     <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} />
                 )}
                 </FooterCardsContainer> 

@@ -10,6 +10,7 @@ from monopoly.api.gamePlayActions.resource import game_play_action_namespace
 from monopoly.api.games.gameCards.resource import game_cards_namespace
 from monopoly.api.games.preMoveCheck.resource import pre_move_check_namespace
 from monopoly.api.games.gameActionTracker.resource import game_action_tracker_namespace
+from monopoly.api.games.drawCards.resource import draw_cards_namespace
 
 flask_api.add_namespace(session_namespace,'/api/sessions')
 flask_api.add_namespace(logout_namespace,'/api/logout')
@@ -20,5 +21,6 @@ flask_api.add_namespace(game_player_moves_namespace,'/api/games/<string:gamePass
 flask_api.add_namespace(cards_namespace,'/api/cards')
 flask_api.add_namespace(game_play_action_namespace,'/api/game-play-actions')
 flask_api.add_namespace(game_cards_namespace,'/api/games/<string:gamePassCode>/game-cards')
+flask_api.add_namespace(draw_cards_namespace,'/api/games/<string:gamePassCode>/draw-cards')
 flask_api.add_namespace(pre_move_check_namespace,'/api/games/<string:gamePassCode>/pre-move-check')
 flask_api.add_namespace(game_action_tracker_namespace,'/api/games/<string:gamePassCode>/game-action-trackers')

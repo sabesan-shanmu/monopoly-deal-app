@@ -9,22 +9,40 @@ from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
 from monopoly.common.constants import NUMBER_OF_CARDS_TO_DRAW
+from monopoly.api.games.gamePlayerMoves.services import get_game_player_moves, is_player_valid
+from flask_jwt_extended.utils import get_jwt_identity
+from monopoly.common.enums import GameMoveStatus,GameCardLocationStatus
 
 
-game_cards_namespace = Namespace('DrawCards', description='Draw 2 cards from deck')
+draw_cards_namespace = Namespace('DrawCards', description='Draw 2 cards from deck')
 
 
-@game_cards_namespace.route('/')
+@draw_cards_namespace.route('/')
 class DrawCardsResource(Resource):
     @validate_gamepassCode
     @validate_player
     def get(self,gamePassCode):
         try:
+            identity = get_jwt_identity()
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")    
+            
+            current_player_move = get_game_player_moves(game.gameId)
+            if current_player_move is None:
+                raise FieldValidationException(message="No Current Moves found")
+
+            if not (is_player_valid(current_player_move,identity["playerId"])) or current_player_move.gameMoveStatus != GameMoveStatus.DrawTwoCardsInProgress:
+                raise FieldValidationException(message="Player Not allowed to draw cards")
+            
+
             drawn_gameCards = draw_game_cards(game.gamePassCode,NUMBER_OF_CARDS_TO_DRAW)
-            updated_gameCards = update_game_cards(draw_game_cards)     
+            #update drawn card to current player's id and location to on hand
+            for i,drawn_card in enumerate(drawn_gameCards):
+                drawn_gameCards[i].playerId = identity["playerId"]
+                drawn_gameCards[i].cardStatus = GameCardLocationStatus.IsOnHand
+            updated_gameCards = update_game_cards(drawn_gameCards)     
+
             result = GameCardSchema(many=True).dump(updated_gameCards)
             return jsonify(result)
         except ValidationError as e:
