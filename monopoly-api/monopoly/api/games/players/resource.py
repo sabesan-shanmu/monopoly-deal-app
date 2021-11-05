@@ -9,7 +9,7 @@ from monopoly.auth import create_tokens,validate_gamepassCode,validate_player
 from flask_jwt_extended  import jwt_refresh_token_required,get_jwt_identity
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-import monopoly.notifications.games as gamesNotification
+from monopoly.notifications.games import publish_game_update_event_to_room,publish_game_update_event_to_all
 from monopoly.api.games.schema import GameSchema
 from collections import namedtuple
 
@@ -58,8 +58,8 @@ class RegisterResource(Resource):
             #publish updated game
             update_game = get_game_by_gamepasscode(gamePassCode)
             update_game_result = GameSchema().dump(update_game)
-            gamesNotification.publish_game_update_event_to_all(update_game_result)            
-            gamesNotification.publish_game_update_event_to_room(update_game_result)
+            publish_game_update_event_to_all(update_game_result)            
+            publish_game_update_event_to_room(gamePassCode,update_game_result)
 
             result = create_tokens(player_result)
            
@@ -88,8 +88,8 @@ class LoginResource(Resource):
                 #publish updated game
                 update_game = get_game_by_gamepasscode(gamePassCode)
                 update_game_result = GameSchema().dump(update_game)
-                gamesNotification.publish_game_update_event_to_all(update_game_result)
-                gamesNotification.publish_game_update_event_to_room(update_game_result)
+                publish_game_update_event_to_all(update_game_result)
+                publish_game_update_event_to_room(gamePassCode,update_game_result)
 
                 return result, 200  
             else:
@@ -131,8 +131,8 @@ class VoteResource(Resource):
             #publish updated game
             update_game = get_game_by_gamepasscode(gamePassCode)
             update_game_result = GameSchema().dump(update_game)
-            gamesNotification.publish_game_update_event_to_all(update_game_result)
-            gamesNotification.publish_game_update_event_to_room(update_game_result)
+            publish_game_update_event_to_all(update_game_result)
+            publish_game_update_event_to_room(gamePassCode,update_game_result)
 
 
             

@@ -70,7 +70,7 @@ class GamePlayerMovesResource(Resource):
             updated_game_moves_result = GamePlayerMovesSchema().dump(gamePlayerMove)
             
             #publish created game move 
-            gameMovesNotification.publish_game_create_event_to_room(gamePassCode,updated_game_moves_result)
+            gameMovesNotification.publish_game_moves_update_event_to_room(gamePassCode,updated_game_moves_result)
 
             return jsonify(updated_game_moves_result)
         except ValidationError as e:

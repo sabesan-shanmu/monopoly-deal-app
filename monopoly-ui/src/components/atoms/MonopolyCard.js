@@ -48,16 +48,11 @@ const StyledNoCard = styled.div`
 `;
 
 const StyledCard = styled.img`
-    ${props => props.isPlayerDrawingCard ? css`
-        animation: ${bounce} 1.3s linear infinite;  
-    `:
-    css`
-        &:hover {
-            animation: ${bounce} 1.3s linear infinite; 
-        }
-    `
+
+    &:hover {
+        animation: ${bounce} 1.3s linear infinite; 
     }
-    
+   
     cursor:pointer;
     border:3px solid black;
     @media ${device.xlarge} {
@@ -78,9 +73,9 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType,isPlayerDrawingCard}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType}) => {
     const [isLoaded, setIsLoaded] = useState(false);
-   
+    
     return (
         <React.Fragment>
                     {cardType == CardTypeEnum.FaceUpCard && 
@@ -95,7 +90,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isPlayerDrawingCard}) =>
                         <StyledMiniCard src={faceDownCardImg} />
                     }
                     {cardType ==CardTypeEnum.FaceDownCard &&
-                        <StyledCard src={faceDownCardImg} isPlayerDrawingCard={isPlayerDrawingCard} />
+                        <StyledCard src={faceDownCardImg}  />
                     }
                     {cardType ==CardTypeEnum.PlaceholderCard &&
                         <StyledNoCard />

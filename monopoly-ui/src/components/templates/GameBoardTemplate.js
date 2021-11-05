@@ -21,7 +21,7 @@ export const GameBoardTemplate = ()=> {
                             <GameLobbyMenu/>
                         }
                         {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
-                            <GameInProgressBoard/>
+                            <GameInProgressBoard game={gameState.game}/>
                         }
                     </GameMoveContextProvider>
                 </React.Fragment>

@@ -15,7 +15,7 @@ import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHan
 const FooterTitleContainer = styled.div`
     display:flex;
     color:white;
-    align-self: center;
+    justify-self: center;
     &>label{
         padding-right:10px;
     }
@@ -30,7 +30,6 @@ const FooterCardsContainer = styled.div`
     &>img{
         margin:10px;
     }
-    width:inherit;
 `;
 
 

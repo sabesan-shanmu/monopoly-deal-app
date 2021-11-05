@@ -30,18 +30,18 @@ export const GameBoardArea = () => {
 
     return (
         <StyledGameBoardArea>
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.TopFarLeft,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.TopLeft,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.TopRight,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.TopFarRight,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.MiddleFarLeft,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.MiddleLeft,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.MiddleRight,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.MiddleFarRight,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.BottomFarLeft,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.BottomLeft,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.BottomRight,players,activeBlocks)} />
-            <PlayerBlock {...getBlockProperty(GameBlockEnum.BottomFarRight,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopFarLeft,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopLeft,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopRight,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopFarRight,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.MiddleFarLeft,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.MiddleLeft,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.MiddleRight,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.MiddleFarRight,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.BottomFarLeft,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.BottomLeft,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.BottomRight,players,activeBlocks)} />
+            <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.BottomFarRight,players,activeBlocks)} />
         </StyledGameBoardArea>
     )
 }

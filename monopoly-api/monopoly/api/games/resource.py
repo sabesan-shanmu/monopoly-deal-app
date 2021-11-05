@@ -71,7 +71,7 @@ class SingleGameResource(Resource):
                     created_game_moves_result = GamePlayerMovesSchema().dump(gamePlayerMoves)
                     
                     #publish created game move 
-                    gameMovesNotification.publish_game_create_event_to_room(gamePassCode,created_game_moves_result)
+                    gameMovesNotification.publish_game_moves_create_event_to_room(gamePassCode,created_game_moves_result)
                     
                 except ValidationError as e:
                     raise ResourceValidationException(e)
@@ -82,7 +82,7 @@ class SingleGameResource(Resource):
             
             #publish game updates
             gamesNotification.publish_game_update_event_to_all(update_game_result)            
-            gamesNotification.publish_game_update_event_to_room(update_game_result)
+            gamesNotification.publish_game_update_event_to_room(gamePassCode,update_game_result)
 
            
 

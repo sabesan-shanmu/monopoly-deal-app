@@ -18,6 +18,9 @@ const currentPlayerCardsReducer =  (state,action)  =>{
     switch(action.type){
         case ActionTypes.LoadResource:
             return {...state,playerCards:action.playerCards};
+        case ActionTypes.CreateResource:
+            const updated_playerCards = [...state.playerCards,...action.playerCards];
+            return {...state,playerCards:updated_playerCards};
         case ActionTypes.UpdateResource:
             return {...state,playerCards:[]}; 
     }
@@ -30,7 +33,7 @@ export const CurrentPlayerCardsContextProvider = ({children}) => {
     const {socket} = useContext(SocketContext); 
     const {gameState,gameDispatch}  = useContext(GameContext);
     const {playerState,playerDispatch}  = useContext(PlayerContext);
-    
+   
     useEffect(() => {
         let isMounted=true;
 
@@ -44,7 +47,13 @@ export const CurrentPlayerCardsContextProvider = ({children}) => {
                 currentPlayerCardsStateDispatch({type:ActionTypes.DeleteResource,errors:error.response.data});
         });
 
+        socket.on(`add_player_cards_on_hand_${gameState.game.gamePassCode}_${playerState.player.playerId}`, (player_cards) => {
       
+            console.log("add_player_cards_on_hand fired!");
+            console.log(player_cards);
+            if(isMounted)
+                currentPlayerCardsStateDispatch({type:ActionTypes.CreateResource,playerCards:player_cards});
+          });
 
         
         return () => {

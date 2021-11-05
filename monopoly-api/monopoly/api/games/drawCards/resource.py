@@ -12,6 +12,9 @@ from monopoly.common.constants import NUMBER_OF_CARDS_TO_DRAW
 from monopoly.api.games.gamePlayerMoves.services import get_game_player_moves, is_player_valid
 from flask_jwt_extended.utils import get_jwt_identity
 from monopoly.common.enums import GameMoveStatus,GameCardLocationStatus
+from monopoly.notifications.playerCards import publish_add_player_cards_on_hand_event_to_room
+from monopoly.notifications.games import publish_game_update_event_to_room
+from monopoly.api.games.schema import GameSchema
 
 
 draw_cards_namespace = Namespace('DrawCards', description='Draw 2 cards from deck')
@@ -43,7 +46,17 @@ class DrawCardsResource(Resource):
                 drawn_gameCards[i].cardStatus = GameCardLocationStatus.IsOnHand
             updated_gameCards = update_game_cards(drawn_gameCards)     
 
-            result = GameCardSchema(many=True).dump(updated_gameCards)
-            return jsonify(result)
+            updated_gameCards_result = GameCardSchema(many=True).dump(updated_gameCards)
+
+
+            #publish event for player who drew card
+            publish_add_player_cards_on_hand_event_to_room(gamePassCode,identity["playerId"],updated_gameCards_result)
+
+            #publish updated game
+            update_game = get_game_by_gamepasscode(gamePassCode)
+            update_game_result = GameSchema().dump(update_game)        
+            publish_game_update_event_to_room(gamePassCode,update_game_result)
+
+            return jsonify(updated_gameCards_result)
         except ValidationError as e:
             raise ResourceValidationException(e)
