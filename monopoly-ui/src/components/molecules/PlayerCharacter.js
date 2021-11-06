@@ -27,7 +27,7 @@ const StyledPlayerCharacter = styled.section`
     word-break: break-word;
     border: 2px solid black;
     border-radius: 5px;
-    max-width: 280px;
+    max-width: 170px;
     align-items: center;
     font-size:0.95em;
     line-height:1.35em;
