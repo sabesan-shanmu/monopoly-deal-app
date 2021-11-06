@@ -53,7 +53,8 @@ const StyledCard = styled.img`
         animation: ${bounce} 1.3s linear infinite; 
     }
    
-    cursor:pointer;
+    opacity:${(props) => props.isCardSelectable? '1':'0.4'};
+    cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
     @media ${device.xlarge} {
         height:200px;
@@ -73,7 +74,7 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=true}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     
     return (
@@ -81,6 +82,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType}) => {
                     {cardType == CardTypeEnum.FaceUpCard && 
                         <StyledCard src={gameCard.card.cardImageUrl}
                             style={{ visibility: isLoaded ? "visible" : "hidden" }}
+                            isCardSelectable={isCardSelectable}
                             onLoad={() => {
                                 setIsLoaded(true);
                             }}
@@ -90,7 +92,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType}) => {
                         <StyledMiniCard src={faceDownCardImg} />
                     }
                     {cardType ==CardTypeEnum.FaceDownCard &&
-                        <StyledCard src={faceDownCardImg}  />
+                        <StyledCard src={faceDownCardImg} isCardSelectable={isCardSelectable} />
                     }
                     {cardType ==CardTypeEnum.PlaceholderCard &&
                         <StyledNoCard />
@@ -100,7 +102,5 @@ export const MonopolyCard = ({gameCard,onClick,cardType}) => {
 }
 
   
-MonopolyCard.defaultProps = {
-    isPlayerDrawingCard:false
-};
+
 

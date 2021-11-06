@@ -6,6 +6,7 @@ import { GameInProgressBoard} from '../organisms/GameInProgressBoard'
 import { GameContext } from '../../context/GameContext'
 import { PlayerContext } from '../../context/PlayerContext'
 import { GameMoveContextProvider } from '../../context/GameMoveContext'
+import { PreMoveCheckContextProvider } from '../../context/PreMoveCheckContext';
 
 export const GameBoardTemplate = ()=> {
     const {gameState,gameDispatch} = useContext(GameContext);
@@ -16,13 +17,15 @@ export const GameBoardTemplate = ()=> {
             {playerState.player && 
                 <React.Fragment>
                     <GameMoveContextProvider>
-                        <GameBoardHeader/>
-                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
-                            <GameLobbyMenu/>
-                        }
-                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
-                            <GameInProgressBoard game={gameState.game}/>
-                        }
+                        <PreMoveCheckContextProvider> 
+                            <GameBoardHeader/>
+                            {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
+                                <GameLobbyMenu/>
+                            }
+                            {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
+                                <GameInProgressBoard game={gameState.game}/>
+                            }
+                        </PreMoveCheckContextProvider>
                     </GameMoveContextProvider>
                 </React.Fragment>
             }
