@@ -43,6 +43,7 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
 
 
     const drawCardOnClick  = async()=>{
+        console.log("Clicked on drawCard");
         let payload = {
             gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
             currentPlayerId:playerState.player.playerId
@@ -69,9 +70,9 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
                     </React.Fragment>
               }
               {blockType == GameBlockTypeEnum.DrawCardsBlock &&
-                    <StyledDrawPile onClick={isPlayerDrawingCard && !isDrawCardsClicked ? drawCardOnClick : undefined }>  
-                        <MonopolyCard cardType={CardTypeEnum.FaceDownCard} />
-                        <MonopolyDealLabel type="h4" text="Draw Card Pile"/>
+                    <StyledDrawPile>  
+                        <MonopolyCard onClick={isPlayerDrawingCard && !isDrawCardsClicked ? drawCardOnClick() : undefined } cardType={CardTypeEnum.FaceDownCard} isCardSelectable={isPlayerDrawingCard} />
+                        <MonopolyDealLabel type="h4" text="Draw Card Pile" />
                     </StyledDrawPile>
                   
               }

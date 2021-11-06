@@ -74,9 +74,9 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=true}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false}) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    
+
     return (
         <React.Fragment>
                     {cardType == CardTypeEnum.FaceUpCard && 
@@ -86,6 +86,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=true}) 
                             onLoad={() => {
                                 setIsLoaded(true);
                             }}
+                            onClick={onClick}
                         />
                     }
                     {cardType ==CardTypeEnum.MiniFaceDownCard &&
