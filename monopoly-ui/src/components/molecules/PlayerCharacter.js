@@ -11,7 +11,7 @@ const StyledCardCounter = styled.div`
     display:flex;
     overflow-x:auto;
     align-self: center;
-    max-width: 200px;
+    max-width: 170px;
     &>img{
         margin:2px;
     }
@@ -27,7 +27,7 @@ const StyledPlayerCharacter = styled.section`
     word-break: break-word;
     border: 2px solid black;
     border-radius: 5px;
-    max-width: 170px;
+    max-width: 280px;
     align-items: center;
     font-size:0.95em;
     line-height:1.35em;
