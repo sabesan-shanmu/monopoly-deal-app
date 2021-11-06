@@ -64,3 +64,36 @@ export const GameMoveStatusEnum = {
     MoveComplete:3,
     SkipYourTurn:4
 }
+
+export const ActionClassificationEnum = {
+    NoActionRequiredMove:1,
+    SingleRentPlayerPaymentRequiredMove:2,
+    MultipleRentPlayerPaymentsRequiredMove:3,
+    GainCardsMove:4,
+    SinglePlayerPaymentRequiredMove:5,
+    MultiplePlayerPaymentsRequiredMove:6,
+    CancelActionMove:7,
+    SlyStealMove:8,
+    ForcedTradeMove:9,
+    DealBreakerMove:10,
+    MustPlayDoubleTheRentMove:11,
+    RotatingCardMove:12,
+    MovePropertyCardMove:13
+}
+
+
+export const GameCardLocationStatusEnum = {
+    IsNotDrawn : 0, //game cards no one owns
+    IsOnHand : 1, //player cards owned by a player
+    IsPlayedOnPropertyPile : 2, //game cards owned by player but can be shown on field that are owned by player
+    IsDiscarded:3, //game cards that are discarded and dont need to be shown to the user
+    IsPlayedOnCashPile:4, //game cards owned by player but can be shown on field that are owned by player
+    IsInPlay : 5 //all the cards that the player plays on their turn. clear this once the player's turn ends
+}
+
+export const CardTypesEnum = {
+    Properties:1,
+    Cash:2,
+    Rent:3,
+    Action:4
+}

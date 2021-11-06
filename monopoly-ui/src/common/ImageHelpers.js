@@ -47,8 +47,8 @@ export const getBackgroundColour=(imageId,type)=>{
             text:"#000000"
         },
         10:{
-            primary:"#7AAE3D",
-            secondary:"#CA47CA",
+            primary:"#251B60",
+            secondary:"#8B0FB7",
             text:"#000000"
         },
         11:{
@@ -79,7 +79,7 @@ export const  getImageList = (playersList) => {
         {value:7,text:'Kirby'},
         {value:8,text:'Sonic'},
         {value:9,text:'Crash Bandicoot'},
-        {value:10,text:'Joker'},
+        {value:10,text:'Waluigi'},
         {value:11,text:'Rocket Raccoon'},
         {value:12,text:'Pikachu'},
     ];

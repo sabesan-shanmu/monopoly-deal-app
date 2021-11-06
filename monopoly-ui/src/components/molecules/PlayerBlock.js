@@ -10,6 +10,8 @@ import {PlayerContext} from '../../context/PlayerContext'
 import { GameMoveStatusEnum } from '../../common/constants';
 import { drawCardsApi } from '../../api/drawCardsApi';
 import { gameMoveApi } from '../../api/gameMoveApi';
+import { PropertyPile } from './PropertyPile';
+import { CashPile } from './CashPile';
 
 const StyledDrawPile = styled.div`
     display:flex;
@@ -67,6 +69,9 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
                         <PlayerCharacter
                             {...playerBlock}
                         />
+                        
+                        <PropertyPile/>
+                        <CashPile/>
                     </React.Fragment>
               }
               {blockType == GameBlockTypeEnum.DrawCardsBlock &&

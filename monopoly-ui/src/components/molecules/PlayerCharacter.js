@@ -7,7 +7,15 @@ import {getBackgroundColour} from '../../common/ImageHelpers'
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
 
-
+const StyledCardCounter = styled.div`
+    display:flex;
+    overflow-x:auto;
+    align-self: center;
+    max-width: 200px;
+    &>img{
+        margin:2px;
+    }
+`;
 
 
 const StyledPlayerCharacter = styled.section`
@@ -19,13 +27,10 @@ const StyledPlayerCharacter = styled.section`
     word-break: break-word;
     border: 2px solid black;
     border-radius: 5px;
-    max-width: 270px;
+    max-width: 280px;
     align-items: center;
     font-size:0.95em;
     line-height:1.35em;
-    &>img{
-        margin:2px;
-    }
 `;
 
 export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,...props}) => { 
@@ -42,11 +47,13 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
                 {isGameBoard &&
                     <div>Cards on Hand:</div>
                 } 
-                {isGameBoard &&
-                    cards.map((card,key)=>
-                        <MonopolyCard cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
-                    )
-                }
+                <StyledCardCounter>
+                    {isGameBoard &&
+                        cards.map((card,key)=>
+                            <MonopolyCard cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
+                        )
+                    }
+                </StyledCardCounter>
             </div>   
         </StyledPlayerCharacter>
     )

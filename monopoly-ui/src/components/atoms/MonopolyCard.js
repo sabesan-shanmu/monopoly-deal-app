@@ -32,18 +32,18 @@ const StyledNoCard = styled.div`
     opactiy:0.5;
     background: rgba(0,0,0,0.3);
     @media ${device.xlarge} {
-        height:200px;
+        height:180px;
     }
 
     @media ${device.large} { 
-        height:200px;
+        height:100px;
     }
     @media ${device.medium} { 
-        height:200px;
+        height:100px;
 
     }
     @media ${device.small} { 
-        height:150px;  
+        height:50px;  
     }
 `;
 
@@ -57,18 +57,18 @@ const StyledCard = styled.img`
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
     @media ${device.xlarge} {
-        height:200px;
+        height:180px;
     }
 
     @media ${device.large} { 
-        height:200px;
+        height:100px;
     }
     @media ${device.medium} { 
-        height:200px;
+        height:100px;
 
     }
     @media ${device.small} { 
-        height:150px;  
+        height:50px;  
     }
 `;
 
