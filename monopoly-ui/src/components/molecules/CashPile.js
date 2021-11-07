@@ -5,18 +5,18 @@ import { device } from '../../common/devices';
 const StyledBorder = styled.div`
     border:2px solid white;
     @media ${device.xlarge} {
-        height:180px;
+        height:200px;
     }
 
     @media ${device.large} { 
-        height:180px;
+        height:200px;
     }
     @media ${device.medium} { 
-        height:180px;
+        height:200px;
 
     }
     @media ${device.small} { 
-        height:180px;  
+        height:200px;  
     }
 `;
 

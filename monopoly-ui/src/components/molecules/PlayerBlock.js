@@ -23,8 +23,6 @@ const StyledDrawPile = styled.div`
 
 const StyledPlayerBlock = styled.div`
     visibility:${(props)=>props.blockType?"visible":"hidden"};
-    min-width:350px;
-    min-height:350px;
     padding:5px;
     margin:5px;
     border:5px solid black;
