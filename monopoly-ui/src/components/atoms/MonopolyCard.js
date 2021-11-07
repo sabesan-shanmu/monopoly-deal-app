@@ -28,7 +28,7 @@ const StyledMiniCard = styled.img`
 
 
 const StyledNoCard = styled.div`
-    width:127px;
+    width:114px;
     opactiy:0.5;
     background: rgba(0,0,0,0.3);
     @media ${device.xlarge} {

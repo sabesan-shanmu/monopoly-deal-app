@@ -14,6 +14,7 @@ import { PropertyPile } from './PropertyPile';
 import { CashPile } from './CashPile';
 
 const StyledDrawPile = styled.div`
+    min-width: 280px;
     display:flex;
     justify-content: center;
     align-items: center;
