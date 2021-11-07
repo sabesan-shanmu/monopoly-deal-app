@@ -61,14 +61,14 @@ const StyledCard = styled.img`
     }
 
     @media ${device.large} { 
-        height:100px;
+        height:180px;
     }
     @media ${device.medium} { 
-        height:100px;
+        height:180px;
 
     }
     @media ${device.small} { 
-        height:50px;  
+        height:180px;  
     }
 `;
 

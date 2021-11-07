@@ -34,12 +34,12 @@ const StyledCharacterImage = styled.img`
         width:100px;
     }
     @media ${device.medium} { 
-        height:75px;
-        width:75px;
+        height:100px;
+        width:100px;
     }
     @media ${device.small} { 
-        height:50px;
-        width:50px;
+        height:100px;
+        width:100px;
     }
 `;
 
