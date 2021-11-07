@@ -9,14 +9,14 @@ const StyledBorder = styled.div`
     }
 
     @media ${device.large} { 
-        height:130px;
+        height:210px;
     }
     @media ${device.medium} { 
-        height:130px;
+        height:210px;
 
     }
     @media ${device.small} { 
-        height:80px;  
+        height:210px;  
     }
 `;
 
