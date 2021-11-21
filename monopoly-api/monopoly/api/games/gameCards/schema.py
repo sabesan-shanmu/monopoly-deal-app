@@ -13,6 +13,7 @@ class GameCardSchema(ma.Schema):
     cardStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
     isCardRightSideUp = fields.Boolean()
     card = fields.Nested(CardSchema)
+    setGroupId = fields.Integer()
     links = ma.Hyperlinks(
         {"self": url_overwrite("GameCards_single_game_cards_resource", gamePassCode="<gamePassCode>", gameCardId="<gameCardId>")}
     )

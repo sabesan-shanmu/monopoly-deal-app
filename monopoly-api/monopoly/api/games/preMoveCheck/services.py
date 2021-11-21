@@ -34,6 +34,11 @@ class PreMoveCheck:
         self.possibleMoves.append(possiblePlayAction)
 
 
+def is_property_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+    return False
+
+
+
 def is_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
     return False
 
@@ -69,6 +74,7 @@ def is_rotate_or_move_property_available(player_cards_on_hand,game_cards_in_play
 def is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
 
     pre_check_conditions = {
+        (Enum.CardTypes.Properties,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_property_playable,
         (Enum.CardTypes.Rent,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_rent_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.Hotel,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_house_or_hotel_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.House,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_house_or_hotel_playable,

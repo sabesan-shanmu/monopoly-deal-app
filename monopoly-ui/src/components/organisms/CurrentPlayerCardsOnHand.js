@@ -60,8 +60,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
     }
     
     const isCardPlayable = (playerCard)=>{
-        
-        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId))?true:false;
+        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId))?.possibleMoves?.length>0?true:false;
     }
     const listOfPossibleMoves = (playerCard)=>{
         return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId));

@@ -66,6 +66,7 @@ class GameCards(db.Model):
     cardStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
     isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=True)
     assignedColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
+    setGroupId = db.Column(db.Integer,nullable=True)
     card =  db.relationship(Cards,primaryjoin=cardId==Cards.cardId)  
 
 class Player(db.Model):
