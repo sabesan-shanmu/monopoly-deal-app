@@ -14,7 +14,7 @@ def get_pre_move_check_list(player_cards_on_hand,game_cards_in_play,game_play_ac
         preMoveCheck = PreMoveCheck(gameCardId=player_card.gameCardId)
 
         for possible_play_action in possible_play_actions:
-            if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
+            if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(player_card,game_cards_in_play,possible_play_action):
                 preMoveCheck.add_precheck_card(possible_play_action)
             elif possible_play_action.isPreCheckRequired is False:
                 preMoveCheck.add_precheck_card(possible_play_action)
@@ -34,44 +34,45 @@ class PreMoveCheck:
         self.possibleMoves.append(possiblePlayAction)
 
 
-def is_property_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_property_playable(player_card,game_cards_in_play,possible_play_action):
+    if(player_card.card.properties.primaryColourId is not Enum.Colours.Any):
+        return True
+    elif (player_card.card.properties.primaryColourId is Enum.Colours.Any):
+        return False
+        
+def is_rent_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-
-
-def is_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
-    return False
-
-def is_house_or_hotel_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_house_or_hotel_playable(player_card,game_cards_in_play,possible_play_action):
     #can only be played if a full set exists
 
     return False
 
-def is_double_the_rent_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_double_the_rent_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_its_my_birthday_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_its_my_birthday_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_debt_collector_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_debt_collector_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_just_say_no_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_just_say_no_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_sly_deal_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_sly_deal_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_forced_deal_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_forced_deal_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_deal_breaker_playable(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_deal_breaker_playable(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_rotate_or_move_property_available(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_rotate_or_move_property_available(player_card,game_cards_in_play,possible_play_action):
     return False
 
-def is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
+def is_pre_check_condition_valid(player_card,game_cards_in_play,possible_play_action):
 
     pre_check_conditions = {
         (Enum.CardTypes.Properties,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_property_playable,
@@ -88,6 +89,6 @@ def is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possibl
         (Enum.CardTypes.Properties,None,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_rotate_or_move_property_available,
     }
     try:
-        return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.currentGameCardLocation,possible_play_action.expectedGameCardLocation)](player_cards_on_hand,game_cards_in_play,possible_play_action)
+        return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.currentGameCardLocation,possible_play_action.expectedGameCardLocation)](player_card,game_cards_in_play,possible_play_action)
     except KeyError:
         raise FieldValidationException(message="Pre Check Condition not met. One or more of the specified conditions are not configured correctly.")

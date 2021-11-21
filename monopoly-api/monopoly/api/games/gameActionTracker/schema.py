@@ -25,6 +25,5 @@ class update_game_action_tracker(ma.Schema):
     gameActionTrackerId = fields.Integer(required=True)
     gameId = fields.Integer(required=True)
     performedByPlayerId = fields.Integer(required=True)
-    isGameActionCompleted = fields.Boolean()
     gamePlayActionId = fields.Integer(required=True)
     gameCardId = fields.Integer(required=True)

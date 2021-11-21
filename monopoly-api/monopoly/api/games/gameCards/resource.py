@@ -32,5 +32,5 @@ class ManyGameCardsResource(Resource):
 class SingleGameCardsResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def put(self,gamePassCode,gameCardId):
+    def patch(self,gamePassCode,gameCardId):
         pass

@@ -106,7 +106,7 @@ class GamePlayAction(db.Model):
     currentGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
     expectedGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
     moveClassification = db.Column(db.Enum(Enum.ActionClassification),nullable=True)
-    tradeTypes = db.Column(db.Enum(Enum.TradeTypes),nullable=True)
+    transactionType = db.Column(db.Enum(Enum.TransactionType),nullable=True)
     isPreCheckRequired = db.Column(db.Boolean,nullable=False,default=False)
     description = db.Column(db.String)
     
@@ -116,7 +116,7 @@ class GameActionTracker(db.Model):
     performedByPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_action_player_id',ondelete='CASCADE'))
     isGameActionCompleted  = db.Column(db.Boolean,nullable=False,default=False)
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True, name='fk_game_Action_id'))
-    tradeTransaction =  db.relationship("TradeTransaction")  
+    transactionTracker =  db.relationship("TransactionTracker")  
     gameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True)
 
 
@@ -130,23 +130,22 @@ class GamePlayerMoves(db.Model):
     gameActionTracker = db.relationship(GameActionTracker)
     currentPlayer = db.relationship(Player,primaryjoin=currentPlayerId==Player.playerId)
 
-class TradeTransaction(db.Model):
-    tradeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+class TransactionTracker(db.Model):
+    transactionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameActionTrackerId = db.Column(db.Integer,db.ForeignKey(GameActionTracker.gameActionTrackerId))
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
     isTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
     sourcePlayerId=db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_trade_transaction_player_id',ondelete='CASCADE'))
-    payee = db.Column(db.Enum(Enum.Payee),nullable=False)
     total = db.Column(db.Integer)
-    tradeTypes = db.Column(db.Enum(Enum.TradeTypes),nullable=True)
+    transactionType = db.Column(db.Enum(Enum.TransactionType),nullable=True)
     tradePayeeTransactions =  db.relationship("TradePayeeTransaction")  
 
 
 class TradePayeeTransaction(db.Model):
     tradePayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    tradeTransactionId = db.Column(db.Integer,db.ForeignKey(TradeTransaction.tradeTransactionId),nullable=True)
+    tradeTransactionId = db.Column(db.Integer,db.ForeignKey(TransactionTracker.transactionTrackerId),nullable=True)
     targetPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
-    isTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
+    isPayeeTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
     requestedGameCardIds = db.Column(db.String)
     responseGameCardIds = db.Column(db.String)
 

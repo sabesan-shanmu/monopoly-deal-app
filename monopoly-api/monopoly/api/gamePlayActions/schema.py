@@ -11,7 +11,7 @@ class GamePlayActionSchema(ma.Schema):
     actionType = EnumField(Enum.ActionTypes,by_value=True)
     expectedGameCardLocation = EnumField(Enum.GameCardLocationStatus,by_value=True)
     moveClassification = EnumField(Enum.ActionClassification,by_value=True)
-    tradeTypes = EnumField(Enum.TradeTypes,by_value=True)
+    transactionType = EnumField(Enum.TransactionType,by_value=True)
     description = fields.String(required=True)
     links = ma.Hyperlinks(
         {"self": url_overwrite("GamePlayActions_single_game_play_action_resource", gamePlayActionId="<gamePlayActionId>")}

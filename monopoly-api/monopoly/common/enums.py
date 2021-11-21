@@ -78,9 +78,16 @@ class ActionClassification(Enum):
     RotatingCardMove = 12
     MovePropertyCardMove =13
 
-class TradeTypes(Enum):
-    ValueTrade = 1 #Trade based off price of cards(ex: Rent,It's My Birthday,Debt Collector )
-    PropertyTrade = 2 #Trade based off property cards (ex:sly deal or forced deal)
+class TransactionType(Enum):
+    NoActionTransaction = 1 #dropping card in cash or property pile
+    ValueTrade = 2 #Trade based off price of cards(ex: Rent,It's My Birthday,Debt Collector )
+    PropertyTrade = 3 #Trade based off property cards (ex:sly deal or forced deal)
+    DealerBreakerTrade = 4 #Steal full set of cards
+    MoveCard = 5 #move a card over to new set
+    RotateCard = 6 #rotate in play card
+    GainCards = 7 #Gain 2 cards
+    CancelAction = 8 #cancel action
+    PlayDoubleTheRent = 9 #player must play double the rent
 
 class VoteStatus(Enum):
     Undecided = 0
