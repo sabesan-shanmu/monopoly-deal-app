@@ -44,6 +44,10 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
 
 
     const drawCardOnClick  = async()=>{
+        if(!isPlayerDrawingCard || isDrawCardsClicked){
+            console.log("player cannot draw cards");
+            return false; 
+        }
         console.log("Clicked on drawCard");
         let payload = {
             gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
@@ -75,7 +79,7 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
               }
               {blockType == GameBlockTypeEnum.DrawCardsBlock &&
                     <StyledDrawPile>  
-                        <MonopolyCard onClick={isPlayerDrawingCard && !isDrawCardsClicked ? drawCardOnClick() : undefined } cardType={CardTypeEnum.FaceDownCard} isCardSelectable={isPlayerDrawingCard} />
+                        <MonopolyCard onClick={()=>drawCardOnClick()} cardType={CardTypeEnum.FaceDownCard} isCardSelectable={isPlayerDrawingCard} />
                         <MonopolyDealLabel type="h4" text="Draw Card Pile" />
                     </StyledDrawPile>
                   

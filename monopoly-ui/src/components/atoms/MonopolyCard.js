@@ -106,7 +106,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                         <StyledMiniCard src={faceDownCardImg} />
                     }
                     {cardType ==CardTypeEnum.FaceDownCard &&
-                        <StyledCard src={faceDownCardImg} isCardSelectable={isCardSelectable} />
+                        <StyledCard src={faceDownCardImg} isCardSelectable={isCardSelectable} onClick={onClick}/>
                     }
                     {cardType ==CardTypeEnum.PlaceholderCard &&
                         <StyledNoCard />
