@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { device } from '../../common/devices';
 import { CardTypeEnum } from '../../common/constants';
 import faceDownCardImg from '../../assets/img/face-down-card.jpg' 
-
+import { Popover } from 'react-tiny-popover'
+import {CardPopoverContent} from '../atoms/CardPopoverContent'
 
 
 const bounce = keyframes`
@@ -74,20 +75,32 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves}) => {
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const [isPopoverOpen,setIsPopoverOpen] = useState(false);
+    console.log("fired");
     return (
         <React.Fragment>
                     {cardType == CardTypeEnum.FaceUpCard && 
-                        <StyledCard src={gameCard.card.cardImageUrl}
-                            style={{ visibility: isLoaded ? "visible" : "hidden" }}
-                            isCardSelectable={isCardSelectable}
-                            onLoad={() => {
-                                setIsLoaded(true);
-                            }}
-                            onClick={onClick}
-                        />
+                        <Popover
+                            isOpen={isPopoverOpen}
+                            positions={['top']} 
+                            padding={10} 
+                            reposition={false} 
+                            onClickOutside={() => setIsPopoverOpen(false)} 
+                            content={({ position, nudgedLeft, nudgedTop }) => ( 
+                                <CardPopoverContent listOfPossibleMoves={listOfPossibleMoves} />
+                            )}
+                        >
+                            <StyledCard src={gameCard.card.cardImageUrl}
+                                style={{ visibility: isLoaded ? "visible" : "hidden" }}
+                                isCardSelectable={isCardSelectable}
+                                onLoad={() => {
+                                    setIsLoaded(true);
+                                }}
+                                onClick={()=>{isCardSelectable &&  setIsPopoverOpen(true)}}
+                            />
+                        </Popover>
                     }
                     {cardType ==CardTypeEnum.MiniFaceDownCard &&
                         <StyledMiniCard src={faceDownCardImg} />

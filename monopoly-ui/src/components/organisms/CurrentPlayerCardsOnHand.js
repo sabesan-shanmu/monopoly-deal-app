@@ -63,7 +63,9 @@ export const CurrentPlayerCardsOnHand = ()=> {
         
         return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId))?true:false;
     }
-
+    const listOfPossibleMoves = (playerCard)=>{
+        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId));
+    }
     
     return (
         <InProgressBoardFooter isFooterVisible={isFooterVisible}>
@@ -74,7 +76,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
             {isFooterVisible &&
                 <FooterCardsContainer>
                 {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
-                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard)} />
+                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard)} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
                 )}
                 </FooterCardsContainer> 
             }

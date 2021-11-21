@@ -107,7 +107,7 @@ class GamePlayAction(db.Model):
     moveClassification = db.Column(db.Enum(Enum.ActionClassification),nullable=True)
     tradeTypes = db.Column(db.Enum(Enum.TradeTypes),nullable=True)
     isPreCheckRequired = db.Column(db.Boolean,nullable=False,default=False)
-
+    description = db.Column(db.String)
     
 class GameActionTracker(db.Model):
     gameActionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
@@ -117,6 +117,7 @@ class GameActionTracker(db.Model):
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True, name='fk_game_Action_id'))
     tradeTransaction =  db.relationship("TradeTransaction")  
     gameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True)
+
 
 class GamePlayerMoves(db.Model):
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)

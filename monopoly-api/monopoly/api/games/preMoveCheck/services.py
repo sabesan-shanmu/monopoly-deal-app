@@ -16,7 +16,7 @@ def get_pre_move_check_list(player_cards_on_hand,game_cards_in_play,game_play_ac
         for possible_play_action in possible_play_actions:
             if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(player_cards_on_hand,game_cards_in_play,possible_play_action):
                 preMoveCheck.add_precheck_card(possible_play_action)
-            else:
+            elif possible_play_action.isPreCheckRequired is False:
                 preMoveCheck.add_precheck_card(possible_play_action)
         
         pre_move_check_list.append(preMoveCheck)
