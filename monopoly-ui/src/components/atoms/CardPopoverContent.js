@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import {getGameMoveName} from '../../common/GameMoveHelpers'
 
 const StyledPopoverContent = styled.div`
     width:115 px;
