@@ -50,9 +50,7 @@ const StyledNoCard = styled.div`
 
 const StyledCard = styled.img`
 
-    &:hover {
-        animation: ${bounce} 1.3s linear infinite; 
-    }
+   
    
     opacity:${(props) => props.isCardSelectable? '1':'0.4'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
@@ -89,7 +87,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                             reposition={false} 
                             onClickOutside={() => setIsPopoverOpen(false)} 
                             content={({ position, nudgedLeft, nudgedTop }) => ( 
-                                <CardPopoverContent listOfPossibleMoves={listOfPossibleMoves} />
+                                <CardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} />
                             )}
                         >
                             <StyledCard src={gameCard.card.cardImageUrl}

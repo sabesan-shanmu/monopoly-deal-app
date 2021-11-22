@@ -1,5 +1,8 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
+import {startGameActionSequence} from '../../common/GameMoveHelpers'
+import { GameContext } from '../../context/GameContext'
+import {PlayerContext} from '../../context/PlayerContext'
 
 const StyledPopoverContent = styled.div`
     width:115 px;
@@ -26,14 +29,16 @@ const StyledPopoverBody = styled.div`
 
 
 
-export const CardPopoverContent = ({listOfPossibleMoves}) =>{
+export const CardPopoverContent = ({game,gameCard,listOfPossibleMoves}) =>{
+    const {gameState,gameDispatch} = useContext(GameContext);
+    const {playerState,playerDispatch} = useContext(PlayerContext);
     console.log(listOfPossibleMoves);
     const gameCardId = listOfPossibleMoves.gameCardId;
     return (
         <StyledPopoverContent>
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
             {listOfPossibleMoves.possibleMoves.map((move,key)=>
-                <StyledPopoverBody key={key}>{move.description}</StyledPopoverBody>
+                <StyledPopoverBody key={key} onClick={()=>startGameActionSequence(gameState.game,playerState.player,gameCard,move)}>{move.description}</StyledPopoverBody>
             )}
         </StyledPopoverContent>
     )

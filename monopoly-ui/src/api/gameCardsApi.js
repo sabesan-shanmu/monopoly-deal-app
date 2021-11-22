@@ -8,6 +8,6 @@ export const gameCardsApi = {
         return axiosInstance.get(gameCardsUrl,{headers: {'Authorization': `Bearer ${accessToken}`}});
     },   
     patch:(gameCardsUrl,accessToken,data) =>{
-        return axiosInstance.post(gameCardsUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}})
+        return axiosInstance.patch(gameCardsUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}})
     }
 }

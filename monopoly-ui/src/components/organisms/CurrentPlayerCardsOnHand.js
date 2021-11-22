@@ -11,6 +11,7 @@ import minimizeIcon from '../../assets/img/minimize.png'
 import { CardTypeEnum } from '../../common/constants';
 import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
+import { GameMoveContext } from '../../context/GameMoveContext';
 
 const FooterTitleContainer = styled.div`
     display:flex;
@@ -36,7 +37,7 @@ const FooterCardsContainer = styled.div`
 export const CurrentPlayerCardsOnHand = ()=> {
 
     const {currentPlayerCardsState,currentPlayerCardsStateDispatch} = useContext(CurrentPlayerCardsContext);
- 
+    const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
     const [isFooterVisible,setIsFooterVisible] = useState(true);
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
     
@@ -75,7 +76,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
             {isFooterVisible &&
                 <FooterCardsContainer>
                 {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
-                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard)} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
+                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard) && !gameMoveState.gameMove.gameActionTracker} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
                 )}
                 </FooterCardsContainer> 
             }

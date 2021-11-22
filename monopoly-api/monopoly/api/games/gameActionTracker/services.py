@@ -10,9 +10,9 @@ def get_game_action_tracker(gameId,gameTrackerActionId):
     return db.session.query(GameActionTracker).filter(and_(gameId=gameId,gameTrackerActionId=gameTrackerActionId)).first()
 
 
-def create_game_action_tracker(gameTrackerAction):
+def add_game_action_tracker(gameTrackerAction):
     try:
-        db.ession.add(gameTrackerAction)
+        db.session.add(gameTrackerAction)
         db.session.commit()
     except exc.IntegrityError:
         db.session.rollback()

@@ -69,7 +69,7 @@ class GamePlayerMovesResource(Resource):
 
             updated_game_moves_result = GamePlayerMovesSchema().dump(gamePlayerMove)
             
-            #publish created game move 
+            #publish updated game move 
             gameMovesNotification.publish_game_moves_update_event_to_room(gamePassCode,updated_game_moves_result)
 
             return jsonify(updated_game_moves_result)

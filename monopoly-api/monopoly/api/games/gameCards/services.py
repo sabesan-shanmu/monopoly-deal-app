@@ -29,6 +29,8 @@ def create_game_cards(game,players,cards):
         db.session.rollback()
         raise
     
+def get_game_card_by_id(gameCardId):
+    return db.session.query(GameCards).filter_by(gameCardId=gameCardId).first()
 
 def get_game_cards_in_play(gamePassCode):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsPlayedOnCashPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsInPlay]))).all()
@@ -51,6 +53,18 @@ def update_game_cards(gameCards):
         db.session.bulk_save_objects(gameCards)
         db.session.commit()
         return gameCards
+    except:
+        db.session.rollback()
+        raise
+
+
+
+def update_game_card(gameCard):
+    try:
+        gameCardUpdate=get_game_card_by_id(gameCard.gameCardId)
+        gameCardUpdate=gameCard
+        db.session.commit()
+        return gameCardUpdate
     except:
         db.session.rollback()
         raise

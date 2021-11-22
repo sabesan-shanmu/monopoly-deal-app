@@ -112,7 +112,7 @@ class GamePlayAction(db.Model):
     
 class GameActionTracker(db.Model):
     gameActionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
+    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
     performedByPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_game_action_player_id',ondelete='CASCADE'))
     isGameActionCompleted  = db.Column(db.Boolean,nullable=False,default=False)
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True, name='fk_game_Action_id'))
@@ -133,7 +133,7 @@ class GamePlayerMoves(db.Model):
 class TransactionTracker(db.Model):
     transactionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gameActionTrackerId = db.Column(db.Integer,db.ForeignKey(GameActionTracker.gameActionTrackerId))
-    gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),nullable=True)
+    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
     isTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
     sourcePlayerId=db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_trade_transaction_player_id',ondelete='CASCADE'))
     total = db.Column(db.Integer)

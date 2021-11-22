@@ -6,10 +6,11 @@ from monopoly.api.games.gamePlayerMoves.services import is_player_valid
 from monopoly.api.games.gamePlayerMoves.services import get_game_player_moves,update_game_player_moves
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-from .services import get_game_action_tracker,get_game_action_trackers
+from .services import get_game_action_tracker,get_game_action_trackers,add_game_action_tracker
 from .schema import GameActionTrackerSchema,create_game_action_tracker,update_game_action_tracker
 from flask_jwt_extended import get_jwt_identity
-
+from monopoly.api.games.gamePlayerMoves.schema import GamePlayerMovesSchema
+import monopoly.notifications.gameMoves as gameMovesNotification
 
 
 
@@ -33,15 +34,20 @@ class ManyGameActionTrackerResource(Resource):
             if current_player_move is None:
                 raise ResourceNotFoundException(message="No Current Moves found")
 
-            if current_player_move.playerId != identity["playerId"] or game_action_tracker.playerId != identity["playerId"]:
+            if current_player_move.currentPlayerId != identity["playerId"] or game_action_tracker.performedByPlayerId != identity["playerId"]:
                 raise FieldValidationException(message="Requested player is unable to start an action.")
             elif current_player_move.gameActionTrackerId is not None:
                 raise FieldValidationException(message="Unable to start a new action while an action is in progress.")
 
-            create_game_action_tracker(game_action_tracker)
+            add_game_action_tracker(game_action_tracker)
             result = GameActionTrackerSchema().dump(game_action_tracker)
-            current_player_move.gameActionTrackerId=result.gameActionTrackerId
+            current_player_move.gameActionTrackerId=game_action_tracker.gameActionTrackerId
             update_game_player_moves(current_player_move)
+            
+            #publish updated game move 
+            updated_game_moves_result = GamePlayerMovesSchema().dump(current_player_move)
+            gameMovesNotification.publish_game_moves_update_event_to_room(gamePassCode,updated_game_moves_result)
+
 
             return jsonify(result)
         except ValidationError as e:
