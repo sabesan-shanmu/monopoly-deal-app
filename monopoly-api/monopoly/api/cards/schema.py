@@ -23,9 +23,12 @@ class ActionCardSchema(ma.Schema):
     transactionCost = fields.Integer()
 
 class CashCardSchema(ma.Schema):
+    name = fields.String(required=True)
     price = fields.Integer(required=True)
+    
 
 class RentCardSchema(ma.Schema):
+    name = fields.String(required=True)
     primaryColourId = EnumField(Enum.Colours,by_value=True)
     secondaryColourId = EnumField(Enum.Colours,by_value=True)
     payee = EnumField(Enum.Payee,by_value=True)

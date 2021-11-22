@@ -109,44 +109,44 @@ def create_properties_card():
 
 def create_cash_card():
     cashCards = [
-        CashCard(cashCardId=1,price=3),
-        CashCard(cashCardId=2,price=3),
-        CashCard(cashCardId=3,price=2),
-        CashCard(cashCardId=4,price=5),
-        CashCard(cashCardId=5,price=3),
-        CashCard(cashCardId=6,price=5),
-        CashCard(cashCardId=7,price=1),
-        CashCard(cashCardId=8,price=1),
-        CashCard(cashCardId=9,price=10),
-        CashCard(cashCardId=10,price=4),
-        CashCard(cashCardId=11,price=1),
-        CashCard(cashCardId=12,price=2),
-        CashCard(cashCardId=13,price=4),
-        CashCard(cashCardId=14,price=2),
-        CashCard(cashCardId=15,price=2),
-        CashCard(cashCardId=16,price=2),
-        CashCard(cashCardId=17,price=1),
-        CashCard(cashCardId=18,price=1),
-        CashCard(cashCardId=19,price=1),
-        CashCard(cashCardId=20,price=4)
+        CashCard(cashCardId=1,name="$3M Cash Card",price=3),
+        CashCard(cashCardId=2,name="$3M Cash Card",price=3),
+        CashCard(cashCardId=3,name="$2M Cash Card",price=2),
+        CashCard(cashCardId=4,name="$5M Cash Card",price=5),
+        CashCard(cashCardId=5,name="$3M Cash Card",price=3),
+        CashCard(cashCardId=6,name="$5M Cash Card",price=5),
+        CashCard(cashCardId=7,name="$1M Cash Card",price=1),
+        CashCard(cashCardId=8,name="$1M Cash Card",price=1),
+        CashCard(cashCardId=9,name="$10M Cash Card",price=10),
+        CashCard(cashCardId=10,name="$4M Cash Card",price=4),
+        CashCard(cashCardId=11,name="$1M Cash Card",price=1),
+        CashCard(cashCardId=12,name="$2M Cash Card",price=2),
+        CashCard(cashCardId=13,name="$4M Cash Card",price=4),
+        CashCard(cashCardId=14,name="$2M Cash Card",price=2),
+        CashCard(cashCardId=15,name="$2M Cash Card",price=2),
+        CashCard(cashCardId=16,name="$2M Cash Card",price=2),
+        CashCard(cashCardId=17,name="$1M Cash Card",price=1),
+        CashCard(cashCardId=18,name="$1M Cash Card",price=1),
+        CashCard(cashCardId=19,name="$1M Cash Card",price=1),
+        CashCard(cashCardId=20,name="$4M Cash Card",price=4)
     ]
     return cashCards
 
 def create_rent_card():
     rentCards = [
-        RentCard(rentCardId=1,primaryColourId=Enum.Colours.Black,secondaryColourId=Enum.Colours.Neutral,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=2,primaryColourId=Enum.Colours.Any,secondaryColourId=Enum.Colours.Any,payee=Enum.Payee.Single,price=3),
-        RentCard(rentCardId=3,primaryColourId=Enum.Colours.Pink,secondaryColourId=Enum.Colours.Orange,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=4,primaryColourId=Enum.Colours.Red,secondaryColourId=Enum.Colours.Yellow,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=5,primaryColourId=Enum.Colours.Black,secondaryColourId=Enum.Colours.Neutral,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=6,primaryColourId=Enum.Colours.Green,secondaryColourId=Enum.Colours.DarkBlue,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=7,primaryColourId=Enum.Colours.Red,secondaryColourId=Enum.Colours.Yellow,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=8,primaryColourId=Enum.Colours.Brown,secondaryColourId=Enum.Colours.LightBlue,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=9,primaryColourId=Enum.Colours.Green,secondaryColourId=Enum.Colours.DarkBlue,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=10,primaryColourId=Enum.Colours.Any,secondaryColourId=Enum.Colours.Any,payee=Enum.Payee.Single,price=3),
-        RentCard(rentCardId=11,primaryColourId=Enum.Colours.Pink,secondaryColourId=Enum.Colours.Orange,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=12,primaryColourId=Enum.Colours.Brown,secondaryColourId=Enum.Colours.LightBlue,payee=Enum.Payee.All,price=1),
-        RentCard(rentCardId=13,primaryColourId=Enum.Colours.Any,secondaryColourId=Enum.Colours.Any,payee=Enum.Payee.Single,price=3)
+        RentCard(rentCardId=1,name="RailRoad - Utility Rent Card",primaryColourId=Enum.Colours.Black,secondaryColourId=Enum.Colours.Neutral,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=2,name="WildCard Rent Card",primaryColourId=Enum.Colours.Any,secondaryColourId=Enum.Colours.Any,payee=Enum.Payee.Single,price=3),
+        RentCard(rentCardId=3,name="Pink - Orange Rent Card",primaryColourId=Enum.Colours.Pink,secondaryColourId=Enum.Colours.Orange,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=4,name="Red - Yellow Rent Card",primaryColourId=Enum.Colours.Red,secondaryColourId=Enum.Colours.Yellow,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=5,name="RailRoad - Utility Rent Card",primaryColourId=Enum.Colours.Black,secondaryColourId=Enum.Colours.Neutral,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=6,name="Green - Dark Blue Rent Card",primaryColourId=Enum.Colours.Green,secondaryColourId=Enum.Colours.DarkBlue,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=7,name="Red - Yellow Rent Card",primaryColourId=Enum.Colours.Red,secondaryColourId=Enum.Colours.Yellow,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=8,name="Brown - Light Blue Rent Card",primaryColourId=Enum.Colours.Brown,secondaryColourId=Enum.Colours.LightBlue,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=9,name="Green - Dark Blue Rent Card",primaryColourId=Enum.Colours.Green,secondaryColourId=Enum.Colours.DarkBlue,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=10,name="WildCard Rent Card", primaryColourId=Enum.Colours.Any,secondaryColourId=Enum.Colours.Any,payee=Enum.Payee.Single,price=3),
+        RentCard(rentCardId=11,name="Pink - Orange Rent Card", primaryColourId=Enum.Colours.Pink,secondaryColourId=Enum.Colours.Orange,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=12,name="Brown - Light Blue Rent Card", primaryColourId=Enum.Colours.Brown,secondaryColourId=Enum.Colours.LightBlue,payee=Enum.Payee.All,price=1),
+        RentCard(rentCardId=13,name="WildCard Rent Card", primaryColourId=Enum.Colours.Any,secondaryColourId=Enum.Colours.Any,payee=Enum.Payee.Single,price=3)
     ]
     return rentCards
 

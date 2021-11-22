@@ -56,12 +56,17 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
 
         
         setIsDrawCardsClicked(true);
-        const [firstResponse, secondResponse] = await Promise.all([
-            drawCardsApi.get(game.links.drawCards,playerState.player.accessToken),
-            gameMoveApi.patch(game.links.gameMoves,playerState.player.accessToken,payload)
-          ]);
-        
-     
+        //1. draw 2 cards
+        drawCardsApi.get(game.links.drawCards,playerState.player.accessToken)
+        .then((success)=>{
+            console.log(success.data);
+            //2. update move status to in progress
+            return gameMoveApi.patch(game.links.gameMoves,playerState.player.accessToken,payload)
+        }).then((success)=>{
+            console.log(success.data);
+        }).catch((error)=>{
+            console.log(error.response.data)
+        });  
 
     }
     

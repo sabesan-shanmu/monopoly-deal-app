@@ -25,10 +25,11 @@ class PropertiesCard(db.Model):
 class CashCard(db.Model):
     cashCardId = db.Column(db.Integer,primary_key=True,nullable=False)
     price = db.Column(db.Integer,nullable=False)
-
+    name = db.Column(db.String,nullable=False)
 
 class RentCard(db.Model):
     rentCardId = db.Column(db.Integer,primary_key=True,nullable=False)
+    name = db.Column(db.String,nullable=False)
     primaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
     secondaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
     payee = db.Column(db.Enum(Enum.Payee),nullable=False)
