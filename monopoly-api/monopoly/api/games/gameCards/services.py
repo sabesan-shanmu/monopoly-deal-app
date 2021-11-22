@@ -13,7 +13,7 @@ def create_game_cards(game,players,cards):
         while len(full_list)>0:
             selected_index = random.randint(0,len(full_list)-1)
             selected_card = full_list.pop(selected_index)
-            game_cards.append(GameCards(gamePassCode=game.gamePassCode,cardId=selected_card.cardId,cardStatus=Enum.GameCardLocationStatus.IsNotDrawn))
+            game_cards.append(GameCards(gamePassCode=game.gamePassCode,name=selected_card.name,cardId=selected_card.cardId,cardStatus=Enum.GameCardLocationStatus.IsNotDrawn))
         
         list_of_game_cards=list(range(0,len(game_cards)))
         for player in players:

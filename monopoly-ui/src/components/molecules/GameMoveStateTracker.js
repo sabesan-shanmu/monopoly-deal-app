@@ -106,8 +106,11 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                     <MonopolyDealButton {...skipTurnBtn} />
                 </StyledStartChoiceHeader>
             }
-            {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress &&
+            {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && !gameMove?.gameActionTracker &&
                 <React.Fragment>Select a card to play</React.Fragment>
+            }
+            {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && gameMove?.gameActionTracker &&
+                <React.Fragment>Move in Progress </React.Fragment>
             }
             
         </div>

@@ -50,6 +50,7 @@ class Cards(db.Model):
     cardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     cardType =  db.Column(db.Enum(Enum.CardTypes))
     cardImageUrl = db.Column(db.String)
+    name = db.Column(db.String)
     propertiesCardId = db.Column(db.Integer,db.ForeignKey("properties_card.propertiesCardId"))
     cashCardId = db.Column(db.Integer,db.ForeignKey("cash_card.cashCardId"))
     rentCardId = db.Column(db.Integer,db.ForeignKey("rent_card.rentCardId"))
@@ -62,6 +63,7 @@ class Cards(db.Model):
 class GameCards(db.Model):
     gameCardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
+    name = db.Column(db.String)
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     cardStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
@@ -118,8 +120,8 @@ class GameActionTracker(db.Model):
     isGameActionCompleted  = db.Column(db.Boolean,nullable=False,default=False)
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True, name='fk_game_Action_id'))
     transactionTracker =  db.relationship("TransactionTracker")  
-    gameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True)
-
+    gameCardId = db.Column(db.Integer,db.ForeignKey("game_cards.gameCardId"),nullable=True)
+    gameCard =  db.relationship(GameCards,primaryjoin=gameCardId==GameCards.gameCardId)  
 
 class GamePlayerMoves(db.Model):
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)

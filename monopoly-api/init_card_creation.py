@@ -212,28 +212,28 @@ def create_card():
             if selected_group == 1:
                 if len(actionCards)>0:
                     actionCard=actionCards.pop(0)
-                    cards.append(Cards(cardId=cardId,cardType=Enum.CardTypes.Action,actionCardId=actionCard.actionCardId))
+                    cards.append(Cards(cardId=cardId,name=actionCard.name,cardType=Enum.CardTypes.Action,actionCardId=actionCard.actionCardId))
                     cardId+=1
                 else:
                     del group_number_list[selected_index]
             elif selected_group == 2:
                 if len(propertiesCards)>0:
                     propertiesCard=propertiesCards.pop(0)
-                    cards.append(Cards(cardId=cardId,cardType=Enum.CardTypes.Properties,propertiesCardId=propertiesCard.propertiesCardId))
+                    cards.append(Cards(cardId=cardId,name=propertiesCard.name,cardType=Enum.CardTypes.Properties,propertiesCardId=propertiesCard.propertiesCardId))
                     cardId+=1
                 else:
                     del group_number_list[selected_index]
             elif selected_group == 3:
                 if len(cashCards)>0:
                     cashCard=cashCards.pop(0)
-                    cards.append(Cards(cardId=cardId,cardType=Enum.CardTypes.Cash,cashCardId=cashCard.cashCardId))
+                    cards.append(Cards(cardId=cardId,name=cashCard.name,cardType=Enum.CardTypes.Cash,cashCardId=cashCard.cashCardId))
                     cardId+=1
                 else:
                     del group_number_list[selected_index] 
             elif selected_group == 4:
                 if len(rentCards)>0:
                     rentCard=rentCards.pop(0)
-                    cards.append(Cards(cardId=cardId,cardType=Enum.CardTypes.Rent,rentCardId=rentCard.rentCardId))
+                    cards.append(Cards(cardId=cardId,name=rentCard.name,cardType=Enum.CardTypes.Rent,rentCardId=rentCard.rentCardId))
                     cardId+=1
                 else:
                     del group_number_list[selected_index] 

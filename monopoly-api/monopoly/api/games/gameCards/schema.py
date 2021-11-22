@@ -8,6 +8,7 @@ from monopoly.models import GameCards
 
 class GameCardSchema(ma.Schema):
     gameCardId = fields.Integer()
+    name = fields.String()
     gamePassCode = fields.String()
     cardId = fields.Integer()
     playerId = fields.Integer()
