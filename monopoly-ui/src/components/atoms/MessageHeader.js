@@ -13,7 +13,7 @@ const StyledMessageHeader = styled.div`
 `
 
 
-export const MessageHeader = ({currentPlayer,gameActionTracker,gameMoveStatus,numberOfMovesPlayed,totalGameMoveCount}) => {
+export const MessageHeader = ({currentPlayer,transactionTracker,gameMoveStatus,numberOfMovesPlayed,totalGameMoveCount}) => {
 
     const getCount =(numberOfMovesPlayed) =>{
         return numberOfMovesPlayed==1?"1st":numberOfMovesPlayed==2?"2nd":numberOfMovesPlayed==3?"3rd":"";
@@ -29,14 +29,14 @@ export const MessageHeader = ({currentPlayer,gameActionTracker,gameMoveStatus,nu
                         Waiting for {currentPlayer.playerName} to make {getCount(numberOfMovesPlayed+1)} move
                     </React.Fragment>
                 }
-                {gameMoveStatus==GameMoveStatusEnum.MoveInProgress && !gameActionTracker &&
+                {gameMoveStatus==GameMoveStatusEnum.MoveInProgress && !transactionTracker &&
                     <React.Fragment>
                         {currentPlayer.playerName}'s {getCount(numberOfMovesPlayed+1)} move is in progress...
                     </React.Fragment>
                 }
-                {gameMoveStatus==GameMoveStatusEnum.MoveInProgress && gameActionTracker &&
+                {gameMoveStatus==GameMoveStatusEnum.MoveInProgress && transactionTracker &&
                     <React.Fragment>
-                        {currentPlayer.playerName} played {gameActionTracker?.gameCard?.name} for {getCount(numberOfMovesPlayed+1)} move
+                        {currentPlayer.playerName} played {transactionTracker?.gameCard?.name} for {getCount(numberOfMovesPlayed+1)} move
                     </React.Fragment>
                 }
                 {gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress &&

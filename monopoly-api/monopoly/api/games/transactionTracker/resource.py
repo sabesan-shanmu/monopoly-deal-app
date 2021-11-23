@@ -6,25 +6,25 @@ from monopoly.api.games.gamePlayerMoves.services import is_player_valid
 from monopoly.api.games.gamePlayerMoves.services import get_game_player_moves,update_game_player_moves
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-from .services import get_game_action_tracker,get_game_action_trackers,add_game_action_tracker
-from .schema import GameActionTrackerSchema,create_game_action_tracker,update_game_action_tracker
+from .services import get_transaction_tracker,get_transaction_trackers,add_transaction_tracker
+from .schema import TransactionTrackerSchema,create_transaction_tracker,update_transaction_tracker
 from flask_jwt_extended import get_jwt_identity
 from monopoly.api.games.gamePlayerMoves.schema import GamePlayerMovesSchema
 import monopoly.notifications.gameMoves as gameMovesNotification
 
 
 
-game_action_tracker_namespace = Namespace('GameActionTracker', description='Resource to track the player actions on their turn.')
+transaction_tracker_namespace = Namespace('TransactionTracker', description='Resource to track the player actions on their turn.')
 
 
-@game_action_tracker_namespace.route('/')
-class ManyGameActionTrackerResource(Resource):
+@transaction_tracker_namespace.route('/')
+class ManyTransactionTrackerResource(Resource):
     @validate_gamepassCode
     @validate_player
     def post(self,gamePassCode):
         try:
             identity = get_jwt_identity()
-            game_action_tracker = create_game_action_tracker().load(request.get_json())
+            transaction_tracker = create_transaction_tracker().load(request.get_json())
 
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
@@ -34,14 +34,14 @@ class ManyGameActionTrackerResource(Resource):
             if current_player_move is None:
                 raise ResourceNotFoundException(message="No Current Moves found")
 
-            if current_player_move.currentPlayerId != identity["playerId"] or game_action_tracker.performedByPlayerId != identity["playerId"]:
+            if current_player_move.currentPlayerId != identity["playerId"] or transaction_tracker.performedByPlayerId != identity["playerId"]:
                 raise FieldValidationException(message="Requested player is unable to start an action.")
-            elif current_player_move.gameActionTrackerId is not None:
+            elif current_player_move.transactionTrackerId is not None:
                 raise FieldValidationException(message="Unable to start a new action while an action is in progress.")
 
-            add_game_action_tracker(game_action_tracker)
-            result = GameActionTrackerSchema().dump(game_action_tracker)
-            current_player_move.gameActionTrackerId=game_action_tracker.gameActionTrackerId
+            add_transaction_tracker(transaction_tracker)
+            result = TransactionTrackerSchema().dump(transaction_tracker)
+            current_player_move.transactionTrackerId=transaction_tracker.transactionTrackerId
             update_game_player_moves(current_player_move)
             
             #publish updated game move 
@@ -61,22 +61,22 @@ class ManyGameActionTrackerResource(Resource):
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")   
             
-            game_action_trackers = get_game_action_trackers(game.gameId)
+            transaction_trackers = get_transaction_trackers(game.gameId)
             
-            result= GameActionTrackerSchema(many=True).dump(game_action_trackers)
+            result= TransactionTrackerSchema(many=True).dump(transaction_trackers)
             return jsonify(result)
 
         except ValidationError as e:
             raise ResourceValidationException(e)
 
-@game_action_tracker_namespace.route('/<int:gameActionTrackerId>/')
-class SingleGameActionTrackerResource(Resource):
+@transaction_tracker_namespace.route('/<int:transactionTrackerId>/')
+class SingleTransactionTrackerResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def put(self,gamePassCode,gameActionTrackerId):
+    def put(self,gamePassCode,transactionTrackerId):
         try:
             identity = get_jwt_identity()
-            game_action_tracker = update_game_action_tracker().load(request.get_json())
+            transaction_tracker = update_transaction_tracker().load(request.get_json())
             game = get_game_by_gamepasscode(gamePassCode)             
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")   
@@ -93,18 +93,18 @@ class SingleGameActionTrackerResource(Resource):
 
     @validate_gamepassCode
     @validate_player
-    def get(self,gamePassCode,gameActionTrackerId):
+    def get(self,gamePassCode,transactionTrackerId):
         try:
             game = get_game_by_gamepasscode(gamePassCode)     
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")   
             
-            game_action_tracker = get_game_action_tracker(game.gameId,gameActionTrackerId)
+            transaction_tracker = get_transaction_tracker(game.gameId,transactionTrackerId)
             
-            if game_action_tracker is None:
+            if transaction_tracker is None:
                 raise ResourceNotFoundException(message="Game Action Tracker Not Found")   
             
-            result = GameActionTrackerSchema().dump(game_action_tracker)
+            result = TransactionTrackerSchema().dump(transaction_tracker)
 
             return jsonify(result)
         except ValidationError as e:

@@ -5,7 +5,7 @@ from sqlalchemy import exc
 
 #player can only progress to complete if an action has been started
 def is_game_action_tracker_valid(current_player_move):
-    return False if current_player_move.gameMoveStatus == Enum.GameMoveStatus.MoveInProgress and current_player_move.gameActionTrackerId is None else True
+    return False if current_player_move.gameMoveStatus == Enum.GameMoveStatus.MoveInProgress and current_player_move.transactionTrackerId is None else True
 
 def get_player_game_order(players,playerId):
     return[x for x in players if x.playerId==playerId][0].playerGameOrder 
@@ -63,7 +63,7 @@ def update_game_player_moves(updateGamePlayerMove):
         gamePlayerMove.totalGameMoveCount=updateGamePlayerMove.totalGameMoveCount
         gamePlayerMove.gameMoveStatus=updateGamePlayerMove.gameMoveStatus
         gamePlayerMove.currentPlayerId=updateGamePlayerMove.currentPlayerId
-        gamePlayerMove.gameActionTrackerId=updateGamePlayerMove.gameActionTrackerId
+        gamePlayerMove.transactionTrackerId=updateGamePlayerMove.transactionTrackerId
         db.session.commit()
         return gamePlayerMove
     except exc.IntegrityError:

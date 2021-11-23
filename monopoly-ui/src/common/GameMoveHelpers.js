@@ -1,23 +1,23 @@
-import {gameActionTrackerApi} from '../api/gameActionTrackerApi' 
+import {transactionTrackerApi} from '../api/transactionTrackerApi' 
 import {gameCardsApi} from '../api/gameCardsApi'
 
 
-export const startGameActionSequence = (game,player,gameCard,gameActionTracker) => {
-    console.log("Start Game Action Sequence");
+export const startTransactionSequence = (game,player,gameCard,transactionTracker) => {
+    console.log("Start Game Action Sequence!");
     //1. create game action tracker
     const actionTrackerPayload = {
         gamePassCode:game.gamePassCode,
         performedByPlayerId:player.playerId,
-        gamePlayActionId:gameActionTracker.gamePlayActionId,
+        gamePlayActionId:transactionTracker.gamePlayActionId,
         gameCardId:gameCard.gameCardId
     };
-    gameActionTrackerApi.post(game.links.gameActionTrackers,player.accessToken,actionTrackerPayload)
+    transactionTrackerApi.post(game.links.transactionTracker,player.accessToken,actionTrackerPayload)
     .then((success)=>{
         console.log(success.data);
         //2. move the card
         const gameCardPayload = {
             gameCardId:gameCard.gameCardId,
-            cardLocationStatus:gameActionTracker.expectedGameCardLocation
+            cardLocationStatus:transactionTracker.expectedGameCardLocation
         };
         return gameCardsApi.patch(gameCard.links.self,player.accessToken,gameCardPayload);
         
@@ -62,6 +62,7 @@ export const rotateCard = (game,player,gameCard) => {
     1. player block pay for rent (must equal or greater than total) if you have no cards, then youre free. 
     2. my own cards(say no)
 
+    End: Player must discard extra cards
 */
 
 
@@ -69,7 +70,7 @@ export const rotateCard = (game,player,gameCard) => {
 
 
 
-export const endGameActionSequence = async() => {
+export const endtransactionSequence = async() => {
 
     
 }

@@ -4,14 +4,14 @@ from marshmallow_enum import EnumField
 import monopoly.common.enums as Enum
 from monopoly.models import GamePlayerMoves
 from monopoly.api.games.players.schema import PlayerSchema
-from monopoly.api.games.gameActionTracker.schema import GameActionTrackerSchema
+from monopoly.api.games.transactionTracker.schema import TransactionTrackerSchema
 
 class GamePlayerMovesSchema(ma.Schema):
     numberOfMovesPlayed = fields.Integer()
     totalGameMoveCount = fields.Integer()
     gameMoveStatus = EnumField(Enum.GameMoveStatus, by_value=True)
     currentPlayer = fields.Nested(PlayerSchema)
-    gameActionTracker = fields.Nested(GameActionTrackerSchema)
+    transactionTracker = fields.Nested(TransactionTrackerSchema)
 
 
 class update_player_moves(ma.Schema):

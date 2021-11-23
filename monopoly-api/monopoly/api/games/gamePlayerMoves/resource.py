@@ -49,7 +49,7 @@ class GamePlayerMovesResource(Resource):
 
    
             updated_player_move.totalGameMoveCount = current_player_move.totalGameMoveCount
-            updated_player_move.gameActionTrackerId = current_player_move.gameActionTrackerId
+            updated_player_move.transactionTrackerId = current_player_move.transactionTrackerId
             updated_player_move.gameId = current_player_move.gameId
             updated_player_move.numberOfMovesPlayed = current_player_move.numberOfMovesPlayed + 1 if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete else current_player_move.numberOfMovesPlayed      
 

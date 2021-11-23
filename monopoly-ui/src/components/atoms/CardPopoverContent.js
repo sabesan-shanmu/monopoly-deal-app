@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 import styled from 'styled-components'
-import {startGameActionSequence,rotateCard} from '../../common/GameMoveHelpers'
+import {startTransactionSequence,rotateCard} from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
 
@@ -39,7 +39,7 @@ export const CardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpe
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
             {listOfPossibleMoves.possibleMoves.map((move,key)=>
                 <StyledPopoverBody key={key} onClick={()=>{
-                    startGameActionSequence(gameState.game,playerState.player,gameCard,move);
+                    startTransactionSequence(gameState.game,playerState.player,gameCard,move);
                     //close popover
                     setIsPopoverOpen(false);
                 }}>{move.description}</StyledPopoverBody>
