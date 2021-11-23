@@ -12,7 +12,7 @@ class GameCardSchema(ma.Schema):
     gamePassCode = fields.String()
     cardId = fields.Integer()
     playerId = fields.Integer()
-    cardStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
+    cardLocationStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
     isCardRightSideUp = fields.Boolean()
     card = fields.Nested(CardSchema)
     setGroupId = fields.Integer()
@@ -23,7 +23,7 @@ class GameCardSchema(ma.Schema):
 class update_game_card_schema(ma.Schema):
     gameCardId = fields.Integer()
     playerId = fields.Integer(allow_none=True)
-    cardStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
+    cardLocationStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
     isCardRightSideUp = fields.Boolean()
     setGroupId = fields.Integer()
     

@@ -8,7 +8,9 @@ from .schema import GameCardSchema,update_game_card_schema
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
-
+from flask_jwt_extended import get_jwt_identity
+from monopoly.notifications.playerCards import publish_update_player_cards_on_hand_event_to_room
+from monopoly.common.enums import GameCardLocationStatus
 
 
 game_cards_namespace = Namespace('GameCards', description='Game cards that are in play on the board')
@@ -34,6 +36,7 @@ class SingleGameCardsResource(Resource):
     @validate_player
     def patch(self,gamePassCode,gameCardId):
         try:    
+            identity = get_jwt_identity()
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")    
@@ -47,7 +50,13 @@ class SingleGameCardsResource(Resource):
 
             new_game_card = update_game_card(updated_game_card)
 
-            
+            #publish event for player if card is on hand
+            if updated_game_card.playerId == identity["playerId"] and \
+            updated_game_card.cardLocationStatus == GameCardLocationStatus.IsOnHand:
+                updated_gameCards_result = GameCardSchema(many=True).dump([new_game_card])
+                publish_update_player_cards_on_hand_event_to_room(gamePassCode,identity["playerId"],updated_gameCards_result)
+
+
             result = GameCardSchema().dump(new_game_card)
             return jsonify(result)
         except ValidationError as e:

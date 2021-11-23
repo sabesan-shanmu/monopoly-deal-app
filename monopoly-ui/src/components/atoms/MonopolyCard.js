@@ -51,7 +51,7 @@ const StyledNoCard = styled.div`
 const StyledCard = styled.img`
 
    
-   
+    transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
     opacity:${(props) => props.isCardSelectable? '1':'0.4'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
@@ -77,6 +77,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
     console.log("fired");
+    
     return (
         <React.Fragment>
                     {cardType == CardTypeEnum.FaceUpCard && 
@@ -93,6 +94,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                             <StyledCard src={gameCard.card.cardImageUrl}
                                 style={{ visibility: isLoaded ? "visible" : "hidden" }}
                                 isCardSelectable={isCardSelectable}
+                                isCardRightSideUp={gameCard.isCardRightSideUp}
                                 onLoad={() => {
                                     setIsLoaded(true);
                                 }}

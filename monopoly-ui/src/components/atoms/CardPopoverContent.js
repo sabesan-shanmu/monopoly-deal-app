@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 import styled from 'styled-components'
-import {startGameActionSequence} from '../../common/GameMoveHelpers'
+import {startGameActionSequence,rotateCard} from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
 
@@ -44,6 +44,11 @@ export const CardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpe
                     setIsPopoverOpen(false);
                 }}>{move.description}</StyledPopoverBody>
             )}
+            {gameCard?.card?.properties?.isRotatable &&
+                <StyledPopoverBody onClick = {()=>{
+                    rotateCard(gameState.game,playerState.player,gameCard);
+                }}>Rotate Card</StyledPopoverBody>
+            }
         </StyledPopoverContent>
     )
 }

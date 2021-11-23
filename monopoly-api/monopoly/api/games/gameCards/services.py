@@ -13,7 +13,7 @@ def create_game_cards(game,players,cards):
         while len(full_list)>0:
             selected_index = random.randint(0,len(full_list)-1)
             selected_card = full_list.pop(selected_index)
-            game_cards.append(GameCards(gamePassCode=game.gamePassCode,name=selected_card.name,cardId=selected_card.cardId,cardStatus=Enum.GameCardLocationStatus.IsNotDrawn))
+            game_cards.append(GameCards(gamePassCode=game.gamePassCode,name=selected_card.name,cardId=selected_card.cardId,cardLocationStatus=Enum.GameCardLocationStatus.IsNotDrawn))
         
         list_of_game_cards=list(range(0,len(game_cards)))
         for player in players:
@@ -21,7 +21,7 @@ def create_game_cards(game,players,cards):
                 selected_index = random.randint(0,len(list_of_game_cards)-1)
                 selected_game_card_id = list_of_game_cards.pop(selected_index)
                 game_cards[selected_game_card_id].playerId=player.playerId
-                game_cards[selected_game_card_id].cardStatus=Enum.GameCardLocationStatus.IsOnHand
+                game_cards[selected_game_card_id].cardLocationStatus=Enum.GameCardLocationStatus.IsOnHand
                 
         db.session.bulk_save_objects(game_cards)
         db.session.commit()
@@ -33,13 +33,13 @@ def get_game_card_by_id(gameCardId):
     return db.session.query(GameCards).filter_by(gameCardId=gameCardId).first()
 
 def get_game_cards_in_play(gamePassCode):
-    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsPlayedOnCashPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsInPlay]))).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsPlayedOnCashPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsInPlay]))).all()
 
 def get_game_cards_on_hand(gamePassCode,playerId):
-    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsOnHand]))).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsOnHand]))).all()
 
 def draw_game_cards(gamePassCode,number):
-    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId == None,GameCards.cardStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
+    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId == None,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
 
 
 def reshuffle_game_cards():

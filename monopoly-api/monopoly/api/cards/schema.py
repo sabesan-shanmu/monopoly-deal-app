@@ -44,7 +44,7 @@ class PropertiesCardSchema(ma.Schema):
     price = fields.Integer(required=True)
     primaryColourDetails = fields.Nested(PropertiesColourSchema)
     secondaryColourDetails = fields.Nested(PropertiesColourSchema)
-
+    isRotatable = fields.Boolean()
 
 class CardSchema(ma.Schema):
     cardId = fields.Integer(required=True)

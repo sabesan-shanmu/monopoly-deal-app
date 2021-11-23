@@ -43,7 +43,7 @@ class DrawCardsResource(Resource):
             #update drawn card to current player's id and location to on hand
             for i,drawn_card in enumerate(drawn_gameCards):
                 drawn_gameCards[i].playerId = identity["playerId"]
-                drawn_gameCards[i].cardStatus = GameCardLocationStatus.IsOnHand
+                drawn_gameCards[i].cardLocationStatus = GameCardLocationStatus.IsOnHand
             updated_gameCards = update_game_cards(drawn_gameCards)     
 
             updated_gameCards_result = GameCardSchema(many=True).dump(updated_gameCards)

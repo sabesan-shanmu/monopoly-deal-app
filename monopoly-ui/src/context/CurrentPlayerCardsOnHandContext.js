@@ -22,7 +22,17 @@ const currentPlayerCardsReducer =  (state,action)  =>{
             const updated_playerCards = [...state.playerCards,...action.playerCards];
             return {...state,playerCards:updated_playerCards};
         case ActionTypes.UpdateResource:
-            return {...state,playerCards:[]}; 
+            if(!state.playerCards)
+                return {...state}
+            const previousPlayerCards = [...state.playerCards];
+            action.playerCards.forEach(gameCard=>{
+                console.log(`searching:${gameCard.gameCardId}`);
+                const foundIndex = previousPlayerCards.findIndex(C=>{return C.gameCardId == gameCard.gameCardId });
+                if(foundIndex>-1)
+                    previousPlayerCards[foundIndex] = gameCard;
+            });
+        
+            return {...state,playerCards:previousPlayerCards}; 
     }
 }
 
@@ -54,6 +64,14 @@ export const CurrentPlayerCardsContextProvider = ({children}) => {
             if(isMounted)
                 currentPlayerCardsStateDispatch({type:ActionTypes.CreateResource,playerCards:player_cards});
           });
+
+        socket.on(`update_player_cards_on_hand_${gameState.game.gamePassCode}_${playerState.player.playerId}`, (player_cards) => {
+      
+            console.log("update_player_cards_on_hand fired!");
+            console.log(player_cards);
+            if(isMounted)
+                currentPlayerCardsStateDispatch({type:ActionTypes.UpdateResource,playerCards:player_cards});
+        });
 
         
         return () => {

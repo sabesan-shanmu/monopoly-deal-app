@@ -21,6 +21,7 @@ class PropertiesCard(db.Model):
     price= db.Column(db.Integer,nullable=False)
     primaryColourDetails = db.relationship(PropertiesColour,primaryjoin=primaryColourId==PropertiesColour.colourId)
     secondaryColourDetails = db.relationship(PropertiesColour,primaryjoin=secondaryColourId==PropertiesColour.colourId)
+    isRotatable = db.Column(db.Boolean,default=False)
 
 class CashCard(db.Model):
     cashCardId = db.Column(db.Integer,primary_key=True,nullable=False)
@@ -66,7 +67,7 @@ class GameCards(db.Model):
     name = db.Column(db.String)
     cardId = db.Column(db.Integer,db.ForeignKey("cards.cardId"),nullable=True)
     playerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
-    cardStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
+    cardLocationStatus = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False, default=Enum.GameCardLocationStatus.IsNotDrawn)
     isCardRightSideUp = db.Column(db.Boolean,nullable=False,default=True)
     assignedColourId = db.Column(db.Enum(Enum.Colours),nullable=True)
     setGroupId = db.Column(db.Integer,nullable=True)
