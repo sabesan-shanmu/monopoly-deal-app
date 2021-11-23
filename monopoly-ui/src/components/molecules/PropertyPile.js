@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { device } from '../../common/devices';
+import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 
 const StyledBorder = styled.div`
     border:2px solid white;
@@ -23,9 +24,7 @@ const StyledBorder = styled.div`
 export const PropertyPile = () => {
     return (
         <React.Fragment>
-            <div>
-                -Properties-
-            </div>
+            <MonopolyDealLabel type="h4" text="-Properties-" />
             <StyledBorder>
             </StyledBorder>
         </React.Fragment>

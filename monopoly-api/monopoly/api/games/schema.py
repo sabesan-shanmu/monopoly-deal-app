@@ -5,6 +5,7 @@ import monopoly.common.enums as Enum
 from monopoly import ma
 from monopoly.models import Game
 from monopoly.api.games.players.schema import PlayerSchema
+from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.common.utils import url_overwrite
 
 
@@ -34,6 +35,7 @@ class GameSchema(ma.Schema):
     gameStatus = EnumField(Enum.GameStatus, by_value=True)
     createdUtcDate = fields.DateTime()
     players = fields.Nested(PlayerSchema,many=True)
+    inPlayPileCards = fields.Nested(GameCardSchema,many=True)
     links = ma.Hyperlinks(
         {
             "self":url_overwrite("Games_single_game_resource", gamePassCode="<gamePassCode>"),

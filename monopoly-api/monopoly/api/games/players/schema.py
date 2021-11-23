@@ -36,12 +36,13 @@ class PlayerSchema(ma.Schema):
     numberOfCardsOnHand = fields.Integer()
     imageId = fields.Integer(required=True)
     voteStatusId = EnumField(Enum.VoteStatus, by_value=True)
-    playerCards = fields.Nested(GameCardSchema,many=True)
+    onHandCards = fields.Nested(GameCardSchema,many=True)
+    cashPileCards = fields.Nested(GameCardSchema,many=True)
+    propertyPileCards = fields.Nested(GameCardSchema,many=True)
     @post_dump
     def update_number_of_cards_on_hand(self, data, many, **kwargs):
-        data["numberOfCardsOnHand"] = len([x for x in data["playerCards"] if x["cardLocationStatus"]==GameCardLocationStatus.IsOnHand.value])
-        #only show cards that are in play
-        data['playerCards'] = [x for x in data["playerCards"] if x["cardLocationStatus"]!=GameCardLocationStatus.IsOnHand.value] 
+        data["numberOfCardsOnHand"] = len([x for x in data["onHandCards"] if x["cardLocationStatus"]==GameCardLocationStatus.IsOnHand.value])
+        del data["onHandCards"]
         return data
     @post_load
     def make_player(self, data, **kwargs):

@@ -2,7 +2,7 @@ from monopoly import db
 import monopoly.common.enums as Enum
 import uuid
 from datetime import datetime
-from sqlalchemy import UniqueConstraint
+from sqlalchemy import UniqueConstraint,and_
 
 
 class PropertiesColour(db.Model):
@@ -85,7 +85,9 @@ class Player(db.Model):
     playerName = db.Column(db.String)
     playerGameOrder = db.Column(db.Integer)
     voteStatusId = db.Column(db.Enum(Enum.VoteStatus),default=Enum.VoteStatus.Undecided)
-    playerCards =  db.relationship(GameCards,primaryjoin=playerId==GameCards.playerId)  
+    onHandCards =  db.relationship(GameCards,primaryjoin=and_(playerId==GameCards.playerId,GameCards.cardLocationStatus==Enum.GameCardLocationStatus.IsOnHand))
+    cashPileCards =  db.relationship(GameCards,primaryjoin=and_(playerId==GameCards.playerId,GameCards.cardLocationStatus==Enum.GameCardLocationStatus.IsPlayedOnCashPile))  
+    propertyPileCards =  db.relationship(GameCards,primaryjoin=and_(playerId==GameCards.playerId,GameCards.cardLocationStatus==Enum.GameCardLocationStatus.IsPlayedOnPropertyPile))    
 
 class Game(db.Model):
     __table_args__ = (
@@ -99,7 +101,7 @@ class Game(db.Model):
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
     createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
     players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,cascade="all,delete")
-
+    inPlayPileCards = db.relationship(GameCards,primaryjoin=and_(gamePassCode==GameCards.gamePassCode,GameCards.cardLocationStatus==Enum.GameCardLocationStatus.IsInPlay))    
     def __str__(self):
         return self.name
 
@@ -135,18 +137,6 @@ class GamePlayerMoves(db.Model):
     transactionTrackerId = db.Column(db.Integer,db.ForeignKey(TransactionTracker.transactionTrackerId),nullable=True)
     transactionTracker = db.relationship(TransactionTracker)
     currentPlayer = db.relationship(Player,primaryjoin=currentPlayerId==Player.playerId)
-
-""" 
-class TransactionTracker(db.Model):
-    transactionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    transactionTrackerId = db.Column(db.Integer,db.ForeignKey(TransactionTracker.transactionTrackerId))
-    gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
-    isTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
-    sourcePlayerId=db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True, name='fk_trade_transaction_player_id',ondelete='CASCADE'))
-    total = db.Column(db.Integer)
-    transactionType = db.Column(db.Enum(Enum.TransactionType),nullable=True)
-    tradePayeeTransactions =  db.relationship("TradePayeeTransaction")  
- """
 
 class TradePayeeTransaction(db.Model):
     tradePayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
