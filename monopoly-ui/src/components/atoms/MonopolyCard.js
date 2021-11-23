@@ -87,7 +87,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                             reposition={false} 
                             onClickOutside={() => setIsPopoverOpen(false)} 
                             content={({ position, nudgedLeft, nudgedTop }) => ( 
-                                <CardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} />
+                                <CardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                             )}
                         >
                             <StyledCard src={gameCard.card.cardImageUrl}

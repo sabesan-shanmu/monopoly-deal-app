@@ -29,7 +29,7 @@ const StyledPopoverBody = styled.div`
 
 
 
-export const CardPopoverContent = ({game,gameCard,listOfPossibleMoves}) =>{
+export const CardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpen}) =>{
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     console.log(listOfPossibleMoves);
@@ -38,7 +38,11 @@ export const CardPopoverContent = ({game,gameCard,listOfPossibleMoves}) =>{
         <StyledPopoverContent>
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
             {listOfPossibleMoves.possibleMoves.map((move,key)=>
-                <StyledPopoverBody key={key} onClick={()=>startGameActionSequence(gameState.game,playerState.player,gameCard,move)}>{move.description}</StyledPopoverBody>
+                <StyledPopoverBody key={key} onClick={()=>{
+                    startGameActionSequence(gameState.game,playerState.player,gameCard,move);
+                    //close popover
+                    setIsPopoverOpen(false);
+                }}>{move.description}</StyledPopoverBody>
             )}
         </StyledPopoverContent>
     )

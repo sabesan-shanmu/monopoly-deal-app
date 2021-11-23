@@ -40,7 +40,8 @@ class PlayerSchema(ma.Schema):
     @post_dump
     def update_number_of_cards_on_hand(self, data, many, **kwargs):
         data["numberOfCardsOnHand"] = len([x for x in data["playerCards"] if x["cardStatus"]==GameCardLocationStatus.IsOnHand.value])
-        del data['playerCards']
+        #only show cards that are in play
+        data['playerCards'] = [x for x in data["playerCards"] if x["cardStatus"]!=GameCardLocationStatus.IsOnHand.value] 
         return data
     @post_load
     def make_player(self, data, **kwargs):
