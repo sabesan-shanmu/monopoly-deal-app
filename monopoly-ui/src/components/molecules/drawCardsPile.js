@@ -19,22 +19,11 @@ const StyledDrawCardsPile = styled.div`
 
 const StyledBorder = styled.div`
     border:2px solid white;
-    display:block;
+    display:grid;
     width: 240px;
-    @media ${device.xlarge} {
-        height:240px;
-    }
-
-    @media ${device.large} { 
-        height:240px;
-    }
-    @media ${device.medium} { 
-        height:240px;
-
-    }
-    @media ${device.small} { 
-        height:240px;  
-    }
+    justify-items: center;
+    position:relative;
+    min-height:240px;
 `;
 
 
@@ -75,7 +64,9 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
     return (
         <StyledDrawCardsPile>
             <MonopolyDealLabel type="h4" text="-Draw Card Pile-" />
-            <MonopolyCard onClick={()=>drawCardOnClick()} cardType={CardTypeEnum.FaceDownCard} isCardSelectable={isPlayerDrawingCard} />
+            <StyledBorder>
+                <MonopolyCard onClick={()=>drawCardOnClick()} cardType={CardTypeEnum.FaceDownCard} isCardSelectable={isPlayerDrawingCard} />
+            </StyledBorder>
         </StyledDrawCardsPile>
     )
 }

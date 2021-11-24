@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
-
+import { MonopolyCard } from '../atoms/MonopolyCard';
+import { CardTypeEnum } from '../../common/constants';
 
 const StyledInPlayPile = styled.div`
     min-width: 280px;
@@ -15,30 +16,34 @@ const StyledInPlayPile = styled.div`
 
 const StyledBorder = styled.div`
     border:2px solid white;
-    display:block;
+    display:grid;
     width: 240px;
-    @media ${device.xlarge} {
-        height:240px;
-    }
+    justify-items: center;
+    position:relative;
+    min-height:240px;
+`;
 
-    @media ${device.large} { 
-        height:240px;
-    }
-    @media ${device.medium} { 
-        height:240px;
-
-    }
-    @media ${device.small} { 
-        height:240px;  
-    }
+const RepositionedCard = styled.div`
+    
+    grid-row:${(props) =>`${props.position}/span ${props.total}`};
+    grid-column:${(props) =>`${props.position}/span ${props.total}`};
 `;
 
 
-export const InPlayPile = () => {
+export const InPlayPile = ({inPlayPileCards}) => {
+    console.log(inPlayPileCards);
+
+    //group by playerId
     return (
         <StyledInPlayPile>
             <MonopolyDealLabel type="h4" text="-Card In Play Pile-" />
-            <StyledBorder>
+            <StyledBorder total={inPlayPileCards?inPlayPileCards.length:1}>
+                {inPlayPileCards && inPlayPileCards.map((pileCard,key)=>(
+                    <RepositionedCard position={key+1} total={inPlayPileCards.length}>
+                     <MonopolyCard gameCard={pileCard} cardType={CardTypeEnum.InPlayCard} key={key} isCardSelectable={true}/>
+                    </RepositionedCard>
+                ))}
+       
             </StyledBorder>
         </StyledInPlayPile>
     )

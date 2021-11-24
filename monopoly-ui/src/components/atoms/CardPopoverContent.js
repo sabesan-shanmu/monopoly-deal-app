@@ -33,11 +33,10 @@ export const CardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpe
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     console.log(listOfPossibleMoves);
-    const gameCardId = listOfPossibleMoves.gameCardId;
     return (
         <StyledPopoverContent>
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
-            {listOfPossibleMoves.possibleMoves.map((move,key)=>
+            {listOfPossibleMoves?.possibleMoves.map((move,key)=>
                 <StyledPopoverBody key={key} onClick={()=>{
                     startTransactionSequence(gameState.game,playerState.player,gameCard,move);
                     //close popover

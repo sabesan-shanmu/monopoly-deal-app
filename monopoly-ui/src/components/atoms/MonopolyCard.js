@@ -73,7 +73,7 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves=[]}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
     console.log("fired");
@@ -110,6 +110,16 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                     }
                     {cardType ==CardTypeEnum.PlaceholderCard &&
                         <StyledNoCard />
+                    }
+                    {cardType ==CardTypeEnum.InPlayCard &&
+                        <StyledCard src={gameCard.card.cardImageUrl}
+                        style={{ visibility: isLoaded ? "visible" : "hidden" }}
+                        isCardSelectable={isCardSelectable}
+                        isCardRightSideUp={gameCard.isCardRightSideUp}
+                        onLoad={() => {
+                            setIsLoaded(true);
+                        }}
+                    />
                     }
         </React.Fragment>
     )

@@ -7,7 +7,7 @@ import {PlayerContext} from '../../context/PlayerContext'
 import { PropertyPile } from './PropertyPile';
 import { CashPile } from './CashPile';
 import { InPlayPile } from './InPlayPile';
-import { DrawCardsPile } from './drawCardsPile';
+import { DrawCardsPile } from './DrawCardsPile';
 
 
 
@@ -27,8 +27,7 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
     const {playerState,playerDispatch} = useContext(PlayerContext);
 
     const playerBlock = {...player,isGameBoard:true};
-
-    
+    console.log(playerBlock);
     return (
         <StyledPlayerBlock blockType={blockType}>
               {blockType == GameBlockTypeEnum.PlayerBlock  &&
@@ -37,8 +36,8 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
                             {...playerBlock}
                         />
                         
-                        <PropertyPile cards={playerState?.player?.propertyPileCards}/>
-                        <CashPile cards={playerState?.player?.cashPileCards}/>
+                        <PropertyPile propertyPileCards={playerBlock?.propertyPileCards}/>
+                        <CashPile cashPileCards={playerBlock?.cashPileCards}/>
                     </React.Fragment>
               }
               {blockType == GameBlockTypeEnum.DrawCardsBlock &&
@@ -49,7 +48,7 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
               }
                {blockType == GameBlockTypeEnum.ActiveCardsBlock &&
                     <React.Fragment>  
-                        <InPlayPile cards={game?.inPlayPileCards} />
+                        <InPlayPile inPlayPileCards={game?.inPlayPileCards} />
                     </React.Fragment>
                   
               }
