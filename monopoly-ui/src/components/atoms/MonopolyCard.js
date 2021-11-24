@@ -27,47 +27,12 @@ const StyledMiniCard = styled.img`
 `;
 
 
-
-const StyledNoCard = styled.div`
-    width:114px;
-    opactiy:0.5;
-    background: rgba(0,0,0,0.3);
-    @media ${device.xlarge} {
-        height:180px;
-    }
-
-    @media ${device.large} { 
-        height:180px;
-    }
-    @media ${device.medium} { 
-        height:180px;
-
-    }
-    @media ${device.small} { 
-        height:180px;  
-    }
-`;
-
 const StyledCard = styled.img`
 
-   
     transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
-    @media ${device.xlarge} {
-        height:180px;
-    }
-
-    @media ${device.large} { 
-        height:180px;
-    }
-    @media ${device.medium} { 
-        height:180px;
-
-    }
-    @media ${device.small} { 
-        height:180px;  
-    }
+    height:200px;
 `;
 
 
@@ -106,9 +71,6 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                     }
                     {cardType ==CardTypeEnum.FaceDownCard &&
                         <StyledCard src={faceDownCardImg} isCardRightSideUp={true} isCardSelectable={isCardSelectable} onClick={onClick}/>
-                    }
-                    {cardType ==CardTypeEnum.PlaceholderCard &&
-                        <StyledNoCard />
                     }
                     {cardType ==CardTypeEnum.InPlayCard &&
                         <StyledCard src={gameCard.card.cardImageUrl}

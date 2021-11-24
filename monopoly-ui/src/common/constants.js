@@ -52,9 +52,8 @@ export const CardTypeEnum = {
     FaceDownCard:1,
     DrawCard:2,
     MiniFaceDownCard:3,
-    PlaceholderCard:4,
-    FaceUpCard:5,
-    InPlayCard:6
+    FaceUpCard:4,
+    InPlayCard:5
 }
 
 export const MAX_NUMBER_OF_MOVES = 3
