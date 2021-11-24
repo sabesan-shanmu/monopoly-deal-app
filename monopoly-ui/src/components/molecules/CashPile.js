@@ -7,8 +7,11 @@ import { CardTypeEnum } from '../../common/constants';
 
 const StyledBorder = styled.div`
     border:2px solid white;
+    display:grid;
+    justify-items: center;
+    position:relative;
     min-height:200px;
-    padding: 5px;
+    padding:5px;
 `;
 
 const RepositionedCard = styled.div`
@@ -26,7 +29,7 @@ export const CashPile = ({cashPileCards}) => {
             <MonopolyDealLabel type="h4" text="-Cash Pile-" />
             <StyledBorder total={cashPileCards?cashPileCards.length:1}>
                 {cashPileCards && cashPileCards.map((cashCard,key)=>(
-                    <RepositionedCard position={key+1} total={cashPileCards.length}>
+                    <RepositionedCard key={key} position={key+1} total={cashPileCards.length}>
                         <MonopolyCard gameCard={cashCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>
                     </RepositionedCard>
                 ))}

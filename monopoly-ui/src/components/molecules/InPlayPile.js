@@ -8,19 +8,20 @@ import { CardTypeEnum } from '../../common/constants';
 const StyledInPlayPile = styled.div`
     min-width: 280px;
     display:flex;
-    justify-content: center;
-    align-items: center;
     flex-direction:column;
     height:100%;
 `;
-
+const StyledGrid = styled.div`
+    display:grid;
+    position:relative;
+`;
 const StyledBorder = styled.div`
     border:2px solid white;
     display:grid;
-    width: 240px;
-    justify-items: center;
-    position:relative;
+    justify-items: flex-start;
     min-height:240px;
+    width: 240px;
+    padding: 5px;
 `;
 
 const RepositionedCard = styled.div`
@@ -34,16 +35,32 @@ export const InPlayPile = ({inPlayPileCards}) => {
     console.log(inPlayPileCards);
 
     //group by playerId
+    const inPlayPileGroupedByPlayerId = inPlayPileCards.reduce((dict, inPlayPileCard) => {
+      
+        if(dict[inPlayPileCard.playerId])
+            dict[inPlayPileCard.playerId].push(inPlayPileCard)
+        else
+            dict[inPlayPileCard.playerId]=[inPlayPileCard];
+        return dict;
+    },{});
+    console.log(inPlayPileGroupedByPlayerId);
+
     return (
         <StyledInPlayPile>
             <MonopolyDealLabel type="h4" text="-Card In Play Pile-" />
-            <StyledBorder total={inPlayPileCards?inPlayPileCards.length:1}>
-                {inPlayPileCards && inPlayPileCards.map((pileCard,key)=>(
-                    <RepositionedCard position={key+1} total={inPlayPileCards.length}>
-                     <MonopolyCard gameCard={pileCard} cardType={CardTypeEnum.InPlayCard} key={key} isCardSelectable={true}/>
-                    </RepositionedCard>
-                ))}
-       
+            <StyledBorder>
+                {inPlayPileGroupedByPlayerId && Object.values(inPlayPileGroupedByPlayerId).map((inPlayGroup,key)=>{
+                    console.log(inPlayGroup);
+                    return (
+                    <StyledGrid key={key}>
+                        {inPlayGroup && inPlayGroup.map((inPileCard,key)=>(
+                            <RepositionedCard position={key+1} total={inPlayGroup.length}>
+                                <MonopolyCard gameCard={inPileCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>
+                            </RepositionedCard>
+                        ))}
+                    </StyledGrid>
+                    )
+                })}
             </StyledBorder>
         </StyledInPlayPile>
     )

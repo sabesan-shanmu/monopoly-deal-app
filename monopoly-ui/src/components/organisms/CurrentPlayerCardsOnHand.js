@@ -31,6 +31,7 @@ const FooterCardsContainer = styled.div`
     &>img{
         margin:10px;
     }
+    min-height:180px;
 `;
 
 
