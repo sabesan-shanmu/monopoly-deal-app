@@ -8,6 +8,7 @@ import { CardTypeEnum } from '../../common/constants';
 const StyledBorder = styled.div`
     border:2px solid white;
     min-height:200px;
+    padding: 5px;
 `;
 
 const RepositionedCard = styled.div`
@@ -26,7 +27,7 @@ export const CashPile = ({cashPileCards}) => {
             <StyledBorder total={cashPileCards?cashPileCards.length:1}>
                 {cashPileCards && cashPileCards.map((cashCard,key)=>(
                     <RepositionedCard position={key+1} total={cashPileCards.length}>
-                        <MonopolyCard gameCard={cashCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={true}/>
+                        <MonopolyCard gameCard={cashCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>
                     </RepositionedCard>
                 ))}
        

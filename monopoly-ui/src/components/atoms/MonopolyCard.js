@@ -52,7 +52,6 @@ const StyledCard = styled.img`
 
    
     transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
-    opacity:${(props) => props.isCardSelectable? '1':'0.4'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
     @media ${device.xlarge} {

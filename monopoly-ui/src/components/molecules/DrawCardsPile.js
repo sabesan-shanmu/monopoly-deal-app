@@ -24,6 +24,7 @@ const StyledBorder = styled.div`
     justify-items: center;
     position:relative;
     min-height:240px;
+    padding: 5px;
 `;
 
 
