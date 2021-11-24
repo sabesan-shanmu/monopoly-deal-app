@@ -10,7 +10,8 @@ const StyledBorder = styled.div`
     display:grid;
     justify-items: center;
     position:relative;
-    min-height:200px;
+    min-height:240px;
+    width: 240px;
     padding:5px;
 `;
 
