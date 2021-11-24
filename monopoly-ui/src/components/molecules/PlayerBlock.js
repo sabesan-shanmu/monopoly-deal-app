@@ -7,8 +7,7 @@ import {PlayerContext} from '../../context/PlayerContext'
 import { PropertyPile } from './PropertyPile';
 import { CashPile } from './CashPile';
 import { InPlayPile } from './InPlayPile';
-import { DrawCardsPile } from './DrawCardsPile';
-
+import { DrawCardsPile } from './sdfdsf';
 
 
 const StyledPlayerBlock = styled.div`
