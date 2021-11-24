@@ -20,7 +20,6 @@ const StyledPlayerBlock = styled.div`
 `;
 
 
-
 export const PlayerBlock = ({game,blockName,player,blockType}) => {
     
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
