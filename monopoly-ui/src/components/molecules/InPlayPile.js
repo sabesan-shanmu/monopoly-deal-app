@@ -10,6 +10,8 @@ const StyledInPlayPile = styled.div`
     display:flex;
     flex-direction:column;
     height:100%;
+    justify-content: center;
+    align-items: center;
 `;
 const StyledGrid = styled.div`
     display:grid;
