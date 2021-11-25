@@ -12,7 +12,7 @@ import { CardTypeEnum } from '../../common/constants';
 import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
-
+import {GameMoveStatusEnum } from '../../common/constants'
 
 const FooterTitleContainer = styled.div`
     display:flex;
@@ -43,7 +43,8 @@ export const CurrentPlayerCardsOnHand = ()=> {
     const [isFooterVisible,setIsFooterVisible] = useState(true);
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
-    const isCurrentPlayerMove = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState.player.playerId;
+    const isCurrentPlayerMove = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState.player.playerId && !gameMoveState.gameMove.transactionTracker 
+        && gameMoveState?.gameMove?.gameMoveStatus != GameMoveStatusEnum.MoveComplete
     console.log(currentPlayerCardsState);
     console.log(preMoveCheckState);
 
@@ -79,7 +80,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
             {isFooterVisible &&
                 <FooterCardsContainer>
                 {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
-                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard) && !gameMoveState.gameMove.transactionTracker && isCurrentPlayerMove} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
+                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard) && isCurrentPlayerMove} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
                 )}
                 </FooterCardsContainer> 
             }
