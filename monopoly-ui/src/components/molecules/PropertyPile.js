@@ -10,6 +10,8 @@ import { CardTypeEnum } from '../../common/constants';
 const StyledGrid = styled.div`
     display:grid;
     position:relative;
+    grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
+    grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
 `;
 const StyledBorder = styled.div`
     border:2px solid white;
@@ -41,11 +43,11 @@ export const PropertyPile = ({propertyPileCards}) => {
     console.log(propertyPileGroupedByGroupId);
     return (
         <React.Fragment>
-            <MonopolyDealLabel type="h4" text="-Properties-" />
+            <MonopolyDealLabel type="h4" text="-Properties Pile-" />
             <StyledBorder>
                 {propertyPileGroupedByGroupId && Object.values(propertyPileGroupedByGroupId).map((propertyPileGroup,key)=>{
                     return (
-                    <StyledGrid key={key}>
+                    <StyledGrid key={key} total={propertyPileGroup.length}>
                         {propertyPileGroup && propertyPileGroup.map((propertyCard,key)=>(
                             <RepositionedCard position={key+1} total={propertyPileCards.length}>
                                 <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>

@@ -35,6 +35,8 @@ class ActionTypes(Enum):
     House = 8 # no action needed
     Hotel = 9 # no action needed
     PassGo = 10 # player can draw 2 cards
+    MoveCard = 11 #move a card over to new set
+    RotateCard = 12 #rotate in play card
 
  
 class CardTypes(Enum):

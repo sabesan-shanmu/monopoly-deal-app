@@ -8,11 +8,13 @@ import { CardTypeEnum } from '../../common/constants';
 const StyledBorder = styled.div`
     border:2px solid white;
     display:grid;
-    justify-items: center;
+    justify-items: flex-start;
     position:relative;
     min-height:240px;
     width: 240px;
     padding:5px;
+    grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
+    grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
 `;
 
 const RepositionedCard = styled.div`

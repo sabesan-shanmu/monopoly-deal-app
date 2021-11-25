@@ -16,6 +16,8 @@ const StyledInPlayPile = styled.div`
 const StyledGrid = styled.div`
     display:grid;
     position:relative;
+    grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
+    grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
 `;
 const StyledBorder = styled.div`
     border:2px solid white;
@@ -54,7 +56,7 @@ export const InPlayPile = ({inPlayPileCards}) => {
                 {inPlayPileGroupedByPlayerId && Object.values(inPlayPileGroupedByPlayerId).map((inPlayGroup,key)=>{
                     console.log(inPlayGroup);
                     return (
-                    <StyledGrid key={key}>
+                    <StyledGrid key={key} total={inPlayGroup.length}>
                         {inPlayGroup && inPlayGroup.map((inPileCard,key)=>(
                             <RepositionedCard position={key+1} total={inPlayGroup.length}>
                                 <MonopolyCard gameCard={inPileCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>

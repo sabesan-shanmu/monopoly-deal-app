@@ -28,11 +28,11 @@ const StyledMiniCard = styled.img`
 
 
 const StyledCard = styled.img`
-
     transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
     height:200px;
+    
 `;
 
 

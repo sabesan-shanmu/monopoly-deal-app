@@ -13,7 +13,9 @@ def create_game_cards(game,players,cards):
         while len(full_list)>0:
             selected_index = random.randint(0,len(full_list)-1)
             selected_card = full_list.pop(selected_index)
-            game_cards.append(GameCards(gamePassCode=game.gamePassCode,name=selected_card.name,cardId=selected_card.cardId,cardLocationStatus=Enum.GameCardLocationStatus.IsNotDrawn))
+            game_cards.append(GameCards(gamePassCode=game.gamePassCode,name=selected_card.name,cardId=selected_card.cardId, \
+                cardLocationStatus=Enum.GameCardLocationStatus.IsNotDrawn,\
+                assignedColourId=(selected_card.properties.primaryColourId if selected_card.cardType is Enum.CardTypes.Properties else None)))
         
         list_of_game_cards=list(range(0,len(game_cards)))
         for player in players:
