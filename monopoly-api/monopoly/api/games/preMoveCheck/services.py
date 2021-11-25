@@ -263,7 +263,21 @@ def is_rotate_property_available(player_card,game_cards_played_by_all_players,po
         player_card.card.properties.isRotatable is False:
         return False
     else:
-        return True
+        current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]))
+        
+        current_player_cards_grouped_by_groupId = []
+        key_func = lambda x: x.groupId
+        for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
+            cards = list(group)
+            currentTotalInSet = len(cards)
+            numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
+            current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
+        #can only rotate card if its a full set without house or partial set
+        if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet <= x.numberNeededToCompleteSet and x.groupId == player_card.groupId]) > 0:
+            return True
+        else:
+            return True
+
 
 def is_move_wild_property_available(player_card,game_cards_played_by_all_players,possible_play_action):
 
@@ -282,8 +296,9 @@ def is_move_wild_property_available(player_card,game_cards_played_by_all_players
         numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
         current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
 
-    #find a non complete set, if there's one then wildcard can be moved
-    if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x.groupId != player_card.groupId]) > 0:
+    #find a non complete set and current set must be full set(without hotel/house) or partial set, if there's one then wildcard can be moved
+    if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x.groupId != player_card.groupId]) > 0 and \
+        len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet <= x.numberNeededToCompleteSet and x.groupId == player_card.groupId]) > 0:
         return True
     else:
         return False
