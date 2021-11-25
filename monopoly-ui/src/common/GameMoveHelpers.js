@@ -1,29 +1,51 @@
-import {transactionTrackerApi} from '../api/transactionTrackerApi' 
+import {transactionTrackerApi,singleTransactionTrackerApi} from '../api/transactionTrackerApi' 
 import {gameCardsApi} from '../api/gameCardsApi'
-import { ActionClassificationEnum, ResourceTypes } from './constants';
+import {gameMoveApi} from '../api/gameMoveApi'
+import { CardTypesEnum,ActionClassificationEnum, GameCardLocationStatusEnum,GameMoveStatusEnum } from './constants';
 
 
-export const startTransactionSequence = (game,player,gameCard,transactionTracker) => {
+export const startCashPileNoActionSequence = (game,player,gameCard,move) => {
     console.log("Start transaction Sequence!");
+    let createdTransaction = {};
     //1. create transaction tracker
     const transactionTrackerPayload = {
         gamePassCode:game.gamePassCode,
         performedByPlayerId:player.playerId,
-        gamePlayActionId:transactionTracker.gamePlayActionId,
+        gamePlayActionId:move.gamePlayActionId,
         gameCardId:gameCard.gameCardId
     };
     transactionTrackerApi.post(game.links.transactionTracker,player.accessToken,transactionTrackerPayload)
     .then((success)=>{
         console.log(success.data);
+        createdTransaction = success.data
         //2. move the card
         const gameCardPayload = {
             gameCardId:gameCard.gameCardId,
-            cardLocationStatus:transactionTracker.expectedGameCardLocation
+            cardLocationStatus:move.expectedGameCardLocation
         };
         return gameCardsApi.patch(gameCard.links.self,player.accessToken,gameCardPayload);
         
     }) 
-    .then((success)=>{console.log(success.data)})
+    .then((success)=>{
+        console.log(success.data)
+        //3. patch the transaction tracker to complete
+        const singletransactionTrackerPayload = {
+            transactionTrackerId:createdTransaction.transactionTrackerId,
+            isGameActionCompleted:true
+        };
+        return singleTransactionTrackerApi.patch(createdTransaction.links.self,player.accessToken,singletransactionTrackerPayload);
+
+    })
+    .then((success)=>{
+        console.log(success.data)
+        //4. mark the move as complete 
+        const movePayload = {
+            gameMoveStatus:GameMoveStatusEnum.MoveComplete,
+            currentPlayerId:player.playerId
+        };
+        return gameMoveApi.patch(game.links.gameMoves,player.accessToken,movePayload);
+
+    })
     .catch((error)=>{console.log(error.response.data)});
  
 
@@ -41,11 +63,39 @@ export const rotateCard = (game,player,gameCard) => {
 }
 
 
-const getMoveSequence = (move) => {
-    
+const getStartMoveSequence = (move) => {
+    console.log("Retrieve Move Sequence gamePlayActionId: "+move.gamePlayActionId);
     return {
-        [ActionClassificationEnum.NoActionRequiredMove]:""
-    };
+       1:"",
+       2:startCashPileNoActionSequence,
+       3:startCashPileNoActionSequence,
+       4:"",
+       5:"",
+       6:"",
+       7:"",
+       8:startCashPileNoActionSequence,
+       9:"",
+       10:startCashPileNoActionSequence,
+       11:"",
+       12:startCashPileNoActionSequence,
+       13:startCashPileNoActionSequence,
+       14:"",
+       15:"",
+       16:"",
+       17:startCashPileNoActionSequence,
+       18:"",
+       19:startCashPileNoActionSequence,
+       20:"",
+       21:startCashPileNoActionSequence,
+       22:"",
+       23:startCashPileNoActionSequence,
+       24:"",
+       25:startCashPileNoActionSequence,
+       26:"",
+       27:startCashPileNoActionSequence,
+       28:"",
+       29:""
+    }[move.gamePlayActionId];
 
 }
 

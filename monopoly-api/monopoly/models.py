@@ -141,7 +141,7 @@ class GamePlayerMoves(db.Model):
 
 class TradePayeeTransaction(db.Model):
     tradePayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    tradeTransactionId = db.Column(db.Integer,db.ForeignKey(TransactionTracker.transactionTrackerId),nullable=True)
+    transactionTrackerId = db.Column(db.Integer,db.ForeignKey(TransactionTracker.transactionTrackerId),nullable=True)
     targetPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
     isPayeeTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
     requestedGameCardIds = db.Column(db.String)

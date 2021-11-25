@@ -28,7 +28,7 @@ const StyledMiniCard = styled.img`
 
 
 const StyledCard = styled.img`
-    opacity: ${(props) => props.isCardSelectable || props.cardType == CardTypeEnum.InPlayCard?'1':'0.75'};
+    opacity: ${(props) => props.isCardSelectable || props.cardType == CardTypeEnum.InPlayCard?'1':'1'};
     transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;

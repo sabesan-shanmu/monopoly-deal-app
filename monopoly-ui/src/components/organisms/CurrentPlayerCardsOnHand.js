@@ -13,6 +13,7 @@ import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHan
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
 
+
 const FooterTitleContainer = styled.div`
     display:flex;
     color:white;
@@ -41,7 +42,8 @@ export const CurrentPlayerCardsOnHand = ()=> {
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
     const [isFooterVisible,setIsFooterVisible] = useState(true);
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
-    
+    const {playerState,playerDispatch} = useContext(PlayerContext);
+    const isCurrentPlayerMove = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState.player.playerId;
     console.log(currentPlayerCardsState);
     console.log(preMoveCheckState);
 
@@ -77,7 +79,7 @@ export const CurrentPlayerCardsOnHand = ()=> {
             {isFooterVisible &&
                 <FooterCardsContainer>
                 {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
-                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard) && !gameMoveState.gameMove.transactionTracker} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
+                    <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard) && !gameMoveState.gameMove.transactionTracker && isCurrentPlayerMove} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
                 )}
                 </FooterCardsContainer> 
             }

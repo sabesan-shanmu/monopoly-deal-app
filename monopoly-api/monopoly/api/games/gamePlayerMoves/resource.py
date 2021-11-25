@@ -47,23 +47,26 @@ class GamePlayerMovesResource(Resource):
             if not is_game_action_tracker_valid(current_player_move):
                 raise FieldValidationException(message="Cannot progress without performing an action.")
 
+            
+            if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete and current_player_move.transactionTracker.isGameActionCompleted is not True:
+                raise FieldValidationException(message="Cannot progress to complete without completing action")
+
    
             updated_player_move.totalGameMoveCount = current_player_move.totalGameMoveCount
-            updated_player_move.transactionTrackerId = current_player_move.transactionTrackerId
+            updated_player_move.transactionTrackerId = current_player_move.transactionTrackerId if updated_player_move.gameMoveStatus != GameMoveStatus.MoveComplete else None
             updated_player_move.gameId = current_player_move.gameId
             updated_player_move.numberOfMovesPlayed = current_player_move.numberOfMovesPlayed + 1 if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete else current_player_move.numberOfMovesPlayed      
-
-    
+            
             #move to the next player since player completed their turn or skipped their turn
             if (updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
-                and current_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES) or updated_player_move.gameMoveStatus == GameMoveStatus.SkipYourTurn:
+                and updated_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES) or updated_player_move.gameMoveStatus == GameMoveStatus.SkipYourTurn:
                 currentPlayerGameOrder = get_player_game_order(game.players,current_player_move.currentPlayerId)
                 updated_player_move.currentPlayerId = get_next_player_id(game.players,1) if len(game.players) == currentPlayerGameOrder else get_next_player_id(game.players,currentPlayerGameOrder+1) 
                 updated_player_move.totalGameMoveCount +=1
                 updated_player_move.numberOfMovesPlayed = 0
                 updated_player_move.gameMoveStatus = GameMoveStatus.WaitingForPlayerToBeginMove
         
-                
+          
             
             gamePlayerMove = update_game_player_moves(updated_player_move)
 

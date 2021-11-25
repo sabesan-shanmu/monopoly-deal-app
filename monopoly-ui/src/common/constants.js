@@ -82,6 +82,22 @@ export const ActionClassificationEnum = {
     MovePropertyCardMove:13
 }
 
+export const ActionTypesEnum = {
+    DealBreaker:1, //can only be played if there's a set in play
+    ForcedDeal:2, // swap cards with a player
+    SlyDeal:3, // take a card ffrom a player
+    JustSayNo:4, // can be played if something is asked to be done by a player
+    DebtCollector:5, // ask one person for money
+    ItsMyBirthday:6, // ask other player's for money
+    DoubleTheRent:7, // can only be played with rent card 
+    House:8, // no action needed
+    Hotel:9, // no action needed
+    PassGo:10, // player can draw 2 cards
+    MoveCard:11, //move a card over to new set
+    RotateCard:12 //rotate in play card
+}
+
+
 
 export const GameCardLocationStatusEnum = {
     IsNotDrawn : 0, //game cards no one owns

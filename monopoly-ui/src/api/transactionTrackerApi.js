@@ -11,3 +11,9 @@ export const transactionTrackerApi = {
         return axiosInstance.post(transactionTrackerUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}})
     }
 }
+
+export const singleTransactionTrackerApi = {
+    patch:(transactionTrackerUrl,accessToken,data) =>{
+        return axiosInstance.patch(transactionTrackerUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}})
+    }
+}

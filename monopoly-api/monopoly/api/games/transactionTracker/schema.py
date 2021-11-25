@@ -30,12 +30,10 @@ class create_transaction_tracker(ma.Schema):
         return TransactionTracker(**data)
 
 
-class update_transaction_tracker(ma.Schema):
+class updated_transaction_tracker(ma.Schema):
     transactionTrackerId = fields.Integer(required=True)
-    gamePassCode = fields.String(required=True)
-    performedByPlayerId = fields.Integer(required=True)
-    gamePlayActionId = fields.Integer(required=True)
-    gameCardId = fields.Integer(required=True)
+    isGameActionCompleted = fields.Boolean(required=True)
     @post_load
     def make_game_action_tracker(self, data, **kwargs):
         return TransactionTracker(**data)
+

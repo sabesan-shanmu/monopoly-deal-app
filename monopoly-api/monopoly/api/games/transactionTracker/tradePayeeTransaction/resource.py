@@ -3,7 +3,7 @@ from flask import request,jsonify
 
 
 
-class ManyTransactionTrackerResource(Resource):
+class ManyTradePayeeTransactionResource(Resource):
     @validate_gamepassCode
     @validate_player
     def post(self,gamePassCode,transactionTrackerId):
@@ -14,13 +14,13 @@ class ManyTransactionTrackerResource(Resource):
     def get(self,gamePassCode,transactionTrackerId):
         pass
 
-class SingleTransactionTrackerResource(Resource):
+class SingleTradePayeeTransactionResource(Resource):
     @validate_gamepassCode
     @validate_player
-    def put(self,gamePassCode,transactionTrackerId,transactionTrackerId):
+    def put(self,gamePassCode,transactionTrackerId,tradePayeeTransactionId):
         pass
 
     @validate_gamepassCode
     @validate_player
-    def get(self,gamePassCode,transactionTrackerId,transactionTrackerId):
+    def get(self,gamePassCode,transactionTrackerId,tradePayeeTransactionId):
         pass

@@ -46,7 +46,7 @@ export const MessageHeader = ({currentPlayer,transactionTracker,gameMoveStatus,n
                 }
                 {gameMoveStatus==GameMoveStatusEnum.MoveComplete &&
                     <React.Fragment>
-                        {currentPlayer.playerName} completed {getCount(numberOfMovesPlayed)} moves
+                        {currentPlayer.playerName} completed {getCount(numberOfMovesPlayed)} move
                     </React.Fragment>
                 }
             </StyledMessageHeader>

@@ -99,7 +99,8 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                     <MonopolyDealButton {...skipTurnBtn} />
                 </StyledStartChoiceHeader>
             }
-            {gameMove.numberOfMovesPlayed != 0 && gameMove.gameMoveStatus == GameMoveStatusEnum.WaitingForPlayerToBeginMove &&
+            {gameMove.numberOfMovesPlayed != 0 && (gameMove.gameMoveStatus == GameMoveStatusEnum.WaitingForPlayerToBeginMove 
+                || gameMove.gameMoveStatus == GameMoveStatusEnum.MoveComplete) &&
                 <StyledStartChoiceHeader>
                     <MonopolyDealButton {...startTurnBtn}/>
                      -OR-

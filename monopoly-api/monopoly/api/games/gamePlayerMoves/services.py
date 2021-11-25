@@ -31,7 +31,7 @@ EXPECTED_GAME_MOVE_STATUS = {
     Enum.GameMoveStatus.WaitingForPlayerToBeginMove: [Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.SkipYourTurn],
     Enum.GameMoveStatus.DrawTwoCardsInProgress:[Enum.GameMoveStatus.MoveInProgress],
     Enum.GameMoveStatus.MoveInProgress:[Enum.GameMoveStatus.MoveComplete],
-    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove]
+    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.SkipYourTurn]
 }
 ALLOWED_MOVE_STATUS = {
     0:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete],
