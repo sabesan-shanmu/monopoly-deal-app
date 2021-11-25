@@ -1,5 +1,5 @@
 import React,{useContext,createContext,useReducer} from 'react'
-import { ActionTypes } from '../common/constants';
+import { ResourceTypes } from '../common/constants';
 
 export const PreMoveCheckContext = createContext();
 
@@ -12,7 +12,7 @@ const initState = {
 
   const preMoveCheckReducer =  (state,action)  =>{
     switch(action.type){
-        case ActionTypes.LoadResource:
+        case ResourceTypes.LoadResource:
             return {...state,listOfPossibleMoves:action.listOfPossibleMoves};
     }
 }

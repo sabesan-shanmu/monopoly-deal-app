@@ -1,5 +1,5 @@
 import React,{useEffect,useReducer,useContext} from 'react'
-import { ActionTypes } from '../common/constants';
+import { ResourceTypes } from '../common/constants';
 import {gamesApi} from '../api/gamesApi';
 import { SocketContext } from './SocketContext';
 
@@ -18,8 +18,8 @@ const gamesListInitState = {
 const gamesListReducer = (state,action)=>{
 
     switch(action.type){
-        case ActionTypes.CreateResource:
-        case ActionTypes.UpdateResource:
+        case ResourceTypes.CreateResource:
+        case ResourceTypes.UpdateResource:
             if(!state.games)
                 return {...state}
             console.log(`searching game:${action.data.gamePassCode}`);
@@ -29,9 +29,9 @@ const gamesListReducer = (state,action)=>{
                 return {games:state.games.map(game =>{ return game.gamePassCode == action.data.gamePassCode?action.data:game})};
             else
                 return {games:state.games.push(action.data)};
-        case ActionTypes.GetAllResources:
+        case ResourceTypes.GetAllResources:
             return {...state,games:action.data,isLoading:false};
-        case ActionTypes.LoadResource:
+        case ResourceTypes.LoadResource:
             return {...state,isLoading:true};      
         
     }
@@ -53,7 +53,7 @@ export const GamesListContextProvider = ({children}) => {
             console.log("created_game fired!");
             console.log(created_game);
             if(isMounted)
-                gamesListDispatch({type:ActionTypes.CreateResource,data:created_game});
+                gamesListDispatch({type:ResourceTypes.CreateResource,data:created_game});
         });
     
              
@@ -61,14 +61,14 @@ export const GamesListContextProvider = ({children}) => {
             console.log("update_game fired!");
             console.log(update_game);
             if(isMounted)
-                gamesListDispatch({type:ActionTypes.UpdateResource,data:update_game});
+                gamesListDispatch({type:ResourceTypes.UpdateResource,data:update_game});
         });
     
 
         gamesApi.getAll().then((success)=>{
             console.log(success.data);
             if(isMounted)
-                gamesListDispatch({type:ActionTypes.GetAllResources,data:success.data});
+                gamesListDispatch({type:ResourceTypes.GetAllResources,data:success.data});
         }).catch((error)=>{
             console.log(error.response.data);
         })

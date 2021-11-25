@@ -1,5 +1,5 @@
 import React,{useReducer,useState,createContext,useEffect} from 'react'
-import {ActionTypes} from "../common/constants";
+import {ResourceTypes} from "../common/constants";
 import {sessionsApi} from "../api/sessionsApi"
 import {getDecodedPlayer} from "../adapters/playerAdapter"
 import {useHistory} from 'react-router-dom'
@@ -14,13 +14,13 @@ const playerInitState = {
 
 const playerReducer = (state,action)=>{
     switch(action.type){
-        case ActionTypes.CreateResource:
+        case ResourceTypes.CreateResource:
             return {...state,player:action.player};
-        case ActionTypes.DeleteResource:
+        case ResourceTypes.DeleteResource:
             return {...state,player:null,errors:null};
-        case ActionTypes.UpdateResource:
+        case ResourceTypes.UpdateResource:
             return {...state,player:action.player};
-        case ActionTypes.GetResource:
+        case ResourceTypes.GetResource:
             return {...state};
     }
 
@@ -40,7 +40,7 @@ export const PlayerContextProvider = ({children}) => {
             console.log(success.data);
             if(isMounted){
                 const playerData = getDecodedPlayer(success.data);
-                playerDispatch({type:ActionTypes.CreateResource,player:playerData});
+                playerDispatch({type:ResourceTypes.CreateResource,player:playerData});
                 history.push(`/${playerData.gamePassCode}/game-board`);
             }
         })

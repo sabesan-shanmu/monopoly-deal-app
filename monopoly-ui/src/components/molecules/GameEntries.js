@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import {device} from "../../common/devices";
 import {useHistory} from 'react-router-dom'
 import {getTotalNumberofExpectedPlayers} from '../../common/GameHelpers'
-import {ActionTypes} from "../../common/constants"
+import {ResourceTypes} from "../../common/constants"
 
 const StyledGameEntries = styled.div`
 {

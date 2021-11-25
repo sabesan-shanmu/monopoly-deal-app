@@ -4,7 +4,7 @@ import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 import {useHistory} from 'react-router-dom'
 import {getGameModesList} from '../common/GameHelpers'
 import {GameContext} from  '../context/GameContext'
-import {ActionTypes} from '../common/constants'
+import {ResourceTypes} from '../common/constants'
 import {gamesApi} from '../api/gamesApi'
 
 export const NewGame = () => {

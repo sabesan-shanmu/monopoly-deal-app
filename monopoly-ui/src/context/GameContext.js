@@ -1,5 +1,5 @@
 import React,{useReducer,createContext,useContext,useEffect} from 'react'
-import {ActionTypes} from "../common/constants";
+import {ResourceTypes} from "../common/constants";
 import { SocketContext } from './SocketContext';
 import {useHistory} from 'react-router-dom'
 import {gamesApi} from '../api/gamesApi'
@@ -14,11 +14,11 @@ const gameInitState = {
 
 const gameReducer = (state,action)=>{
     switch(action.type){
-        case ActionTypes.GetResource:
+        case ResourceTypes.GetResource:
           return {...state,game:action.game};
-        case ActionTypes.UpdateResource:
+        case ResourceTypes.UpdateResource:
             return {...state,game:action.game};
-        case ActionTypes.DeleteResource:
+        case ResourceTypes.DeleteResource:
           return {...state,game:null};
     }
 
@@ -37,7 +37,7 @@ export const GameContextProvider = ({children}) => {
     gamesApi.get(gamePassCode).then((success)=>{
       console.log(success.data);
       if(isMounted)
-        gameDispatch({type:ActionTypes.GetResource,game:success.data});
+        gameDispatch({type:ResourceTypes.GetResource,game:success.data});
     }).catch((error)=>{
       console.log(error.response.data);
       history.push('/games-list');
@@ -48,7 +48,7 @@ export const GameContextProvider = ({children}) => {
       console.log("update_game fired!");
       console.log(update_game);
       if(isMounted)
-        gameDispatch({type:ActionTypes.UpdateResource,game:update_game});
+        gameDispatch({type:ResourceTypes.UpdateResource,game:update_game});
     });
 
 

@@ -1,5 +1,5 @@
 
-export const ActionTypes = {
+export const ResourceTypes = {
     GetAllResources:1,
     GetResource:2,
     CreateResource:3,

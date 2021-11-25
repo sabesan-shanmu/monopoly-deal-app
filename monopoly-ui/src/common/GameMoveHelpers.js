@@ -1,5 +1,6 @@
 import {transactionTrackerApi} from '../api/transactionTrackerApi' 
 import {gameCardsApi} from '../api/gameCardsApi'
+import { ActionClassificationEnum, ResourceTypes } from './constants';
 
 
 export const startTransactionSequence = (game,player,gameCard,transactionTracker) => {
@@ -38,6 +39,17 @@ export const rotateCard = (game,player,gameCard) => {
     .then((success)=>{console.log(success.data)})
     .catch((error)=>{console.log(error.response.data)});
 }
+
+
+const getMoveSequence = (move) => {
+    
+    return {
+        [ActionClassificationEnum.NoActionRequiredMove]:""
+    };
+
+}
+
+
 
 /*
     Actions that are considered moves

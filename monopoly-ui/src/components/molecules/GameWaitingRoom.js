@@ -2,7 +2,7 @@ import React,{useContext} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {GameContext} from '../../context/GameContext'
-import {ActionTypes} from "../../common/constants"
+import {ResourceTypes} from "../../common/constants"
 import {PlayerCharacter} from './PlayerCharacter'
 import {PlayerVoteStatus} from '../atoms/PlayerVoteStatus'
 

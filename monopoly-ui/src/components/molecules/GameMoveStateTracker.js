@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { gameMoveApi } from '../../api/gameMoveApi';
 import { preMoveCheckApi } from '../../api/preMoveCheckApi';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
-import { ActionTypes } from '../../common/constants';
+import { ResourceTypes } from '../../common/constants';
 
 const StyledStartChoiceHeader = styled.div`
     margin-top:5px;
@@ -84,7 +84,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     useEffect(() => {
         if(gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress){
             preMoveCheckApi.get(game.links.preMoveCheck,player.accessToken)
-                .then(success =>preMoveCheckStateDispatch({type:ActionTypes.LoadResource,listOfPossibleMoves:success.data}))
+                .then(success =>preMoveCheckStateDispatch({type:ResourceTypes.LoadResource,listOfPossibleMoves:success.data}))
                 .catch(error=> console.log(error))
         }
     },[gameMove])

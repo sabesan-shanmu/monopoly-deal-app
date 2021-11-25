@@ -7,7 +7,7 @@ import { PlayerVoteMenu} from '../molecules/PlayerVoteMenu'
 import styled from 'styled-components'
 import {playersApi} from '../../api/playersApi'
 import {gamesApi} from '../../api/gamesApi'
-import { ActionTypes } from '../../common/constants'
+import { ResourceTypes } from '../../common/constants'
 import {getDecodedPlayer} from "../../adapters/playerAdapter"
 import { MonopolySpinner } from '../atoms/MonopolySpinner'
 import {StartGameScreen} from '../molecules/StartGameScreen'
@@ -64,7 +64,7 @@ export const GameLobbyMenu = () =>{
                     .then(function(success){
                         console.log(success.data);
                         const playerData = getDecodedPlayer(success.data);
-                        playerDispatch({type:ActionTypes.UpdateResource,player:playerData});
+                        playerDispatch({type:ResourceTypes.UpdateResource,player:playerData});
                        
                     })
                     .catch(function(error){

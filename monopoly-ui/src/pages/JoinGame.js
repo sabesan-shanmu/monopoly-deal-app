@@ -6,7 +6,7 @@ import {MonopolySpinner} from  '../components/atoms/MonopolySpinner'
 import {GameContext} from '../context/GameContext'
 import {PlayerContext} from '../context/PlayerContext'
 import {playersApi} from '../api/playersApi'
-import {ActionTypes} from '../common/constants'
+import {ResourceTypes} from '../common/constants'
 import {getDecodedPlayer} from '../adapters/playerAdapter'
 
 export const JoinGame = (props) =>{
@@ -99,7 +99,7 @@ export const JoinGame = (props) =>{
                     .then(function(success){
                         console.log(success.data);
                         const playerData = getDecodedPlayer(success.data);
-                        playerDispatch({type:ActionTypes.CreateResource,player:playerData});
+                        playerDispatch({type:ResourceTypes.CreateResource,player:playerData});
                         history.push(`/${playerData.gamePassCode}/game-board`);
                     })
                     .catch(function(error){
@@ -119,7 +119,7 @@ export const JoinGame = (props) =>{
                     .then(function(success){
                         console.log(success.data);  
                         const playerData = getDecodedPlayer(success.data);
-                        playerDispatch({type:ActionTypes.CreateResource,player:playerData});
+                        playerDispatch({type:ResourceTypes.CreateResource,player:playerData});
                         history.push(`/${playerData.gamePassCode}/game-board`);
                     })
                     .catch(function(error){

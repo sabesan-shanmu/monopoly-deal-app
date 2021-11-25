@@ -5,7 +5,7 @@ import {PlayerContext} from '../../context/PlayerContext'
 import {sessionsApi} from "../../api/sessionsApi"
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
-import {ActionTypes} from '../../common/constants'
+import {ResourceTypes} from '../../common/constants'
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel'
 import { GameContext } from '../../context/GameContext'
 import { MessageHeader } from '../atoms/MessageHeader'
@@ -46,7 +46,7 @@ export const GameBoardHeader = () =>{
             sessionsApi.clear()
                 .then(function(success){
                     console.log(success.data);
-                    playerDispatch({type:ActionTypes.DeleteResource});
+                    playerDispatch({type:ResourceTypes.DeleteResource});
                     history.push('/games-list');
                 })
                 .catch(function(error){
