@@ -57,8 +57,12 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
             return gameMoveApi.patch(game.links.gameMoves,player.accessToken,payload)
         }).then((success)=>{
             console.log(success.data);
+            //reset state
+            setIsDrawCardsClicked(false);
         }).catch((error)=>{
-            console.log(error.response.data)
+            console.log(error.response.data);
+            //reset state
+            setIsDrawCardsClicked(false);
         });  
 
     }
