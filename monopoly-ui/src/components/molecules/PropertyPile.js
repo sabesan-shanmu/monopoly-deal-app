@@ -1,11 +1,11 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
 import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
-
-
+import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
+import { GameMoveContext } from '../../context/GameMoveContext';
 
 const StyledGrid = styled.div`
     display:grid;
@@ -32,6 +32,18 @@ const RepositionedCard = styled.div`
 
 export const PropertyPile = ({propertyPileCards}) => {
     console.log(propertyPileCards);
+
+    const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
+    const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
+
+    const isCardPlayable = (playerCard)=>{
+        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId))?.possibleMoves?.length>0?true:false;
+    }
+    const listOfPossibleMoves = (playerCard)=>{
+        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId));
+    }
+    
+
     //group by groupId
     const propertyPileGroupedByGroupId= propertyPileCards.reduce((dict, propertyPileCard) => {
         if(dict[propertyPileCard.groupId])
@@ -50,7 +62,8 @@ export const PropertyPile = ({propertyPileCards}) => {
                     <StyledGrid key={key} total={propertyPileGroup.length}>
                         {propertyPileGroup && propertyPileGroup.map((propertyCard,key)=>(
                             <RepositionedCard position={key+1} total={propertyPileCards.length}>
-                                <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>
+                                <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} key={key} 
+                                isCardSelectable={isCardPlayable(propertyCard) && !gameMoveState.gameMove.transactionTracker} listOfPossibleMoves={listOfPossibleMoves(propertyCard)}/>
                             </RepositionedCard>
                         ))}
                     </StyledGrid>

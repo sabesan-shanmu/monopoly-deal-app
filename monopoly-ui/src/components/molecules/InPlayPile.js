@@ -59,7 +59,7 @@ export const InPlayPile = ({inPlayPileCards}) => {
                     <StyledGrid key={key} total={inPlayGroup.length}>
                         {inPlayGroup && inPlayGroup.map((inPileCard,key)=>(
                             <RepositionedCard position={key+1} total={inPlayGroup.length}>
-                                <MonopolyCard gameCard={inPileCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>
+                                <MonopolyCard gameCard={inPileCard} cardType={CardTypeEnum.InPlayCard} key={key} isCardSelectable={false}/>
                             </RepositionedCard>
                         ))}
                     </StyledGrid>

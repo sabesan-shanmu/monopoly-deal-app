@@ -28,6 +28,7 @@ const StyledMiniCard = styled.img`
 
 
 const StyledCard = styled.img`
+    opacity: ${(props) => props.isCardSelectable || props.cardType == CardTypeEnum.InPlayCard?'1':'0.75'};
     transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
@@ -59,6 +60,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                                 style={{ visibility: isLoaded ? "visible" : "hidden" }}
                                 isCardSelectable={isCardSelectable}
                                 isCardRightSideUp={gameCard.isCardRightSideUp}
+                                cardType={cardType}
                                 onLoad={() => {
                                     setIsLoaded(true);
                                 }}
@@ -76,6 +78,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                         <StyledCard src={gameCard.card.cardImageUrl}
                         style={{ visibility: isLoaded ? "visible" : "hidden" }}
                         isCardSelectable={isCardSelectable}
+                        cardType={cardType}
                         isCardRightSideUp={gameCard.isCardRightSideUp}
                         onLoad={() => {
                             setIsLoaded(true);

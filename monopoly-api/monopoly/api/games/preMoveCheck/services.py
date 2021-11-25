@@ -2,10 +2,11 @@ import monopoly.common.enums as Enum
 from monopoly.exceptions import FieldValidationException
 import itertools
 
-def get_pre_move_check_list(player_cards_on_hand,game_cards_played_by_all_players,game_play_actions):
+def get_pre_move_check_list(current_player_cards,game_cards_played_by_all_players,game_play_actions):
     pre_move_check_list = []
     
-    for player_card in player_cards_on_hand:
+    #cards on hand and on property pile
+    for player_card in current_player_cards:
 
         cardType = player_card.card.cardType
         actionType = get_action_type(player_card)

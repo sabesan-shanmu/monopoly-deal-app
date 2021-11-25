@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {startTransactionSequence,rotateCard} from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
+import { GameCardLocationStatusEnum } from '../../common/constants'
 
 const StyledPopoverContent = styled.div`
     width:115 px;
@@ -43,7 +44,7 @@ export const CardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpe
                     setIsPopoverOpen(false);
                 }}>{move.description}</StyledPopoverBody>
             )}
-            {gameCard?.card?.properties?.isRotatable &&
+            {gameCard?.card?.properties?.isRotatable && gameCard.cardLocationStatus == GameCardLocationStatusEnum.IsOnHand &&
                 <StyledPopoverBody onClick = {()=>{
                     rotateCard(gameState.game,playerState.player,gameCard);
                 }}>Rotate Card</StyledPopoverBody>

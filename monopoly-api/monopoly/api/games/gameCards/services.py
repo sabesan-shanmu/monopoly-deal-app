@@ -40,6 +40,10 @@ def get_game_cards_in_play(gamePassCode):
 def get_game_cards_on_hand(gamePassCode,playerId):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsOnHand]))).all()
 
+
+def get_game_cards_owned_by_player(gamePassCode,playerId):
+    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile]))).all()
+
 def draw_game_cards(gamePassCode,number):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId == None,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
 
