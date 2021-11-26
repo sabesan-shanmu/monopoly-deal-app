@@ -2,7 +2,7 @@ from flask_restx import Resource,Namespace
 from flask import session,request,make_response
 from monopoly.exceptions import FieldValidationException,ResourceNotFoundException
 from monopoly.api.games.players.services import get_player_by_player_id
-from monopoly.api.games.players.schema import PlayerSchema 
+from monopoly.api.games.players.schema import PlayerJwtSchema 
 from monopoly.auth import create_tokens
 
 session_namespace = Namespace('Sessions', description='')
@@ -22,7 +22,7 @@ class SesssionResource(Resource):
         if playerFound is None:
             raise ResourceNotFoundException(message="Player Not Found")  
         
-        player_result = PlayerSchema().dump(playerFound)
+        player_result = PlayerJwtSchema().dump(playerFound)
         result = create_tokens(player_result)
         
         return make_response(result,200)
