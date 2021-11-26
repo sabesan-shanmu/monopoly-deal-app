@@ -186,3 +186,8 @@ export const sortCardsByLastUpdateDate = (unsortedList) =>{
         return new Date(a.lastUpdated).getTime()-new Date(b.lastUpdated).getTime();
     });
 }
+
+
+export const getCardSetTotal = (list) =>{
+    return list.reduce((total, gameCard) => total + (gameCard?.card?.action?.price || 0) + (gameCard?.card?.cash?.price || 0) + (gameCard?.card?.properties?.price || 0) +(gameCard?.card?.rent?.price || 0) , 0);
+}

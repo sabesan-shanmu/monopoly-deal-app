@@ -6,7 +6,7 @@ import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
-import {sortCardsByLastUpdateDate} from '../../common/GameHelpers'
+import {sortCardsByLastUpdateDate,getCardSetTotal} from '../../common/GameHelpers'
 
 
 const StyledGrid = styled.div`
@@ -35,6 +35,7 @@ const RepositionedCard = styled.div`
 export const PropertyPile = ({propertyPileCards}) => {
     console.log(propertyPileCards);
     propertyPileCards = sortCardsByLastUpdateDate(propertyPileCards);
+    const cashTotal = getCardSetTotal(propertyPileCards);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
 
@@ -57,7 +58,7 @@ export const PropertyPile = ({propertyPileCards}) => {
     console.log(propertyPileGroupedByGroupId);
     return (
         <React.Fragment>
-            <MonopolyDealLabel type="h4" text="-Properties Pile-" />
+            <MonopolyDealLabel type="h4" text={`Properties Pile : $ ${cashTotal}`} />
             <StyledBorder>
                 {propertyPileGroupedByGroupId && Object.values(propertyPileGroupedByGroupId).map((propertyPileGroup,key)=>{
                     return (

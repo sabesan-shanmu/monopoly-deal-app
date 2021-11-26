@@ -4,7 +4,7 @@ import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
-import {sortCardsByLastUpdateDate } from '../../common/GameHelpers'
+import {sortCardsByLastUpdateDate,getCardSetTotal } from '../../common/GameHelpers'
 
 
 const StyledBorder = styled.div`
@@ -30,10 +30,10 @@ const RepositionedCard = styled.div`
 export const CashPile = ({cashPileCards}) => {
 
     cashPileCards = sortCardsByLastUpdateDate(cashPileCards);
-    const cashTotal = cashPileCards.reduce((total, gameCard) => total + (gameCard?.card?.action?.price || 0) + (gameCard?.card?.cash?.price || 0) + (gameCard?.card?.properties?.price || 0) +(gameCard?.card?.rent?.price || 0) , 0);
+    const cashTotal = getCardSetTotal(cashPileCards);
     return (
         <React.Fragment>
-            <MonopolyDealLabel type="h4" text="-Cash Pile-" />
+            <MonopolyDealLabel type="h4" text={`Cash Pile : $ ${cashTotal}`} />
             <StyledBorder total={cashPileCards?cashPileCards.length:1}>
                 {cashPileCards && cashPileCards.map((cashCard,key)=>(
                     <RepositionedCard key={key} position={key+1} total={cashPileCards.length}>
@@ -42,7 +42,7 @@ export const CashPile = ({cashPileCards}) => {
                 ))}
        
             </StyledBorder>
-            <MonopolyDealLabel type="h4" text={`Total Value: ${cashTotal}`} />
+            
         </React.Fragment>
     )
 }
