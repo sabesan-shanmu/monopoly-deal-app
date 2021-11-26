@@ -33,7 +33,9 @@ const StyledCard = styled.img`
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
     border:3px solid black;
     height:200px;
-    
+    &:hover {
+        border: 3px solid #abff32;
+    }
 `;
 
 

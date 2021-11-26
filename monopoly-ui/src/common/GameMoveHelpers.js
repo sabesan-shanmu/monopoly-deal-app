@@ -63,7 +63,8 @@ export const rotateCard = (game,player,gameCard) => {
     //1. rotate the card
     const gameCardPayload = {
         gameCardId:gameCard.gameCardId,
-        isCardRightSideUp:!gameCard.isCardRightSideUp
+        isCardRightSideUp:!gameCard.isCardRightSideUp,
+        assignedColourId:gameCard.assignedColourId == gameCard.card.properties.primaryColourId? gameCard.card.properties.secondaryColourId:gameCard.card.properties.primaryColourId
     };
     gameCardsApi.patch(gameCard.links.self,player.accessToken,gameCardPayload)
     .then((success)=>{console.log(success.data)})
@@ -71,7 +72,7 @@ export const rotateCard = (game,player,gameCard) => {
 }
 
 
-const getStartMoveSequence = (move) => {
+export const getStartMoveSequence = (move) => {
     console.log("Retrieve Move Sequence gamePlayActionId: "+move.gamePlayActionId);
     return {
        1:"",

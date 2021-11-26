@@ -282,7 +282,7 @@ def is_rotate_property_available(player_card,game_cards_played_by_all_players,po
 
 def is_move_wild_property_available(player_card,game_cards_played_by_all_players,possible_play_action):
 
-    if player_card.card.properties.primaryColourDetails.colourId is not Enum.Colours.Any and \
+    if player_card.card.properties.primaryColourDetails.colourId is not Enum.Colours.Any or \
         player_card.cardLocationStatus != Enum.GameCardLocationStatus.IsPlayedOnPropertyPile:
         return False
 
