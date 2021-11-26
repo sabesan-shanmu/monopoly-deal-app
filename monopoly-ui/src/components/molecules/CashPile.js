@@ -13,7 +13,7 @@ const StyledBorder = styled.div`
     justify-items: flex-start;
     position:relative;
     min-height:240px;
-    width: 240px;
+    min-width: 240px;
     padding:5px;
     grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
     grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
