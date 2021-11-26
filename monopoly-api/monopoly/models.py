@@ -74,7 +74,7 @@ class GameCards(db.Model):
     assignedColourDetails = db.relationship(PropertiesColour,primaryjoin=assignedColourId==PropertiesColour.colourId)
     groupId = db.Column(db.String,default="0")
     card =  db.relationship(Cards,primaryjoin=cardId==Cards.cardId)  
-    lastUpdated = db.Column(db.DateTime,default=datetime.now(timezone.utc),onupdate=datetime.now(timezone.utc))
+    lastUpdated = db.Column(db.DateTime,default=datetime.utcnow,onupdate=datetime.utcnow)
 
 class Player(db.Model):
     __table_args__ = (

@@ -6,6 +6,8 @@ import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
+import {sortCardsByLastUpdateDate} from '../../common/GameHelpers'
+
 
 const StyledGrid = styled.div`
     display:grid;
@@ -32,7 +34,7 @@ const RepositionedCard = styled.div`
 
 export const PropertyPile = ({propertyPileCards}) => {
     console.log(propertyPileCards);
-
+    propertyPileCards = sortCardsByLastUpdateDate(propertyPileCards);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
 

@@ -4,6 +4,7 @@ import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
+import {sortCardsByLastUpdateDate} from '../../common/GameHelpers'
 
 const StyledInPlayPile = styled.div`
     min-width: 280px;
@@ -37,7 +38,7 @@ const RepositionedCard = styled.div`
 
 export const InPlayPile = ({inPlayPileCards}) => {
     console.log(inPlayPileCards);
-
+    inPlayPileCards = sortCardsByLastUpdateDate(inPlayPileCards);
     //group by playerId
     const inPlayPileGroupedByPlayerId = inPlayPileCards.reduce((dict, inPlayPileCard) => {
       

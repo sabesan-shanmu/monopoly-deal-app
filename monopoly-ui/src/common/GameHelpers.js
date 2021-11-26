@@ -176,13 +176,13 @@ export const getBlockProperty = (blockName,players,activeBlocks) =>{
 
 
 export const sortCardsByLastUpdateDate = (unsortedList) =>{
-
+    
     return unsortedList.sort((a,b)=>{
         if(a.lastUpdated == null)
             return 1;
         else if(b.lastUpdated == null)
             return -1;
 
-        return new Date(a.lastUpdated).getTime()-new Date(b.lastUpdated).getTime()? -1 : 1;
+        return new Date(a.lastUpdated).getTime()-new Date(b.lastUpdated).getTime();
     });
 }
