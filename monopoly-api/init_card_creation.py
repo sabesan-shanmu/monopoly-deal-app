@@ -66,7 +66,7 @@ def create_action_cards():
 def create_properties_card():
     propertiesCards = [
         PropertiesCard(propertiesCardId=1,name="Baltic Aveue",primaryColourId=Enum.Colours.Brown,secondaryColourId=None,price=1,isRotatable=False),
-        PropertiesCard(propertiesCardId=2,name="Property Wild Card",primaryColourId=Enum.Colours.Brown,secondaryColourId=Enum.Colours.LightBlue,price=1,isRotatable=True),
+        PropertiesCard(propertiesCardId=2,name="Property Wild Card",primaryColourId=Enum.Colours.LightBlue,secondaryColourId=Enum.Colours.Brown,price=1,isRotatable=True),
         PropertiesCard(propertiesCardId=3,name="B. & O. Railroad",primaryColourId=Enum.Colours.Black,secondaryColourId=None,price=2,isRotatable=False),
         PropertiesCard(propertiesCardId=4,name="Property Wild Card",primaryColourId=Enum.Colours.Green,secondaryColourId=Enum.Colours.Black,price=4,isRotatable=True),
         PropertiesCard(propertiesCardId=5,name="Oriental Avenue",primaryColourId=Enum.Colours.LightBlue,secondaryColourId=None,price=1,isRotatable=False),
@@ -101,7 +101,7 @@ def create_properties_card():
         PropertiesCard(propertiesCardId=34,name="Illinois Avenue",primaryColourId=Enum.Colours.Red,secondaryColourId=None,price=3,isRotatable=False),
         PropertiesCard(propertiesCardId=35,name="Property Wild Card",primaryColourId=Enum.Colours.Red,secondaryColourId=Enum.Colours.Yellow,price=3,isRotatable=True),
         PropertiesCard(propertiesCardId=36,name="Indiana Avenue",primaryColourId=Enum.Colours.Red,secondaryColourId=None,price=3,isRotatable=False),
-        PropertiesCard(propertiesCardId=37,name="Property Wild Card",primaryColourId=Enum.Colours.Neutral,secondaryColourId=Enum.Colours.Black,price=2,isRotatable=True),
+        PropertiesCard(propertiesCardId=37,name="Property Wild Card",primaryColourId=Enum.Colours.Black,secondaryColourId=Enum.Colours.Neutral,price=2,isRotatable=True),
         PropertiesCard(propertiesCardId=38,name="Kentucky Avenue",primaryColourId=Enum.Colours.Red,secondaryColourId=None,price=3,isRotatable=False),
         PropertiesCard(propertiesCardId=39,name="Vermont Avenue",primaryColourId=Enum.Colours.LightBlue,secondaryColourId=None,price=1,isRotatable=False)
     ]
