@@ -309,6 +309,7 @@ def is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,po
     pre_check_conditions = {
         (Enum.CardTypes.Properties,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_property_playable,
         (Enum.CardTypes.Rent,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_rent_playable,
+        (Enum.CardTypes.Rent,Enum.ActionTypes.DoubleTheRent,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_double_the_rent_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.Hotel,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_house_or_hotel_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.House,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_house_or_hotel_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.DoubleTheRent,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_double_the_rent_playable,

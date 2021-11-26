@@ -4,8 +4,10 @@ import {gameMoveApi} from '../api/gameMoveApi'
 import { CardTypesEnum,ActionClassificationEnum, GameCardLocationStatusEnum,GameMoveStatusEnum } from './constants';
 
 
-export const startCashPileNoActionSequence = (game,player,gameCard,move) => {
-    console.log("Start transaction Sequence!");
+
+
+export const startCashOrPropertyActionSequence = (game,player,gameCard,move) => {
+    console.log("startCashOrPropertyActionSequence!");
     let createdTransaction = {};
     //1. create transaction tracker
     const transactionTrackerPayload = {
@@ -21,7 +23,9 @@ export const startCashPileNoActionSequence = (game,player,gameCard,move) => {
         //2. move the card
         const gameCardPayload = {
             gameCardId:gameCard.gameCardId,
-            cardLocationStatus:move.expectedGameCardLocation
+            cardLocationStatus:move.expectedGameCardLocation,
+            groupId:gameCard.groupId,
+            isCardRightSideUp:gameCard.isCardRightSideUp
         };
         return gameCardsApi.patch(gameCard.links.self,player.accessToken,gameCardPayload);
         
@@ -46,6 +50,10 @@ export const startCashPileNoActionSequence = (game,player,gameCard,move) => {
         return gameMoveApi.patch(game.links.gameMoves,player.accessToken,movePayload);
 
     })
+    .then((success)=>{
+        console.log(success.data);
+        console.log("Start No Action Sequence!");
+    })
     .catch((error)=>{console.log(error.response.data)});
  
 
@@ -67,32 +75,32 @@ const getStartMoveSequence = (move) => {
     console.log("Retrieve Move Sequence gamePlayActionId: "+move.gamePlayActionId);
     return {
        1:"",
-       2:startCashPileNoActionSequence,
-       3:startCashPileNoActionSequence,
+       2:startCashOrPropertyActionSequence,
+       3:startCashOrPropertyActionSequence,
        4:"",
        5:"",
        6:"",
        7:"",
-       8:startCashPileNoActionSequence,
+       8:startCashOrPropertyActionSequence,
        9:"",
-       10:startCashPileNoActionSequence,
+       10:startCashOrPropertyActionSequence,
        11:"",
-       12:startCashPileNoActionSequence,
-       13:startCashPileNoActionSequence,
+       12:startCashOrPropertyActionSequence,
+       13:startCashOrPropertyActionSequence,
        14:"",
        15:"",
        16:"",
-       17:startCashPileNoActionSequence,
+       17:startCashOrPropertyActionSequence,
        18:"",
-       19:startCashPileNoActionSequence,
+       19:startCashOrPropertyActionSequence,
        20:"",
-       21:startCashPileNoActionSequence,
+       21:startCashOrPropertyActionSequence,
        22:"",
-       23:startCashPileNoActionSequence,
+       23:startCashOrPropertyActionSequence,
        24:"",
-       25:startCashPileNoActionSequence,
+       25:startCashOrPropertyActionSequence,
        26:"",
-       27:startCashPileNoActionSequence,
+       27:startCashOrPropertyActionSequence,
        28:"",
        29:""
     }[move.gamePlayActionId];

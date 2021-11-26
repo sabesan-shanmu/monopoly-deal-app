@@ -26,6 +26,6 @@ class update_game_card_schema(ma.Schema):
     playerId = fields.Integer(allow_none=True)
     cardLocationStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
     isCardRightSideUp = fields.Boolean()
-    setGroupId = fields.Integer()
+    groupId = fields.Integer()
     
 

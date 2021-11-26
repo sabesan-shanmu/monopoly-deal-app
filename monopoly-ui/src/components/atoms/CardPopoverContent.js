@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 import styled from 'styled-components'
-import {startCashPileNoActionSequence,rotateCard} from '../../common/GameMoveHelpers'
+import {startCashOrPropertyActionSequence,rotateCard} from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
 import { GameCardLocationStatusEnum } from '../../common/constants'
@@ -39,7 +39,7 @@ export const CardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpe
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
             {listOfPossibleMoves?.possibleMoves.map((move,key)=>
                 <StyledPopoverBody key={key} onClick={()=>{
-                    startCashPileNoActionSequence(gameState.game,playerState.player,gameCard,move);
+                    startCashOrPropertyActionSequence(gameState.game,playerState.player,gameCard,move);
                     //close popover
                     setIsPopoverOpen(false);
                 }}>{move.description}</StyledPopoverBody>
