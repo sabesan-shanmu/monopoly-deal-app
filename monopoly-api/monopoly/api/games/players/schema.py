@@ -56,4 +56,12 @@ class PlayerJwtSchema(ma.Schema):
     playerGameOrder = fields.Integer()
     gamePassCode = fields.String()
     imageId = fields.Integer(required=True)
+    numberOfCardsOnHand = fields.Integer()
+    voteStatusId = EnumField(Enum.VoteStatus, by_value=True)
+    onHandCards = fields.Nested(GameCardSchema,many=True)
+    @post_dump
+    def update_number_of_cards_on_hand(self, data, many, **kwargs):
+        data["numberOfCardsOnHand"] = len([x for x in data["onHandCards"] if x["cardLocationStatus"]==GameCardLocationStatus.IsOnHand.value])
+        del data["onHandCards"]
+        return data
     
