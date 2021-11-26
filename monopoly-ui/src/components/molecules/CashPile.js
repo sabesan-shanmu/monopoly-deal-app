@@ -28,9 +28,9 @@ const RepositionedCard = styled.div`
 
 
 export const CashPile = ({cashPileCards}) => {
-    console.log(cashPileCards);
+
     cashPileCards = sortCardsByLastUpdateDate(cashPileCards);
-    console.log(cashPileCards);
+    const cashTotal = cashPileCards.reduce((total, gameCard) => total + (gameCard?.card?.action?.price || 0) + (gameCard?.card?.cash?.price || 0) + (gameCard?.card?.properties?.price || 0) +(gameCard?.card?.rent?.price || 0) , 0);
     return (
         <React.Fragment>
             <MonopolyDealLabel type="h4" text="-Cash Pile-" />
@@ -42,6 +42,7 @@ export const CashPile = ({cashPileCards}) => {
                 ))}
        
             </StyledBorder>
+            <MonopolyDealLabel type="h4" text={`Total Value: ${cashTotal}`} />
         </React.Fragment>
     )
 }
