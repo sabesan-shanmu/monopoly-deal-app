@@ -14,20 +14,24 @@ const StyledGrid = styled.div`
     position:relative;
     grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
     grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
+    margin:5px;
 `;
 const StyledBorder = styled.div`
     border:2px solid white;
     display:grid;
     justify-items: flex-start;
     min-height:240px;
-    width: 240px;
-    padding: 5px;
+    max-width: 275px;
+    column-gap: 5px;
+    //grid-template-columns: ${(props) =>`repeat(${props.total},130px)`};
+    grid-template-columns: ${(props) =>`repeat(2,130px)`};
+  
 `;
 
 const RepositionedCard = styled.div`
     
     grid-row:${(props) =>`${props.position}/span ${props.total}`};
-    grid-column:${(props) =>`${props.position}/span ${props.total}`};
+    grid-column:${(props) =>`1/span ${props.total}`};
 `;
 
 
@@ -49,17 +53,17 @@ export const PropertyPile = ({propertyPileCards}) => {
 
     //group by groupId
     const propertyPileGroupedByGroupId= propertyPileCards.reduce((dict, propertyPileCard) => {
-        if(dict[propertyPileCard.groupId])
-            dict[propertyPileCard.groupId].push(propertyPileCard)
+        if(dict[propertyPileCard.assignedColourId])
+            dict[propertyPileCard.assignedColourId].push(propertyPileCard)
         else
-            dict[propertyPileCard.groupId]=[propertyPileCard];
+            dict[propertyPileCard.assignedColourId]=[propertyPileCard];
         return dict;
     },[]);
     console.log(propertyPileGroupedByGroupId);
     return (
         <React.Fragment>
             <MonopolyDealLabel type="h4" text={`Properties Pile : $ ${cashTotal}`} />
-            <StyledBorder>
+            <StyledBorder total={propertyPileCards.length} >
                 {propertyPileGroupedByGroupId && Object.values(propertyPileGroupedByGroupId).map((propertyPileGroup,key)=>{
                     return (
                     <StyledGrid key={key} total={propertyPileGroup.length}>

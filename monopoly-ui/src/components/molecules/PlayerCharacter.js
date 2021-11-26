@@ -31,6 +31,7 @@ const StyledPlayerCharacter = styled.section`
     align-items: center;
     font-size:0.95em;
     line-height:1.35em;
+    margin:3px;
 `;
 
 export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,...props}) => { 

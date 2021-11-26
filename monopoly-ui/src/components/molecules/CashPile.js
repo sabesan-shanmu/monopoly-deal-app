@@ -13,16 +13,15 @@ const StyledBorder = styled.div`
     justify-items: flex-start;
     position:relative;
     min-height:240px;
-    min-width: 240px;
+    max-width: 260px;
     padding:5px;
-    grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
-    grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
+    overflow-x: auto;
+    grid-template-columns: ${(props) =>`repeat(${props.total},40px)`};
 `;
 
 const RepositionedCard = styled.div`
-    
-    grid-row:${(props) =>`${props.position}/span ${props.total}`};
-    grid-column:${(props) =>`${props.position}/span ${props.total}`};
+
+    grid-columns:${(props) =>`${props.position}/span ${props.total}`};
 `;
 
 
