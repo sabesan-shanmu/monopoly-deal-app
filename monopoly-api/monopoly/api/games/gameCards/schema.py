@@ -16,6 +16,7 @@ class GameCardSchema(ma.Schema):
     isCardRightSideUp = fields.Boolean()
     card = fields.Nested(CardSchema)
     groupId = fields.String()
+    lastUpdated = fields.DateTime()
     links = ma.Hyperlinks(
         {"self": url_overwrite("GameCards_single_game_cards_resource", gamePassCode="<gamePassCode>", gameCardId="<gameCardId>")}
     )

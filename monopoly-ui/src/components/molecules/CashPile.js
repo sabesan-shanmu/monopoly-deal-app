@@ -4,6 +4,8 @@ import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
+import {sortCardsByLastUpdateDate } from '../../common/GameHelpers'
+
 
 const StyledBorder = styled.div`
     border:2px solid white;
@@ -26,6 +28,8 @@ const RepositionedCard = styled.div`
 
 
 export const CashPile = ({cashPileCards}) => {
+    console.log(cashPileCards);
+    cashPileCards = sortCardsByLastUpdateDate(cashPileCards);
     console.log(cashPileCards);
     return (
         <React.Fragment>
