@@ -27,7 +27,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
     
     const startTurnBtn = {
-        label:"Start Turn",
+        label:"Start Move",
         onClick:(e)=>{
             let payload = {
                 gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
@@ -46,7 +46,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     
     
     const drawCardsBtn = {
-        label:"Start Turn",
+        label:"Start Move",
         onClick:(e)=>{
             let payload = {
                 gameMoveStatus:GameMoveStatusEnum.DrawTwoCardsInProgress,
