@@ -49,3 +49,11 @@ class PlayerSchema(ma.Schema):
         return Player(**data)
 
 
+
+class PlayerJwtSchema(ma.Schema):
+    playerId = fields.Integer()
+    playerName = fields.String()
+    playerGameOrder = fields.Integer()
+    gamePassCode = fields.String()
+    imageId = fields.Integer(required=True)
+    

@@ -1,5 +1,5 @@
 from flask_restx import Resource,Namespace
-from .schema import PlayerSchema,login_player_schema,register_player_schema,vote_player_schema
+from .schema import PlayerJwtSchema,login_player_schema,register_player_schema,vote_player_schema
 from monopoly.common import constants,enums
 from flask import request,jsonify,session
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -50,7 +50,7 @@ class RegisterResource(Resource):
 
             add_player(player)
           
-            player_result = PlayerSchema().dump(player)
+            player_result = PlayerJwtSchema().dump(player)
             
             session["gameId"] = game.gameId
             session["playerId"] = player_result["playerId"]
@@ -80,7 +80,7 @@ class LoginResource(Resource):
                 raise ResourceNotFoundException(message="Player Not Found")  
 
             if check_password_hash(playerFound.playerPassCode,player.playerPassCode):
-                player_result = PlayerSchema().dump(playerFound)
+                player_result = PlayerJwtSchema().dump(playerFound)
                 result = create_tokens(player_result)
                 session["gameId"] = game.gameId
                 session["playerId"] = player_result["playerId"]
@@ -126,7 +126,7 @@ class VoteResource(Resource):
             playerFound.voteStatusId = player_vote.voteStatusId
             update_player(playerFound)
             
-            player_result = PlayerSchema().dump(playerFound)
+            player_result = PlayerJwtSchema().dump(playerFound)
 
             #publish updated game
             update_game = get_game_by_gamepasscode(gamePassCode)
