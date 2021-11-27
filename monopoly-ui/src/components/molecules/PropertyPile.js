@@ -62,7 +62,7 @@ export const PropertyPile = ({propertyPileCards}) => {
     console.log(propertyPileGroupedByGroupId);
     return (
         <React.Fragment>
-            <MonopolyDealLabel type="h4" text={`Properties Pile : $ ${cashTotal}`} />
+            <MonopolyDealLabel type="h2" text={`Properties Pile : $ ${cashTotal}`} />
             <StyledBorder total={propertyPileCards.length} >
                 {propertyPileGroupedByGroupId && Object.values(propertyPileGroupedByGroupId).map((propertyPileGroup,key)=>{
                     return (

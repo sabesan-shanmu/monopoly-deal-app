@@ -52,7 +52,7 @@ export const InPlayPile = ({inPlayPileCards}) => {
 
     return (
         <StyledInPlayPile>
-            <MonopolyDealLabel type="h4" text="-Card In Play Pile-" />
+            <MonopolyDealLabel type="h2" text="-Card In Play Pile-" />
             <StyledBorder>
                 {inPlayPileGroupedByPlayerId && Object.values(inPlayPileGroupedByPlayerId).map((inPlayGroup,key)=>{
                     console.log(inPlayGroup);

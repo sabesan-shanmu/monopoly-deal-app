@@ -32,7 +32,7 @@ export const CashPile = ({cashPileCards}) => {
     const cashTotal = getCardSetTotal(cashPileCards);
     return (
         <React.Fragment>
-            <MonopolyDealLabel type="h4" text={`Cash Pile : $ ${cashTotal}`} />
+            <MonopolyDealLabel type="h2" text={`Cash Pile : $ ${cashTotal}`} />
             <StyledBorder total={cashPileCards?cashPileCards.length:1}>
                 {cashPileCards && cashPileCards.map((cashCard,key)=>(
                     <RepositionedCard key={key} position={key+1} total={cashPileCards.length}>

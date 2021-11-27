@@ -68,7 +68,7 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
     }
     return (
         <StyledDrawCardsPile>
-            <MonopolyDealLabel type="h4" text="-Draw Card Pile-" />
+            <MonopolyDealLabel type="h2" text="-Draw Card Pile-" />
             <StyledBorder>
                 <MonopolyCard onClick={()=>drawCardOnClick()} cardType={CardTypeEnum.FaceDownCard} isCardSelectable={isPlayerDrawingCard} />
             </StyledBorder>
