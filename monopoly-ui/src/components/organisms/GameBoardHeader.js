@@ -11,6 +11,7 @@ import { GameContext } from '../../context/GameContext'
 import { MessageHeader } from '../atoms/MessageHeader'
 import { GameMoveStateTracker } from '../molecules/GameMoveStateTracker'
 import { GameMoveContext } from '../../context/GameMoveContext'
+import modalBackgroundImg from "../../assets/img/backgrounds/modal-background.jpg";
 
 const StyledGameHeader = styled.div`
     display:grid;
@@ -25,6 +26,15 @@ const StyledGameHeader = styled.div`
     }
     grid-area: header;
     color:white;
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:999;
+    background-image: url(${modalBackgroundImg});
+    //background:#854f28;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 
 export const GameBoardHeader = () =>{
