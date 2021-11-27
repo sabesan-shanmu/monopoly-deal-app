@@ -32,15 +32,17 @@ const StyledPlayerCharacter = styled.section`
     font-size:0.95em;
     line-height:1.35em;
     margin:3px;
+    ${({isGameBoard})=>isGameBoard?'&:hover {border: 3px solid #abff32;}':''}
+    cursor:${(props) =>!props.isGameBoard?'':props.isSelectable==true? 'pointer':'not-allowed' };
 `;
 
-export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,...props}) => { 
+export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,isSelectable=false,...props}) => { 
 
 
     const cards = [...Array(numberOfCardsOnHand).keys()]
-
+    console.log(isSelectable);
     return (
-        <StyledPlayerCharacter imageId={imageId}>
+        <StyledPlayerCharacter imageId={imageId} isGameBoard={isGameBoard} isSelectable={isSelectable} >
             <CharacterImage imageId={imageId}/>
             <div>
                 <div>Player Name:{playerName}</div>

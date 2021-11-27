@@ -131,6 +131,8 @@ def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_
     return False
 
 def is_house_or_hotel_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+    #temporarily preventing houses or hotels from getting played as part of property pile, this card adds complexity for trade scenarios. might revisit this later
+    return False
     #can only be played if a full set exists
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
     if(current_player_cards_on_field):
@@ -257,7 +259,7 @@ def is_just_say_no_playable(player_card,game_cards_played_by_all_players,possibl
     return False
 
 def is_rotate_property_available(player_card,game_cards_played_by_all_players,possible_play_action):
-    
+    return False
     #card is not on property pile or is not rotatable
     if player_card.card.properties.primaryColourDetails.colourId is Enum.Colours.Any or \
         player_card.cardLocationStatus != Enum.GameCardLocationStatus.IsPlayedOnPropertyPile or \
@@ -281,7 +283,7 @@ def is_rotate_property_available(player_card,game_cards_played_by_all_players,po
 
 
 def is_move_wild_property_available(player_card,game_cards_played_by_all_players,possible_play_action):
-
+    return False
     if player_card.card.properties.primaryColourDetails.colourId is not Enum.Colours.Any or \
         player_card.cardLocationStatus != Enum.GameCardLocationStatus.IsPlayedOnPropertyPile:
         return False
