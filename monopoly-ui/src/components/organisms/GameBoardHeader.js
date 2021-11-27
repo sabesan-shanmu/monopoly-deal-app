@@ -28,7 +28,7 @@ const StyledGameHeader = styled.div`
     color:white;
     position:fixed;
     top:0;
-    width:100%;
+    width:99%;
     z-index:999;
     background-image: url(${modalBackgroundImg});
     //background:#854f28;
