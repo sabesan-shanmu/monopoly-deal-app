@@ -39,6 +39,18 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
     {
         case 2:
             return {
+                numberOfRows:1,
+                hiddenBlocks:[
+                    GameBlockEnum.MiddleFarLeft,
+                    GameBlockEnum.MiddleLeft,
+                    GameBlockEnum.MiddleRight,
+                    GameBlockEnum.MiddleFarRight,
+                    GameBlockEnum.BottomFarLeft,
+                    GameBlockEnum.BottomLeft,
+                    GameBlockEnum.BottomRight,
+                    GameBlockEnum.BottomFarRight,
+
+                ],
                 playersBlock:[
                     GameBlockEnum.TopFarLeft,
                     GameBlockEnum.TopFarRight
@@ -48,6 +60,14 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 3:
             return {
+                numberOfRows:2,
+                hiddenBlocks:[
+                    GameBlockEnum.BottomFarLeft,
+                    GameBlockEnum.BottomLeft,
+                    GameBlockEnum.BottomFarRight,
+                    GameBlockEnum.BottomFarRight,
+
+                ],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopLeft,
@@ -58,6 +78,14 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 4:
             return {
+                numberOfRows:2,
+                hiddenBlocks:[
+                    GameBlockEnum.BottomFarLeft,
+                    GameBlockEnum.BottomLeft,
+                    GameBlockEnum.BottomFarRight,
+                    GameBlockEnum.BottomFarRight,
+
+                ],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopLeft,
@@ -69,6 +97,8 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 5:
             return {
+                numberOfRows:3,
+                hiddenBlocks:[],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopLeft,
@@ -81,6 +111,8 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 6:
             return {
+                numberOfRows:3,
+                hiddenBlocks:[],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopLeft,
@@ -94,6 +126,8 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 7:
             return {
+                numberOfRows:3,
+                hiddenBlocks:[],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopFarLeft,
@@ -108,6 +142,8 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 8:
             return {
+                numberOfRows:3,
+                hiddenBlocks:[],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopFarLeft,
@@ -123,6 +159,8 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 9:
             return {
+                numberOfRows:3,
+                hiddenBlocks:[],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopFarLeft,
@@ -139,6 +177,8 @@ export const getActiveGameBlocks = (numberofPlayers) =>{
             };
         case 10:
             return {
+                numberOfRows:3,
+                hiddenBlocks:[],
                 playersBlock:[
                     GameBlockEnum.MiddleFarLeft,
                     GameBlockEnum.TopFarLeft,
@@ -163,7 +203,8 @@ export const getBlockProperty = (blockName,players,activeBlocks) =>{
 
     const blockType = activeBlocks.playersBlock.includes(blockName)?GameBlockTypeEnum.PlayerBlock:
                 activeBlocks.drawPile.includes(blockName)?GameBlockTypeEnum.DrawCardsBlock:
-                activeBlocks.activePile.includes(blockName)?GameBlockTypeEnum.ActiveCardsBlock:null;
+                activeBlocks.activePile.includes(blockName)?GameBlockTypeEnum.ActiveCardsBlock:
+                activeBlocks.hiddenBlocks.includes(blockName)?GameBlockTypeEnum.HiddenBlock:null;
    
     const blockNumber = activeBlocks.playersBlock.findIndex(t=>t == blockName)+1;
     

@@ -9,7 +9,7 @@ import {GameBlockEnum} from '../../common/constants'
 const StyledGameBoardArea = styled.div`
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    grid-template-rows:repeat(3,1fr);
+    grid-template-rows:${(props)=>`repeat(${props.numberOfRows},1fr)`};
 `;
 
 
@@ -29,7 +29,7 @@ export const GameBoardArea = () => {
     console.log(activeBlocks);
 
     return (
-        <StyledGameBoardArea>
+        <StyledGameBoardArea numberOfRows={activeBlocks.numberOfRows}> 
             <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopFarLeft,players,activeBlocks)} />
             <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopLeft,players,activeBlocks)} />
             <PlayerBlock game={gameState.game} {...getBlockProperty(GameBlockEnum.TopRight,players,activeBlocks)} />

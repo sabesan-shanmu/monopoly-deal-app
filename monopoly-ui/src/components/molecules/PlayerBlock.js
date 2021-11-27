@@ -11,7 +11,7 @@ import { DrawCardsPile } from './DrawCardsPile';
 
 
 const StyledPlayerBlock = styled.div`
-    visibility:${(props)=>props.blockType?"visible":"hidden"};
+    ${(props)=>props.blockType == GameBlockTypeEnum.HiddenBlock? "display:none":props.blockType?"visibility:visible":"visibility:hidden"};
     padding:5px;
     margin:5px;
     border:5px solid black;

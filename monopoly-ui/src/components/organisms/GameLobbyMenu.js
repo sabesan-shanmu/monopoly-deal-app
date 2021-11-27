@@ -19,6 +19,7 @@ const GameLobbyMenuForm = styled.form`
     flex-direction: column;
     align-items:center;
     justify-content:center;
+    margin-top:120px;
 `;
 
 

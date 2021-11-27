@@ -45,7 +45,8 @@ export const GameBlockEnum = {
 export const GameBlockTypeEnum = {
     PlayerBlock:1,
     DrawCardsBlock:2,
-    ActiveCardsBlock:3
+    ActiveCardsBlock:3,
+    HiddenBlock:4
 }
 
 export const CardTypeEnum = {
