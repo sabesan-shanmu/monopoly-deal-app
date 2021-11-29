@@ -17,20 +17,21 @@ const StyledInPlayPile = styled.div`
 const StyledGrid = styled.div`
     display:grid;
     position:relative;
-    grid-template-rows: ${(props) =>`repeat(${props.total},30px)`};
-    grid-template-columns: ${(props) =>`repeat(${props.total},20px)`};
+    grid-template-rows: ${(props) =>`repeat(${props.total},90px)`};
+    grid-template-columns: ${(props) =>`repeat(${props.total},50px)`};
 `;
 const StyledBorder = styled.div`
     border:2px solid white;
     display:grid;
     justify-items: flex-start;
     min-height:240px;
-    width: 240px;
+    max-width: 270px;
     padding: 5px;
+    grid-template-columns:repeat(2,130px);
+    col-gap:10px;
 `;
 
-const RepositionedCard = styled.div`
-    
+const RepositionedCard = styled.div` 
     grid-row:${(props) =>`${props.position}/span ${props.total}`};
     grid-column:${(props) =>`${props.position}/span ${props.total}`};
 `;

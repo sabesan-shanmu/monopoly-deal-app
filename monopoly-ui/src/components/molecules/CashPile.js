@@ -20,7 +20,7 @@ const StyledBorder = styled.div`
 `;
 
 const RepositionedCard = styled.div`
-
+    grid-columns:${(props) =>`${props.position}/span ${props.total}`};
     grid-columns:${(props) =>`${props.position}/span ${props.total}`};
 `;
 
