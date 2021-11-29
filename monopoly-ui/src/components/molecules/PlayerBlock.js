@@ -46,7 +46,7 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
               }
                {blockType == GameBlockTypeEnum.ActiveCardsBlock &&
                     <React.Fragment>  
-                        <InPlayPile inPlayPileCards={game?.inPlayPileCards} />
+                        <InPlayPile players={game.players} inPlayPileCards={game?.inPlayPileCards} />
                     </React.Fragment>
                   
               }
