@@ -32,7 +32,7 @@ const StyledPlayerCharacter = styled.section`
     font-size:0.95em;
     line-height:1.35em;
     margin:3px;
-    ${({isGameBoard})=>isGameBoard?'&:hover {border: 3px solid #abff32;}':''}
+    ${({isGameBoard})=>isGameBoard?'&:hover {border: 3px solid #5DE23C;}':''}
     cursor:${(props) =>!props.isGameBoard?'':props.isSelectable==true? 'pointer':'not-allowed' };
 `;
 

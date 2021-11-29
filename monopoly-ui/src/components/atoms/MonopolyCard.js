@@ -34,7 +34,7 @@ const StyledCard = styled.img`
     border:3px solid black;
     height:200px;
     &:hover {
-        border: 3px solid #abff32;
+        border: 3px solid #5DE23C;
     }
 `;
 

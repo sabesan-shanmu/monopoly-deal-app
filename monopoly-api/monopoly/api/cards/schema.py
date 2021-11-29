@@ -25,13 +25,14 @@ class ActionCardSchema(ma.Schema):
 class CashCardSchema(ma.Schema):
     name = fields.String(required=True)
     price = fields.Integer(required=True)
+    actionType = EnumField(Enum.ActionTypes,by_value=True)
     
 
 class RentCardSchema(ma.Schema):
     name = fields.String(required=True)
     primaryColourId = EnumField(Enum.Colours,by_value=True)
     secondaryColourId = EnumField(Enum.Colours,by_value=True)
-    payee = EnumField(Enum.Payee,by_value=True)
+    actionType = EnumField(Enum.ActionTypes,by_value=True)
     price = fields.Integer(required=True)
     primaryColourDetails = fields.Nested(PropertiesColourSchema)
     secondaryColourDetails = fields.Nested(PropertiesColourSchema)
@@ -45,12 +46,14 @@ class PropertiesCardSchema(ma.Schema):
     primaryColourDetails = fields.Nested(PropertiesColourSchema)
     secondaryColourDetails = fields.Nested(PropertiesColourSchema)
     isRotatable = fields.Boolean()
+    actionType = EnumField(Enum.ActionTypes,by_value=True)
 
 class CardSchema(ma.Schema):
     cardId = fields.Integer(required=True)
     cardType = EnumField(Enum.CardTypes, by_value=True)
     cardImageUrl = fields.String(required=True)
     name = fields.String(required=True)
+    price = fields.Integer(required=True)
     action = fields.Nested(ActionCardSchema)
     properties = fields.Nested(PropertiesCardSchema)
     rent = fields.Nested(RentCardSchema)

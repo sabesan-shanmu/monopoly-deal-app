@@ -23,18 +23,20 @@ class PropertiesCard(db.Model):
     primaryColourDetails = db.relationship(PropertiesColour,primaryjoin=primaryColourId==PropertiesColour.colourId)
     secondaryColourDetails = db.relationship(PropertiesColour,primaryjoin=secondaryColourId==PropertiesColour.colourId)
     isRotatable = db.Column(db.Boolean,default=False)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
 
 class CashCard(db.Model):
     cashCardId = db.Column(db.Integer,primary_key=True,nullable=False)
     price = db.Column(db.Integer,nullable=False)
     name = db.Column(db.String,nullable=False)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
 
 class RentCard(db.Model):
     rentCardId = db.Column(db.Integer,primary_key=True,nullable=False)
     name = db.Column(db.String,nullable=False)
     primaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
     secondaryColourId = db.Column(db.Enum(Enum.Colours),db.ForeignKey(PropertiesColour.colourId),nullable=True)
-    payee = db.Column(db.Enum(Enum.Payee),nullable=False)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=False)
     price= db.Column(db.Integer,nullable=False)
     primaryColourDetails = db.relationship(PropertiesColour,primaryjoin=primaryColourId==PropertiesColour.colourId)
     secondaryColourDetails = db.relationship(PropertiesColour,primaryjoin=secondaryColourId==PropertiesColour.colourId)
@@ -61,7 +63,8 @@ class Cards(db.Model):
     cash = db.relationship(CashCard,primaryjoin=cashCardId==CashCard.cashCardId)  
     rent = db.relationship(RentCard,primaryjoin=rentCardId==RentCard.rentCardId)
     action = db.relationship(ActionCard,primaryjoin=actionCardId==ActionCard.actionCardId)
-
+    price= db.Column(db.Integer,nullable=False)
+    
 class GameCards(db.Model):
     gameCardId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
@@ -114,21 +117,19 @@ class GamePlayAction(db.Model):
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
     currentGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
     expectedGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
-    moveClassification = db.Column(db.Enum(Enum.ActionClassification),nullable=True)
-    transactionType = db.Column(db.Enum(Enum.TransactionType),nullable=True)
     isPreCheckRequired = db.Column(db.Boolean,nullable=False,default=False)
     description = db.Column(db.String)
     
 class TransactionTracker(db.Model):
     transactionTrackerId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     gamePassCode = db.Column(db.String,db.ForeignKey("game.gamePassCode",ondelete="CASCADE"),nullable=True)
-    performedByPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True,ondelete='CASCADE'))
+    performedByPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True,ondelete='CASCADE'))  
+    performedByPlayer = db.relationship(Player,primaryjoin=performedByPlayerId==Player.playerId)
     isGameActionCompleted  = db.Column(db.Boolean,nullable=False,default=False)
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True)) 
     gameCardId = db.Column(db.Integer,db.ForeignKey("game_cards.gameCardId"),nullable=True)
     gameCard =  db.relationship(GameCards,primaryjoin=gameCardId==GameCards.gameCardId)
-    transactionTotal = db.Column(db.Integer)
-    transactionType = db.Column(db.Enum(Enum.TransactionType),nullable=True)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
     tradePayeeTransactions =  db.relationship("TradePayeeTransaction")   
 
 class GamePlayerMoves(db.Model):
@@ -145,8 +146,11 @@ class TradePayeeTransaction(db.Model):
     tradePayeeTransactionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
     transactionTrackerId = db.Column(db.Integer,db.ForeignKey(TransactionTracker.transactionTrackerId),nullable=True)
     targetPlayerId = db.Column(db.Integer,db.ForeignKey("player.playerId",ondelete="CASCADE"),nullable=True)
+    targetPlayer = db.relationship(Player,primaryjoin=targetPlayerId==Player.playerId)
     isPayeeTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
-    requestedGameCardIds = db.Column(db.String)
-    responseGameCardIds = db.Column(db.String)
-    totalPaid =  db.Column(db.Integer)
+    actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
+    requestedTotal = db.Column(db.Integer) #rent, its my birthday, debt collector
+    requestedGroupId = db.Column(db.String) #dealbreaker
+    requestedGameCardId = db.Column(db.Integer) #sly deal,force deal
+    
 

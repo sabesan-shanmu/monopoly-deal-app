@@ -67,35 +67,22 @@ export const GameMoveStatusEnum = {
     SkipYourTurn:4
 }
 
-export const ActionClassificationEnum = {
-    NoActionRequiredMove:1,
-    SingleRentPlayerPaymentRequiredMove:2,
-    MultipleRentPlayerPaymentsRequiredMove:3,
-    GainCardsMove:4,
-    SinglePlayerPaymentRequiredMove:5,
-    MultiplePlayerPaymentsRequiredMove:6,
-    CancelActionMove:7,
-    SlyStealMove:8,
-    ForcedTradeMove:9,
-    DealBreakerMove:10,
-    MustPlayDoubleTheRentMove:11,
-    RotatingCardMove:12,
-    MovePropertyCardMove:13
-}
 
 export const ActionTypesEnum = {
-    DealBreaker:1, //can only be played if there's a set in play
+    NoActionRequired:0,
+    DealBreaker:1, // can only be played if there's a set in play
     ForcedDeal:2, // swap cards with a player
-    SlyDeal:3, // take a card ffrom a player
-    JustSayNo:4, // can be played if something is asked to be done by a player
-    DebtCollector:5, // ask one person for money
-    ItsMyBirthday:6, // ask other player's for money
-    DoubleTheRent:7, // can only be played with rent card 
-    House:8, // no action needed
-    Hotel:9, // no action needed
-    PassGo:10, // player can draw 2 cards
-    MoveCard:11, //move a card over to new set
-    RotateCard:12 //rotate in play card
+    SlyDeal:3, // take a card from a player
+    DebtCollector : 4, // ask one person for money
+    ItsMyBirthday : 5, // ask other player's for money
+    PassGo : 6, // player can draw 2 cards
+    SinglePlayerRent : 7, // single player pays rent
+    MultiplePlayerRent : 8, // multiple players pay rent
+    DoubleTheRent : 9, // can only be played with rent card 
+    House : 10, // no action needed
+    Hotel : 11, // no action needed
+    JustSayNo:12 //can be played if something is asked to be done by a player
+ 
 }
 
 

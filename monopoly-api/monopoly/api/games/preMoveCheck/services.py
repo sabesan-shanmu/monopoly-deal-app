@@ -25,15 +25,15 @@ def get_pre_move_check_list(current_player_cards,game_cards_played_by_all_player
     return pre_move_check_list
 
 def get_action_type(player_card):
-
-    
-    return {
-        Enum.CardTypes.Properties: (None if player_card.cardLocationStatus is not Enum.GameCardLocationStatus.IsPlayedOnPropertyPile else(Enum.ActionTypes.MoveCard \
-            if player_card.card.properties.primaryColourDetails.colourId is not Enum.Colours.Any  else Enum.ActionTypes.RotateCard)),
-        Enum.CardTypes.Cash: None,
-        Enum.CardTypes.Rent: None,
-        Enum.CardTypes.Action: player_card.card.action.actionType if player_card.card.action is not None else None,
-    }[player_card.card.cardType]
+    print(player_card)
+    if player_card.card.cardType is Enum.CardTypes.Properties:
+        return player_card.card.properties.actionType
+    elif player_card.card.cardType is Enum.CardTypes.Cash:
+        return player_card.card.cash.actionType
+    elif player_card.card.cardType is Enum.CardTypes.Rent:
+        return player_card.card.rent.actionType
+    elif player_card.card.cardType is Enum.CardTypes.Action:
+        return player_card.card.action.actionType
 
 
 def get_game_cards_played_by_all_players(players,game_cards_in_play):
@@ -130,26 +130,6 @@ def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_
             
     return False
 
-def is_house_or_hotel_playable(player_card,game_cards_played_by_all_players,possible_play_action):
-    #temporarily preventing houses or hotels from getting played as part of property pile, this card adds complexity for trade scenarios. might revisit this later
-    return False
-    #can only be played if a full set exists
-    current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
-    if(current_player_cards_on_field):
-
-        current_player_cards_grouped_by_groupId = []
-        key_func = lambda x: x.groupId
-        for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
-            cards = list(group)
-            currentTotalInSet = len(cards)
-            numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
-            current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
-        
-        #find a complete set, if there's one  then hotel/housecan be played
-        if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet == x.numberNeededToCompleteSet]) == 0:
-            return False    
-
-    return False
 
 def is_double_the_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action):
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
@@ -254,75 +234,19 @@ def is_debt_collector_playable(player_card,game_cards_played_by_all_players,poss
     other_player_cards_on_field_list = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId and (len(x.propertyPileCards)>0 or len(x.cashPileCards)>0)]
     return True if len(other_player_cards_on_field_list)>0 else False
 
-def is_just_say_no_playable(player_card,game_cards_played_by_all_players,possible_play_action):
-    #for pre-move-check its always a no, the player cant play just say no to in play pile as part of their current turnunless they were asked to play it as part of an action erquest
-    return False
-
-def is_rotate_property_available(player_card,game_cards_played_by_all_players,possible_play_action):
-    return False
-    #card is not on property pile or is not rotatable
-    if player_card.card.properties.primaryColourDetails.colourId is Enum.Colours.Any or \
-        player_card.cardLocationStatus != Enum.GameCardLocationStatus.IsPlayedOnPropertyPile or \
-        player_card.card.properties.isRotatable is False:
-        return False
-    else:
-        current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]))
-        
-        current_player_cards_grouped_by_groupId = []
-        key_func = lambda x: x.groupId
-        for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
-            cards = list(group)
-            currentTotalInSet = len(cards)
-            numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
-            current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
-        #can only rotate card if its a full set without house or partial set
-        if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet <= x.numberNeededToCompleteSet and x.groupId == player_card.groupId]) > 0:
-            return True
-        else:
-            return True
-
-
-def is_move_wild_property_available(player_card,game_cards_played_by_all_players,possible_play_action):
-    return False
-    if player_card.card.properties.primaryColourDetails.colourId is not Enum.Colours.Any or \
-        player_card.cardLocationStatus != Enum.GameCardLocationStatus.IsPlayedOnPropertyPile:
-        return False
-
-    current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]))
-
-    
-    current_player_cards_grouped_by_groupId = []
-    key_func = lambda x: x.groupId
-    for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
-        cards = list(group)
-        currentTotalInSet = len(cards)
-        numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
-        current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
-
-    #find a non complete set and current set must be full set(without hotel/house) or partial set, if there's one then wildcard can be moved
-    if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x.groupId != player_card.groupId]) > 0 and \
-        len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet <= x.numberNeededToCompleteSet and x.groupId == player_card.groupId]) > 0:
-        return True
-    else:
-        return False
 
 def is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,possible_play_action):
 
     pre_check_conditions = {
-        (Enum.CardTypes.Properties,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_property_playable,
-        (Enum.CardTypes.Rent,None,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_rent_playable,
+        (Enum.CardTypes.Properties,Enum.ActionTypes.NoActionRequired,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_property_playable,
+        (Enum.CardTypes.Rent,Enum.ActionTypes.SinglePlayerRent,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_rent_playable,
+        (Enum.CardTypes.Rent,Enum.ActionTypes.MultiplePlayerRent,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_rent_playable,
         (Enum.CardTypes.Rent,Enum.ActionTypes.DoubleTheRent,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_double_the_rent_playable,
-        (Enum.CardTypes.Action,Enum.ActionTypes.Hotel,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_house_or_hotel_playable,
-        (Enum.CardTypes.Action,Enum.ActionTypes.House,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_house_or_hotel_playable,
-        (Enum.CardTypes.Action,Enum.ActionTypes.DoubleTheRent,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_double_the_rent_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.ItsMyBirthday,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_its_my_birthday_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.DebtCollector,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_debt_collector_playable,
-        (Enum.CardTypes.Action,Enum.ActionTypes.JustSayNo,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_just_say_no_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.SlyDeal,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_sly_deal_playable,
         (Enum.CardTypes.Action,Enum.ActionTypes.ForcedDeal,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_forced_deal_playable,
-        (Enum.CardTypes.Action,Enum.ActionTypes.DealBreaker,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_deal_breaker_playable,
-        (Enum.CardTypes.Properties,Enum.ActionTypes.RotateCard,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_rotate_property_available,   
-        (Enum.CardTypes.Properties,Enum.ActionTypes.MoveCard,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_move_wild_property_available
+        (Enum.CardTypes.Action,Enum.ActionTypes.DealBreaker,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_deal_breaker_playable
     }
     try:
         return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.currentGameCardLocation,possible_play_action.expectedGameCardLocation)](player_card,game_cards_played_by_all_players,possible_play_action)
