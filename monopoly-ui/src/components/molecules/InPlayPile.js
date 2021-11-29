@@ -28,6 +28,7 @@ const StyledBorder = styled.div`
     max-width: 270px;
     padding: 5px;
     grid-template-columns:repeat(2,130px);
+    overflow-x:scroll;
 `;
 
 const RepositionedCard = styled.div` 
