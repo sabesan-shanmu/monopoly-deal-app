@@ -2,8 +2,4 @@
     display:grid;
     flex-direction: row;
     height:100%;
-    /* grid-auto-rows: 130px auto; */
-    grid-template-areas: 
-    'header'
-    'content';
 }

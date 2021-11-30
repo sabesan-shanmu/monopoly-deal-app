@@ -24,7 +24,6 @@ const StyledGameHeader = styled.div`
     &>div{
         text-align: center;
     }
-    grid-area: header;
     color:white;
     position:fixed;
     top:0;

@@ -26,7 +26,6 @@ const StyledLoaderContainer = styled.div`
     animation: ${transform} 3s linear infinite;
     align-self:center;
     justify-self:center;
-    grid-area: content;
     color:white;
 `;
 

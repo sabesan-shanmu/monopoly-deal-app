@@ -19,7 +19,6 @@ export const StyledMenuForm = styled.form`
     max-height:500px;
     justify-self:center;
     align-self: center;
-    grid-area: content;
 `;
 
 

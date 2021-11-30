@@ -19,7 +19,6 @@ export const StyledMenuContainer = styled.div`
     max-height:500px;
     justify-self:center;
     align-self: center;
-    grid-area: content;
 `;
 
 
