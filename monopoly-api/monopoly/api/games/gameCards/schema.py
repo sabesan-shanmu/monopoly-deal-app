@@ -29,6 +29,6 @@ class update_game_card_schema(ma.Schema):
     cardLocationStatus = EnumField(Enum.GameCardLocationStatus, by_value=True)
     isCardRightSideUp = fields.Boolean()
     groupId = fields.String()
-    assignedColourId = EnumField(Enum.Colours, by_value=True)
+    assignedColourId = EnumField(Enum.Colours, by_value=True,allow_none=True)
     
 
