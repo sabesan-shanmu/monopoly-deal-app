@@ -134,7 +134,6 @@ export const getGroupId = (gameCard,currentPlayerPropertyPileCards)=>{
             dict[propertyPileCard.groupId]=[propertyPileCard];
         return dict;
     },[]);
-
     const cardGroups = Object.values(currentPlayerPropertyCardsGroupedByGroupId);
     for (var i=0; i<cardGroups.length;i++){
         
@@ -144,8 +143,8 @@ export const getGroupId = (gameCard,currentPlayerPropertyPileCards)=>{
     }
  
 
-    //deafault:increment group id based on colour
-    return getColourName(foundCards[0].assignedColourId)+parseInt(foundCards[0].groupId.split("-")[1])+1;
+    //default:increment group id based on colour
+    return `${getColourName(foundCards[0].assignedColourId)}-${parseInt(foundCards[0].groupId.split("-")[1])+1}`;
 }
 
 
