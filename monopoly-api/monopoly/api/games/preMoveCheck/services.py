@@ -25,7 +25,6 @@ def get_pre_move_check_list(current_player_cards,game_cards_played_by_all_player
     return pre_move_check_list
 
 def get_action_type(player_card):
-    print(player_card)
     if player_card.card.cardType is Enum.CardTypes.Properties:
         return player_card.card.properties.actionType
     elif player_card.card.cardType is Enum.CardTypes.Cash:
@@ -85,7 +84,8 @@ def is_property_playable(player_card,game_cards_played_by_all_players,possible_p
         if(current_player_cards_on_field):
             current_player_cards_grouped_by_groupId = []
             key_func = lambda x: x.groupId
-            for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
+            sortedPropertyCards = sorted(current_player_cards_on_field.propertyPileCards, key=key_func, reverse=True)
+            for key, group in itertools.groupby(sortedPropertyCards, key=key_func):
                 cards = list(group)
                 currentTotalInSet = len(cards)
                 numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
@@ -116,7 +116,8 @@ def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_
 
         current_player_cards_grouped_by_groupId = []
         key_func = lambda x: x.groupId
-        for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
+        sortedPropertyCards = sorted(current_player_cards_on_field.propertyPileCards, key=key_func, reverse=True)
+        for key, group in itertools.groupby(sortedPropertyCards, key=key_func):
             cards = list(group)
             currentTotalInSet = len(cards)
             numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
@@ -151,7 +152,8 @@ def is_deal_breaker_playable(player_card,game_cards_played_by_all_players,possib
         
         other_player_cards_grouped_by_groupId = []
         key_func = lambda x: x.groupId
-        for key, group in itertools.groupby(other_player_cards.propertyPileCards, key_func):
+        sortedPropertyCards = sorted(other_player_cards.propertyPileCards, key=key_func, reverse=True)
+        for key, group in itertools.groupby(sortedPropertyCards, key=key_func):
             cards = list(group)
             currentTotalInSet = len(cards)
             numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
@@ -172,7 +174,8 @@ def is_sly_deal_playable(player_card,game_cards_played_by_all_players,possible_p
         
         other_player_cards_grouped_by_groupId = []
         key_func = lambda x: x.groupId
-        for key, group in itertools.groupby(other_player_cards.propertyPileCards, key_func):
+        sortedPropertyCards = sorted(other_player_cards.propertyPileCards, key=key_func, reverse=True)
+        for key, group in itertools.groupby(sortedPropertyCards, key=key_func):
             cards = list(group)
             currentTotalInSet = len(cards)
             numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
@@ -198,7 +201,8 @@ def is_forced_deal_playable(player_card,game_cards_played_by_all_players,possibl
 
     current_player_cards_grouped_by_groupId = []
     key_func = lambda x: x.groupId
-    for key, group in itertools.groupby(current_player_cards_on_field.propertyPileCards, key_func):
+    sortedPropertyCards = sorted(current_player_cards_on_field.propertyPileCards, key=key_func, reverse=True)
+    for key, group in itertools.groupby(sortedPropertyCards, key=key_func):
         cards = list(group)
         currentTotalInSet = len(cards)
         numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
@@ -213,7 +217,8 @@ def is_forced_deal_playable(player_card,game_cards_played_by_all_players,possibl
         
         other_player_cards_grouped_by_groupId = []
         key_func = lambda x: x.groupId
-        for key, group in itertools.groupby(other_player_cards.propertyPileCards, key_func):
+        sortedPropertyCards = sorted(other_player_cards.propertyPileCards, key=key_func, reverse=True)
+        for key, group in itertools.groupby(sortedPropertyCards, key=key_func):
             cards = list(group)
             currentTotalInSet = len(cards)
             numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
