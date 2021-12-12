@@ -3,7 +3,7 @@ import { PlayerContext } from '../../context/PlayerContext';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import styled from 'styled-components';
 
-import { CardTypeEnum } from '../../common/constants';
+import { CardTypeEnum,PopoverTypesEnum } from '../../common/constants';
 import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
@@ -47,7 +47,11 @@ export const CurrentPlayerCardsOnHand = ()=> {
     return (
         <FooterCardsContainer>
         {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
-            <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={isCardPlayable(playerCard) && isCurrentPlayerMove} listOfPossibleMoves={listOfPossibleMoves(playerCard)} />
+            <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} 
+            isCardSelectable={isCardPlayable(playerCard) && isCurrentPlayerMove} 
+            listOfPossibleMoves={listOfPossibleMoves(playerCard)} 
+            popoverType={PopoverTypesEnum.PreMove}
+            />
         )}
         </FooterCardsContainer> 
     )

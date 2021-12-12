@@ -232,3 +232,30 @@ export const sortCardsByLastUpdateDate = (unsortedList) =>{
 export const getCardSetTotal = (list) =>{
     return list.reduce((total, gameCard) => total + (gameCard?.card?.action?.price || 0) + (gameCard?.card?.cash?.price || 0) + (gameCard?.card?.properties?.price || 0) +(gameCard?.card?.rent?.price || 0) , 0);
 }
+
+
+
+export const getCurrentPlayerPropertyPileCards = (game,currentPlayer) =>{
+
+    const playerFound = game.players.find((player)=>player.playerId === currentPlayer.playerId);
+    console.log(playerFound);
+    return playerFound.propertyPileCards;
+}
+
+
+export const getColourName = (colourId)=>{
+    return {
+        0:"Any",
+        1:"Green",
+        2:"Brown",
+        3:"DarkBlue",
+        4:"LightBlue",
+        5:"Orange",
+        6:"Pink",
+        7:"Black",
+        8:"Red",
+        9:"Yellow",
+        10:"Neutral"
+    }[colourId];
+
+}

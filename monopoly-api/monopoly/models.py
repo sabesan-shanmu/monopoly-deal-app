@@ -113,6 +113,7 @@ class Game(db.Model):
 
 class GamePlayAction(db.Model):
     gamePlayActionId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
+    colourId = db.Column(db.Enum(Enum.Colours),nullable=True)
     cardType = db.Column(db.Enum(Enum.CardTypes),nullable=False)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
     currentGameCardLocation = db.Column(db.Enum(Enum.GameCardLocationStatus),nullable=False)
@@ -150,6 +151,7 @@ class TradePayeeTransaction(db.Model):
     isPayeeTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
     requestedTotal = db.Column(db.Integer) #rent, its my birthday, debt collector
+    requestedRentColourId = db.Column(db.Enum(Enum.Colours),nullable=True)#rent
     requestedGroupId = db.Column(db.String) #dealbreaker
     requestedGameCardId = db.Column(db.Integer) #sly deal,force deal
     

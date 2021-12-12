@@ -77,9 +77,9 @@ class PreMoveCheck:
 
 
 def is_property_playable(player_card,game_cards_played_by_all_players,possible_play_action):
-    if(player_card.card.properties.primaryColourId is not Enum.Colours.Any):
+    if(player_card.card.properties.primaryColourId is not Enum.Colours.Any and possible_play_action.colourId is Enum.Colours.Any):
         return True
-    elif (player_card.card.properties.primaryColourId is Enum.Colours.Any):
+    elif (player_card.card.properties.primaryColourId is Enum.Colours.Any and possible_play_action.colourId is not Enum.Colours.Any):
         #check to see if player has played at least 1 property card in property pile with no full sets
         current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
         if(current_player_cards_on_field):
@@ -89,11 +89,12 @@ def is_property_playable(player_card,game_cards_played_by_all_players,possible_p
                 cards = list(group)
                 currentTotalInSet = len(cards)
                 numberNeededToCompleteSet = cards[0].assignedColourDetails.numberNeededToCompleteSet
-                current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
+                colourId = cards[0].assignedColourDetails.colourId
+                current_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet,colourId=colourId))
             
             #find a non complete set, if there's one then, wildcard property can be played
-            if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet]) == 0:
-                return False   
+            if len([x for x in current_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x.colourId ==possible_play_action.colourId]) > 0:
+                return True   
 
 
     return False

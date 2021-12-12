@@ -7,6 +7,7 @@ from monopoly.common.utils import url_overwrite
 
 class GamePlayActionSchema(ma.Schema):
     gamePlayActionId = fields.Integer(required=True)
+    colourId = EnumField(Enum.Colours,by_value=True);
     cardType = EnumField(Enum.CardTypes,by_value=True)
     actionType = EnumField(Enum.ActionTypes,by_value=True)
     expectedGameCardLocation = EnumField(Enum.GameCardLocationStatus,by_value=True)

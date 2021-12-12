@@ -102,3 +102,27 @@ export const CardTypesEnum = {
     Rent:3,
     Action:4
 }
+
+
+export const PopoverTypesEnum = {
+    PreMove:1,
+    preAction:2,
+    selectionProcess:3,
+    inPlayProcess:4,
+    moveCompletion:5
+}
+
+
+export const ColoursEnum = {
+    Any:0,
+    Green:1,
+    Brown:2,
+    DarkBlue:3,
+    LightBlue:4,
+    Orange:5,
+    Pink:6,
+    Black:7,
+    Red:8,
+    Yellow:9,
+    Neutral:10,
+}

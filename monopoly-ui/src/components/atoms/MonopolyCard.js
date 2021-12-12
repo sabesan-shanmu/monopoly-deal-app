@@ -2,10 +2,11 @@ import React,{useState} from 'react'
 import styled,{keyframes,css} from 'styled-components'
 import PropTypes from 'prop-types';
 import { device } from '../../common/devices';
-import { CardTypeEnum } from '../../common/constants';
+import { CardTypeEnum,PopoverTypesEnum } from '../../common/constants';
 import faceDownCardImg from '../../assets/img/face-down-card.jpg' 
 import { Popover } from 'react-tiny-popover'
-import {CardPopoverContent} from '../atoms/CardPopoverContent'
+import {PreMoveCardPopoverContent} from '../atoms/PreMoveCardPopoverContent'
+
 
 
 const bounce = keyframes`
@@ -40,7 +41,7 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves=[]}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves=[], popoverType=null}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
     console.log("fired");
@@ -54,9 +55,12 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                             padding={10} 
                             reposition={false} 
                             onClickOutside={() => setIsPopoverOpen(false)} 
-                            content={({ position, nudgedLeft, nudgedTop }) => ( 
-                                <CardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
-                            )}
+                            content={({ position, nudgedLeft, nudgedTop }) => {
+                                
+                                if(popoverType == PopoverTypesEnum.PreMove)
+                                    return <PreMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
+                                
+                            }}
                         >
                             <StyledCard src={gameCard.card.cardImageUrl}
                                 style={{ visibility: isLoaded ? "visible" : "hidden" }}

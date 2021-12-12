@@ -1,22 +1,34 @@
 import {transactionTrackerApi,singleTransactionTrackerApi} from '../api/transactionTrackerApi' 
 import {gameCardsApi} from '../api/gameCardsApi'
 import {gameMoveApi} from '../api/gameMoveApi'
-import { CardTypesEnum,ActionClassificationEnum, GameCardLocationStatusEnum,GameMoveStatusEnum } from './constants';
+import {GameMoveStatusEnum,ColoursEnum} from './constants';
+import { getCurrentPlayerPropertyPileCards,getColourName } from './GameHelpers';
+
+export const startPropertyActionSequence = (game,currentPlayer,gameCard,move) =>{
+    console.log("Started startPropertyActionSequence!");
+    //1. update assigned colour
+    console.log(move);
+    gameCard.assignedColourId = move.colourId != ColoursEnum.Any? move.colourId:gameCard.assignedColourId;
+    
+    //2. update group id
+    const currentPlayerPropertyPileCards = getCurrentPlayerPropertyPileCards(game,currentPlayer);
+    gameCard.groupId = getGroupId(gameCard,currentPlayerPropertyPileCards)
+    
+    startNoActionSequence(game,currentPlayer,gameCard,move);
+}
 
 
-
-
-export const startCashOrPropertyActionSequence = (game,player,gameCard,move) => {
-    console.log("startCashOrPropertyActionSequence!");
+export const startNoActionSequence = (game,currentPlayer,gameCard,move) => {
+    console.log("Started startNoActionSequence!");
     let createdTransaction = {};
     //1. create transaction tracker
     const transactionTrackerPayload = {
         gamePassCode:game.gamePassCode,
-        performedByPlayerId:player.playerId,
+        performedByPlayerId:currentPlayer.playerId,
         gamePlayActionId:move.gamePlayActionId,
         gameCardId:gameCard.gameCardId
     };
-    transactionTrackerApi.post(game.links.transactionTracker,player.accessToken,transactionTrackerPayload)
+    transactionTrackerApi.post(game.links.transactionTracker,currentPlayer.accessToken,transactionTrackerPayload)
     .then((success)=>{
         console.log(success.data);
         createdTransaction = success.data
@@ -25,9 +37,10 @@ export const startCashOrPropertyActionSequence = (game,player,gameCard,move) => 
             gameCardId:gameCard.gameCardId,
             cardLocationStatus:move.expectedGameCardLocation,
             groupId:gameCard.groupId,
+            assignedColourId:gameCard.assignedColourId,
             isCardRightSideUp:gameCard.isCardRightSideUp
         };
-        return gameCardsApi.patch(gameCard.links.self,player.accessToken,gameCardPayload);
+        return gameCardsApi.patch(gameCard.links.self,currentPlayer.accessToken,gameCardPayload);
         
     }) 
     .then((success)=>{
@@ -37,7 +50,7 @@ export const startCashOrPropertyActionSequence = (game,player,gameCard,move) => 
             transactionTrackerId:createdTransaction.transactionTrackerId,
             isGameActionCompleted:true
         };
-        return singleTransactionTrackerApi.patch(createdTransaction.links.self,player.accessToken,singletransactionTrackerPayload);
+        return singleTransactionTrackerApi.patch(createdTransaction.links.self,currentPlayer.accessToken,singletransactionTrackerPayload);
 
     })
     .then((success)=>{
@@ -45,69 +58,61 @@ export const startCashOrPropertyActionSequence = (game,player,gameCard,move) => 
         //4. mark the move as complete 
         const movePayload = {
             gameMoveStatus:GameMoveStatusEnum.MoveComplete,
-            currentPlayerId:player.playerId
+            currentPlayerId:currentPlayer.playerId
         };
-        return gameMoveApi.patch(game.links.gameMoves,player.accessToken,movePayload);
+        return gameMoveApi.patch(game.links.gameMoves,currentPlayer.accessToken,movePayload);
 
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Start No Action Sequence!");
+        console.log("Completed startNoActionSequence!");
     })
     .catch((error)=>{console.log(error.response.data)});
  
 
 }
 
-export const rotateCard = (game,player,gameCard) => {
+export const rotateCard = (game,currentPlayer,gameCard) => {
     //1. rotate the card
     const gameCardPayload = {
         gameCardId:gameCard.gameCardId,
         isCardRightSideUp:!gameCard.isCardRightSideUp,
         assignedColourId:gameCard.assignedColourId == gameCard.card.properties.primaryColourId? gameCard.card.properties.secondaryColourId:gameCard.card.properties.primaryColourId
     };
-    gameCardsApi.patch(gameCard.links.self,player.accessToken,gameCardPayload)
+    gameCardsApi.patch(gameCard.links.self,currentPlayer.accessToken,gameCardPayload)
     .then((success)=>{console.log(success.data)})
     .catch((error)=>{console.log(error.response.data)});
 }
 
 
-export const getStartMoveSequence = (move) => {
-    console.log("Retrieve Move Sequence gamePlayActionId: "+move.gamePlayActionId);
-    return {
-       1:"",
-       2:startCashOrPropertyActionSequence,
-       3:startCashOrPropertyActionSequence,
-       4:"",
-       5:"",
-       6:"",
-       7:"",
-       8:startCashOrPropertyActionSequence,
-       9:"",
-       10:startCashOrPropertyActionSequence,
-       11:"",
-       12:startCashOrPropertyActionSequence,
-       13:startCashOrPropertyActionSequence,
-       14:"",
-       15:"",
-       16:"",
-       17:startCashOrPropertyActionSequence,
-       18:"",
-       19:startCashOrPropertyActionSequence,
-       20:"",
-       21:startCashOrPropertyActionSequence,
-       22:"",
-       23:startCashOrPropertyActionSequence,
-       24:"",
-       25:startCashOrPropertyActionSequence,
-       26:"",
-       27:startCashOrPropertyActionSequence,
-       28:"",
-       29:""
-    }[move.gamePlayActionId];
+export const getGroupId = (gameCard,currentPlayerPropertyPileCards)=>{
 
+    const foundCards = currentPlayerPropertyPileCards.filter((card)=> card.assignedColourId == gameCard.assignedColourId);
+
+    //no card found with that colour
+    if(foundCards.length == 0)
+        return getColourName(gameCard.assignedColourId)+"-1";
+
+    const currentPlayerPropertyCardsGroupedByGroupId = foundCards.reduce((dict, propertyPileCard) => {
+        if(dict[propertyPileCard.groupId])
+            dict[propertyPileCard.groupId].push(propertyPileCard)
+        else
+            dict[propertyPileCard.groupId]=[propertyPileCard];
+        return dict;
+    },[]);
+
+    const cardGroups = Object.values(currentPlayerPropertyCardsGroupedByGroupId);
+    for (var i=0; i<cardGroups.length;i++){
+        
+        //there's room in this set.
+        if(cardGroups[i].length < cardGroups[i][0].assignedColourDetails.numberNeededToCompleteSet)
+            return  cardGroups[i][0].groupId;
+    }
+ 
+
+    //deafault:increment group id based on colour
+    return getColourName(foundCards[0].assignedColourId)+parseInt(foundCards[0].groupId.split("-")[1])+1;
 }
-
 
 
 /*
