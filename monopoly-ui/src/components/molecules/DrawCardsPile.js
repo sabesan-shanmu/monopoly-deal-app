@@ -5,7 +5,9 @@ import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { GameMoveStatusEnum,CardTypeEnum } from '../../common/constants';
 import { drawCardsApi } from '../../api/drawCardsApi';
+import { singleTransactionTrackerApi } from '../../api/transactionTrackerApi';
 import { gameMoveApi } from '../../api/gameMoveApi';
+import { GamePlayActionEnum } from '../../common/constants';
 
 
 const StyledDrawCardsPile = styled.div`
@@ -34,7 +36,7 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
     
 
     const isPlayerDrawingCard = gameMove?.currentPlayer?.playerId == player?.playerId 
-    && gameMove?.gameMoveStatus == GameMoveStatusEnum.DrawTwoCardsInProgress;
+    && (gameMove?.gameMoveStatus == GameMoveStatusEnum.DrawTwoCardsInProgress|| gameMove?.transactionTracker?.gamePlayActionId == GamePlayActionEnum.PassGoOnPlayPile);
 
     const drawCardOnClick  = async()=>{
         if(!isPlayerDrawingCard || isDrawCardsClicked){
@@ -42,10 +44,7 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
             return false; 
         }
         console.log("Clicked on drawCard");
-        let payload = {
-            gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
-            currentPlayerId:player.playerId
-        };
+        
 
         
         setIsDrawCardsClicked(true);
@@ -53,12 +52,56 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
         drawCardsApi.get(game.links.drawCards,player.accessToken)
         .then((success)=>{
             console.log(success.data);
-            //2. update move status to in progress
-            return gameMoveApi.patch(game.links.gameMoves,player.accessToken,payload)
-        }).then((success)=>{
-            console.log(success.data);
-            //reset state
-            setIsDrawCardsClicked(false);
+
+            //2a. update move status to in progress
+            if (gameMove.gameMoveStatus == GameMoveStatusEnum.DrawTwoCardsInProgress)
+            {
+                let payload = {
+                    gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
+                    currentPlayerId:player.playerId
+                };
+                return gameMoveApi.patch(game.links.gameMoves,player.accessToken,payload)
+                .then((success)=>{
+                    console.log(success.data);
+                    //reset state
+                    setIsDrawCardsClicked(false);
+                }).catch((error)=>{
+                    console.log(error.response.data);
+                    //reset state
+                    setIsDrawCardsClicked(false);
+                });  
+            }
+            else 
+            {
+                //2b. Draw Cards action    
+                //1. patch the transaction tracker to complete
+                const singletransactionTrackerPayload = {
+                    transactionTrackerId:gameMove.transactionTracker.transactionTrackerId,
+                    isGameActionCompleted:true
+                };
+                
+                return singleTransactionTrackerApi.patch(gameMove.transactionTracker.links.self,player.accessToken,singletransactionTrackerPayload)
+                .then((success)=>{
+                    console.log(success.data)
+                    //2. mark the move as complete 
+                    const movePayload = {
+                        gameMoveStatus:GameMoveStatusEnum.MoveComplete,
+                        currentPlayerId:player.playerId
+                    };
+                    return gameMoveApi.patch(game.links.gameMoves,player.accessToken,movePayload);
+
+                }) 
+                .then((success)=>{
+                    console.log(success.data);
+                    //reset state
+                    setIsDrawCardsClicked(false);
+                }).catch((error)=>{
+                    console.log(error.response.data);
+                    //reset state
+                    setIsDrawCardsClicked(false);
+                });  ;
+            }
+
         }).catch((error)=>{
             console.log(error.response.data);
             //reset state

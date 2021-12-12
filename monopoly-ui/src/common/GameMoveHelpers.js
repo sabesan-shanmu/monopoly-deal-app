@@ -18,6 +18,40 @@ export const startPropertyActionSequence = (game,currentPlayer,gameCard,move) =>
 }
 
 
+export const startPassGoInPlayPileActionSequence = (game,currentPlayer,gameCard,move) =>{
+    console.log("Started startPassGoInPlayPileActionSequence!");
+    let createdTransaction = {};
+    //1. create transaction tracker
+    const transactionTrackerPayload = {
+        gamePassCode:game.gamePassCode,
+        performedByPlayerId:currentPlayer.playerId,
+        gamePlayActionId:move.gamePlayActionId,
+        gameCardId:gameCard.gameCardId
+    };
+    transactionTrackerApi.post(game.links.transactionTracker,currentPlayer.accessToken,transactionTrackerPayload)
+    .then((success)=>{
+        console.log(success.data);
+        createdTransaction = success.data
+        //2. move the card
+        const gameCardPayload = {
+            gameCardId:gameCard.gameCardId,
+            cardLocationStatus:move.expectedGameCardLocation,
+            groupId:gameCard.groupId,
+            assignedColourId:gameCard.assignedColourId,
+            isCardRightSideUp:gameCard.isCardRightSideUp
+        };
+        return gameCardsApi.patch(gameCard.links.self,currentPlayer.accessToken,gameCardPayload);
+        
+    })
+    .then((success)=>{
+        console.log(success.data);
+        console.log("Partiallly Completed startNoActionSequence!");
+    })
+    .catch((error)=>{console.log(error.response.data)}); 
+}
+
+
+
 export const startNoActionSequence = (game,currentPlayer,gameCard,move) => {
     console.log("Started startNoActionSequence!");
     let createdTransaction = {};

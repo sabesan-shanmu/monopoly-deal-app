@@ -30,7 +30,7 @@ const StyledGameHeader = styled.div`
     width:99%;
     z-index:999;
     //background-image: url(${modalBackgroundImg});
-    background:#854f28;
+    background:#422713;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

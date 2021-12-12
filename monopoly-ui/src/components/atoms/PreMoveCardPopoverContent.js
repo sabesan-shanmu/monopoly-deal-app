@@ -1,9 +1,9 @@
 import React,{useContext} from 'react'
 import styled from 'styled-components'
-import {startNoActionSequence,rotateCard,startPropertyActionSequence} from '../../common/GameMoveHelpers'
+import {startNoActionSequence,rotateCard,startPropertyActionSequence,startPassGoInPlayPileActionSequence} from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
-import { GameCardLocationStatusEnum } from '../../common/constants'
+import { GameCardLocationStatusEnum,GamePlayActionEnum } from '../../common/constants'
 
 const StyledPopoverContent = styled.div`
     width:115 px;
@@ -43,34 +43,38 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                     switch(move.gamePlayActionId)
                     {
 
-                        case 1:
-                        case 24: 
-                        case 25: 
-                        case 26: 
-                        case 27: 
-                        case 28: 
-                        case 29: 
-                        case 30: 
-                        case 31:
-                        case 32:
-                        case 33: 
+                        case GamePlayActionEnum.PlayOnPropertyPile:
+                        case GamePlayActionEnum.GreenOnPropertyPile: 
+                        case GamePlayActionEnum.BrownOnPropertyPile: 
+                        case GamePlayActionEnum.DarkBlueOnPropertyPile: 
+                        case GamePlayActionEnum.LightBlueOnPropertyPile: 
+                        case GamePlayActionEnum.OrangeOnPropertyPile: 
+                        case GamePlayActionEnum.PinkOnPropertyPile: 
+                        case GamePlayActionEnum.BlackOnPropertyPile: 
+                        case GamePlayActionEnum.RedOnPropertyPile:
+                        case GamePlayActionEnum.YellowOnPropertyPile:
+                        case GamePlayActionEnum.NeutralOnPropertyPile: 
                             startPropertyActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 8:
-                        case 9:
-                        case 11:
-                        case 12:
-                        case 14:
-                        case 16:
-                        case 17:
-                        case 19:
-                        case 21:
-                        case 23:        
+                        case GamePlayActionEnum.CashOnCashPile:
+                        case GamePlayActionEnum.SingleRentOnCashPile:
+                        case GamePlayActionEnum.MultipleRentOnCashPile:
+                        case GamePlayActionEnum.HotelOnCashPile:
+                        case GamePlayActionEnum.HouseOnCashPile:
+                        case GamePlayActionEnum.PassGoOnCashPile:
+                        case GamePlayActionEnum.DoubleTheRentOnCashPile:
+                        case GamePlayActionEnum.ItsMyBirthdayCashPile:
+                        case GamePlayActionEnum.DebtCollectorOnCashPile:
+                        case GamePlayActionEnum.JustSayNoOnCashPile:
+                        case GamePlayActionEnum.SlyDealOnCashPile:
+                        case GamePlayActionEnum.ForcedDealOnCashPile:
+                        case GamePlayActionEnum.DealBreakerOnCashPile:        
                             startNoActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
+                        case GamePlayActionEnum.PassGoOnPlayPile:
+                            startPassGoInPlayPileActionSequence(gameState.game,playerState.player,gameCard,move);
+                            break;
+
                     }
                     //close popover
                     setIsPopoverOpen(false);

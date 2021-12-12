@@ -128,6 +128,7 @@ class TransactionTracker(db.Model):
     performedByPlayer = db.relationship(Player,primaryjoin=performedByPlayerId==Player.playerId)
     isGameActionCompleted  = db.Column(db.Boolean,nullable=False,default=False)
     gamePlayActionId = db.Column(db.Integer,db.ForeignKey(GamePlayAction.gamePlayActionId,use_alter=True)) 
+    gamePlayAction =  db.relationship(GamePlayAction,primaryjoin=gamePlayActionId==GamePlayAction.gamePlayActionId)
     gameCardId = db.Column(db.Integer,db.ForeignKey("game_cards.gameCardId"),nullable=True)
     gameCard =  db.relationship(GameCards,primaryjoin=gameCardId==GameCards.gameCardId)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)

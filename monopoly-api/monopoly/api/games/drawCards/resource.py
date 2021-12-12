@@ -15,7 +15,7 @@ from monopoly.common.enums import GameMoveStatus,GameCardLocationStatus
 from monopoly.notifications.playerCards import publish_add_player_cards_on_hand_event_to_room
 from monopoly.notifications.games import publish_game_update_event_to_room
 from monopoly.api.games.schema import GameSchema
-
+import monopoly.common.enums as Enum
 
 draw_cards_namespace = Namespace('DrawCards', description='Draw 2 cards from deck')
 
@@ -35,7 +35,8 @@ class DrawCardsResource(Resource):
             if current_player_move is None:
                 raise FieldValidationException(message="No Current Moves found")
 
-            if not (is_player_valid(current_player_move,identity["playerId"])) or current_player_move.gameMoveStatus != GameMoveStatus.DrawTwoCardsInProgress:
+            if not (is_player_valid(current_player_move,identity["playerId"])) and \
+                (current_player_move.gameMoveStatus != GameMoveStatus.DrawTwoCardsInProgress or current_player_move.transactionTracker.gamePlayAction.actionType != Enum.ActionTypes.PassGo):
                 raise FieldValidationException(message="Player Not allowed to draw cards")
             
 

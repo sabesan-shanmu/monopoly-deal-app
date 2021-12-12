@@ -5,6 +5,7 @@ import monopoly.common.enums as Enum
 from monopoly.models import TransactionTracker
 from monopoly.common.utils import url_overwrite
 from monopoly.api.games.gameCards.schema import GameCardSchema
+from monopoly.api.gamePlayActions.schema import GamePlayActionSchema
 
 
 class TransactionTrackerSchema(ma.Schema):
@@ -13,6 +14,7 @@ class TransactionTrackerSchema(ma.Schema):
     performedByPlayerId = fields.Integer()
     isGameActionCompleted = fields.Boolean()
     gamePlayActionId = fields.Integer()
+    gamePlayAction = fields.Nested(GamePlayActionSchema)
     gameCardId = fields.Integer()
     gameCard = fields.Nested(GameCardSchema)
     links = ma.Hyperlinks(

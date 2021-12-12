@@ -9,7 +9,7 @@ export const InProgressBoardFooter = styled.footer`
     width:95%;
     padding: 5px;
     //background-image: url(${modalBackgroundImg});
-    background:#854f28;
+    background:#422713;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

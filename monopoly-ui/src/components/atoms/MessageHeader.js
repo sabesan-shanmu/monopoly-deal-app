@@ -1,7 +1,7 @@
 import React from 'react'
 import {getBackgroundColour} from '../../common/ImageHelpers'
 import styled from 'styled-components'
-import {MAX_NUMBER_OF_MOVES,GameMoveStatusEnum} from '../../common/constants'
+import {MAX_NUMBER_OF_MOVES,GameMoveStatusEnum,GamePlayActionEnum} from '../../common/constants'
 
 
 const StyledMessageHeader = styled.div`
@@ -35,14 +35,15 @@ export const MessageHeader = ({currentPlayer,transactionTracker,gameMoveStatus,n
                     </React.Fragment>
                 }
                 {gameMoveStatus==GameMoveStatusEnum.MoveInProgress && transactionTracker &&
-                    <React.Fragment>
+                    <div>
                         {currentPlayer.playerName} played {transactionTracker?.gameCard?.name} for {getCount(numberOfMovesPlayed+1)} move
-                    </React.Fragment>
+                    </div>
                 }
-                {gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress &&
-                    <React.Fragment>
+                {(gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress || 
+                transactionTracker?.gamePlayActionId == GamePlayActionEnum.PassGoOnPlayPile) &&
+                    <div>
                         {currentPlayer.playerName} click on Draw Card Pile to draw 2 cards
-                    </React.Fragment>
+                    </div>
                 }
                 {gameMoveStatus==GameMoveStatusEnum.MoveComplete &&
                     <React.Fragment>
