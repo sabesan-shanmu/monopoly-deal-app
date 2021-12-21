@@ -1,7 +1,7 @@
 import {transactionTrackerApi,singleTransactionTrackerApi} from '../api/transactionTrackerApi' 
 import {gameCardsApi} from '../api/gameCardsApi'
 import {gameMoveApi} from '../api/gameMoveApi'
-import {GameMoveStatusEnum,ColoursEnum} from './constants';
+import {GameMoveStatusEnum,ColoursEnum,TransactionTrackerStatusEnum} from './constants';
 import { getCurrentPlayerPropertyPileCards,getColourName } from './GameHelpers';
 
 export const startPropertyActionSequence = (game,currentPlayer,gameCard,move) =>{
@@ -26,7 +26,8 @@ export const startPassGoInPlayPileActionSequence = (game,currentPlayer,gameCard,
         gamePassCode:game.gamePassCode,
         performedByPlayerId:currentPlayer.playerId,
         gamePlayActionId:move.gamePlayActionId,
-        gameCardId:gameCard.gameCardId
+        gameCardId:gameCard.gameCardId,
+        transactionTrackerStatus:TransactionTrackerStatusEnum.InProgress
     };
     transactionTrackerApi.post(game.links.transactionTracker,currentPlayer.accessToken,transactionTrackerPayload)
     .then((success)=>{
@@ -60,7 +61,8 @@ export const startNoActionSequence = (game,currentPlayer,gameCard,move) => {
         gamePassCode:game.gamePassCode,
         performedByPlayerId:currentPlayer.playerId,
         gamePlayActionId:move.gamePlayActionId,
-        gameCardId:gameCard.gameCardId
+        gameCardId:gameCard.gameCardId,
+        transactionTrackerStatus:TransactionTrackerStatusEnum.InProgress
     };
     transactionTrackerApi.post(game.links.transactionTracker,currentPlayer.accessToken,transactionTrackerPayload)
     .then((success)=>{
@@ -82,7 +84,7 @@ export const startNoActionSequence = (game,currentPlayer,gameCard,move) => {
         //3. patch the transaction tracker to complete
         const singletransactionTrackerPayload = {
             transactionTrackerId:createdTransaction.transactionTrackerId,
-            isGameActionCompleted:true
+            transactionTrackerStatus:TransactionTrackerStatusEnum.Completed
         };
         return singleTransactionTrackerApi.patch(createdTransaction.links.self,currentPlayer.accessToken,singletransactionTrackerPayload);
 

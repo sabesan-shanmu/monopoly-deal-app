@@ -70,3 +70,10 @@ class VoteStatus(Enum):
     Undecided = 0
     Accepted = 1
     Declined = 2
+
+class TransactionTrackerStatus(Enum):
+    InProgress = 1
+    CurrentPlayerSelection = 2
+    OtherPlayerSelection = 3
+    OthersAcknowledge = 4
+    Completed = 5

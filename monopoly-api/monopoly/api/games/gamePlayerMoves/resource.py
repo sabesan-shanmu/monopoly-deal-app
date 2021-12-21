@@ -13,6 +13,7 @@ from monopoly.exceptions import ResourceNotFoundException,ResourceValidationExce
 from marshmallow import ValidationError
 from flask_jwt_extended import get_jwt_identity
 import monopoly.notifications.gameMoves as gameMovesNotification
+import monopoly.common.enums as Enum
 
 
 
@@ -48,7 +49,7 @@ class GamePlayerMovesResource(Resource):
                 raise FieldValidationException(message="Cannot progress without performing an action.")
 
             
-            if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete and current_player_move.transactionTracker.isGameActionCompleted is not True:
+            if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete and current_player_move.transactionTracker.transactionTrackerStatus is not Enum.TransactionTrackerStatus.Completed:
                 raise FieldValidationException(message="Cannot progress to complete without completing action")
 
    

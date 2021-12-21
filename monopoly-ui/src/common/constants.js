@@ -162,3 +162,12 @@ export const GamePlayActionEnum = {
     YellowOnPropertyPile:32,
     NeutralOnPropertyPile:33
 }
+
+
+export const TransactionTrackerStatusEnum = {
+    InProgress:1,
+    CurrentPlayerSelection:2,
+    OtherPlayerSelection:3,
+    OthersAcknowledge:4,
+    Completed:5
+}

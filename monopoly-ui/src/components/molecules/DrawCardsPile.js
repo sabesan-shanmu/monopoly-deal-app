@@ -7,7 +7,7 @@ import { GameMoveStatusEnum,CardTypeEnum } from '../../common/constants';
 import { drawCardsApi } from '../../api/drawCardsApi';
 import { singleTransactionTrackerApi } from '../../api/transactionTrackerApi';
 import { gameMoveApi } from '../../api/gameMoveApi';
-import { GamePlayActionEnum } from '../../common/constants';
+import { GamePlayActionEnum,TransactionTrackerStatusEnum } from '../../common/constants';
 
 
 const StyledDrawCardsPile = styled.div`
@@ -77,7 +77,7 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
                 //1. patch the transaction tracker to complete
                 const singletransactionTrackerPayload = {
                     transactionTrackerId:gameMove.transactionTracker.transactionTrackerId,
-                    isGameActionCompleted:true
+                    transactionTrackerStatus:TransactionTrackerStatusEnum.Completed
                 };
                 
                 return singleTransactionTrackerApi.patch(gameMove.transactionTracker.links.self,player.accessToken,singletransactionTrackerPayload)

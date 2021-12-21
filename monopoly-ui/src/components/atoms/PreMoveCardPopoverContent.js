@@ -74,6 +74,21 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                         case GamePlayActionEnum.PassGoOnPlayPile:
                             startPassGoInPlayPileActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
+                        case GamePlayActionEnum.SingleRentOnPlayPile:
+                        case GamePlayActionEnum.MultipleRentOnPlayPile:
+                            break;
+                        case GamePlayActionEnum.DoubleTheRentOnPlayPile:
+                            break;
+                        case GamePlayActionEnum.DebtCollectorOnPlayPile:
+                            break;
+                        case GamePlayActionEnum.ItsMyBirthdayOnPlayPile:
+                            break
+                        case GamePlayActionEnum.ForcedDealOnPlayPile:
+                            break;
+                        case GamePlayActionEnum.SlyDealOnPlayPile:
+                            break;
+                        case GamePlayActionEnum.DealBreakerOnPlayPile:
+                            break;
 
                     }
                     //close popover

@@ -12,7 +12,7 @@ class TransactionTrackerSchema(ma.Schema):
     transactionTrackerId = fields.Integer()
     gamePassCode = fields.String()
     performedByPlayerId = fields.Integer()
-    isGameActionCompleted = fields.Boolean()
+    transactionTrackerStatus = EnumField(Enum.TransactionTrackerStatus,by_value=True)
     gamePlayActionId = fields.Integer()
     gamePlayAction = fields.Nested(GamePlayActionSchema)
     gameCardId = fields.Integer()
@@ -27,6 +27,7 @@ class create_transaction_tracker(ma.Schema):
     performedByPlayerId = fields.Integer(required=True)
     gamePlayActionId = fields.Integer(required=True)
     gameCardId = fields.Integer(required=True)
+    transactionTrackerStatus = EnumField(Enum.TransactionTrackerStatus,by_value=True,required=True)
     @post_load
     def make_game_action_tracker(self, data, **kwargs):
         return TransactionTracker(**data)
@@ -34,7 +35,7 @@ class create_transaction_tracker(ma.Schema):
 
 class updated_transaction_tracker(ma.Schema):
     transactionTrackerId = fields.Integer(required=True)
-    isGameActionCompleted = fields.Boolean(required=True)
+    transactionTrackerStatus = EnumField(Enum.TransactionTrackerStatus,by_value=True)
     @post_load
     def make_game_action_tracker(self, data, **kwargs):
         return TransactionTracker(**data)
