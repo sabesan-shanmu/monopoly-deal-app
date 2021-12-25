@@ -39,8 +39,7 @@ export const MessageHeader = ({currentPlayer,transactionTracker,gameMoveStatus,n
                         {currentPlayer.playerName} played {transactionTracker?.gameCard?.name} for {getCount(numberOfMovesPlayed+1)} move
                     </div>
                 }
-                {(gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress || 
-                transactionTracker?.gamePlayActionId == GamePlayActionEnum.PassGoOnPlayPile) &&
+                {gameMoveStatus==GameMoveStatusEnum.DrawTwoCardsInProgress &&
                     <div>
                         {currentPlayer.playerName} click on Draw Card Pile to draw 2 cards
                     </div>

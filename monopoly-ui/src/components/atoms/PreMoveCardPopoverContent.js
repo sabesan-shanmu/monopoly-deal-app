@@ -1,6 +1,12 @@
 import React,{useContext} from 'react'
 import styled from 'styled-components'
-import {startNoActionSequence,rotateCard,startPropertyActionSequence,startPassGoInPlayPileActionSequence} from '../../common/GameMoveHelpers'
+import {startNoActionSequence,
+    rotateCard,
+    startPropertyActionSequence,
+    startPassGoInPlayPileActionSequence,
+    startRentActionSequence,
+    startDoubleTheRentActionSequence
+} from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
 import { GameCardLocationStatusEnum,GamePlayActionEnum } from '../../common/constants'
@@ -33,7 +39,7 @@ const StyledPopoverBody = styled.div`
 export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpen}) =>{
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
-    console.log(listOfPossibleMoves);
+    
     return (
         <StyledPopoverContent>
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
@@ -42,7 +48,6 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                     
                     switch(move.gamePlayActionId)
                     {
-
                         case GamePlayActionEnum.PlayOnPropertyPile:
                         case GamePlayActionEnum.GreenOnPropertyPile: 
                         case GamePlayActionEnum.BrownOnPropertyPile: 
@@ -76,8 +81,10 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                             break;
                         case GamePlayActionEnum.SingleRentOnPlayPile:
                         case GamePlayActionEnum.MultipleRentOnPlayPile:
+                            startRentActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
                         case GamePlayActionEnum.DoubleTheRentOnPlayPile:
+                            startDoubleTheRentActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
                         case GamePlayActionEnum.DebtCollectorOnPlayPile:
                             break;

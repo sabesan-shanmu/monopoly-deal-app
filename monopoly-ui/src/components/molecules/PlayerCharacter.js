@@ -1,11 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
-import {device} from "../../common/devices";
+import { Popover } from 'react-tiny-popover'
 import { CharacterImage } from '../atoms/CharacterImage';
 import {getBackgroundColour} from '../../common/ImageHelpers'
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum } from '../../common/constants';
+import {SelectionMovePlayerPopoverContent} from '../atoms/SelectionMovePlayerPopoverContent';
 
 const StyledCardCounter = styled.div`
     display:flex;
@@ -36,29 +37,42 @@ const StyledPlayerCharacter = styled.section`
     cursor:${(props) =>!props.isGameBoard?'':props.isSelectable==true? 'pointer':'not-allowed' };
 `;
 
-export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,isSelectable=false,...props}) => { 
+export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,isSelectable=false,listOfPossibleMoves=[],...props}) => { 
 
-
+    const [isPopoverOpen,setIsPopoverOpen] = useState(false);
     const cards = [...Array(numberOfCardsOnHand).keys()]
     console.log(isSelectable);
     return (
-        <StyledPlayerCharacter imageId={imageId} isGameBoard={isGameBoard} isSelectable={isSelectable} >
-            <CharacterImage imageId={imageId}/>
-            <div>
-                <div>Player Name:{playerName}</div>
-                <div>Game Order:{playerGameOrder}</div>
-                {isGameBoard &&
-                    <div>Cards on Hand:</div>
-                } 
-                <StyledCardCounter>
+        <Popover
+            isOpen={isPopoverOpen}
+            positions={['top']} 
+            padding={10} 
+            reposition={false} 
+            onClickOutside={() => setIsPopoverOpen(false)} 
+            content={({ position, nudgedLeft, nudgedTop }) => {
+                
+                return <SelectionMovePlayerPopoverContent setIsPopoverOpen={setIsPopoverOpen} listOfPossibleMoves={listOfPossibleMoves} />
+    
+            }}
+        >
+            <StyledPlayerCharacter imageId={imageId} isGameBoard={isGameBoard} isSelectable={isSelectable}  onClick={()=>{isSelectable &&  setIsPopoverOpen(true)}}>
+                <CharacterImage imageId={imageId}/>
+                <div>
+                    <div>Player Name:{playerName}</div>
+                    <div>Game Order:{playerGameOrder}</div>
                     {isGameBoard &&
-                        cards.map((card,key)=>
-                            <MonopolyCard cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
-                        )
-                    }
-                </StyledCardCounter>
-            </div>   
-        </StyledPlayerCharacter>
+                        <div>Cards on Hand:</div>
+                    } 
+                    <StyledCardCounter>
+                        {isGameBoard &&
+                            cards.map((card,key)=>
+                                <MonopolyCard cardType={CardTypeEnum.MiniFaceDownCard}   key={key} />
+                            )
+                        }
+                    </StyledCardCounter>
+                </div>   
+            </StyledPlayerCharacter>
+        </Popover>
     )
 }
 

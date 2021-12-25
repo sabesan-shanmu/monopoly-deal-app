@@ -133,7 +133,11 @@ class TransactionTracker(db.Model):
     gameCard =  db.relationship(GameCards,primaryjoin=gameCardId==GameCards.gameCardId)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
     tradePayeeTransactions =  db.relationship("TradePayeeTransaction")
-    
+    requestedTotal = db.Column(db.Integer) #rent, its my birthday, debt collector
+    requestedRentColourId = db.Column(db.Enum(Enum.Colours),nullable=True)#rent
+    requestedGroupId = db.Column(db.String) #dealbreaker
+    requestedGameCardId = db.Column(db.Integer) #sly deal,force deal
+    sendingGameCardId = db.Column(db.Integer) #force deal
 
 class GamePlayerMoves(db.Model):
     gameId = db.Column(db.Integer,db.ForeignKey("game.gameId",ondelete="CASCADE"),primary_key=True,nullable=True)
@@ -152,9 +156,5 @@ class TradePayeeTransaction(db.Model):
     targetPlayer = db.relationship(Player,primaryjoin=targetPlayerId==Player.playerId)
     isPayeeTransactionCompleted = db.Column(db.Boolean,nullable=False,default=False)
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
-    requestedTotal = db.Column(db.Integer) #rent, its my birthday, debt collector
-    requestedRentColourId = db.Column(db.Enum(Enum.Colours),nullable=True)#rent
-    requestedGroupId = db.Column(db.String) #dealbreaker
-    requestedGameCardId = db.Column(db.Integer) #sly deal,force deal
-    
+   
 

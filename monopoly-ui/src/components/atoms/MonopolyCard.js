@@ -2,10 +2,11 @@ import React,{useState} from 'react'
 import styled,{keyframes,css} from 'styled-components'
 import PropTypes from 'prop-types';
 import { device } from '../../common/devices';
-import { CardTypeEnum,PopoverTypesEnum } from '../../common/constants';
+import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
 import faceDownCardImg from '../../assets/img/face-down-card.jpg' 
 import { Popover } from 'react-tiny-popover'
 import {PreMoveCardPopoverContent} from '../atoms/PreMoveCardPopoverContent'
+import {InPlayMoveCardPopoverContent} from '../atoms/InPlayMoveCardPopoverContent'
 
 
 
@@ -57,9 +58,10 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                             onClickOutside={() => setIsPopoverOpen(false)} 
                             content={({ position, nudgedLeft, nudgedTop }) => {
                                 
-                                if(popoverType == PopoverTypesEnum.PreMove)
+                                if(popoverType == TransactionTrackerStatusEnum.InProgress)
                                     return <PreMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
-                                
+                                else if(popoverType == TransactionTrackerStatusEnum.CurrentPlayerSelection)
+                                    return <InPlayMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                             }}
                         >
                             <StyledCard src={gameCard.card.cardImageUrl}

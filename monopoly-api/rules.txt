@@ -1,0 +1,73 @@
+options preMove(preMove):
+1. play on property pile   wildcard on p 	remove should be able to select which colour to move it to   
+2. play on cash pile 
+3. single rent card + double rent 
+4. multiple rent cardd + double rent 
+5. Draw 2 cards 
+6. Single Rent
+7. Multiple Rent
+8. Its My Bday
+9. Debt Collector
+10. Sly Deal
+11. Forced Deal
+12. Deal Breaker
+
+
+
+my property pile after move is made to middle(preActionProcess)
+1. 
+2. 
+3. select my card for rent (single)
+4. select my card for rent (multiple)					 
+5.
+6. select my card for rent (single) 
+7. select my card for rent (multiple)					 
+8.
+9.
+10.       
+11. select my card for force deal + non full set    
+12 
+
+select other player(selectionProcess)
+others's property pile on my turn:
+1. 
+2. 
+3.  single rent select player
+4. 				 
+5.
+6.  single rent select player
+7.				 
+8.
+9.  debt collector select player
+10. sly deal + select non full set card     
+11. force deal + select non full set card   
+12, deal breaker + select full set card  
+
+
+other player on my turn after selection(on their screen) (inPlayProcess)
+1. 
+2. 
+3. player selects any card from either cash pile or property pile that add up to $
+4. player selects any card from either cash pile or property pile that add up to $	 	
+5.
+6. player selects any card from either cash pile or property pile that add up to $
+7. player selects any card from either cash pile or property pile that add up to $	 
+8.
+9. player selects any card from either cash pile or property pile that add up to $
+10. player acknoweldges sly deal + completes it
+11. player acknoweldges force trade + completes it 
+12,  player acknoweldges force trade + completes it
+
+Note: proceed or cancel prior to above action 
+
+
+other player on my turn after selection(on their screen) (postAction)
+player completes move
+after end of 3rd move: player must discard cards 
+
+
+
+
+
+
+

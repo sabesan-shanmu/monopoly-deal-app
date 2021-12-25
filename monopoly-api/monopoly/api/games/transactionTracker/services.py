@@ -21,7 +21,12 @@ def add_transaction_tracker(trackerTransaction):
 def modify_transaction_tracker(trackerTransaction):
     try:
         transactionTrackerUpdate=get_transaction_tracker(trackerTransaction.transactionTrackerId)
-        transactionTrackerUpdate.transactionTrackerStatus=trackerTransaction.transactionTrackerStatus
+        transactionTrackerUpdate.transactionTrackerStatus = trackerTransaction.transactionTrackerStatus
+        transactionTrackerUpdate.requestedRentColourId = trackerTransaction.requestedRentColourId
+        transactionTrackerUpdate.requestedTotal = trackerTransaction.requestedTotal
+        transactionTrackerUpdate.requestedGroupId = trackerTransaction.requestedGroupId
+        transactionTrackerUpdate.requestedGameCardId = trackerTransaction.requestedGameCardId 
+        transactionTrackerUpdate.sendingGameCardId = trackerTransaction.sendingGameCardId
         db.session.commit()
         return transactionTrackerUpdate
     except:

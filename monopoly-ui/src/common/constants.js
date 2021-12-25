@@ -104,13 +104,6 @@ export const CardTypesEnum = {
 }
 
 
-export const PopoverTypesEnum = {
-    PreMove:1,
-    preAction:2,
-    selectionProcess:3,
-    inPlayProcess:4,
-    moveCompletion:5
-}
 
 
 export const ColoursEnum = {

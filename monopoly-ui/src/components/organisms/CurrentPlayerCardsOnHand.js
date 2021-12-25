@@ -3,7 +3,7 @@ import { PlayerContext } from '../../context/PlayerContext';
 import { MonopolyCard } from '../atoms/MonopolyCard';
 import styled from 'styled-components';
 
-import { CardTypeEnum,PopoverTypesEnum } from '../../common/constants';
+import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
 import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
@@ -35,24 +35,23 @@ export const CurrentPlayerCardsOnHand = ()=> {
     console.log(preMoveCheckState);
 
    
-  
-    
-    const isCardPlayable = (playerCard)=>{
-        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId))?.possibleMoves?.length>0?true:false;
-    }
-    const listOfPossibleMoves = (playerCard)=>{
+    const getListOfPossibleMoves = (playerCard)=>{
         return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId));
     }
     
     return (
         <FooterCardsContainer>
-        {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>
+        {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>{
+            const listOfPossibleMoves= getListOfPossibleMoves(playerCard);
+            const isCardSelectable = listOfPossibleMoves?.possibleMoves?.length>0 && isCurrentPlayerMove;
+            return (
             <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} 
-            isCardSelectable={isCardPlayable(playerCard) && isCurrentPlayerMove} 
-            listOfPossibleMoves={listOfPossibleMoves(playerCard)} 
-            popoverType={PopoverTypesEnum.PreMove}
-            />
-        )}
+                isCardSelectable={isCardSelectable} 
+                listOfPossibleMoves={listOfPossibleMoves} 
+                popoverType={TransactionTrackerStatusEnum.InProgress}
+                />
+            )
+        })}
         </FooterCardsContainer> 
     )
 }

@@ -243,6 +243,25 @@ export const getCurrentPlayerPropertyPileCards = (game,currentPlayer) =>{
 }
 
 
+export const getRentCost = (gameCard,propertyPileCards) =>{
+    const rentProperties = propertyPileCards.filter(card=>card.groupId == gameCard.groupId);
+ 
+    const numberOfRentPropertiesOwned = rentProperties.length;
+
+    switch(numberOfRentPropertiesOwned){
+        case 1:
+            return gameCard.assignedColourDetails.onePairRentPrice;
+        case 2:
+            return gameCard.assignedColourDetails.twoPairRentPrice;
+        case 3:
+            return gameCard.assignedColourDetails.threePairRentPrice;
+        case 4:
+            return gameCard.assignedColourDetails.fourPairRentPrice;
+        default:
+            return 0;
+    }
+}
+
 export const getColourName = (colourId)=>{
     return {
         0:"Any",
@@ -259,3 +278,5 @@ export const getColourName = (colourId)=>{
     }[colourId];
 
 }
+
+

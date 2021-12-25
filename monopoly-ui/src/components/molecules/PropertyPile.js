@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
-import { CardTypeEnum } from '../../common/constants';
-import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
+import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
+import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
+import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
 import {sortCardsByLastUpdateDate,getCardSetTotal} from '../../common/GameHelpers'
 
@@ -41,14 +42,25 @@ export const PropertyPile = ({propertyPileCards}) => {
     propertyPileCards = sortCardsByLastUpdateDate(propertyPileCards);
     const cashTotal = getCardSetTotal(propertyPileCards);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
-    const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
+    const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
+    const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext);
+    
+    const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
+    
+    console.log(inPlayMoveCheckState);
+    const getListOfPossibleMoves = (propertyCard) => {
+        
+        switch(transactionTrackerStatus)
+        {
+            case TransactionTrackerStatusEnum.CurrentPlayerSelection:
+                return (inPlayMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
+            case TransactionTrackerStatusEnum.OtherPlayerSelection:
+                return (selectionMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
+            default:
+                return null;   
+        }
+    }
 
-    const isCardPlayable = (playerCard)=>{
-        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId))?.possibleMoves?.length>0?true:false;
-    }
-    const listOfPossibleMoves = (playerCard)=>{
-        return (preMoveCheckState.listOfPossibleMoves.find(t=>t.gameCardId == playerCard.gameCardId));
-    }
     
 
     //group by groupId
@@ -67,12 +79,19 @@ export const PropertyPile = ({propertyPileCards}) => {
                 {propertyPileGroupedByGroupId && Object.values(propertyPileGroupedByGroupId).map((propertyPileGroup,key)=>{
                     return (
                     <StyledGrid key={key} total={propertyPileGroup.length}>
-                        {propertyPileGroup && propertyPileGroup.map((propertyCard,key)=>(
+                        {propertyPileGroup && propertyPileGroup.map((propertyCard,key)=>{
+                            const listOfPossibleMoves= getListOfPossibleMoves(propertyCard);
+                            const isCardSelectable = listOfPossibleMoves?.length>0;
+                         
+                            
+                            return (
                             <RepositionedCard position={key+1} total={propertyPileCards.length}>
                                 <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} key={key} 
-                                isCardSelectable={isCardPlayable(propertyCard) && !gameMoveState.gameMove.transactionTracker} listOfPossibleMoves={listOfPossibleMoves(propertyCard)}/>
+                                isCardSelectable={isCardSelectable} listOfPossibleMoves={listOfPossibleMoves}
+                                popoverType={transactionTrackerStatus} />
                             </RepositionedCard>
-                        ))}
+                            )
+                        })}
                     </StyledGrid>
                     )
                 })}

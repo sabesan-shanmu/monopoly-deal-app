@@ -2,20 +2,20 @@ import monopoly.common.enums as Enum
 from monopoly.exceptions import FieldValidationException
 import itertools
 
-def get_pre_move_check_list(current_player_cards,game_cards_played_by_all_players,game_play_actions):
+def get_pre_move_check_list(current_player_cards,game_cards_played_by_all_players,game_play_actions,game_move):
     pre_move_check_list = []
     
     #cards on hand and on property pile
     for player_card in current_player_cards:
 
         cardType = player_card.card.cardType
-        actionType = get_action_type(player_card)
-        possible_play_actions = [x for x in game_play_actions if x.actionType==actionType and x.cardType==cardType]
+        actionTypes = get_action_types(player_card)
+        possible_play_actions = [x for x in game_play_actions if x.actionType in actionTypes and x.cardType==cardType]
         
         preMoveCheck = PreMoveCheck(gameCardId=player_card.gameCardId)
 
         for possible_play_action in possible_play_actions:
-            if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,possible_play_action):
+            if possible_play_action.isPreCheckRequired is True and is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
                 preMoveCheck.add_precheck_card(possible_play_action)
             elif possible_play_action.isPreCheckRequired is False:
                 preMoveCheck.add_precheck_card(possible_play_action)
@@ -24,15 +24,15 @@ def get_pre_move_check_list(current_player_cards,game_cards_played_by_all_player
             
     return pre_move_check_list
 
-def get_action_type(player_card):
+def get_action_types(player_card):
     if player_card.card.cardType is Enum.CardTypes.Properties:
-        return player_card.card.properties.actionType
+        return [player_card.card.properties.actionType]
     elif player_card.card.cardType is Enum.CardTypes.Cash:
-        return player_card.card.cash.actionType
+        return [player_card.card.cash.actionType]
     elif player_card.card.cardType is Enum.CardTypes.Rent:
-        return player_card.card.rent.actionType
+        return [player_card.card.rent.actionType,Enum.ActionTypes.DoubleTheRent]  #For rent cards , will need the double the rent option to appear
     elif player_card.card.cardType is Enum.CardTypes.Action:
-        return player_card.card.action.actionType
+        return [player_card.card.action.actionType]
 
 
 def get_game_cards_played_by_all_players(players,game_cards_in_play):
@@ -40,10 +40,11 @@ def get_game_cards_played_by_all_players(players,game_cards_in_play):
     game_cards_played_by_all_players = []
 
     for player in players:
+        onHandCards = [x for x in game_cards_in_play if x.cardLocationStatus==Enum.GameCardLocationStatus.IsOnHand and x.playerId==player.playerId]
         cashPileCards = [x for x in game_cards_in_play if x.cardLocationStatus==Enum.GameCardLocationStatus.IsPlayedOnCashPile and x.playerId==player.playerId]
         propertyPileCards = [x for x in game_cards_in_play if x.cardLocationStatus==Enum.GameCardLocationStatus.IsPlayedOnPropertyPile and x.playerId==player.playerId]
         inPlayCards = [x for x in game_cards_in_play if x.cardLocationStatus==Enum.GameCardLocationStatus.IsInPlay and x.playerId==player.playerId]
-        gameCardsOnBoard = GameCardsOnBoard(player.playerId,cashPileCards,propertyPileCards,inPlayCards)    
+        gameCardsOnBoard = GameCardsOnBoard(player.playerId,cashPileCards,propertyPileCards,inPlayCards,onHandCards)    
         game_cards_played_by_all_players.append(gameCardsOnBoard)
        
     return game_cards_played_by_all_players
@@ -51,11 +52,12 @@ def get_game_cards_played_by_all_players(players,game_cards_in_play):
 
 class GameCardsOnBoard:
     
-    def __init__(self,playerId,cashPileCards,propertyPileCards,inPlayCards):
+    def __init__(self,playerId,cashPileCards,propertyPileCards,inPlayCards,onHandCards):
         self.playerId = playerId
         self.cashPileCards = cashPileCards
         self.propertyPileCards = propertyPileCards
         self.inPlayCards = inPlayCards
+        self.onHandCards = onHandCards
 
 class GroupedCards:
     
@@ -75,7 +77,7 @@ class PreMoveCheck:
         self.possibleMoves.append(possiblePlayAction)
 
 
-def is_property_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_property_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     if(player_card.card.properties.primaryColourId is not Enum.Colours.Any and possible_play_action.colourId is Enum.Colours.Any):
         return True
     elif (player_card.card.properties.primaryColourId is Enum.Colours.Any and possible_play_action.colourId is not Enum.Colours.Any):
@@ -99,7 +101,7 @@ def is_property_playable(player_card,game_cards_played_by_all_players,possible_p
 
     return False
         
-def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
     if(current_player_cards_on_field):
 
@@ -133,19 +135,20 @@ def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_
     return False
 
 
-def is_double_the_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_double_the_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
     if(current_player_cards_on_field):
-         #player doesnt have any rent cards in play
-        if len(current_player_cards_on_field.inPlayCards) == 0:
+        #rent card must be playable
+        if not is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
             return False
-        #check to see if a rent card exists on the board in play
-        return True if len([x for x in current_player_cards_on_field.inPlayCards if x.card.cardType == Enum.CardTypes.Rent ])>0 else False
+        #check to see if a double rent card on hand and numer of moves played is less than 2()
+        return True if len([x for x in current_player_cards_on_field.onHandCards if x.card.cardType == Enum.CardTypes.Action and x.card.action.actionType == Enum.ActionTypes.DoubleTheRent ])>0  \
+            and game_move.numberOfMovesPlayed < 2 else False
         
     return False
 
 
-def is_deal_breaker_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_deal_breaker_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     other_player_cards_on_field_list = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId]
     
     for other_player_cards in other_player_cards_on_field_list:
@@ -166,7 +169,7 @@ def is_deal_breaker_playable(player_card,game_cards_played_by_all_players,possib
 
     return False
 
-def is_sly_deal_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_sly_deal_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
 
     other_player_cards_on_field_list = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId]
     
@@ -189,7 +192,7 @@ def is_sly_deal_playable(player_card,game_cards_played_by_all_players,possible_p
     return False
 
 
-def is_forced_deal_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_forced_deal_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     
     other_player_cards_on_field_list = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId]
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]))
@@ -230,18 +233,18 @@ def is_forced_deal_playable(player_card,game_cards_played_by_all_players,possibl
     
     return False
 
-def is_its_my_birthday_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_its_my_birthday_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     #Just need 1 player to have card on the field
     other_player_cards_on_field_list = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId and (len(x.propertyPileCards)>0 or len(x.cashPileCards)>0)]
     return True if len(other_player_cards_on_field_list)>0 else False
 
-def is_debt_collector_playable(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_debt_collector_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     #Just need 1 player to have card on the field
     other_player_cards_on_field_list = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId and (len(x.propertyPileCards)>0 or len(x.cashPileCards)>0)]
     return True if len(other_player_cards_on_field_list)>0 else False
 
 
-def is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,possible_play_action):
+def is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
 
     pre_check_conditions = {
         (Enum.CardTypes.Properties,Enum.ActionTypes.NoActionRequired,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile):is_property_playable,
@@ -255,6 +258,6 @@ def is_pre_check_condition_valid(player_card,game_cards_played_by_all_players,po
         (Enum.CardTypes.Action,Enum.ActionTypes.DealBreaker,Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsInPlay):is_deal_breaker_playable
     }
     try:
-        return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.currentGameCardLocation,possible_play_action.expectedGameCardLocation)](player_card,game_cards_played_by_all_players,possible_play_action)
+        return pre_check_conditions[(possible_play_action.cardType,possible_play_action.actionType,possible_play_action.currentGameCardLocation,possible_play_action.expectedGameCardLocation)](player_card,game_cards_played_by_all_players,possible_play_action,game_move)
     except KeyError:
         raise FieldValidationException(message="Pre Check Condition not met. One or more of the specified conditions are not configured correctly.")
