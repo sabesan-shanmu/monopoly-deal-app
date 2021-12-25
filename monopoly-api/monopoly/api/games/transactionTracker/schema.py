@@ -37,7 +37,7 @@ class create_transaction_tracker(ma.Schema):
     actionType = EnumField(Enum.ActionTypes,by_value=True,required=True)
     transactionTrackerStatus = EnumField(Enum.TransactionTrackerStatus,by_value=True,required=True)
     @post_load
-    def make_game_action_tracker(self, data, **kwargs):
+    def make_transaction_tracker(self, data, **kwargs):
         return TransactionTracker(**data)
 
 
@@ -50,6 +50,6 @@ class updated_transaction_tracker(ma.Schema):
     requestedGameCardId = fields.Integer(allow_none=True) #sly deal,force deal
     sendingGameCardId = fields.Integer(allow_none=True) #force deal
     @post_load
-    def make_game_action_tracker(self, data, **kwargs):
+    def make_transaction_tracker(self, data, **kwargs):
         return TransactionTracker(**data)
 

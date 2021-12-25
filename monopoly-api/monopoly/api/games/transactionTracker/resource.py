@@ -125,7 +125,7 @@ class SingleTransactionTrackerResource(Resource):
             transaction_tracker = get_transaction_tracker(transactionTrackerId)
             
             if transaction_tracker is None:
-                raise ResourceNotFoundException(message="Game Action Tracker Not Found")   
+                raise ResourceNotFoundException(message="Game Transaction Tracker Not Found")   
             
             result = TransactionTrackerSchema().dump(transaction_tracker)
 

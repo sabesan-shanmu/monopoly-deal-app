@@ -4,7 +4,7 @@ import {startNoActionSequence,
     rotateCard,
     startPropertyActionSequence,
     startPassGoInPlayPileActionSequence,
-    startRentActionSequence,
+    startRentorForcedDealActionSequence,
     startDoubleTheRentActionSequence
 } from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
@@ -81,7 +81,7 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                             break;
                         case GamePlayActionEnum.SingleRentOnPlayPile:
                         case GamePlayActionEnum.MultipleRentOnPlayPile:
-                            startRentActionSequence(gameState.game,playerState.player,gameCard,move);
+                            startRentorForcedDealActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
                         case GamePlayActionEnum.DoubleTheRentOnPlayPile:
                             startDoubleTheRentActionSequence(gameState.game,playerState.player,gameCard,move);
@@ -91,6 +91,7 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                         case GamePlayActionEnum.ItsMyBirthdayOnPlayPile:
                             break
                         case GamePlayActionEnum.ForcedDealOnPlayPile:
+                            startRentorForcedDealActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
                         case GamePlayActionEnum.SlyDealOnPlayPile:
                             break;

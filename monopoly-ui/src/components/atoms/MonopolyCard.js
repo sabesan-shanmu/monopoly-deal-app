@@ -7,6 +7,7 @@ import faceDownCardImg from '../../assets/img/face-down-card.jpg'
 import { Popover } from 'react-tiny-popover'
 import {PreMoveCardPopoverContent} from '../atoms/PreMoveCardPopoverContent'
 import {InPlayMoveCardPopoverContent} from '../atoms/InPlayMoveCardPopoverContent'
+import { SelectionMoveCardPopoverContent } from './SelectionMoveCardPopoverContent';
 
 
 
@@ -62,6 +63,8 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                                     return <PreMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else if(popoverType == TransactionTrackerStatusEnum.CurrentPlayerSelection)
                                     return <InPlayMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
+                                else if(popoverType ==  TransactionTrackerStatusEnum.OtherPlayerSelection)
+                                    return <SelectionMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                             }}
                         >
                             <StyledCard src={gameCard.card.cardImageUrl}

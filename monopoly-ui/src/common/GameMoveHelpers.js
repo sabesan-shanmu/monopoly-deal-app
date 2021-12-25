@@ -22,7 +22,7 @@ export const startDoubleTheRentActionSequence = (game,currentPlayer,gameCard,mov
             .then(function(success){
                 console.log(success.data);
                 //4.play the rent card
-                return startRentActionSequence(game,currentPlayer,gameCard,move)
+                return startRentorForcedDealActionSequence(game,currentPlayer,gameCard,move)
             })
             .then(function(success){
                 console.log(success.data);
@@ -35,8 +35,8 @@ export const startDoubleTheRentActionSequence = (game,currentPlayer,gameCard,mov
         })
 }
 
-export const startRentActionSequence = (game,currentPlayer,gameCard,move) =>{
-    console.log("Started startRentActionSequence!");
+export const startRentorForcedDealActionSequence = (game,currentPlayer,gameCard,move) =>{
+    console.log("Started startRentorForcedDealActionSequence!");
     let createdTransaction = {};
     //1. create transaction tracker
     const transactionTrackerPayload = {
@@ -63,7 +63,7 @@ export const startRentActionSequence = (game,currentPlayer,gameCard,move) =>{
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Partiallly Completed startRentActionSequence!");
+        console.log("Partiallly Completed startRentorForcedDealActionSequence!");
     })
     .catch((error)=>{console.log(error.response.data)}); 
 
@@ -181,7 +181,7 @@ export const updateInPlayTransactionTracker = (game,currentPlayer,gameMove,gameC
     const propertyPileCards = getCurrentPlayerPropertyPileCards(game,currentPlayer);
     const transactionTracker = gameMove.transactionTracker;
 
-    //1. create transaction tracker
+    //1. update transaction tracker
     const updatedTransactionTrackerPayload = {
         transactionTrackerId:transactionTracker.transactionTrackerId,
         transactionTrackerStatus:gameCard?.card?.rent?.actionType == ActionTypesEnum.MultiplePlayerRent ? TransactionTrackerStatusEnum.OthersAcknowledge:TransactionTrackerStatusEnum.OtherPlayerSelection,
@@ -192,15 +192,34 @@ export const updateInPlayTransactionTracker = (game,currentPlayer,gameMove,gameC
     
      //1. patch the transaction tracker 
     console.log(updatedTransactionTrackerPayload);
-    return;
+    
     singleTransactionTrackerApi.patch(transactionTracker.links.self,currentPlayer.accessToken,updatedTransactionTrackerPayload)
-    .then((success)=>{console.log(success.data)})
+    .then((success)=>{
+        console.log(success.data)
+        if(gameCard?.card?.rent?.actionType == ActionTypesEnum.MultiplePlayerRent){
+            //create transaction for all
+
+        }
+    })
     .catch((error)=>{console.log(error.response.data)});
 
 }
 
 
+export const updateSelectionTransactionTracker = (game,currentPlayer,gameMove,selectedPlayerId,selectedGameCard) =>{
+    
+    const propertyPileCards = getCurrentPlayerPropertyPileCards(game,currentPlayer);
+    const transactionTracker = gameMove.transactionTracker;
 
+    //1. update transaction tracker
+    const updatedTransactionTrackerPayload = {
+        transactionTrackerId:transactionTracker.transactionTrackerId,
+        transactionTrackerStatus:TransactionTrackerStatusEnum.OthersAcknowledge,
+        requestedGroupId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.groupId:null,
+        requestedGameCardId:selectedGameCard?selectedGameCard.gameCard:null
+    };
+
+}
 
 export const rotateCard = (game,currentPlayer,gameCard) => {
     //1. rotate the card
@@ -244,7 +263,7 @@ export const getGroupId = (gameCard,currentPlayerPropertyPileCards)=>{
     }
  
 
-    //default:increment group id based on colour
+    //default:increment group id based on colour(starting a new set)
     return `${getColourName(foundCards[0].assignedColourId)}-${parseInt(foundCards[0].groupId.split("-")[1])+1}`;
 }
 

@@ -42,16 +42,16 @@ def get_selection_moves(currentPlayerMove,otherPlayers):
         playedGameCard = currentPlayerMove.transactionTracker.gameCard
 
         if currentPlayerMove.transactionTracker.actionType in [Enum.ActionTypes.DebtCollector,Enum.ActionTypes.SinglePlayerRent,Enum.ActionTypes.DoubleTheRent]:
-            selectionMoveCheck.add_selectablePlayer({"playerId":player.playerId,"description":"Select {0}".format(player.playerName),"actionType":currentPlayerMove.transactionTracker.actionType})
+            selectionMoveCheck.add_selectablePlayer({"playerId":player.playerId,"description":"Select Player","actionType":currentPlayerMove.transactionTracker.actionType})
         elif currentPlayerMove.transactionTracker.actionType in [Enum.ActionTypes.SlyDeal,Enum.ActionTypes.ForcedDeal,Enum.ActionTypes.DealBreaker]:
          
             for propertyPileCard in propertyPileCards:
-                isNonCompleteSetCard = len([x for x in other_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x == propertyPileCard.groupId]) > 0
+                isNonCompleteSetCard = len([x for x in other_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x.groupId == propertyPileCard.groupId]) > 0
                 
                 if currentPlayerMove.transactionTracker.actionType in [Enum.ActionTypes.SlyDeal,Enum.ActionTypes.ForcedDeal] and isNonCompleteSetCard == True:
                     #sly deal and forced deal card cannot be part of a complete set
                     selectionMoveCheck.add_selectableCard({"gameCardId":propertyPileCard.gameCardId,"description":"Select Card","actionType":currentPlayerMove.transactionTracker.actionType})
-                elif currentPlayerMove.transactionTracker.actionType in [Enum.ActionTypes.SlyDeal,Enum.ActionTypes.ForcedDeal] and isNonCompleteSetCard == False:
+                elif currentPlayerMove.transactionTracker.actionType in [Enum.ActionTypes.DealBreaker] and isNonCompleteSetCard == False:
                     #deal break card must be played with complete set
                     selectionMoveCheck.add_selectableCard({"gameCardId":propertyPileCard.gameCardId,"description":"Select Set","actionType":currentPlayerMove.transactionTracker.actionType})
        

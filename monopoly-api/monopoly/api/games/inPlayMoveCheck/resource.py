@@ -43,14 +43,9 @@ class InPlayMoveCheckResource(Resource):
 
             
             player = get_player_by_player_id(gameFound.gameId,identity["playerId"])
-            #get list of cards on property pile 
-            propertyPileCards = player.propertyPileCards
-            if len(propertyPileCards) == 0:
-                return []
-
-          
+                  
     
-            in_play_moves = get_in_play_moves(currentPlayerMove,propertyPileCards)
+            in_play_moves = get_in_play_moves(currentPlayerMove,player.propertyPileCards)
 
 
             result = InPlayMoveCheckSchema().dump(in_play_moves)

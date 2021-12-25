@@ -28,7 +28,7 @@ def get_in_play_moves(currentPlayerMove,propertyPileCards):
 
     for propertyPileCard in propertyPileCards:
         
-        isNonCompleteSetCard = len([x for x in my_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x == propertyPileCard.groupId]) > 0
+        isNonCompleteSetCard = len([x for x in my_player_cards_grouped_by_groupId if x.currentTotalInSet < x.numberNeededToCompleteSet and x.groupId == propertyPileCard.groupId]) > 0
         #forced deal card cannot be part of a complete set
         if currentPlayerMove.transactionTracker.actionType is Enum.ActionTypes.ForcedDeal and isNonCompleteSetCard == True:
             inPlayMovesList.add_selectableCard({"gameCardId":propertyPileCard.gameCardId,"actionType":Enum.ActionTypes.ForcedDeal,"description":"Select Card"})

@@ -37,7 +37,7 @@ const StyledPlayerCharacter = styled.section`
     cursor:${(props) =>!props.isGameBoard?'':props.isSelectable==true? 'pointer':'not-allowed' };
 `;
 
-export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,isSelectable=false,listOfPossibleMoves=[],...props}) => { 
+export const PlayerCharacter = ({playerId,playerName,imageId,numberOfCardsOnHand,playerGameOrder,isGameBoard=false,isSelectable=false,listOfPossibleMoves=[],...props}) => { 
 
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
     const cards = [...Array(numberOfCardsOnHand).keys()]
@@ -51,7 +51,7 @@ export const PlayerCharacter = ({playerName,imageId,numberOfCardsOnHand,playerGa
             onClickOutside={() => setIsPopoverOpen(false)} 
             content={({ position, nudgedLeft, nudgedTop }) => {
                 
-                return <SelectionMovePlayerPopoverContent setIsPopoverOpen={setIsPopoverOpen} listOfPossibleMoves={listOfPossibleMoves} />
+                return <SelectionMovePlayerPopoverContent selectedPlayerId={playerId} setIsPopoverOpen={setIsPopoverOpen} listOfPossibleMoves={listOfPossibleMoves} />
     
             }}
         >

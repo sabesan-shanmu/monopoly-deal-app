@@ -31,7 +31,7 @@ const StyledPopoverBody = styled.div`
 
 
 
-export const SelectionMovePlayerPopoverContent = ({selectedPlayerId,listOfPossibleMoves,setIsPopoverOpen}) =>{
+export const SelectionMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpen}) =>{
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
@@ -41,7 +41,7 @@ export const SelectionMovePlayerPopoverContent = ({selectedPlayerId,listOfPossib
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
             {listOfPossibleMoves.map((move,key)=>
                 <StyledPopoverBody key={key} onClick={()=>{
-                    updateSelectionTransactionTracker(gameState.game,playerState.player,gameMoveState.gameMove,selectedPlayerId,null);
+                    updateSelectionTransactionTracker(gameState.game,playerState.player,gameMoveState.gameMove,null,gameCard);
                     //close popover
                     setIsPopoverOpen(false);
                 }}>{move.description}</StyledPopoverBody>
