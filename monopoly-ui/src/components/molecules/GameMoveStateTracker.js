@@ -212,7 +212,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                 </StyledStartChoiceHeader>
             }
             {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && !gameMove?.transactionTracker &&
-                <React.Fragment>Select a card to play or move cards in your property pile</React.Fragment>
+                <React.Fragment>Select a card to play from your hand or move cards in your property pile</React.Fragment>
             }
             {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && gameMove?.transactionTracker &&
                 <React.Fragment>{getMessage(gameMove)}</React.Fragment>
