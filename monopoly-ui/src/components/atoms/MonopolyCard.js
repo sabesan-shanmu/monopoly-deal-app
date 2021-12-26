@@ -2,12 +2,13 @@ import React,{useState} from 'react'
 import styled,{keyframes,css} from 'styled-components'
 import PropTypes from 'prop-types';
 import { device } from '../../common/devices';
-import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
+import { CardTypeEnum,TransactionTrackerStatusEnum, GameCardLocationStatusEnum } from '../../common/constants';
 import faceDownCardImg from '../../assets/img/face-down-card.jpg' 
 import { Popover } from 'react-tiny-popover'
 import {PreMoveCardPopoverContent} from '../atoms/PreMoveCardPopoverContent'
 import {InPlayMoveCardPopoverContent} from '../atoms/InPlayMoveCardPopoverContent'
 import { SelectionMoveCardPopoverContent } from './SelectionMoveCardPopoverContent';
+import { PropertyMoveCardPopoverContent } from './PropertyMoveCardPopoverContent';
 
 
 
@@ -59,12 +60,14 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                             onClickOutside={() => setIsPopoverOpen(false)} 
                             content={({ position, nudgedLeft, nudgedTop }) => {
                                 
-                                if(popoverType == TransactionTrackerStatusEnum.InProgress)
+                                if(popoverType == TransactionTrackerStatusEnum.InProgress && gameCard.cardLocationStatus == GameCardLocationStatusEnum.IsOnHand)
                                     return <PreMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else if(popoverType == TransactionTrackerStatusEnum.CurrentPlayerSelection)
                                     return <InPlayMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else if(popoverType ==  TransactionTrackerStatusEnum.OtherPlayerSelection)
                                     return <SelectionMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
+                                else
+                                    return <PropertyMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                             }}
                         >
                             <StyledCard src={gameCard.card.cardImageUrl}

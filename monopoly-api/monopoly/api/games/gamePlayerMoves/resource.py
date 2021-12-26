@@ -14,6 +14,9 @@ from marshmallow import ValidationError
 from flask_jwt_extended import get_jwt_identity
 import monopoly.notifications.gameMoves as gameMovesNotification
 import monopoly.common.enums as Enum
+from monopoly.api.games.gameCards.services import discard_game_cards
+from monopoly.api.games.schema import GameSchema
+from monopoly.notifications.games import publish_game_update_event_to_room
 
 
 
@@ -66,6 +69,12 @@ class GamePlayerMovesResource(Resource):
                 updated_player_move.totalGameMoveCount +=1
                 updated_player_move.numberOfMovesPlayed = 0
                 updated_player_move.gameMoveStatus = GameMoveStatus.WaitingForPlayerToBeginMove
+                #clear the play pile
+                discard_game_cards(gamePassCode)
+                #publish updated game
+                update_game = get_game_by_gamepasscode(gamePassCode)
+                update_game_result = GameSchema().dump(update_game)
+                publish_game_update_event_to_room(gamePassCode,update_game_result)
         
           
             

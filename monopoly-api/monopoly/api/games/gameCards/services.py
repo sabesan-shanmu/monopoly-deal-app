@@ -5,6 +5,7 @@ from monopoly.common.constants import INITIAL_NUMBER_OF_CARDS
 from monopoly import db
 from sqlalchemy import exc,and_
 from monopoly.common import constants,enums
+from monopoly.common.enums import GameCardLocationStatus
 
 def create_game_cards(game,players,cards):
     try:
@@ -53,11 +54,30 @@ def draw_game_cards(gamePassCode,number):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId == None,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsNotDrawn]))).limit(number).all()
 
 
-def reshuffle_game_cards():
-    pass
+def reshuffle_game_cards(gamePassCode):
+    try:
+        discardedCards=db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsDiscarded]))).all()
+        for i,discardCard in enumerate(discardedCards):
+            discardCards[i].playerId = None
+            discardCards[i].groupId = "0"
+            discardCards[i].cardLocationStatus = GameCardLocationStatus.IsNotDrawn
+        db.session.commit()
+    except:
+        db.session.rollback()
+        raise
 
-def discard_game_cards(gameCards):
-    pass
+def discard_game_cards(gamePassCode):
+    try:
+        inPlayCards=db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsInPlay]))).all()
+        for i,inPlayCard in enumerate(inPlayCards):
+            inPlayCards[i].playerId = None
+            inPlayCards[i].groupId = "0"
+            inPlayCards[i].cardLocationStatus = GameCardLocationStatus.IsDiscarded
+        db.session.bulk_save_objects(inPlayCards)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        raise
 
 def update_game_cards(gameCards):
     try:

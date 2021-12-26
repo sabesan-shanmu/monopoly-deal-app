@@ -2,7 +2,7 @@
 from flask_restx import Resource,Namespace
 from flask import request,jsonify
 from marshmallow import ValidationError
-from monopoly.api.games.gameCards.services import draw_game_cards,update_game_cards
+from monopoly.api.games.gameCards.services import draw_game_cards, reshuffle_game_cards, update_game_cards
 from monopoly.api.games.services import get_game_by_gamepasscode
 from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.auth import validate_gamepassCode,validate_player
@@ -41,6 +41,12 @@ class DrawCardsResource(Resource):
             
 
             drawn_gameCards = draw_game_cards(game.gamePassCode,NUMBER_OF_CARDS_TO_DRAW)
+
+            #shuffle deck if drawn_cards<2
+            if len(drawn_gameCards)<2:
+                reshuffle_game_cards(game.gamePassCode)
+                drawn_gameCards = draw_game_cards(game.gamePassCode,NUMBER_OF_CARDS_TO_DRAW)
+
             #update drawn card to current player's id and location to on hand
             for i,drawn_card in enumerate(drawn_gameCards):
                 drawn_gameCards[i].playerId = identity["playerId"]

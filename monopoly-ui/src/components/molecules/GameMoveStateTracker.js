@@ -6,9 +6,11 @@ import { gameMoveApi } from '../../api/gameMoveApi';
 import { preMoveCheckApi } from '../../api/preMoveCheckApi';
 import { inPlayMoveCheckApi } from '../../api/inPlayMoveCheckApi';
 import { selectionMoveCheckApi } from '../../api/selectionMoveCheckApi';
+import { propertyMoveCheckApi } from '../../api/propertyMoveCheckApi';
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
+import { PropertyMoveCheckContext } from '../../context/PropertyMoveCheckContext'
 import { ResourceTypes,ActionTypesEnum } from '../../common/constants';
 
 const StyledStartChoiceHeader = styled.div`
@@ -31,6 +33,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
     const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
     const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext);
+    const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
     
     const startTurnBtn = {
         label:"Start Move",
@@ -128,6 +131,20 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                         })
                 })
         }
+        if(gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress ||
+            gameMove.transactionTracker?.transactionTrackerStatus == TransactionTrackerStatusEnum.OthersAcknowledge)
+        {
+            propertyMoveCheckApi.get(game.links.propertyMoveCheck,player.accessToken)
+                .then(success =>propertyMoveCheckStateDispatch({type:ResourceTypes.LoadResource,listOfPossibleMoves:success.data}))
+                .catch(error=>{
+                    console.log(error.response.data);
+                    propertyMoveCheckStateDispatch({   
+                            type:ResourceTypes.LoadResource,
+                            listOfPossibleMoves:[]
+                        })
+                })
+
+        }
 
     },[gameMove])
 
@@ -195,7 +212,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                 </StyledStartChoiceHeader>
             }
             {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && !gameMove?.transactionTracker &&
-                <React.Fragment>Select a card to play</React.Fragment>
+                <React.Fragment>Select a card to play or move cards in your property pile</React.Fragment>
             }
             {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && gameMove?.transactionTracker &&
                 <React.Fragment>{getMessage(gameMove)}</React.Fragment>

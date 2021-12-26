@@ -49,6 +49,7 @@ class GameSchema(ma.Schema):
             "preMoveCheck": url_overwrite("PreMoveCheck_pre_move_check_resource", gamePassCode="<gamePassCode>"),
             "inPlayMoveCheck": url_overwrite("InPlayMoveCheck_in_play_move_check_resource", gamePassCode="<gamePassCode>"),
             "selectionMoveCheck": url_overwrite("SelectionMoveCheck_selection_move_check_resource", gamePassCode="<gamePassCode>"),
+            "propertyMoveCheck": url_overwrite("PropertyMoveCheck_property_move_check_resource", gamePassCode="<gamePassCode>"),
             "drawCards": url_overwrite("DrawCards_draw_cards_resource", gamePassCode="<gamePassCode>"),
             "transactionTracker": url_overwrite("TransactionTracker_many_transaction_tracker_resource", gamePassCode="<gamePassCode>")
         }

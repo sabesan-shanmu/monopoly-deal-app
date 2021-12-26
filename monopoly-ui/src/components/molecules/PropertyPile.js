@@ -6,6 +6,7 @@ import { MonopolyCard } from '../atoms/MonopolyCard';
 import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
 import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
+import { PropertyMoveCheckContext } from '../../context/PropertyMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
 import {sortCardsByLastUpdateDate,getCardSetTotal} from '../../common/GameHelpers'
 
@@ -43,7 +44,8 @@ export const PropertyPile = ({propertyPileCards}) => {
     const cashTotal = getCardSetTotal(propertyPileCards);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
     const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
-    const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext);
+    const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext); 
+    const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
     
     const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
     
@@ -56,8 +58,8 @@ export const PropertyPile = ({propertyPileCards}) => {
                 return (inPlayMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
             case TransactionTrackerStatusEnum.OtherPlayerSelection:
                 return (selectionMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
-            default:
-                return null;   
+            default: //TODO: in theory this should be find, will need to check to see if this causes issue
+                return (propertyMoveCheckState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
         }
     }
 

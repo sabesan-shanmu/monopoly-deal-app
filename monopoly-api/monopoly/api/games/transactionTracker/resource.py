@@ -95,7 +95,7 @@ class SingleTransactionTrackerResource(Resource):
 
             trade_payee_transactions = get_trade_payee_transaction_trackers(transactionTrackerId)
 
-            if len([x for x in trade_payee_transactions if x.payeeTransactionStatus != Enum.TransactionTrackerStatus.Completed])>0:
+            if len([x for x in trade_payee_transactions if x.payeeTransactionStatus == Enum.PayeeTransactionStatus.NotPaid])>0:
                 raise FieldValidationException(message="Trade Transaction is not complete")
 
             #update transaction tracker

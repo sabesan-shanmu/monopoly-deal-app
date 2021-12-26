@@ -9,6 +9,7 @@ import { GameMoveContextProvider } from '../../context/GameMoveContext'
 import { PreMoveCheckContextProvider } from '../../context/PreMoveCheckContext';
 import { InPlayMoveCheckContextProvider } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContextProvider } from '../../context/SelectionMoveCheckContext';
+import { PropertyMoveCheckContextProvider } from '../../context/PropertyMoveCheckContext'
 
 
 export const GameBoardTemplate = ()=> {
@@ -20,19 +21,21 @@ export const GameBoardTemplate = ()=> {
             {playerState.player && 
                 <React.Fragment>
                     <GameMoveContextProvider>
-                        <PreMoveCheckContextProvider> 
-                            <InPlayMoveCheckContextProvider>
-                                <SelectionMoveCheckContextProvider>
-                                    <GameBoardHeader/>
-                                    {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
-                                        <GameLobbyMenu/>
-                                    }
-                                    {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
-                                        <GameInProgressBoard game={gameState.game}/>
-                                    }
-                                </SelectionMoveCheckContextProvider>
-                            </InPlayMoveCheckContextProvider>
-                        </PreMoveCheckContextProvider>
+                        <PropertyMoveCheckContextProvider> 
+                            <PreMoveCheckContextProvider> 
+                                <InPlayMoveCheckContextProvider>
+                                    <SelectionMoveCheckContextProvider>
+                                        <GameBoardHeader/>
+                                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
+                                            <GameLobbyMenu/>
+                                        }
+                                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
+                                            <GameInProgressBoard game={gameState.game}/>
+                                        }
+                                    </SelectionMoveCheckContextProvider>
+                                </InPlayMoveCheckContextProvider>
+                            </PreMoveCheckContextProvider>
+                        </PropertyMoveCheckContextProvider>
                     </GameMoveContextProvider>
                 </React.Fragment>
             }

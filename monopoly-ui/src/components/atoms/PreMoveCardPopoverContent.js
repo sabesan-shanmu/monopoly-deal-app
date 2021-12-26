@@ -105,7 +105,7 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
             )}
             {gameCard?.card?.properties?.isRotatable && gameCard.cardLocationStatus == GameCardLocationStatusEnum.IsOnHand &&
                 <StyledPopoverBody onClick = {()=>{
-                    rotateCard(gameState.game,playerState.player,gameCard);
+                    rotateCard(gameCard,playerState.player);
                 }}>Rotate Card</StyledPopoverBody>
             }
         </StyledPopoverContent>

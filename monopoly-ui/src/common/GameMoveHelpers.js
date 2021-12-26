@@ -377,7 +377,7 @@ export const updateSelectionTransactionTracker = (game,currentPlayer,gameMove,se
     .catch((error)=>{console.log(error.response.data)});
 }
 
-export const rotateCard = (game,currentPlayer,gameCard) => {
+export const rotateCard = (gameCard,currentPlayer) => {
     //1. rotate the card
     const gameCardPayload = {
         gameCardId:gameCard.gameCardId,
@@ -393,6 +393,20 @@ export const rotateCard = (game,currentPlayer,gameCard) => {
 }
 
 
+export const moveCard = (gameCard,currentPlayer,gameCardmove) => {
+    //1. move the card
+    const gameCardPayload = {
+        gameCardId:gameCardmove.gameCardId,
+        isCardRightSideUp:gameCardmove.isCardRightSideUp,
+        assignedColourId:gameCardmove.assignedColourId,
+        groupId:gameCardmove.groupId
+    };
+    gameCardsApi.patch(gameCard.links.self,currentPlayer.accessToken,gameCardPayload)
+    .then((success)=>{console.log(success.data)})
+    .catch((error)=>{
+        console.log(error.response.data)
+    });
+}
 
 
 
