@@ -18,7 +18,6 @@ export const GameBoardArea = () => {
 
     const {gameState,gameDispatch} = useContext(GameContext);
     const players = gameState.game.players;
-    console.log(gameState.game)
 
 
     const activeBlocks = getActiveGameBlocks(gameState.game.numberOfPlayers);
@@ -26,7 +25,6 @@ export const GameBoardArea = () => {
 
 
 
-    console.log(activeBlocks);
 
     return (
         <StyledGameBoardArea numberOfRows={activeBlocks.numberOfRows}> 

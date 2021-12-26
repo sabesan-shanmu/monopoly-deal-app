@@ -29,7 +29,6 @@ const StyledStartChoiceHeader = styled.div`
 
 
 export const GameMoveStateTracker = ({gameMove,game,player})=>{
-    console.log({gameMove,game,player});
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
     const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
     const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext);

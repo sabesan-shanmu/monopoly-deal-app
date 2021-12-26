@@ -39,7 +39,7 @@ const RepositionedCard = styled.div`
 
 
 export const PropertyPile = ({propertyPileCards}) => {
-    console.log(propertyPileCards);
+
     propertyPileCards = sortCardsByLastUpdateDate(propertyPileCards);
     const cashTotal = getCardSetTotal(propertyPileCards);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
@@ -48,8 +48,7 @@ export const PropertyPile = ({propertyPileCards}) => {
     const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
     
     const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
-    
-    console.log(inPlayMoveCheckState);
+
     const getListOfPossibleMoves = (propertyCard) => {
         
         switch(transactionTrackerStatus)
@@ -73,7 +72,6 @@ export const PropertyPile = ({propertyPileCards}) => {
             dict[propertyPileCard.assignedColourId]=[propertyPileCard];
         return dict;
     },[]);
-    console.log(propertyPileGroupedByGroupId);
     return (
         <React.Fragment>
             <MonopolyDealLabel type="h2" text={`Properties Pile : $ ${cashTotal}`} />

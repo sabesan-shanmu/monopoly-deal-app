@@ -19,7 +19,6 @@ export const MessageHeader = ({currentPlayer,transactionTracker,gameMoveStatus,n
         return numberOfMovesPlayed==1?"1st":numberOfMovesPlayed==2?"2nd":numberOfMovesPlayed==3?"3rd":"";
     }
 
-    console.log(currentPlayer);
     return (
         <React.Fragment>
             <StyledMessageHeader imageId={currentPlayer.imageId}>

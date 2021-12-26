@@ -11,6 +11,7 @@ import {startNoActionSequence,
 } from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
+import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext'
 import { GameCardLocationStatusEnum,GamePlayActionEnum } from '../../common/constants'
 
 const StyledPopoverContent = styled.div`
@@ -41,7 +42,8 @@ const StyledPopoverBody = styled.div`
 export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPopoverOpen}) =>{
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
-    
+    const {currentPlayerCardsState,currentPlayerCardsStateDispatch} = useContext(CurrentPlayerCardsContext);
+
     return (
         <StyledPopoverContent>
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
@@ -87,7 +89,7 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                             startRentorForcedDealActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
                         case GamePlayActionEnum.DoubleTheRentOnPlayPile:
-                            startDoubleTheRentActionSequence(gameState.game,playerState.player,gameCard,move);
+                            startDoubleTheRentActionSequence(gameState.game,playerState.player,gameCard,move,currentPlayerCardsState.playerCards);
                             break;
                         case GamePlayActionEnum.ItsMyBirthdayOnPlayPile:
                             startItsMyBirthdayActionSequnece(gameState.game,playerState.player,gameCard,move);

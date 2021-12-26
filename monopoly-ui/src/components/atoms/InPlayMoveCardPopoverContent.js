@@ -35,7 +35,6 @@ export const InPlayMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIs
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
-    const {currentPlayerCardsState,currentPlayerCardsStateDispatch} = useContext(CurrentPlayerCardsContext);
     
     return (
         <StyledPopoverContent>

@@ -238,7 +238,6 @@ export const getCardSetTotal = (list) =>{
 export const getCurrentPlayerPropertyPileCards = (game,currentPlayer) =>{
 
     const playerFound = game.players.find((player)=>player.playerId === currentPlayer.playerId);
-    console.log(playerFound);
     return playerFound.propertyPileCards;
 }
 

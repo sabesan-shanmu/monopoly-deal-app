@@ -27,12 +27,11 @@ export const PlayerBlock = ({game,blockName,player,blockType}) => {
     const {selectionMoveCheckState,selectionMoveCheckDispatch} = useContext(SelectionMoveCheckContext);
 
     const playerBlock = {...player,isGameBoard:true};
-    console.log(playerBlock);
+
 
     const listOfPossibleMoves  = selectionMoveCheckState?.listOfPossibleMoves?.selectablePlayers.filter(t=>t.playerId == playerBlock.playerId);
     const isSelectable = listOfPossibleMoves?.length>0;
-    console.log(listOfPossibleMoves);
-    console.log(selectionMoveCheckState);
+
 
     return (
         <StyledPlayerBlock blockType={blockType}>

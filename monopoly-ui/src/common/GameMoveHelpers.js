@@ -157,7 +157,7 @@ export const startDoubleTheRentActionSequence = (game,currentPlayer,gameCard,mov
             currentPlayerId:currentPlayer.playerId
         };
         //6.start new turn 
-        gameMoveApi.patch(game.links.gameMoves,currentPlayer.accessToken,payload)
+        return gameMoveApi.patch(game.links.gameMoves,currentPlayer.accessToken,payload)
     })
     .then(function(success){
         console.log(success.data);
@@ -165,7 +165,6 @@ export const startDoubleTheRentActionSequence = (game,currentPlayer,gameCard,mov
         return startRentorForcedDealActionSequence(game,currentPlayer,gameCard,move)
     })
     .then(function(success){
-        console.log(success.data);
         console.log("Partially Completed startDoubleTheRentActionSequence!");
     })
     .catch((error)=>{console.log(error.response.data)});

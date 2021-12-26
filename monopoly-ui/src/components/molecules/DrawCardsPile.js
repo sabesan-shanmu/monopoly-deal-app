@@ -43,7 +43,7 @@ export const DrawCardsPile = ({game,gameMove,player}) => {
             console.log("player cannot draw cards");
             return false; 
         }
-        console.log("Clicked on drawCard");
+
         
 
         

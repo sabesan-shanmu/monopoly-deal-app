@@ -47,7 +47,7 @@ const StyledCard = styled.img`
 export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves=[], popoverType=null}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
-    console.log("fired");
+
     
     return (
         <React.Fragment>

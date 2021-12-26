@@ -42,7 +42,7 @@ const StyledGroup = styled.div`
 
 
 export const InPlayPile = ({players,inPlayPileCards}) => {
-    console.log(players);
+
     inPlayPileCards = sortCardsByLastUpdateDate(inPlayPileCards);
     //group by playerId
     const inPlayPileGroupedByPlayerId = inPlayPileCards.reduce((dict, inPlayPileCard) => {
@@ -53,7 +53,7 @@ export const InPlayPile = ({players,inPlayPileCards}) => {
             dict[inPlayPileCard.playerId]=[inPlayPileCard];
         return dict;
     },{});
-    console.log(inPlayPileGroupedByPlayerId);
+
 
     return (
         <StyledInPlayPile>

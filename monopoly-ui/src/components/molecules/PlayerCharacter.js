@@ -41,7 +41,7 @@ export const PlayerCharacter = ({playerId,playerName,imageId,numberOfCardsOnHand
 
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
     const cards = [...Array(numberOfCardsOnHand).keys()]
-    console.log(isSelectable);
+  
     return (
         <Popover
             isOpen={isPopoverOpen}

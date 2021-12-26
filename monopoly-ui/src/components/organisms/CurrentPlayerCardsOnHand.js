@@ -31,8 +31,6 @@ export const CurrentPlayerCardsOnHand = ()=> {
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const isCurrentPlayerMove = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState.player.playerId && !gameMoveState.gameMove.transactionTracker 
         && gameMoveState?.gameMove?.gameMoveStatus == GameMoveStatusEnum.MoveInProgress
-    console.log(currentPlayerCardsState);
-    console.log(preMoveCheckState);
 
    
     const getListOfPossibleMoves = (playerCard)=>{
