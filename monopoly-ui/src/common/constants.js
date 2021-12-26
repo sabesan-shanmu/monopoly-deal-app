@@ -85,6 +85,12 @@ export const ActionTypesEnum = {
  
 }
 
+export const PayeeTransactionStatusEnum = {
+    NotPaid:1,
+    Paid:2,
+    DeclinedTransaction:3
+}
+
 
 
 export const GameCardLocationStatusEnum = {

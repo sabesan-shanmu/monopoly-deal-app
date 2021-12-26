@@ -12,7 +12,7 @@ def get_trade_payee_transaction_tracker(tradePayeeTransactionId):
 
 def save_trade_payee_transactions(tradePayeeTransactions):
     try:
-        db.session.bulk_save_objects(tradePayeeTransactions)
+        db.session.add_all(tradePayeeTransactions)
         db.session.commit()
         return tradePayeeTransactions
     except:

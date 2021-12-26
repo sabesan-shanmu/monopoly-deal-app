@@ -6,6 +6,7 @@ from monopoly.models import TransactionTracker
 from monopoly.common.utils import url_overwrite
 from monopoly.api.games.gameCards.schema import GameCardSchema
 from monopoly.api.gamePlayActions.schema import GamePlayActionSchema
+from monopoly.api.games.transactionTracker.tradePayeeTransaction.schema import TradePayeeTransactionSchema
 
 
 class TransactionTrackerSchema(ma.Schema):
@@ -14,6 +15,7 @@ class TransactionTrackerSchema(ma.Schema):
     performedByPlayerId = fields.Integer()
     actionType = EnumField(Enum.ActionTypes,by_value=True)
     transactionTrackerStatus = EnumField(Enum.TransactionTrackerStatus,by_value=True)
+    tradePayeeTransactions = fields.Nested(TradePayeeTransactionSchema,many=True)
     gamePlayActionId = fields.Integer()
     gamePlayAction = fields.Nested(GamePlayActionSchema)
     gameCardId = fields.Integer()
@@ -24,9 +26,10 @@ class TransactionTrackerSchema(ma.Schema):
     requestedGameCardId = fields.Integer() #sly deal,force deal
     sendingGameCardId = fields.Integer() #force deal
 
-    links = ma.Hyperlinks(
-        {"self": url_overwrite("TransactionTracker_single_transaction_tracker_resource", gamePassCode="<gamePassCode>", transactionTrackerId="<transactionTrackerId>")}
-    )
+    links = ma.Hyperlinks({
+        "self": url_overwrite("TransactionTracker_single_transaction_tracker_resource", gamePassCode="<gamePassCode>", transactionTrackerId="<transactionTrackerId>"),
+        "tradePayeeTransaction": url_overwrite("TradePayeeTracker_many_trade_payee_transaction_resource", gamePassCode="<gamePassCode>", transactionTrackerId="<transactionTrackerId>")   
+    })
 
 
 class create_transaction_tracker(ma.Schema):
@@ -36,6 +39,7 @@ class create_transaction_tracker(ma.Schema):
     gameCardId = fields.Integer(required=True)
     actionType = EnumField(Enum.ActionTypes,by_value=True,required=True)
     transactionTrackerStatus = EnumField(Enum.TransactionTrackerStatus,by_value=True,required=True)
+    requestedTotal = fields.Integer(allow_none=True)
     @post_load
     def make_transaction_tracker(self, data, **kwargs):
         return TransactionTracker(**data)

@@ -77,3 +77,9 @@ class TransactionTrackerStatus(Enum):
     OtherPlayerSelection = 3
     OthersAcknowledge = 4
     Completed = 5
+
+
+class PayeeTransactionStatus(Enum):
+    NotPaid = 1
+    Paid = 2
+    DeclinedTransaction = 3

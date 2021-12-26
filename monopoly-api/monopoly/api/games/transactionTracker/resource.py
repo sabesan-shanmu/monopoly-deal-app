@@ -12,7 +12,7 @@ from flask_jwt_extended import get_jwt_identity
 from monopoly.api.games.gamePlayerMoves.schema import GamePlayerMovesSchema
 import monopoly.notifications.gameMoves as gameMovesNotification
 from monopoly.api.games.transactionTracker.tradePayeeTransaction.services import get_trade_payee_transaction_trackers
-
+import monopoly.common.enums as Enum
 
 
 transaction_tracker_namespace = Namespace('TransactionTracker', description='Resource to track the player actions on their turn.')
@@ -95,7 +95,7 @@ class SingleTransactionTrackerResource(Resource):
 
             trade_payee_transactions = get_trade_payee_transaction_trackers(transactionTrackerId)
 
-            if len([x for x in trade_payee_transactions if x.isPayeeTransactionCompleted == False])>0:
+            if len([x for x in trade_payee_transactions if x.payeeTransactionStatus != Enum.TransactionTrackerStatus.Completed])>0:
                 raise FieldValidationException(message="Trade Transaction is not complete")
 
             #update transaction tracker

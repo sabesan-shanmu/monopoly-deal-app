@@ -85,8 +85,8 @@ export const PropertyPile = ({propertyPileCards}) => {
                          
                             
                             return (
-                            <RepositionedCard position={key+1} total={propertyPileCards.length}>
-                                <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} key={key} 
+                            <RepositionedCard key={key} position={key+1} total={propertyPileCards.length}>
+                                <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} 
                                 isCardSelectable={isCardSelectable} listOfPossibleMoves={listOfPossibleMoves}
                                 popoverType={transactionTrackerStatus} />
                             </RepositionedCard>

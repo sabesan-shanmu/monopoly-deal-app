@@ -148,6 +148,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                 switch(actionType){
                     case ActionTypesEnum.SinglePlayerRent:
                     case ActionTypesEnum.MultiplePlayerRent:
+                    case ActionTypesEnum.DoubleTheRent:
                         return "Select Property Card from your property pile that matches the Rent Card Colour scheme";
                     case ActionTypesEnum.ForcedDeal:
                         return "Select Property Card from your property pile that is not part of a complete set";
@@ -157,14 +158,18 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
             case TransactionTrackerStatusEnum.OtherPlayerSelection:
                 switch(actionType){
                     case ActionTypesEnum.SinglePlayerRent:
+                    case ActionTypesEnum.DoubleTheRent:
                         return "Choose One Player to pay Rent";
+                    case ActionTypesEnum.DebtCollector: 
+                        return "Choose One Player to pay Debt"
+                    case ActionTypesEnum.DealBreaker: 
+                        return "Select Propety Card  from a player's property pile that is part of a complete set";
                     case ActionTypesEnum.ForcedDeal:
+                    case ActionTypesEnum.SlyDeal:
                         return "Select Property Card from a player's property pile that is not part of a complete set";
                     default: 
                         return "";
                 }
-            case TransactionTrackerStatusEnum.OthersAcknowledge:
-                return "Move In Progress";
             default:
                 return "Move In Progress";
         }

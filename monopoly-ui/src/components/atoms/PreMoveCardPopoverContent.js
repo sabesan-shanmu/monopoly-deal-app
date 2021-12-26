@@ -5,7 +5,9 @@ import {startNoActionSequence,
     startPropertyActionSequence,
     startPassGoInPlayPileActionSequence,
     startRentorForcedDealActionSequence,
-    startDoubleTheRentActionSequence
+    startDoubleTheRentActionSequence,
+    startDebtCollectorOrSlyDealorDealBreakerActionSequnece,
+    startItsMyBirthdayActionSequnece
 } from '../../common/GameMoveHelpers'
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
@@ -81,21 +83,19 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                             break;
                         case GamePlayActionEnum.SingleRentOnPlayPile:
                         case GamePlayActionEnum.MultipleRentOnPlayPile:
+                        case GamePlayActionEnum.ForcedDealOnPlayPile:
                             startRentorForcedDealActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
                         case GamePlayActionEnum.DoubleTheRentOnPlayPile:
                             startDoubleTheRentActionSequence(gameState.game,playerState.player,gameCard,move);
                             break;
-                        case GamePlayActionEnum.DebtCollectorOnPlayPile:
-                            break;
                         case GamePlayActionEnum.ItsMyBirthdayOnPlayPile:
+                            startItsMyBirthdayActionSequnece(gameState.game,playerState.player,gameCard,move);
                             break
-                        case GamePlayActionEnum.ForcedDealOnPlayPile:
-                            startRentorForcedDealActionSequence(gameState.game,playerState.player,gameCard,move);
-                            break;
                         case GamePlayActionEnum.SlyDealOnPlayPile:
-                            break;
+                        case GamePlayActionEnum.DebtCollectorOnPlayPile:
                         case GamePlayActionEnum.DealBreakerOnPlayPile:
+                            startDebtCollectorOrSlyDealorDealBreakerActionSequnece(gameState.game,playerState.player,gameCard,move);
                             break;
 
                     }

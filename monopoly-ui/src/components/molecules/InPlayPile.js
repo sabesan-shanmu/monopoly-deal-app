@@ -63,11 +63,11 @@ export const InPlayPile = ({players,inPlayPileCards}) => {
                    
                     const playerName = players.find(player=>player.playerId==inPlayGroup[0].playerId).playerName;
                     return (
-                    <StyledGroup>
-                        <MonopolyDealLabel type="h4" text={`played by ${playerName}:`} />
-                        <StyledGrid key={key} total={inPlayGroup.length}>
+                    <StyledGroup key={key}>
+                        <MonopolyDealLabel  type="h4" text={`played by ${playerName}:`} />
+                        <StyledGrid  total={inPlayGroup.length}>
                             {inPlayGroup && inPlayGroup.map((inPileCard,key)=>(
-                                <RepositionedCard position={key+1} total={inPlayGroup.length}>
+                                <RepositionedCard key={key} position={key+1} total={inPlayGroup.length}>
                                     <MonopolyCard gameCard={inPileCard} cardType={CardTypeEnum.InPlayCard} key={key} isCardSelectable={false}/>
                                 </RepositionedCard>
                             ))}

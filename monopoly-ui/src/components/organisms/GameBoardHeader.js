@@ -12,6 +12,8 @@ import { MessageHeader } from '../atoms/MessageHeader'
 import { GameMoveStateTracker } from '../molecules/GameMoveStateTracker'
 import { GameMoveContext } from '../../context/GameMoveContext'
 import modalBackgroundImg from "../../assets/img/backgrounds/modal-background.jpg";
+import {TransactionTracker} from "../molecules/TransactionTracker"
+import {TransactionTrackerStatusEnum} from "../../common/constants"
 
 const StyledGameHeader = styled.div`
     display:grid;
@@ -89,6 +91,14 @@ export const GameBoardHeader = () =>{
                                     player={playerState.player}
                                 />
                             }
+                            {/*only display the following when players are ready to transact*/}
+                            {gameMoveState.gameMove.transactionTracker && gameMoveState.gameMove.transactionTracker.transactionTrackerStatus == TransactionTrackerStatusEnum.OthersAcknowledge  &&
+                                <TransactionTracker
+                                    gameMove={gameMoveState.gameMove}
+                                    game={game}
+                                    player={playerState.player}
+                                />
+                            }       
                         </React.Fragment>
                     }
                 </div>
