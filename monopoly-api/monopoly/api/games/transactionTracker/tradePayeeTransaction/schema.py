@@ -16,9 +16,9 @@ class TradePayeeTransactionSchema(ma.Schema):
     actionType = EnumField(Enum.ActionTypes,by_value=True)
     payeeTransactionStatus = EnumField(Enum.PayeeTransactionStatus,by_value=True)
     links = ma.Hyperlinks(
-        {"self": url_overwrite("TransactionTracker_single_transaction_tracker_resource", gamePassCode="<gamePassCode>", transactionTrackerId="<transactionTrackerId>",tradePayeeTransactionId="<tradePayeeTransactionId>")}
+        {"self": url_overwrite("TradePayeeTracker_single_trade_payee_transaction_resource", gamePassCode="<gamePassCode>", transactionTrackerId="<transactionTrackerId>",tradePayeeTransactionId="<tradePayeeTransactionId>")}
     )
-
+    
 class create_trade_payee_transaction(ma.Schema):
     gamePassCode = fields.String()
     transactionTrackerId = fields.Integer(required=True)
