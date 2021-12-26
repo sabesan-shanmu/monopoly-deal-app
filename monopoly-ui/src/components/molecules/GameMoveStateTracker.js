@@ -142,7 +142,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                     case ActionTypesEnum.PassGo:
                         return "Click on Draw Card Pile to draw 2 cards";
                     default: 
-                        return "";
+                        return "Move In Progress";
                 }
             case TransactionTrackerStatusEnum.CurrentPlayerSelection:
                 switch(actionType){
@@ -171,7 +171,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                         return "";
                 }
             default:
-                return "Move In Progress";
+                return "";
         }
 
     }

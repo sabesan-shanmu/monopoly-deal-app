@@ -22,7 +22,7 @@ def modify_transaction_tracker(trackerTransaction):
     try:
         transactionTrackerUpdate=get_transaction_tracker(trackerTransaction.transactionTrackerId)
         transactionTrackerUpdate.transactionTrackerStatus = trackerTransaction.transactionTrackerStatus
-        transactionTrackerUpdate.requestedRentColourId = trackerTransaction.requestedRentColourId
+        transactionTrackerUpdate.requestedColourId = trackerTransaction.requestedColourId
         transactionTrackerUpdate.requestedTotal = trackerTransaction.requestedTotal
         transactionTrackerUpdate.requestedGroupId = trackerTransaction.requestedGroupId
         transactionTrackerUpdate.requestedGameCardId = trackerTransaction.requestedGameCardId 

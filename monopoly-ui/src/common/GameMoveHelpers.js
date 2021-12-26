@@ -293,7 +293,7 @@ export const updateInPlayTransactionTracker = (game,currentPlayer,gameMove,gameC
     const updatedTransactionTrackerPayload = {
         transactionTrackerId:transactionTracker.transactionTrackerId,
         transactionTrackerStatus:transactionTracker?.gameCard?.card?.rent?.actionType == ActionTypesEnum.MultiplePlayerRent ? TransactionTrackerStatusEnum.OthersAcknowledge:TransactionTrackerStatusEnum.OtherPlayerSelection,
-        requestedRentColourId:transactionTracker.actionType != ActionTypesEnum.ForcedDeal?gameCard.assignedColourId:null,
+        requestedColourId:transactionTracker.actionType != ActionTypesEnum.ForcedDeal?gameCard.assignedColourId:null,
         requestedTotal:transactionTracker.actionType != ActionTypesEnum.ForcedDeal? getRentCost(gameCard,propertyPileCards)*(transactionTracker.actionType == ActionTypesEnum.DoubleTheRent?2:1):null,
         sendingGameCardId:transactionTracker.actionType == ActionTypesEnum.ForcedDeal?gameCard.gameCardId:null
     };
@@ -351,6 +351,7 @@ export const updateSelectionTransactionTracker = (game,currentPlayer,gameMove,se
         transactionTrackerId:transactionTracker.transactionTrackerId,
         transactionTrackerStatus:TransactionTrackerStatusEnum.OthersAcknowledge,
         requestedGroupId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.groupId:null,
+        requestedColourId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.assignedColourId:null,
         requestedGameCardId:selectedGameCard && transactionTracker.actionType != ActionTypesEnum.DealBreaker?selectedGameCard.gameCard:null,
         requestedTotal:transactionTracker.actionType == ActionTypesEnum.DebtCollector?gameMove.transactionTracker.gameCard.card.action.transactionCost:null
     };

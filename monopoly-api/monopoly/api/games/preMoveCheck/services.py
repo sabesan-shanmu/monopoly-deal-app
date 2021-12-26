@@ -103,7 +103,8 @@ def is_property_playable(player_card,game_cards_played_by_all_players,possible_p
         
 def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
-    if(current_player_cards_on_field):
+    other_player_cards_no_field  = next(iter([x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId]),None)
+    if(current_player_cards_on_field and other_player_cards_no_field):
 
         #player doesnt have any property cards
         if len(current_player_cards_on_field.propertyPileCards) == 0:

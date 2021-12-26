@@ -145,10 +145,12 @@ class TransactionTracker(db.Model):
     actionType = db.Column(db.Enum(Enum.ActionTypes),nullable=True)
     tradePayeeTransactions =  db.relationship(TradePayeeTransaction,primaryjoin=transactionTrackerId==TradePayeeTransaction.transactionTrackerId)
     requestedTotal = db.Column(db.Integer) #rent, its my birthday, debt collector
-    requestedRentColourId = db.Column(db.Enum(Enum.Colours),nullable=True)#rent
-    requestedGroupId = db.Column(db.String) #dealbreaker
-    requestedGameCardId = db.Column(db.Integer) #sly deal,force deal
-    sendingGameCardId = db.Column(db.Integer) #force deal
+    requestedColourId = db.Column(db.Enum(Enum.Colours),nullable=True)#rent,dealbreaker
+    requestedGroupId = db.Column(db.String,nullable=True) #dealbreaker
+    requestedGameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True) #sly deal,force deal
+    requestGameCard = db.relationship(GameCards,primaryjoin=requestedGameCardId==GameCards.gameCardId)
+    sendingGameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True) #force deal
+    sendingGameCard = db.relationship(GameCards,primaryjoin=sendingGameCardId==GameCards.gameCardId)
 
 
 
