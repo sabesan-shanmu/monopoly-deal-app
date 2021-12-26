@@ -332,9 +332,9 @@ export const updateInPlayTransactionTracker = (game,currentPlayer,gameMove,gameC
     const updatedTransactionTrackerPayload = {
         transactionTrackerId:transactionTracker.transactionTrackerId,
         transactionTrackerStatus:transactionTracker?.gameCard?.card?.rent?.actionType == ActionTypesEnum.MultiplePlayerRent ? TransactionTrackerStatusEnum.OthersAcknowledge:TransactionTrackerStatusEnum.OtherPlayerSelection,
-        requestedColourId:transactionTracker.actionType != ActionTypesEnum.ForcedDeal?gameCard.assignedColourId:null,
-        requestedTotal:transactionTracker.actionType != ActionTypesEnum.ForcedDeal? getRentCost(gameCard,propertyPileCards)*(transactionTracker.actionType == ActionTypesEnum.DoubleTheRent?2:1):null,
-        sendingGameCardId:transactionTracker.actionType == ActionTypesEnum.ForcedDeal?gameCard.gameCardId:null
+        requestedColourId:transactionTracker.actionType != ActionTypesEnum.ForcedDeal?gameCard.assignedColourId:transactionTracker.requestedColourId,
+        requestedTotal:transactionTracker.actionType != ActionTypesEnum.ForcedDeal? getRentCost(gameCard,propertyPileCards)*(transactionTracker.actionType == ActionTypesEnum.DoubleTheRent?2:1):transactionTracker.requestedTotal,
+        sendingGameCardId:transactionTracker.actionType == ActionTypesEnum.ForcedDeal?gameCard.gameCardId:transactionTracker.sendingGameCardId
     };
     
      //1. patch the transaction tracker 
@@ -389,10 +389,10 @@ export const updateSelectionTransactionTracker = (game,currentPlayer,gameMove,se
     const updatedTransactionTrackerPayload = {
         transactionTrackerId:transactionTracker.transactionTrackerId,
         transactionTrackerStatus:TransactionTrackerStatusEnum.OthersAcknowledge,
-        requestedGroupId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.groupId:null,
-        requestedColourId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.assignedColourId:null,
-        requestedGameCardId:selectedGameCard && transactionTracker.actionType != ActionTypesEnum.DealBreaker?selectedGameCard.gameCardId:null,
-        requestedTotal:transactionTracker.actionType == ActionTypesEnum.DebtCollector?gameMove.transactionTracker.gameCard.card.action.transactionCost:null
+        requestedGroupId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.groupId:transactionTracker.requestedGroupId,
+        requestedColourId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.assignedColourId:transactionTracker.requestedColourId,
+        requestedGameCardId:selectedGameCard && transactionTracker.actionType != ActionTypesEnum.DealBreaker?selectedGameCard.gameCardId:transactionTracker.selectedGameCard,
+        requestedTotal:transactionTracker.actionType == ActionTypesEnum.DebtCollector?gameMove.transactionTracker.gameCard.card.action.transactionCost:transactionTracker.requestedTotal
     };
     singleTransactionTrackerApi.patch(transactionTracker.links.self,currentPlayer.accessToken,updatedTransactionTrackerPayload)
     .then((success)=>{
