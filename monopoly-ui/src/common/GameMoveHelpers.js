@@ -54,7 +54,7 @@ export const startItsMyBirthdayActionSequnece = (game,currentPlayer,gameCard,mov
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Partiallly Completed startItsMyBirthdayActionSequnece!");
+        console.log("Partially Completed startItsMyBirthdayActionSequnece!");
     })
     .catch((error)=>{
         console.log(error.response.data)
@@ -90,7 +90,7 @@ export const startDebtCollectorOrSlyDealorDealBreakerActionSequnece = (game,curr
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Partiallly Completed startDebtCollectorOrSlyDealActionSequnece!");
+        console.log("Partially Completed startDebtCollectorOrSlyDealActionSequnece!");
     })
     .catch((error)=>{
         console.log(error.response.data)
@@ -101,34 +101,74 @@ export const startDebtCollectorOrSlyDealorDealBreakerActionSequnece = (game,curr
 
 
 export const startDoubleTheRentActionSequence = (game,currentPlayer,gameCard,move,currentPlayerCards) =>{
-    
+    console.log("Started startDoubleTheRentActionSequence!");
     //1.find the double the rent card 
     const doubleTheRentGameCard = currentPlayerCards.find(t=> t.card.cardType == CardTypesEnum.Action && t.card.action.actionType == ActionTypesEnum.DoubleTheRent);
-    //2.play double the rent card 
-    startNoActionSequence(game,currentPlayer,doubleTheRentGameCard,move)
-        .then(function(){
-            console.log("done!!!!");
-            let payload = {
-                gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
-                currentPlayerId:currentPlayer.playerId
-            };
-            return;
-            //3.start new turn 
-            gameMoveApi.patch(game.links.gameMoves,currentPlayer.accessToken,payload)
-            .then(function(success){
-                console.log(success.data);
-                //4.play the rent card
-                return startRentorForcedDealActionSequence(game,currentPlayer,gameCard,move)
-            })
-            .then(function(success){
-                console.log(success.data);
-            })
-            .catch(function(error){
-                console.log(error.response.data);
-            })
-            
+    
+    let createdTransaction = {};
+    //2. create transaction tracker
+    const transactionTrackerPayload = {
+        gamePassCode:game.gamePassCode,
+        performedByPlayerId:currentPlayer.playerId,
+        gamePlayActionId:move.gamePlayActionId,
+        gameCardId:doubleTheRentGameCard.gameCardId,
+        transactionTrackerStatus:TransactionTrackerStatusEnum.InProgress,
+        actionType:move.actionType
+    };
+    transactionTrackerApi.post(game.links.transactionTracker,currentPlayer.accessToken,transactionTrackerPayload)
+    .then((success)=>{
+        console.log(success.data);
+        createdTransaction = success.data
+        //3. move the card
+        const gameCardPayload = {
+            gameCardId:doubleTheRentGameCard.gameCardId,
+            cardLocationStatus:move.expectedGameCardLocation,
+            groupId:doubleTheRentGameCard.groupId,
+            assignedColourId:doubleTheRentGameCard.assignedColourId,
+            isCardRightSideUp:doubleTheRentGameCard.isCardRightSideUp
+        };
+        return gameCardsApi.patch(doubleTheRentGameCard.links.self,currentPlayer.accessToken,gameCardPayload);
+        
+    }) 
+    .then((success)=>{
+        console.log(success.data)
+        //4. patch the transaction tracker to complete
+        const singletransactionTrackerPayload = {
+            transactionTrackerId:createdTransaction.transactionTrackerId,
+            transactionTrackerStatus:TransactionTrackerStatusEnum.Completed
+        };
+        return singleTransactionTrackerApi.patch(createdTransaction.links.self,currentPlayer.accessToken,singletransactionTrackerPayload);
 
-        })
+    })
+    .then((success)=>{
+        console.log(success.data)
+        //5. mark the move as complete 
+        const movePayload = {
+            gameMoveStatus:GameMoveStatusEnum.MoveComplete,
+            currentPlayerId:currentPlayer.playerId
+        };
+        return gameMoveApi.patch(game.links.gameMoves,currentPlayer.accessToken,movePayload);
+
+    })
+    .then((success)=>{
+        console.log(success.data);
+        let payload = {
+            gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
+            currentPlayerId:currentPlayer.playerId
+        };
+        //6.start new turn 
+        gameMoveApi.patch(game.links.gameMoves,currentPlayer.accessToken,payload)
+    })
+    .then(function(success){
+        console.log(success.data);
+        //7.play the rent card
+        return startRentorForcedDealActionSequence(game,currentPlayer,gameCard,move)
+    })
+    .then(function(success){
+        console.log(success.data);
+        console.log("Partially Completed startDoubleTheRentActionSequence!");
+    })
+    .catch((error)=>{console.log(error.response.data)});
 }
 
 export const startRentorForcedDealActionSequence = (game,currentPlayer,gameCard,move) =>{
@@ -159,7 +199,7 @@ export const startRentorForcedDealActionSequence = (game,currentPlayer,gameCard,
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Partiallly Completed startRentorForcedDealActionSequence!");
+        console.log("Partially Completed startRentorForcedDealActionSequence!");
     })
     .catch((error)=>{
         console.log(error.response.data)
@@ -210,7 +250,7 @@ export const startPassGoInPlayPileActionSequence = (game,currentPlayer,gameCard,
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Partiallly Completed startNoActionSequence!");
+        console.log("Partially Completed startNoActionSequence!");
     })
     .catch((error)=>{
         console.log(error.response.data)
@@ -323,7 +363,7 @@ export const updateInPlayTransactionTracker = (game,currentPlayer,gameMove,gameC
     })
     .then((success)=>{
         
-        console.log("Partiallly Completed updateInPlayTransactionTracker!");
+        console.log("Partially Completed updateInPlayTransactionTracker!");
     })
     .catch((error)=>{
         console.log(error.response.data)
@@ -372,7 +412,7 @@ export const updateSelectionTransactionTracker = (game,currentPlayer,gameMove,se
     })
     .then((success)=>{
         console.log(success.data);
-        console.log("Partiallly Completed updateSelectionTransactionTracker!");
+        console.log("Partially Completed updateSelectionTransactionTracker!");
     })
     .catch((error)=>{console.log(error.response.data)});
 }
