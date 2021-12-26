@@ -103,8 +103,9 @@ def is_property_playable(player_card,game_cards_played_by_all_players,possible_p
         
 def is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
     current_player_cards_on_field = next(iter([x for x in game_cards_played_by_all_players if x.playerId==player_card.playerId]),None)
-    other_player_cards_no_field  = next(iter([x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId]),None)
-    if(current_player_cards_on_field and other_player_cards_no_field):
+    #need one person with cards played on the field
+    other_player_cards_on_field  = [x for x in game_cards_played_by_all_players if x.playerId!=player_card.playerId and (len(x.cashPileCards)>0 or len(x.propertyPileCards)>0)]
+    if(current_player_cards_on_field and len(other_player_cards_on_field)>0):
 
         #player doesnt have any property cards
         if len(current_player_cards_on_field.propertyPileCards) == 0:
@@ -142,7 +143,7 @@ def is_double_the_rent_playable(player_card,game_cards_played_by_all_players,pos
         #rent card must be playable
         if not is_rent_playable(player_card,game_cards_played_by_all_players,possible_play_action,game_move):
             return False
-        #check to see if a double rent card on hand and numer of moves played is less than 2()
+        #check to see if a double rent card on hand and numer of moves played is less than 2
         return True if len([x for x in current_player_cards_on_field.onHandCards if x.card.cardType == Enum.CardTypes.Action and x.card.action.actionType == Enum.ActionTypes.DoubleTheRent ])>0  \
             and game_move.numberOfMovesPlayed < 2 else False
         

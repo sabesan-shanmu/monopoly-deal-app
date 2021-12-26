@@ -80,7 +80,7 @@ class SingleTransactionTrackerResource(Resource):
     def patch(self,gamePassCode,transactionTrackerId):
         try:
             identity = get_jwt_identity()
-            transaction_tracker = updated_transaction_tracker().load(request.get_json())
+            
             game = get_game_by_gamepasscode(gamePassCode)             
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")   
@@ -98,8 +98,18 @@ class SingleTransactionTrackerResource(Resource):
             if len([x for x in trade_payee_transactions if x.payeeTransactionStatus == Enum.PayeeTransactionStatus.NotPaid])>0:
                 raise FieldValidationException(message="Trade Transaction is not complete")
 
+
+           
+            original_transaction_tracker = get_transaction_tracker(transactionTrackerId)
+            transaction_tracker = updated_transaction_tracker().load(request.get_json())
+            
+            for column in original_transaction_tracker.__table__.columns._data.keys():
+                
+                if column in transaction_tracker:
+                    setattr(original_transaction_tracker, column,transaction_tracker[column])
+
             #update transaction tracker
-            update_transaction_tracker = modify_transaction_tracker(transaction_tracker)
+            update_transaction_tracker = modify_transaction_tracker(original_transaction_tracker)
             result = TransactionTrackerSchema().dump(update_transaction_tracker)
             
             

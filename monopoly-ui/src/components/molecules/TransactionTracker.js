@@ -21,17 +21,17 @@ const getTransaction = (transactionTracker) =>{
     {
         case ActionTypesEnum.ItsMyBirthday:
         case ActionTypesEnum.DebtCollector:
-            return ` requests $ ${transactionTracker.requestedTotal} from `;
+            return ` requests $ ${transactionTracker?.requestedTotal} from `;
         case ActionTypesEnum.MultiplePlayerRent:
         case ActionTypesEnum.SinglePlayerRent:
         case ActionTypesEnum.DoubleTheRent:
-            return ` requests $ ${transactionTracker.requestedTotal} for ${getColourName(transactionTracker.requestedColourId)} Rent from `;
+            return ` requests $ ${transactionTracker?.requestedTotal} for ${getColourName(transactionTracker?.requestedColourId)} Rent from `;
         case ActionTypesEnum.DealBreaker:
-            return ` requests ${getColourName(transactionTracker.requestedColourId)} Set (${transactionTracker.requestedGroupId}) from `;
+            return ` requests ${getColourName(transactionTracker?.requestedColourId)} Set (${transactionTracker?.requestedGroupId}) from `;
         case ActionTypesEnum.ForcedDeal:
-            return ` requests ${transactionTracker.sendingGameCard.name}} for ${transactionTracker.requestGameCard.name}) from `;
+            return ` requests ${transactionTracker?.sendingGameCard?.name} for ${transactionTracker?.requestGameCard?.name} from `;
         case ActionTypesEnum.SlyDeal:
-            return ` requests ${transactionTracker.requestGameCard.name}} from `;
+            return ` requests ${transactionTracker?.requestGameCard?.name} from `;
 
     }
 }

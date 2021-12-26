@@ -25,7 +25,7 @@ class TransactionTrackerSchema(ma.Schema):
     requestedColourId = EnumField(Enum.Colours,by_value=True)#rent
     requestedGroupId = fields.String() #dealbreaker
     requestedGameCardId = fields.Integer() #sly deal,force deal
-    requestGameCard = fields.Nested(GameCardSchema) 
+    requestedGameCard = fields.Nested(GameCardSchema) 
     sendingGameCardId = fields.Integer() #force deal
     sendingGameCard = fields.Nested(GameCardSchema) 
     links = ma.Hyperlinks({
@@ -55,7 +55,5 @@ class updated_transaction_tracker(ma.Schema):
     requestedGroupId = fields.String(allow_none=True) #dealbreaker
     requestedGameCardId = fields.Integer(allow_none=True) #sly deal,force deal
     sendingGameCardId = fields.Integer(allow_none=True) #force deal
-    @post_load
-    def make_transaction_tracker(self, data, **kwargs):
-        return TransactionTracker(**data)
+
 

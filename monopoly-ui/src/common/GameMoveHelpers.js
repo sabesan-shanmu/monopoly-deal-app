@@ -392,7 +392,7 @@ export const updateSelectionTransactionTracker = (game,currentPlayer,gameMove,se
         transactionTrackerStatus:TransactionTrackerStatusEnum.OthersAcknowledge,
         requestedGroupId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.groupId:null,
         requestedColourId:transactionTracker.actionType == ActionTypesEnum.DealBreaker?selectedGameCard.assignedColourId:null,
-        requestedGameCardId:selectedGameCard && transactionTracker.actionType != ActionTypesEnum.DealBreaker?selectedGameCard.gameCard:null,
+        requestedGameCardId:selectedGameCard && transactionTracker.actionType != ActionTypesEnum.DealBreaker?selectedGameCard.gameCardId:null,
         requestedTotal:transactionTracker.actionType == ActionTypesEnum.DebtCollector?gameMove.transactionTracker.gameCard.card.action.transactionCost:null
     };
     singleTransactionTrackerApi.patch(transactionTracker.links.self,currentPlayer.accessToken,updatedTransactionTrackerPayload)

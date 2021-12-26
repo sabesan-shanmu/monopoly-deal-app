@@ -148,7 +148,7 @@ class TransactionTracker(db.Model):
     requestedColourId = db.Column(db.Enum(Enum.Colours),nullable=True)#rent,dealbreaker
     requestedGroupId = db.Column(db.String,nullable=True) #dealbreaker
     requestedGameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True) #sly deal,force deal
-    requestGameCard = db.relationship(GameCards,primaryjoin=requestedGameCardId==GameCards.gameCardId)
+    requestedGameCard = db.relationship(GameCards,primaryjoin=requestedGameCardId==GameCards.gameCardId)
     sendingGameCardId = db.Column(db.Integer,db.ForeignKey(GameCards.gameCardId),nullable=True) #force deal
     sendingGameCard = db.relationship(GameCards,primaryjoin=sendingGameCardId==GameCards.gameCardId)
 
