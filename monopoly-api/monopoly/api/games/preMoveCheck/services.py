@@ -165,7 +165,7 @@ def is_deal_breaker_playable(player_card,game_cards_played_by_all_players,possib
             other_player_cards_grouped_by_groupId.append(GroupedCards(groupId=key,currentTotalInSet = currentTotalInSet,numberNeededToCompleteSet=numberNeededToCompleteSet))
     
         #find a complete set, if there's one then deal breaker can be done(using > in case it has house)
-        if len([x for x in other_player_cards_grouped_by_groupId if x.currentTotalInSet > x.numberNeededToCompleteSet]) > 0:
+        if len([x for x in other_player_cards_grouped_by_groupId if x.currentTotalInSet >= x.numberNeededToCompleteSet]) > 0:
             return True
     
 
