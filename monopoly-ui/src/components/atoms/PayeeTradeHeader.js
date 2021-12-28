@@ -120,7 +120,6 @@ export const PayeeTradeHeader = ({tradePayeeTransaction,transactionTracker,curre
 
 
     },[tradePayeeTransaction]);
-    console.log(tradeTransactionState.listOfPossibleMoves);
     const selectedCards = tradeTransactionState.listOfPossibleMoves.filter(move=>move.isSelected).map(c=>c.gameCard.name).join(" , ");
     const selectedCardsTotal = tradeTransactionState.listOfPossibleMoves.filter(move=>move.isSelected).reduce((total, move) => total + (move.gameCard?.card?.price || 0 ) , 0);
     

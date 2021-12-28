@@ -50,7 +50,7 @@ export const PropertyPile = ({propertyPileCards}) => {
     const {tradeTransactionState,tradeTransactionsDispatch} = useContext(TradeTransactionContext);
     const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
     
-    console.log(tradeTransactionState);
+  
     const getListOfPossibleMoves = (propertyCard) => {
         
         switch(transactionTrackerStatus)
