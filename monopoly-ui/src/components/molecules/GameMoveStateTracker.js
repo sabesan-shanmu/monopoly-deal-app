@@ -11,6 +11,7 @@ import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
 import { PropertyMoveCheckContext } from '../../context/PropertyMoveCheckContext'
+import {CurrentPlayerCardsContext} from '../../context/CurrentPlayerCardsOnHandContext'
 import { ResourceTypes,ActionTypesEnum } from '../../common/constants';
 import { completeOthersAcknowledgeSequence } from '../../common/GameMoveHelpers';
 
@@ -34,6 +35,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
     const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext);
     const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
+    const {currentPlayerCardsState,currentPlayerCardsStateDispatch} = useContext(CurrentPlayerCardsContext);
     
     //all transactions must be resolved to show complete button
     const transactionsComplete = gameMove.transactionTracker && gameMove.transactionTracker?.tradePayeeTransactions && 
@@ -222,7 +224,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                     <MonopolyDealButton {...skipTurnBtn} />
                 </StyledStartChoiceHeader>
             }
-            {gameMove.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards &&
+            {(gameMove.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards || currentPlayerCardsState.playerCards.length == 0) &&
                 <StyledStartChoiceHeader>
                     <MonopolyDealButton {...skipTurnBtn}/>
                 </StyledStartChoiceHeader>
