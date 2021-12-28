@@ -70,12 +70,13 @@ export const PropertyPile = ({propertyPileCards}) => {
 
     //group by groupId
     const propertyPileGroupedByGroupId= propertyPileCards.reduce((dict, propertyPileCard) => {
-        if(dict[propertyPileCard.assignedColourId])
-            dict[propertyPileCard.assignedColourId].push(propertyPileCard)
+        if(dict[propertyPileCard.groupId])
+            dict[propertyPileCard.groupId].push(propertyPileCard)
         else
-            dict[propertyPileCard.assignedColourId]=[propertyPileCard];
+            dict[propertyPileCard.groupId]=[propertyPileCard];
         return dict;
     },[]);
+
     return (
         <React.Fragment>
             <MonopolyDealLabel type="h2" text={`Properties Pile : $ ${cashTotal}`} />
@@ -88,7 +89,6 @@ export const PropertyPile = ({propertyPileCards}) => {
                             const isCardSelectable = transactionTrackerStatus !=  TransactionTrackerStatusEnum.OthersAcknowledge?
                                 listOfPossibleMoves?.length>0:(listOfPossibleMoves?.length>0 && tradeTransactionState.isTradeAllowed);
                          
-                            
                             return (
                             <RepositionedCard key={key} position={key+1} total={propertyPileCards.length}>
                                 <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} 
