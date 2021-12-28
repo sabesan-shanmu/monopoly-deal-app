@@ -20,7 +20,7 @@ def create_properties_colour():
         PropertiesColour(colourId=Enum.Colours.Red ,onePairRentPrice=2 ,twoPairRentPrice=3,threePairRentPrice=6,fourPairRentPrice=None,numberNeededToCompleteSet=3),
         PropertiesColour(colourId=Enum.Colours.Yellow ,onePairRentPrice=2 ,twoPairRentPrice=4,threePairRentPrice=6,fourPairRentPrice=None,numberNeededToCompleteSet=3),
         PropertiesColour(colourId=Enum.Colours.Neutral ,onePairRentPrice=1 ,twoPairRentPrice=2,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=2),
-        PropertiesColour(colourId=Enum.Colours.Any ,onePairRentPrice=None,twoPairRentPrice=None,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=None)
+        PropertiesColour(colourId=Enum.Colours.Any ,onePairRentPrice=None,twoPairRentPrice=None,threePairRentPrice=None,fourPairRentPrice=None,numberNeededToCompleteSet=999)
     ]
     return propertiesColourCards
 
