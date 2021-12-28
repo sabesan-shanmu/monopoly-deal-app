@@ -47,7 +47,7 @@ export const PayeeTradeHeader = ({tradePayeeTransaction,transactionTracker,curre
                 tradePayeeTransactionId:tradePayeeTransaction.tradePayeeTransactionId,
                 payeeTransactionStatus:PayeeTransactionStatusEnum.Paid,
                 sendingGameCards:tradeTransactionState.listOfPossibleMoves.filter(move=>move.isSelected).map(c=>getGameCardFormat(c.gameCard)),
-                receivingGameCard:isForcedDeal?getGameCardFormat(transactionTracker.requestedGameCard):null
+                receivingGameCard:isForcedDeal?getGameCardFormat(transactionTracker.sendingGameCard):null
             }
             singleTradePayeeTransactionApi.put(tradePayeeTransaction.links.self,currentPlayer.accessToken,tradePayeeTransactionPayload)
                 .then(function(success){
@@ -110,7 +110,7 @@ export const PayeeTradeHeader = ({tradePayeeTransaction,transactionTracker,curre
                 list.push({gameCardId:playerCard.gameCardId,gameCard:playerCard,isSelected:true});
             return list;
         },[])
-        
+
         tradeTransactionsDispatch({   
                 type:ResourceTypes.LoadResource,
                 listOfPossibleMoves:valuedCards,

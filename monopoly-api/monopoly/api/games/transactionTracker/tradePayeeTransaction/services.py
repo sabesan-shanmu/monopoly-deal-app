@@ -136,15 +136,15 @@ def trade_updated_game_cards(updated_trade_payee_transactions,transaction_tracke
         if transaction_tracker.actionType is Enum.ActionTypes.ForcedDeal:
             receiver_property_cards = get_game_cards_on_property_pile(targetPlayer.gamePassCode,targetPlayer.playerId)
             
-            original_game_card = get_game_card_by_id(updated_trade_payee_transactions["receivingGameCard"]["gameCardId"])
-            original_game_card.playerId = targetPlayer.playerId
-            if original_game_card.card.properties.primaryColourId is Enum.Colours.Any:
-                original_game_card.groupId = "0"
-                original_game_card.assignedColourId = None
+            forced_deal_game_card = get_game_card_by_id(updated_trade_payee_transactions["receivingGameCard"]["gameCardId"])
+            forced_deal_game_card.playerId = targetPlayer.playerId
+            if forced_deal_game_card.card.properties.primaryColourId is Enum.Colours.Any:
+                forced_deal_game_card.groupId = "0"
+                forced_deal_game_card.assignedColourId = None
             else:
-                original_game_card.groupId = get_next_group_id(original_game_card,receiver_property_cards)
+                forced_deal_game_card.groupId = get_next_group_id(forced_deal_game_card,receiver_property_cards)
             
-            update_game_card(original_game_card)
+            update_game_card(forced_deal_game_card)
 
 
 def get_next_group_id(gameCard,propertyPileCards):
