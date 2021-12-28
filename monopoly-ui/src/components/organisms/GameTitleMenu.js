@@ -24,6 +24,9 @@ const StyledFooter= styled.a`
     margin-top:5px;
     color:white;
     font-size:1.35em;
+    display: flex;
+    align-items:center;
+    cursor:pointer;
 `
 
 export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
@@ -47,7 +50,9 @@ export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
                 <MonopolyDealButton {...selectGame} /> 
             </StyledGameTitleMenuBody>
             
-            <StyledFooter target="_blank" href="http://monopolydealrules.com">How To Play</StyledFooter>
+            <StyledFooter target="_blank" href="https://www.youtube.com/watch?v=w2o8LgIvWEg">
+            <img src="https://img.icons8.com/fluency/48/000000/youtube-play.png"/>Demo
+            </StyledFooter>
         </StyledMenuContainer>
     )
 }
