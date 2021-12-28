@@ -127,7 +127,7 @@ def trade_updated_game_cards(updated_trade_payee_transactions,transaction_tracke
                 if original_game_card.card.properties.primaryColourId is Enum.Colours.Any \
                     and transaction_tracker.actionType is not Enum.ActionTypes.DealBreaker:
                     original_game_card.groupId = "0"
-                    original_game_card.assignedColourId = None
+                    original_game_card.assignedColourId = Enum.Colours.Any
                 else:
                     original_game_card.groupId = get_next_group_id(original_game_card,initiator_property_cards)
             
@@ -140,7 +140,7 @@ def trade_updated_game_cards(updated_trade_payee_transactions,transaction_tracke
             forced_deal_game_card.playerId = targetPlayer.playerId
             if forced_deal_game_card.card.properties.primaryColourId is Enum.Colours.Any:
                 forced_deal_game_card.groupId = "0"
-                forced_deal_game_card.assignedColourId = None
+                forced_deal_game_card.assignedColourId = Enum.Colours.Any
             else:
                 forced_deal_game_card.groupId = get_next_group_id(forced_deal_game_card,receiver_property_cards)
             
