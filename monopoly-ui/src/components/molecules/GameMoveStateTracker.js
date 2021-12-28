@@ -45,6 +45,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     
     const startTurnBtn = {
         label:"Start Move",
+        disabled:currentPlayerCardsState.playerCards.length == 0?true:false,
         onClick:(e)=>{
             let payload = {
                 gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
@@ -224,7 +225,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                     <MonopolyDealButton {...skipTurnBtn} />
                 </StyledStartChoiceHeader>
             }
-            {(gameMove.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards || currentPlayerCardsState.playerCards.length == 0) &&
+            {gameMove.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards &&
                 <StyledStartChoiceHeader>
                     <MonopolyDealButton {...skipTurnBtn}/>
                 </StyledStartChoiceHeader>
