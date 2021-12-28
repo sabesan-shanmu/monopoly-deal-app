@@ -45,7 +45,7 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     
     const startTurnBtn = {
         label:"Start Move",
-        disabled:currentPlayerCardsState.playerCards.length == 0?true:false,
+        disabled:gameMove.numberOfMovesPlayed>0 && currentPlayerCardsState.playerCards.length == 0?true:false,
         onClick:(e)=>{
             let payload = {
                 gameMoveStatus:GameMoveStatusEnum.MoveInProgress,
