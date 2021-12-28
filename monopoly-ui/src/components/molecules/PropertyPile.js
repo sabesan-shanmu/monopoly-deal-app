@@ -8,6 +8,7 @@ import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
 import { PropertyMoveCheckContext } from '../../context/PropertyMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
+import { TradeTransactionContext } from '../../context/TradeTransactionContext';
 import {sortCardsByLastUpdateDate,getCardSetTotal} from '../../common/GameHelpers'
 
 
@@ -46,9 +47,10 @@ export const PropertyPile = ({propertyPileCards}) => {
     const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
     const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext); 
     const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
-    
+    const {tradeTransactionState,tradeTransactionsDispatch} = useContext(TradeTransactionContext);
     const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
-
+    
+    console.log(tradeTransactionState);
     const getListOfPossibleMoves = (propertyCard) => {
         
         switch(transactionTrackerStatus)
@@ -57,6 +59,8 @@ export const PropertyPile = ({propertyPileCards}) => {
                 return (inPlayMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
             case TransactionTrackerStatusEnum.OtherPlayerSelection:
                 return (selectionMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
+            case TransactionTrackerStatusEnum.OthersAcknowledge:
+                return  (tradeTransactionState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
             default: //TODO: in theory this should be find, will need to check to see if this causes issue
                 return (propertyMoveCheckState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
         }
@@ -81,7 +85,8 @@ export const PropertyPile = ({propertyPileCards}) => {
                     <StyledGrid key={key} total={propertyPileGroup.length}>
                         {propertyPileGroup && propertyPileGroup.map((propertyCard,key)=>{
                             const listOfPossibleMoves= getListOfPossibleMoves(propertyCard);
-                            const isCardSelectable = listOfPossibleMoves?.length>0;
+                            const isCardSelectable = transactionTrackerStatus !=  TransactionTrackerStatusEnum.OthersAcknowledge?
+                                listOfPossibleMoves?.length>0:(listOfPossibleMoves?.length>0 && tradeTransactionState.isTradeAllowed);
                          
                             
                             return (

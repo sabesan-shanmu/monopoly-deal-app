@@ -28,6 +28,7 @@ const StyledBorder = styled.div`
     max-width: 270px;
     padding: 5px;
     grid-template-columns:repeat(1,250px);
+    grid-row-gap:120px;
    
 `;
 
@@ -53,7 +54,6 @@ export const InPlayPile = ({players,inPlayPileCards}) => {
             dict[inPlayPileCard.playerId]=[inPlayPileCard];
         return dict;
     },{});
-
 
     return (
         <StyledInPlayPile>

@@ -8,7 +8,7 @@ const StyledError = styled.div`
     align-content: center;
     background-color:#f8b2b2;
     font-weight:bold;
-    font-size:1.35em;
+    font-size:1.05em;
     color:#5b1313;
     border: 1px solid #5b1313;
     padding:2px;

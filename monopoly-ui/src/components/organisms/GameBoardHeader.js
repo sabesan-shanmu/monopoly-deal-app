@@ -98,7 +98,8 @@ export const GameBoardHeader = () =>{
                                     game={game}
                                     player={playerState.player}
                                 />
-                            }       
+                            }
+             
                         </React.Fragment>
                     }
                 </div>

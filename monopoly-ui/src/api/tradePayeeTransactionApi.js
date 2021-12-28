@@ -10,7 +10,7 @@ export const tradePayeeTransactionApi = {
 
 export const singleTradePayeeTransactionApi = {
     put:(tradePayeeTransactionUrl,accessToken,data) =>{
-        return axiosInstance.patch(tradePayeeTransactionUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}})
+        return axiosInstance.put(tradePayeeTransactionUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}})
     },
     get:(tradePayeeTransactionUrl,accessToken) =>{
         return axiosInstance.get(tradePayeeTransactionUrl,{headers: {'Authorization': `Bearer ${accessToken}`}})

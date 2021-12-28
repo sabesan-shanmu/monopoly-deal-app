@@ -64,6 +64,7 @@ class GameMoveStatus(Enum):
     MoveInProgress = 2
     MoveComplete = 3
     SkipYourTurn = 4
+    DiscardExtraCards = 5
 
 
 class VoteStatus(Enum):

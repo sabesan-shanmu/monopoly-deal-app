@@ -42,6 +42,10 @@ def get_all_active_game_cards(gamePassCode):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsOnHand,Enum.GameCardLocationStatus.IsPlayedOnCashPile,Enum.GameCardLocationStatus.IsPlayedOnPropertyPile,Enum.GameCardLocationStatus.IsInPlay]))).all()
 
 
+def get_game_cards_on_property_pile(gamePassCode,playerId):
+    return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsPlayedOnPropertyPile]))).all()
+
+
 
 def get_game_cards_on_hand(gamePassCode,playerId):
     return db.session.query(GameCards).filter(and_(GameCards.gamePassCode==gamePassCode,GameCards.playerId==playerId,GameCards.cardLocationStatus.in_([Enum.GameCardLocationStatus.IsOnHand]))).all()

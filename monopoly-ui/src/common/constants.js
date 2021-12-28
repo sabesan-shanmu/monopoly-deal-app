@@ -58,13 +58,15 @@ export const CardTypeEnum = {
 }
 
 export const MAX_NUMBER_OF_MOVES = 3
+export const MAX_NUMBER_OF_CARDS = 5
 
 export const GameMoveStatusEnum = { 
     WaitingForPlayerToBeginMove:0,
     DrawTwoCardsInProgress:1,
     MoveInProgress:2,
     MoveComplete:3,
-    SkipYourTurn:4
+    SkipYourTurn:4,
+    DiscardExtraCards:5
 }
 
 

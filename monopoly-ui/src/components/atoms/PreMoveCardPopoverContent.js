@@ -2,6 +2,7 @@ import React,{useContext} from 'react'
 import styled from 'styled-components'
 import {startNoActionSequence,
     rotateCard,
+    discardCard,
     startPropertyActionSequence,
     startPassGoInPlayPileActionSequence,
     startRentorForcedDealActionSequence,
@@ -12,7 +13,8 @@ import {startNoActionSequence,
 import { GameContext } from '../../context/GameContext'
 import {PlayerContext} from '../../context/PlayerContext'
 import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHandContext'
-import { GameCardLocationStatusEnum,GamePlayActionEnum } from '../../common/constants'
+import { GameMoveContext } from '../../context/GameMoveContext'
+import { GameCardLocationStatusEnum,GamePlayActionEnum,GameMoveStatusEnum } from '../../common/constants'
 
 const StyledPopoverContent = styled.div`
     width:115 px;
@@ -43,11 +45,11 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
     const {gameState,gameDispatch} = useContext(GameContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
     const {currentPlayerCardsState,currentPlayerCardsStateDispatch} = useContext(CurrentPlayerCardsContext);
-
+    const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext);
     return (
         <StyledPopoverContent>
             <StyledPopoverHeader>Choose an Action:</StyledPopoverHeader>
-            {listOfPossibleMoves?.possibleMoves.map((move,key)=>
+            {listOfPossibleMoves?.possibleMoves && gameMoveState.gameMove.gameMoveStatus != GameMoveStatusEnum.DiscardExtraCards && listOfPossibleMoves?.possibleMoves.map((move,key)=>
                 <StyledPopoverBody key={key} onClick={()=>{
                     
                     switch(move.gamePlayActionId)
@@ -105,10 +107,17 @@ export const PreMoveCardPopoverContent = ({gameCard,listOfPossibleMoves,setIsPop
                     setIsPopoverOpen(false);
                 }}>{move.description}</StyledPopoverBody>
             )}
-            {gameCard?.card?.properties?.isRotatable && gameCard.cardLocationStatus == GameCardLocationStatusEnum.IsOnHand &&
+            {listOfPossibleMoves?.possibleMoves && gameCard?.card?.properties?.isRotatable && gameMoveState.gameMove.gameMoveStatus != GameMoveStatusEnum.DiscardExtraCards && gameCard.cardLocationStatus == GameCardLocationStatusEnum.IsOnHand &&
                 <StyledPopoverBody onClick = {()=>{
                     rotateCard(gameCard,playerState.player);
                 }}>Rotate Card</StyledPopoverBody>
+            }
+            {gameMoveState.gameMove.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards && gameCard.cardLocationStatus == GameCardLocationStatusEnum.IsOnHand &&
+                <StyledPopoverBody onClick = {()=>{
+                    discardCard(gameCard,playerState.player);
+                    //close popover
+                    setIsPopoverOpen(false);
+                }}>Discard Card</StyledPopoverBody>
             }
         </StyledPopoverContent>
     )

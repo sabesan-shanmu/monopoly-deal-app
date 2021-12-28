@@ -8,7 +8,7 @@ import { CurrentPlayerCardsContext } from '../../context/CurrentPlayerCardsOnHan
 import { PreMoveCheckContext } from '../../context/PreMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
 import {GameMoveStatusEnum } from '../../common/constants'
-
+import {MAX_NUMBER_OF_CARDS} from '../../common/constants'
 
 
 const FooterCardsContainer = styled.div`
@@ -29,8 +29,6 @@ export const CurrentPlayerCardsOnHand = ()=> {
     
     const {preMoveCheckState,preMoveCheckStateDispatch} = useContext(PreMoveCheckContext);
     const {playerState,playerDispatch} = useContext(PlayerContext);
-    const isCurrentPlayerMove = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState.player.playerId && !gameMoveState.gameMove.transactionTracker 
-        && gameMoveState?.gameMove?.gameMoveStatus == GameMoveStatusEnum.MoveInProgress
 
    
     const getListOfPossibleMoves = (playerCard)=>{
@@ -41,7 +39,9 @@ export const CurrentPlayerCardsOnHand = ()=> {
         <FooterCardsContainer>
         {currentPlayerCardsState.playerCards && currentPlayerCardsState.playerCards.map((playerCard,key)=>{
             const listOfPossibleMoves= getListOfPossibleMoves(playerCard);
-            const isCardSelectable = listOfPossibleMoves?.possibleMoves?.length>0 && isCurrentPlayerMove;
+            const isCardSelectable = gameMoveState?.gameMove?.currentPlayer?.playerId == playerState.player.playerId && 
+            (listOfPossibleMoves?.possibleMoves?.length>0 && !gameMoveState.gameMove.transactionTracker && gameMoveState?.gameMove?.gameMoveStatus == GameMoveStatusEnum.MoveInProgress || 
+            currentPlayerCardsState.playerCards.length > MAX_NUMBER_OF_CARDS && gameMoveState?.gameMove?.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards) 
             return (
             <MonopolyCard gameCard={playerCard} cardType={CardTypeEnum.FaceUpCard} key={key} 
                 isCardSelectable={isCardSelectable} 

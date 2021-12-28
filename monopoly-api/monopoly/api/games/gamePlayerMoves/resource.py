@@ -8,7 +8,7 @@ from monopoly.api.games.services import get_game_by_gamepasscode
 from .schema import GamePlayerMovesSchema,update_player_moves
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.common.enums import GameMoveStatus
-from monopoly.common.constants import MAX_NUMBER_OF_MOVES
+from monopoly.common.constants import MAX_NUMBER_OF_MOVES,INITIAL_NUMBER_OF_CARDS
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
 from marshmallow import ValidationError
 from flask_jwt_extended import get_jwt_identity
@@ -17,6 +17,7 @@ import monopoly.common.enums as Enum
 from monopoly.api.games.gameCards.services import discard_game_cards
 from monopoly.api.games.schema import GameSchema
 from monopoly.notifications.games import publish_game_update_event_to_room
+from monopoly.api.games.players.services import get_player_by_player_id
 
 
 
@@ -52,10 +53,14 @@ class GamePlayerMovesResource(Resource):
                 raise FieldValidationException(message="Cannot progress without performing an action.")
 
             
-            if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete and current_player_move.transactionTracker.transactionTrackerStatus is not Enum.TransactionTrackerStatus.Completed:
+            if updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete and current_player_move.transactionTracker is not None and current_player_move.transactionTracker.transactionTrackerStatus is not Enum.TransactionTrackerStatus.Completed:
                 raise FieldValidationException(message="Cannot progress to complete without completing action")
 
-   
+            playerFound = get_player_by_player_id(game.gameId,identity["playerId"])
+            if playerFound is None:
+                raise ResourceNotFoundException(message="Player Not Found")  
+
+            
             updated_player_move.totalGameMoveCount = current_player_move.totalGameMoveCount
             updated_player_move.transactionTrackerId = current_player_move.transactionTrackerId if updated_player_move.gameMoveStatus != GameMoveStatus.MoveComplete else None
             updated_player_move.gameId = current_player_move.gameId
@@ -64,17 +69,22 @@ class GamePlayerMovesResource(Resource):
             #move to the next player since player completed their turn or skipped their turn
             if (updated_player_move.gameMoveStatus == GameMoveStatus.MoveComplete 
                 and updated_player_move.numberOfMovesPlayed == MAX_NUMBER_OF_MOVES) or updated_player_move.gameMoveStatus == GameMoveStatus.SkipYourTurn:
-                currentPlayerGameOrder = get_player_game_order(game.players,current_player_move.currentPlayerId)
-                updated_player_move.currentPlayerId = get_next_player_id(game.players,1) if len(game.players) == currentPlayerGameOrder else get_next_player_id(game.players,currentPlayerGameOrder+1) 
-                updated_player_move.totalGameMoveCount +=1
-                updated_player_move.numberOfMovesPlayed = 0
-                updated_player_move.gameMoveStatus = GameMoveStatus.WaitingForPlayerToBeginMove
-                #clear the play pile
-                discard_game_cards(gamePassCode)
-                #publish updated game
-                update_game = get_game_by_gamepasscode(gamePassCode)
-                update_game_result = GameSchema().dump(update_game)
-                publish_game_update_event_to_room(gamePassCode,update_game_result)
+                
+                if  len(playerFound.onHandCards)>INITIAL_NUMBER_OF_CARDS:
+                    updated_player_move.gameMoveStatus = GameMoveStatus.DiscardExtraCards
+                    updated_player_move.numberOfMovesPlayed = current_player_move.numberOfMovesPlayed 
+                else:
+                    currentPlayerGameOrder = get_player_game_order(game.players,current_player_move.currentPlayerId)
+                    updated_player_move.currentPlayerId = get_next_player_id(game.players,1) if len(game.players) == currentPlayerGameOrder else get_next_player_id(game.players,currentPlayerGameOrder+1) 
+                    updated_player_move.totalGameMoveCount +=1
+                    updated_player_move.numberOfMovesPlayed = 0
+                    updated_player_move.gameMoveStatus = GameMoveStatus.WaitingForPlayerToBeginMove
+                    #clear the play pile
+                    discard_game_cards(gamePassCode)
+                    #publish updated game
+                    update_game = get_game_by_gamepasscode(gamePassCode)
+                    update_game_result = GameSchema().dump(update_game)
+                    publish_game_update_event_to_room(gamePassCode,update_game_result)
         
           
             

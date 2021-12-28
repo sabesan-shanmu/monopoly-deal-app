@@ -30,13 +30,14 @@ def is_player_valid(current_player_move,playerId):
 EXPECTED_GAME_MOVE_STATUS = {
     Enum.GameMoveStatus.WaitingForPlayerToBeginMove: [Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.SkipYourTurn],
     Enum.GameMoveStatus.DrawTwoCardsInProgress:[Enum.GameMoveStatus.MoveInProgress],
-    Enum.GameMoveStatus.MoveInProgress:[Enum.GameMoveStatus.MoveComplete],
-    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.SkipYourTurn]
+    Enum.GameMoveStatus.MoveInProgress:[Enum.GameMoveStatus.DiscardExtraCards,Enum.GameMoveStatus.MoveComplete],
+    Enum.GameMoveStatus.MoveComplete:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.SkipYourTurn,Enum.GameMoveStatus.MoveComplete],
+    Enum.GameMoveStatus.DiscardExtraCards:[Enum.GameMoveStatus.SkipYourTurn],
 }
 ALLOWED_MOVE_STATUS = {
-    0:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete],
-    1:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete],
-    2:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete]
+    0:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.DrawTwoCardsInProgress,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete,Enum.GameMoveStatus.DiscardExtraCards],
+    1:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete,Enum.GameMoveStatus.DiscardExtraCards],
+    2:[Enum.GameMoveStatus.WaitingForPlayerToBeginMove,Enum.GameMoveStatus.MoveInProgress,Enum.GameMoveStatus.MoveComplete,Enum.GameMoveStatus.DiscardExtraCards],
 }
 
 def create_game_player_moves(game):

@@ -36,7 +36,7 @@ class PropertyMoveCheckResource(Resource):
 
             if currentPlayerMove.transactionTracker and currentPlayerMove.transactionTracker.transactionTrackerStatus is not Enum.TransactionTrackerStatus.Completed \
             or currentPlayerMove.gameMoveStatus is not Enum.GameMoveStatus.MoveInProgress:
-                raise FieldValidationException(message="Move must be in progress and no action must be in progress") 
+                raise FieldValidationException(message="Move must be in progress and transactions must be completed") 
 
             #current player property cards
             currentPlayer = [player for player in gameFound.players if player.playerId == identity["playerId"]]

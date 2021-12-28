@@ -1,11 +1,12 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components';
 import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
-import { CardTypeEnum } from '../../common/constants';
+import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
 import {sortCardsByLastUpdateDate,getCardSetTotal } from '../../common/GameHelpers'
-
+import { GameMoveContext } from '../../context/GameMoveContext';
+import { TradeTransactionContext } from '../../context/TradeTransactionContext';
 
 const StyledBorder = styled.div`
     border:2px solid white;
@@ -30,15 +31,42 @@ export const CashPile = ({cashPileCards}) => {
 
     cashPileCards = sortCardsByLastUpdateDate(cashPileCards);
     const cashTotal = getCardSetTotal(cashPileCards);
+    const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
+    const {tradeTransactionState,tradeTransactionsDispatch} = useContext(TradeTransactionContext);
+    const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
+
+    const getListOfPossibleMoves = (cashCard) => {
+        switch(transactionTrackerStatus)
+        {
+            case TransactionTrackerStatusEnum.OthersAcknowledge:
+                return  (tradeTransactionState?.listOfPossibleMoves.filter(t=>t.gameCardId == cashCard.gameCardId));
+            default:
+                return [];
+        }
+    }
+
+
+    
     return (
         <React.Fragment>
             <MonopolyDealLabel type="h2" text={`Cash Pile : $ ${cashTotal}`} />
             <StyledBorder total={cashPileCards?cashPileCards.length:1}>
-                {cashPileCards && cashPileCards.map((cashCard,key)=>(
-                    <RepositionedCard key={key} position={key+1} total={cashPileCards.length}>
-                        <MonopolyCard gameCard={cashCard} cardType={CardTypeEnum.FaceUpCard} key={key} isCardSelectable={false}/>
-                    </RepositionedCard>
-                ))}
+                {cashPileCards && cashPileCards.map((cashCard,key)=>{
+                    const listOfPossibleMoves= getListOfPossibleMoves(cashCard);
+                    const isCardSelectable = transactionTrackerStatus !=  TransactionTrackerStatusEnum.OthersAcknowledge?
+                                listOfPossibleMoves?.length>0:(listOfPossibleMoves?.length>0 && tradeTransactionState.isTradeAllowed);
+                         
+                    return (
+                        <RepositionedCard key={key} position={key+1} total={cashPileCards.length}>
+                        <MonopolyCard gameCard={cashCard} cardType={CardTypeEnum.FaceUpCard} 
+                            key={key} 
+                            isCardSelectable={isCardSelectable}
+                            listOfPossibleMoves={listOfPossibleMoves}
+                            popoverType={transactionTrackerStatus}    
+                        />
+                        </RepositionedCard>
+                    )
+                })}
        
             </StyledBorder>
             

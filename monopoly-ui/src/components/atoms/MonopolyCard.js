@@ -9,6 +9,7 @@ import {PreMoveCardPopoverContent} from '../atoms/PreMoveCardPopoverContent'
 import {InPlayMoveCardPopoverContent} from '../atoms/InPlayMoveCardPopoverContent'
 import { SelectionMoveCardPopoverContent } from './SelectionMoveCardPopoverContent';
 import { PropertyMoveCardPopoverContent } from './PropertyMoveCardPopoverContent';
+import { TradeTransactionCardPopoverContent } from './TradeTransactionCardPopoverContent';
 
 
 
@@ -35,7 +36,7 @@ const StyledCard = styled.img`
     opacity: ${(props) => props.isCardSelectable || props.cardType == CardTypeEnum.InPlayCard?'1':'1'};
     transform: ${(props) => props.isCardRightSideUp?'':'rotate(180deg)'};
     cursor:${(props) =>props.isCardSelectable? 'pointer':'not-allowed' };
-    border:3px solid black;
+    border:3px solid ${(props) =>props.isHighlighted? '#5DE23C':'black' };
     height:200px;
     &:hover {
         border: 3px solid #5DE23C;
@@ -49,6 +50,15 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
 
     
+    const isHighlighted = (popoverType,listOfPossibleMoves,gameCard) =>{
+        //highlight is only used when trade is in progress
+        if(popoverType !=  TransactionTrackerStatusEnum.OthersAcknowledge)
+            return false;
+        else
+            return listOfPossibleMoves.find(t=>t.gameCardId == gameCard.gameCardId && t.isSelected == true);
+    }
+
+
     return (
         <React.Fragment>
                     {cardType == CardTypeEnum.FaceUpCard && 
@@ -66,6 +76,8 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                                     return <InPlayMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else if(popoverType ==  TransactionTrackerStatusEnum.OtherPlayerSelection)
                                     return <SelectionMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
+                                else if(popoverType ==  TransactionTrackerStatusEnum.OthersAcknowledge)
+                                    return <TradeTransactionCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else
                                     return <PropertyMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                             }}
@@ -74,6 +86,7 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                                 style={{ visibility: isLoaded ? "visible" : "hidden" }}
                                 isCardSelectable={isCardSelectable}
                                 isCardRightSideUp={gameCard.isCardRightSideUp}
+                                isHighlighted={isHighlighted(popoverType,listOfPossibleMoves,gameCard)}
                                 cardType={cardType}
                                 onLoad={() => {
                                     setIsLoaded(true);

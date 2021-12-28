@@ -10,6 +10,9 @@ import { PreMoveCheckContextProvider } from '../../context/PreMoveCheckContext';
 import { InPlayMoveCheckContextProvider } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContextProvider } from '../../context/SelectionMoveCheckContext';
 import { PropertyMoveCheckContextProvider } from '../../context/PropertyMoveCheckContext'
+import { TradeTransactionContextProvider } from '../../context/TradeTransactionContext'
+import {CurrentPlayerCardsContextProvider} from '../../context/CurrentPlayerCardsOnHandContext'
+import { ConfettiHolder } from '../atoms/ConfettiHolder'
 
 
 export const GameBoardTemplate = ()=> {
@@ -25,13 +28,20 @@ export const GameBoardTemplate = ()=> {
                             <PreMoveCheckContextProvider> 
                                 <InPlayMoveCheckContextProvider>
                                     <SelectionMoveCheckContextProvider>
-                                        <GameBoardHeader/>
-                                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
-                                            <GameLobbyMenu/>
-                                        }
-                                        {gameState.game && gameState.game?.gameStatus == GameStatusEnum.InProgress &&
-                                            <GameInProgressBoard game={gameState.game}/>
-                                        }
+                                        <TradeTransactionContextProvider>
+                                            <CurrentPlayerCardsContextProvider>
+                                                <GameBoardHeader/>
+                                                {gameState.game && gameState.game?.gameStatus == GameStatusEnum.WaitingToStart &&
+                                                    <GameLobbyMenu/>
+                                                }
+                                                {gameState.game && gameState.game?.gameStatus != GameStatusEnum.WaitingToStart &&
+                                                    <React.Fragment>
+                                                        <GameInProgressBoard game={gameState.game}/>
+                                                        <ConfettiHolder/>
+                                                    </React.Fragment>
+                                                }
+                                            </CurrentPlayerCardsContextProvider>
+                                        </TradeTransactionContextProvider>
                                     </SelectionMoveCheckContextProvider>
                                 </InPlayMoveCheckContextProvider>
                             </PreMoveCheckContextProvider>

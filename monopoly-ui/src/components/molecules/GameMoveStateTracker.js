@@ -1,5 +1,5 @@
 import React,{useEffect,useContext} from 'react'
-import { GameMoveStatusEnum,TransactionTrackerStatusEnum } from '../../common/constants'
+import { GameMoveStatusEnum,TransactionTrackerStatusEnum,PayeeTransactionStatusEnum } from '../../common/constants'
 import { MonopolyDealButton } from '../atoms/MonopolyDealButton'
 import styled from 'styled-components';
 import { gameMoveApi } from '../../api/gameMoveApi';
@@ -12,6 +12,7 @@ import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
 import { PropertyMoveCheckContext } from '../../context/PropertyMoveCheckContext'
 import { ResourceTypes,ActionTypesEnum } from '../../common/constants';
+import { completeOthersAcknowledgeSequence } from '../../common/GameMoveHelpers';
 
 const StyledStartChoiceHeader = styled.div`
     margin-top:5px;
@@ -34,6 +35,12 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext);
     const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
     
+    //all transactions must be resolved to show complete button
+    const transactionsComplete = gameMove.transactionTracker && gameMove.transactionTracker?.tradePayeeTransactions && 
+            gameMove.transactionTracker?.tradePayeeTransactions.length > 0 &&
+            (gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid)).length==0;
+    
+    
     const startTurnBtn = {
         label:"Start Move",
         onClick:(e)=>{
@@ -51,7 +58,12 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
             })
         }
     }
-    
+    const completeTurnBtn = {
+        label:"Complete Turn",
+        onClick:(e)=>{
+            completeOthersAcknowledgeSequence(game,gameMove.transactionTracker,player)
+        }
+    }
     
     const drawCardsBtn = {
         label:"Start Move",
@@ -72,10 +84,10 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
     }
     
     const skipTurnBtn = {
-        label:"Skip Turn",
+        label:"End Turn",
         onClick:(e)=>{
-            let payload = {
-                gameMoveStatus:GameMoveStatusEnum.SkipYourTurn,
+            let payload = { 
+                gameMoveStatus:gameMove.numberOfMovesPlayed<2?GameMoveStatusEnum.SkipYourTurn:GameMoveStatusEnum.MoveComplete,
                 currentPlayerId:gameMove.currentPlayer.playerId
             };
 
@@ -210,11 +222,24 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                     <MonopolyDealButton {...skipTurnBtn} />
                 </StyledStartChoiceHeader>
             }
+            {gameMove.gameMoveStatus == GameMoveStatusEnum.DiscardExtraCards &&
+                <StyledStartChoiceHeader>
+                    <MonopolyDealButton {...skipTurnBtn}/>
+                </StyledStartChoiceHeader>
+            }
             {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && !gameMove?.transactionTracker &&
                 <React.Fragment>Select a card to play from your hand or move cards in your property pile</React.Fragment>
             }
             {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress && gameMove?.transactionTracker &&
                 <React.Fragment>{getMessage(gameMove)}</React.Fragment>
+            }
+            {gameMove.gameMoveStatus == GameMoveStatusEnum.MoveInProgress &&
+                gameMove?.transactionTracker &&
+                gameMove?.transactionTracker.transactionTrackerStatus == TransactionTrackerStatusEnum.OthersAcknowledge &&
+                transactionsComplete &&
+                <StyledStartChoiceHeader>
+                    <MonopolyDealButton {...completeTurnBtn}/>
+                </StyledStartChoiceHeader>
             }
             
         </div>

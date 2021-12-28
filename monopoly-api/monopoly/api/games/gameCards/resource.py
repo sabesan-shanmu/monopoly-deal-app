@@ -59,7 +59,7 @@ class SingleGameCardsResource(Resource):
 
             #publish event for player if card is no longer in hand
             if updated_game_card.playerId == identity["playerId"] and \
-            updated_game_card.cardLocationStatus != GameCardLocationStatus.IsOnHand:
+            updated_game_card.cardLocationStatus != GameCardLocationStatus.IsOnHand or updated_game_card.cardLocationStatus == GameCardLocationStatus.IsDiscarded:
                 updated_gameCards_result = GameCardSchema(many=True).dump([new_game_card])
                 publish_delete_player_cards_on_hand_event_to_room(gamePassCode,identity["playerId"],updated_gameCards_result)
 

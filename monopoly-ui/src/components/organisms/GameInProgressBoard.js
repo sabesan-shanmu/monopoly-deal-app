@@ -2,7 +2,6 @@ import React,{useState} from 'react'
 import { CurrentPlayerCardsOnHand } from './CurrentPlayerCardsOnHand'
 import { InProgressBoardContainer } from '../atoms/InProgressBoardContainer'
 import { GameBoardArea } from './GameBoardArea'
-import {CurrentPlayerCardsContextProvider} from '../../context/CurrentPlayerCardsOnHandContext'
 import maximizeIcon from '../../assets/img/maximize.png'
 import minimizeIcon from '../../assets/img/minimize.png'
 import { InProgressBoardFooter } from '../atoms/InProgressBoardFooter';
@@ -45,7 +44,6 @@ export const GameInProgressBoard = () => {
     
     return (
         <InProgressBoardContainer>
-            <CurrentPlayerCardsContextProvider>
                 <GameBoardArea/>
                     <InProgressBoardFooter isFooterVisible={isFooterVisible}>
                     <FooterTitleContainer onClick={()=>setIsFooterVisible(!isFooterVisible)} >
@@ -56,8 +54,6 @@ export const GameInProgressBoard = () => {
                         <CurrentPlayerCardsOnHand/>
                     }
                 </InProgressBoardFooter>
-            </CurrentPlayerCardsContextProvider>
-            
         </InProgressBoardContainer>
     )
 }

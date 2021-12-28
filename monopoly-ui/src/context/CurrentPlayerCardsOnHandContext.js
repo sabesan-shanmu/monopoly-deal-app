@@ -97,7 +97,7 @@ export const CurrentPlayerCardsContextProvider = ({children}) => {
         return () => {
             isMounted=false
         }
-    }, [])
+    }, [gameState.game.gameStatus])
 
 
     return (

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { getBackgroundColour } from '../../common/ImageHelpers';
 import {PayeeTransactionStatusEnum,ActionTypesEnum} from '../../common/constants';
 import { getColourName } from '../../common/GameHelpers';
+import { PayeeTradeHeader } from '../atoms/PayeeTradeHeader';
+
 const StyledTransactionTracker = styled.div`
     margin-top:3px;
     padding:3px;
@@ -27,21 +29,24 @@ const getTransaction = (transactionTracker) =>{
         case ActionTypesEnum.DoubleTheRent:
             return ` requests $ ${transactionTracker?.requestedTotal} for ${getColourName(transactionTracker?.requestedColourId)} Rent from `;
         case ActionTypesEnum.DealBreaker:
-            return ` requests ${getColourName(transactionTracker?.requestedColourId)} Set (${transactionTracker?.requestedGroupId}) from `;
+            return ` steals ${getColourName(transactionTracker?.requestedColourId)} Set (${transactionTracker?.requestedGroupId}) from `;
         case ActionTypesEnum.ForcedDeal:
-            return ` requests ${transactionTracker?.sendingGameCard?.name} for ${transactionTracker?.requestGameCard?.name} from `;
+            return ` sends ${transactionTracker?.sendingGameCard?.name} and receives ${transactionTracker?.requestedGameCard?.name} from `;
         case ActionTypesEnum.SlyDeal:
-            return ` requests ${transactionTracker?.requestGameCard?.name} from `;
+            return ` steals ${transactionTracker?.requestedGameCard?.name} from `;
 
     }
 }
 
 
 export const TransactionTracker = ({gameMove,game,player}) => {
-    console.log(gameMove);
+
     const completedTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.Paid);
     const notPaidTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid);
     const declinedTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.DeclinedTransactionaid);
+    const playerDetails = game.players.find(p=>p.playerId==player.playerId);
+    const tradePayeeTransaction = gameMove.transactionTracker.tradePayeeTransactions.find(trade => trade.targetPlayerId == player.playerId && trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid);
+  
     return ( 
         <StyledTransactionTracker>
             {notPaidTransactions.length>0 &&
@@ -77,6 +82,14 @@ export const TransactionTracker = ({gameMove,game,player}) => {
                     ))}
                     cancelled transaction with Just Say No
                 </div>
+            }
+            {tradePayeeTransaction &&
+                <PayeeTradeHeader
+                    tradePayeeTransaction={tradePayeeTransaction}
+                    transactionTracker={gameMove.transactionTracker}
+                    currentPlayer={player}
+                    playerCardsOnField={[...playerDetails.cashPileCards,...playerDetails.propertyPileCards]}
+                />
             }
         </StyledTransactionTracker>
     );

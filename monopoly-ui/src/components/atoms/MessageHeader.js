@@ -43,6 +43,11 @@ export const MessageHeader = ({currentPlayer,transactionTracker,gameMoveStatus,n
                         {currentPlayer.playerName} click on Draw Card Pile to draw 2 cards
                     </div>
                 }
+                {gameMoveStatus==GameMoveStatusEnum.DiscardExtraCards &&
+                    <div>
+                        {currentPlayer.playerName} discard extra cards on hand (Max: 5 cards allowed on hand)
+                    </div>
+                }
                 {gameMoveStatus==GameMoveStatusEnum.MoveComplete &&
                     <React.Fragment>
                         {currentPlayer.playerName} completed {getCount(numberOfMovesPlayed)} move
