@@ -3,8 +3,8 @@ from flask_restx import Resource,Namespace
 from flask import request,jsonify
 from .services import get_game_player_moves,update_game_player_moves,get_player_game_order,\
 get_next_player_id,is_player_moves_status_valid,\
-is_player_move_count_valid,is_player_valid,is_game_action_tracker_valid
-from monopoly.api.games.services import get_game_by_gamepasscode
+is_player_move_count_valid,is_player_valid,is_game_action_tracker_valid,get_winner_id
+from monopoly.api.games.services import get_game_by_gamepasscode,update_game
 from .schema import GamePlayerMovesSchema,update_player_moves
 from monopoly.auth import validate_gamepassCode,validate_player
 from monopoly.common.enums import GameMoveStatus
@@ -82,12 +82,25 @@ class GamePlayerMovesResource(Resource):
                     #clear the play pile
                     discard_game_cards(gamePassCode)
                     #publish updated game
-                    update_game = get_game_by_gamepasscode(gamePassCode)
-                    update_game_result = GameSchema().dump(update_game)
+                    updated_game = get_game_by_gamepasscode(gamePassCode)
+                    update_game_result = GameSchema().dump(updated_game)
                     publish_game_update_event_to_room(gamePassCode,update_game_result)
+                            
         
+            #check to see if theres a winner
+            winner_found = get_winner_id(game)
+            if winner_found:
+                #update winner
+                game.gameStatus=Enum.GameStatus.Completed
+                game.gameWinnerId= winner_found.playerId
+                update_game(game)
+                #publish updated game
+                updated_game = get_game_by_gamepasscode(gamePassCode)
+                update_game_result = GameSchema().dump(updated_game)
+                publish_game_update_event_to_room(gamePassCode,update_game_result)
+
           
-            
+
             gamePlayerMove = update_game_player_moves(updated_player_move)
 
             updated_game_moves_result = GamePlayerMovesSchema().dump(gamePlayerMove)

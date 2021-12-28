@@ -13,7 +13,7 @@ import { GameMoveStateTracker } from '../molecules/GameMoveStateTracker'
 import { GameMoveContext } from '../../context/GameMoveContext'
 import modalBackgroundImg from "../../assets/img/backgrounds/modal-background.jpg";
 import {TransactionTracker} from "../molecules/TransactionTracker"
-import {TransactionTrackerStatusEnum} from "../../common/constants"
+import {GameStatusEnum,TransactionTrackerStatusEnum} from "../../common/constants"
 
 const StyledGameHeader = styled.div`
     display:grid;
@@ -79,7 +79,7 @@ export const GameBoardHeader = () =>{
                             {...gameTitleLabel}
 
                     />
-                    {gameMoveState.gameMove &&
+                    {game.gameStatus == GameStatusEnum.InProgress  && gameMoveState.gameMove &&
                         <React.Fragment>
                             <MessageHeader
                                 {...gameMoveState.gameMove}
@@ -101,6 +101,11 @@ export const GameBoardHeader = () =>{
                             }
              
                         </React.Fragment>
+                    }
+                    {game.gameStatus == GameStatusEnum.Completed && 
+                        <div>
+                            <MonopolyDealLabel type="h1" text={`Game Over! ${game.gameWinner.playerName} has won the game!!!`}  />
+                        </div>
                     }
                 </div>
              

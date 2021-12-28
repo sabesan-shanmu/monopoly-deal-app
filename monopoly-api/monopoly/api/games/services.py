@@ -29,12 +29,21 @@ def delete_game(game):
         raise
         
 
-def update_game(game):
+def update_game_status(game):
     try:
         gameUpdate=get_game_by_gamepasscode(game.gamePassCode)
         gameUpdate.gameStatus=game.gameStatus
         db.session.commit()
         return gameUpdate
+    except:
+        db.session.rollback()
+        raise
+
+def update_game(game):
+    try:
+        db.session.merge(game)
+        db.session.commit()
+        return game
     except:
         db.session.rollback()
         raise

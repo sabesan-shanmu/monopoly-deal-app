@@ -2,7 +2,7 @@ from flask_restx import Resource,Namespace
 from flask import request,jsonify,make_response
 from .schema import GameSchema,create_game_schema,update_game_schema
 from marshmallow import ValidationError
-from .services import get_games,get_game_by_gamepasscode,create_game,delete_game,update_game,is_game_allowed_to_start
+from .services import get_games,get_game_by_gamepasscode,create_game,delete_game,update_game_status,is_game_allowed_to_start
 import monopoly.common.enums as Enum
 import monopoly.common.constants as Constants
 from monopoly.api.cards.services import get_cards
@@ -76,7 +76,7 @@ class SingleGameResource(Resource):
                 except ValidationError as e:
                     raise ResourceValidationException(e)
             
-            gameFound = update_game(game)
+            gameFound = update_game_status(game)
             update_game_result = GameSchema().dump(gameFound)
 
             

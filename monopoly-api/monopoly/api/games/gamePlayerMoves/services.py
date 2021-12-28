@@ -2,7 +2,8 @@ from monopoly.models import GamePlayerMoves,Player
 import monopoly.common.enums as Enum
 from monopoly import db
 from sqlalchemy import exc
-
+from monopoly.api.games.transactionTracker.tradePayeeTransaction.services import get_cards_grouped_by_group_id
+from monopoly.common.constants import NUMBER_OF_SETS_NEEDED_TO_WIN
 #player can only progress to complete if an action has been started
 def is_game_action_tracker_valid(current_player_move):
     return False if current_player_move.gameMoveStatus == Enum.GameMoveStatus.MoveInProgress and current_player_move.transactionTrackerId is None else True
@@ -70,3 +71,16 @@ def update_game_player_moves(updateGamePlayerMove):
     except exc.IntegrityError:
         db.session.rollback()
         raise
+
+
+
+def get_winner_id(game):
+    #check to see if any player has >3 sets
+    players = game.players
+    for player in players:
+        player_cards_grouped_by_groupId = get_cards_grouped_by_group_id(player.propertyPileCards)
+        completed_sets = [x for x in player_cards_grouped_by_groupId if x.currentTotalInSet >= x.numberNeededToCompleteSet]
+        if len(completed_sets)>=NUMBER_OF_SETS_NEEDED_TO_WIN:
+            return player
+    
+    return None

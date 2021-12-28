@@ -4,7 +4,7 @@ import modalBackgroundImg from "../../assets/img/backgrounds/modal-background.jp
 
 
 export const InProgressBoardFooter = styled.footer`
-    position: ${props => props.isFooterVisible ? "sticky" : "sticky"};
+    position: ${props => props.isFooterVisible ? "sticky" : "fixed"};
     bottom: 0;
     width:95%;
     padding: 5px;

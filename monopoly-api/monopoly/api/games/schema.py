@@ -35,6 +35,7 @@ class GameSchema(ma.Schema):
     gameStatus = EnumField(Enum.GameStatus, by_value=True)
     createdUtcDate = fields.DateTime()
     players = fields.Nested(PlayerSchema,many=True)
+    gameWinner = fields.Nested(PlayerSchema)
     inPlayPileCards = fields.Nested(GameCardSchema,many=True)
     links = ma.Hyperlinks(
         {

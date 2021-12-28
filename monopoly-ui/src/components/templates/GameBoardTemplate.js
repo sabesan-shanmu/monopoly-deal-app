@@ -12,7 +12,7 @@ import { SelectionMoveCheckContextProvider } from '../../context/SelectionMoveCh
 import { PropertyMoveCheckContextProvider } from '../../context/PropertyMoveCheckContext'
 import { TradeTransactionContextProvider } from '../../context/TradeTransactionContext'
 import {CurrentPlayerCardsContextProvider} from '../../context/CurrentPlayerCardsOnHandContext'
-import { ConfettiHolder } from '../atoms/ConfettiHolder'
+
 
 
 export const GameBoardTemplate = ()=> {
@@ -37,7 +37,6 @@ export const GameBoardTemplate = ()=> {
                                                 {gameState.game && gameState.game?.gameStatus != GameStatusEnum.WaitingToStart &&
                                                     <React.Fragment>
                                                         <GameInProgressBoard game={gameState.game}/>
-                                                        <ConfettiHolder/>
                                                     </React.Fragment>
                                                 }
                                             </CurrentPlayerCardsContextProvider>

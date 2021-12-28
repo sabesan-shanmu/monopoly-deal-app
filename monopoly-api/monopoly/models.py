@@ -108,6 +108,8 @@ class Game(db.Model):
     createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
     players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,cascade="all,delete")
     inPlayPileCards = db.relationship(GameCards,primaryjoin=and_(gamePassCode==GameCards.gamePassCode,GameCards.cardLocationStatus==Enum.GameCardLocationStatus.IsInPlay))    
+    gameWinnerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True,ondelete='CASCADE'))  
+    gameWinner = db.relationship(Player,primaryjoin=gameWinnerId==Player.playerId)
     def __str__(self):
         return self.name
 
