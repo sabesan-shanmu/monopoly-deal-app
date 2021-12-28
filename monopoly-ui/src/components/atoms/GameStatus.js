@@ -9,7 +9,7 @@ const getBackgroundColour = (gameStatus)=>{
             return "#68a84f";
         case GameStatusEnum.InProgress:
             return "#f1c232";
-        case GameStatusEnum.WaitingToStart:
+        case GameStatusEnum.Completed:
             return "#e06666";
     }
 }
