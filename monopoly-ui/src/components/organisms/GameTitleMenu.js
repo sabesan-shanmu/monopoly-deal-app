@@ -50,7 +50,7 @@ export const GameTitleMenu = ({newGameOnClick,selectGameOnClick})=> {
                 <MonopolyDealButton {...selectGame} /> 
             </StyledGameTitleMenuBody>
             
-            <StyledFooter target="_blank" href="https://www.youtube.com/watch?v=w2o8LgIvWEg">
+            <StyledFooter target="_blank" href="https://youtu.be/j6m51ukj_Bw">
             <img src="https://img.icons8.com/fluency/48/000000/youtube-play.png"/>Demo
             </StyledFooter>
         </StyledMenuContainer>
