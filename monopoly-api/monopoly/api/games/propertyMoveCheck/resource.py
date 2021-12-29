@@ -34,7 +34,7 @@ class PropertyMoveCheckResource(Resource):
 
       
 
-            if currentPlayerMove.transactionTracker and currentPlayerMove.transactionTracker.transactionTrackerStatus is not Enum.TransactionTrackerStatus.Completed \
+            if currentPlayerMove.transactionTracker and currentPlayerMove.transactionTracker.transactionTrackerStatus not in [Enum.TransactionTrackerStatus.OthersAcknowledge,Enum.TransactionTrackerStatus.Completed] \
             or currentPlayerMove.gameMoveStatus is not Enum.GameMoveStatus.MoveInProgress:
                 raise FieldValidationException(message="Move must be in progress and transactions must be completed") 
 

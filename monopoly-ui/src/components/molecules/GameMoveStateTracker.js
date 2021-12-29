@@ -240,9 +240,12 @@ export const GameMoveStateTracker = ({gameMove,game,player})=>{
                 gameMove?.transactionTracker &&
                 gameMove?.transactionTracker.transactionTrackerStatus == TransactionTrackerStatusEnum.OthersAcknowledge &&
                 transactionsComplete &&
-                <StyledStartChoiceHeader>
-                    <MonopolyDealButton {...completeTurnBtn}/>
-                </StyledStartChoiceHeader>
+                <React.Fragment>
+                    Move cards in your property pile or end your turn
+                    <StyledStartChoiceHeader>
+                        <MonopolyDealButton {...completeTurnBtn}/>
+                    </StyledStartChoiceHeader>
+                </React.Fragment>
             }
             
         </div>

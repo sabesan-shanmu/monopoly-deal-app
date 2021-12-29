@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import styled,{keyframes,css} from 'styled-components'
 import PropTypes from 'prop-types';
 import { device } from '../../common/devices';
-import { CardTypeEnum,TransactionTrackerStatusEnum, GameCardLocationStatusEnum } from '../../common/constants';
+import { CardTypeEnum,TransactionTrackerStatusEnum, GameCardLocationStatusEnum,PayeeTransactionStatusEnum } from '../../common/constants';
 import faceDownCardImg from '../../assets/img/face-down-card.jpg' 
 import { Popover } from 'react-tiny-popover'
 import {PreMoveCardPopoverContent} from '../atoms/PreMoveCardPopoverContent'
@@ -45,7 +45,7 @@ const StyledCard = styled.img`
 
 
 
-export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves=[], popoverType=null}) => {
+export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,listOfPossibleMoves=[], popoverType=null,transactionTracker=null}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPopoverOpen,setIsPopoverOpen] = useState(false);
 
@@ -77,7 +77,12 @@ export const MonopolyCard = ({gameCard,onClick,cardType,isCardSelectable=false,l
                                 else if(popoverType ==  TransactionTrackerStatusEnum.OtherPlayerSelection)
                                     return <SelectionMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else if(popoverType ==  TransactionTrackerStatusEnum.OthersAcknowledge)
-                                    return <TradeTransactionCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
+                                    if(transactionTracker && 
+                                        (transactionTracker.tradePayeeTransactions.length == 0   ||
+                                        transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid).length == 0)) 
+                                        return <PropertyMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
+                                    else
+                                        return <TradeTransactionCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                                 else
                                     return <PropertyMoveCardPopoverContent gameCard={gameCard} listOfPossibleMoves={listOfPossibleMoves} setIsPopoverOpen={setIsPopoverOpen} />
                             }}

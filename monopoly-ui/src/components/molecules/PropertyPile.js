@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { device } from '../../common/devices';
 import { MonopolyDealLabel } from '../atoms/MonopolyDealLabel';
 import { MonopolyCard } from '../atoms/MonopolyCard';
-import { CardTypeEnum,TransactionTrackerStatusEnum } from '../../common/constants';
+import { CardTypeEnum,TransactionTrackerStatusEnum,PayeeTransactionStatusEnum } from '../../common/constants';
 import { InPlayMoveCheckContext } from '../../context/InPlayMoveCheckContext';
 import { SelectionMoveCheckContext } from '../../context/SelectionMoveCheckContext';
 import { PropertyMoveCheckContext } from '../../context/PropertyMoveCheckContext';
 import { GameMoveContext } from '../../context/GameMoveContext';
 import { TradeTransactionContext } from '../../context/TradeTransactionContext';
+import { PlayerContext } from '../../context/PlayerContext';
 import {sortCardsByLastUpdateDate,getCardSetTotal} from '../../common/GameHelpers'
 
 
@@ -43,14 +44,18 @@ export const PropertyPile = ({propertyPileCards}) => {
 
     propertyPileCards = sortCardsByLastUpdateDate(propertyPileCards);
     const cashTotal = getCardSetTotal(propertyPileCards);
+    const {playerState,playerDispatch} = useContext(PlayerContext);
     const {gameMoveState,gameMoveDispatch} = useContext(GameMoveContext)
     const {inPlayMoveCheckState,inPlayMoveCheckStateDispatch} = useContext(InPlayMoveCheckContext);
     const {selectionMoveCheckState,selectionMoveCheckStateDispatch} = useContext(SelectionMoveCheckContext); 
     const {propertyMoveCheckState,propertyMoveCheckStateDispatch} = useContext(PropertyMoveCheckContext);
     const {tradeTransactionState,tradeTransactionsDispatch} = useContext(TradeTransactionContext);
     const transactionTrackerStatus = gameMoveState.gameMove?.transactionTracker?.transactionTrackerStatus;
-    
-  
+    const isCurrentPlayerMove = playerState?.player?.playerId == gameMoveState?.gameMove?.currentPlayer.playerId;
+    const isPropertyMoveAllowed  = gameMoveState.gameMove?.transactionTracker && isCurrentPlayerMove
+    && (gameMoveState.gameMove?.transactionTracker.tradePayeeTransactions.length == 0 ||
+        gameMoveState.gameMove?.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid).length == 0);
+
     const getListOfPossibleMoves = (propertyCard) => {
         
         switch(transactionTrackerStatus)
@@ -60,7 +65,10 @@ export const PropertyPile = ({propertyPileCards}) => {
             case TransactionTrackerStatusEnum.OtherPlayerSelection:
                 return (selectionMoveCheckState?.listOfPossibleMoves?.selectableCards.filter(t=>t.gameCardId == propertyCard.gameCardId));
             case TransactionTrackerStatusEnum.OthersAcknowledge:
-                return  (tradeTransactionState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
+                if(isPropertyMoveAllowed)
+                    return (propertyMoveCheckState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
+                else
+                    return (tradeTransactionState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
             default: //TODO: in theory this should be find, will need to check to see if this causes issue
                 return (propertyMoveCheckState?.listOfPossibleMoves.filter(t=>t.gameCardId == propertyCard.gameCardId));
         }
@@ -86,14 +94,16 @@ export const PropertyPile = ({propertyPileCards}) => {
                     <StyledGrid key={key} total={propertyPileGroup.length}>
                         {propertyPileGroup && propertyPileGroup.map((propertyCard,key)=>{
                             const listOfPossibleMoves= getListOfPossibleMoves(propertyCard);
-                            const isCardSelectable = transactionTrackerStatus !=  TransactionTrackerStatusEnum.OthersAcknowledge?
-                                listOfPossibleMoves?.length>0:(listOfPossibleMoves?.length>0 && tradeTransactionState.isTradeAllowed);
+                            const isCardSelectable = transactionTrackerStatus ==  TransactionTrackerStatusEnum.OthersAcknowledge?
+                                (isPropertyMoveAllowed?listOfPossibleMoves?.length>0:listOfPossibleMoves?.length>0 && tradeTransactionState.isTradeAllowed):listOfPossibleMoves?.length>0;
                          
                             return (
                             <RepositionedCard key={key} position={key+1} total={propertyPileCards.length}>
                                 <MonopolyCard gameCard={propertyCard} cardType={CardTypeEnum.FaceUpCard} 
                                 isCardSelectable={isCardSelectable} listOfPossibleMoves={listOfPossibleMoves}
-                                popoverType={transactionTrackerStatus} />
+                                popoverType={transactionTrackerStatus} 
+                                transactionTracker={gameMoveState.gameMove?.transactionTracker}
+                                />
                             </RepositionedCard>
                             )
                         })}
