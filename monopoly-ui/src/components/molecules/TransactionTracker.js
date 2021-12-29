@@ -43,7 +43,7 @@ export const TransactionTracker = ({gameMove,game,player}) => {
 
     const completedTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.Paid);
     const notPaidTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid);
-    const declinedTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.DeclinedTransactionaid);
+    const declinedTransactions = gameMove.transactionTracker.tradePayeeTransactions.filter(trade => trade.payeeTransactionStatus == PayeeTransactionStatusEnum.DeclinedTransaction);
     const playerDetails = game.players.find(p=>p.playerId==player.playerId);
     const tradePayeeTransaction = gameMove.transactionTracker.tradePayeeTransactions.find(trade => trade.targetPlayerId == player.playerId && trade.payeeTransactionStatus == PayeeTransactionStatusEnum.NotPaid);
   
