@@ -74,10 +74,10 @@ export const TransactionTracker = ({gameMove,game,player}) => {
             }
             {declinedTransactions.length>0 &&
                 <div>
-                    {completedTransactions.map((payeeTransaction,key)=>(
+                    {declinedTransactions.map((payeeTransaction,key)=>(
                         <React.Fragment key={payeeTransaction.targetPlayerId} >
                             <StyledMessageHeader imageId={payeeTransaction.targetPlayer.imageId}>{payeeTransaction.targetPlayer.playerName} </StyledMessageHeader>
-                            {key==0 && key!=completedTransactions.length-1 && <span>,</span>}
+                            {key==0 && key!=declinedTransactions.length-1 && <span>,</span>}
                         </React.Fragment>
                     ))}
                     cancelled transaction with Just Say No
