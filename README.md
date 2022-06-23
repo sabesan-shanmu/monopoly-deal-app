@@ -15,5 +15,5 @@
 - Property Wild Cards remain on the field even after the parent card is stolen. Player has the option to reassign it to a different set on the next turn.
 
 ## Demo
-https://www.youtube.com/watch?v=w2o8LgIvWEg
+[https://www.youtube.com/watch?v=w2o8LgIvWEg](https://www.youtube.com/watch?v=j6m51ukj_Bw)
 
