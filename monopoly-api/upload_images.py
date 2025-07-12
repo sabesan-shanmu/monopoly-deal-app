@@ -13,14 +13,14 @@ firebase_storage = os.environ.get("STORAGE")
 
 
 firebaseConfig = {
-  "apiKey": "AIzaSyADCnd17s0cs4kbRzCM5WIrlbxegOBjtes",
+  "apiKey": "removeed",
   "authDomain": "monopoly-deal-images.firebaseapp.com",
   "databaseURL": "https://monopoly-deal-images-default-rtdb.firebaseio.com",
   "projectId": "monopoly-deal-images",
   "storageBucket": "monopoly-deal-images.appspot.com",
-  "messagingSenderId": "37338932171",
-  "appId": "1:37338932171:web:331d853d443334ee2ecc4e",
-  "measurementId": "G-KCTDQ5VRCL",
+  "messagingSenderId": "removed",
+  "appId": "removed",
+  "measurementId": "removed",
   "serviceAccount":"./firebase-config.json"
 };
 
