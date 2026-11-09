@@ -23,10 +23,11 @@ socketio = SocketIO()
 def create_app():
     app = Flask(__name__,template_folder="static")
 
+    from config import ProductionConfig,DevelopmentConfig
     if app.config["ENV"] == "production":
-        app.config.from_object('config.ProductionConfig')
+        app.config.from_object(ProductionConfig())
     else:
-        app.config.from_object('config.DevelopmentConfig')
+        app.config.from_object(DevelopmentConfig())
     
     db.init_app(app)
     migrate.init_app(app,db)
