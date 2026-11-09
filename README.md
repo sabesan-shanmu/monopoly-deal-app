@@ -17,7 +17,14 @@ The repo deploys as a [Render Blueprint](render.yaml): the Flask API as a web se
    ```sh
    python init_card_creation.py
    ```
-   On the free plan, where the Shell tab isn't available, run it from your machine with `DATABASE_URL` pointing at Neon.
+   On the free plan, where the Shell tab isn't available, run it from your machine against Neon instead. Use Python 3.9 and skip gevent, which doesn't install on Apple Silicon. Set `FLASK_ENV=development`: Flask 2.0 defaults to production mode, which requires `REDIS_URL`.
+   ```sh
+   cd monopoly-api
+   /usr/bin/python3 -m venv .venv
+   grep -vE '^(gevent|gevent-websocket|greenlet|zope)' requirements.txt > .venv/req-seed.txt && .venv/bin/pip install -r .venv/req-seed.txt
+   read -s "DATABASE_URL?Paste Neon URL: " && export DATABASE_URL
+   FLASK_ENV=development .venv/bin/python init_card_creation.py
+   ```
 
 Free Render web services sleep after ~15 minutes idle, so the first request can take ~50s.
 
