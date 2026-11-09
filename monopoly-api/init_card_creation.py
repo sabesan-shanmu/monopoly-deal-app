@@ -2,11 +2,23 @@ from monopoly import create_app
 from monopoly.models import ActionCard,PropertiesCard,RentCard,CashCard,Cards,GamePlayAction,PropertiesColour
 import monopoly.common.enums as Enum 
 from monopoly import db
-import random 
+import random
+import os
 
-""" 
+"""
 Purpose:Script for initial card data creation
 """
+
+# Card images are served by the UI as static files from monopoly-ui/public/cards
+CARD_IMAGES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'monopoly-ui', 'public', 'cards')
+
+def card_image_url(folder, card_id):
+    """Return the UI-relative URL for a card image, e.g. /cards/action-cards/11.jpg (extensions vary in case)."""
+    folder_path = os.path.join(CARD_IMAGES_DIR, folder)
+    for file_name in os.listdir(folder_path):
+        if os.path.splitext(file_name)[0] == str(card_id):
+            return "/cards/{0}/{1}".format(folder, file_name)
+    raise FileNotFoundError("No image for {0}/{1}".format(folder, card_id))
 
 def create_properties_colour():
     propertiesColourCards =[
@@ -216,28 +228,28 @@ def create_card():
             if selected_group == 1:
                 if len(actionCards)>0:
                     actionCard=actionCards.pop(0)
-                    cards.append(Cards(cardId=cardId,price=actionCard.price,name=actionCard.name,cardType=Enum.CardTypes.Action,actionCardId=actionCard.actionCardId))
+                    cards.append(Cards(cardId=cardId,price=actionCard.price,name=actionCard.name,cardType=Enum.CardTypes.Action,actionCardId=actionCard.actionCardId,cardImageUrl=card_image_url('action-cards',actionCard.actionCardId)))
                     cardId+=1
                 else:
                     del group_number_list[selected_index]
             elif selected_group == 2:
                 if len(propertiesCards)>0:
                     propertiesCard=propertiesCards.pop(0)
-                    cards.append(Cards(cardId=cardId,price=propertiesCard.price,name=propertiesCard.name,cardType=Enum.CardTypes.Properties,propertiesCardId=propertiesCard.propertiesCardId))
+                    cards.append(Cards(cardId=cardId,price=propertiesCard.price,name=propertiesCard.name,cardType=Enum.CardTypes.Properties,propertiesCardId=propertiesCard.propertiesCardId,cardImageUrl=card_image_url('property-cards',propertiesCard.propertiesCardId)))
                     cardId+=1
                 else:
                     del group_number_list[selected_index]
             elif selected_group == 3:
                 if len(cashCards)>0:
                     cashCard=cashCards.pop(0)
-                    cards.append(Cards(cardId=cardId,price=cashCard.price,name=cashCard.name,cardType=Enum.CardTypes.Cash,cashCardId=cashCard.cashCardId))
+                    cards.append(Cards(cardId=cardId,price=cashCard.price,name=cashCard.name,cardType=Enum.CardTypes.Cash,cashCardId=cashCard.cashCardId,cardImageUrl=card_image_url('cash-cards',cashCard.cashCardId)))
                     cardId+=1
                 else:
                     del group_number_list[selected_index] 
             elif selected_group == 4:
                 if len(rentCards)>0:
                     rentCard=rentCards.pop(0)
-                    cards.append(Cards(cardId=cardId,price=rentCard.price,name=rentCard.name,cardType=Enum.CardTypes.Rent,rentCardId=rentCard.rentCardId))
+                    cards.append(Cards(cardId=cardId,price=rentCard.price,name=rentCard.name,cardType=Enum.CardTypes.Rent,rentCardId=rentCard.rentCardId,cardImageUrl=card_image_url('rent-cards',rentCard.rentCardId)))
                     cardId+=1
                 else:
                     del group_number_list[selected_index] 

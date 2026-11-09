@@ -1,0 +1,64 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Postgres (Neon) and Redis (Upstash) are external; paste their URLs when Render prompts for the sync:false values.
+services:
+  - type: web
+    name: monopoly-deal-api
+    runtime: python
+    plan: free
+    region: virginia # same region as the Neon database (AWS us-east-1)
+    rootDir: monopoly-api
+    buildCommand: pip install -r requirements.txt
+    # Free instances have no pre-deploy step, so migrations run on start (no-op when already up to date)
+    startCommand: flask db upgrade && gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 --bind 0.0.0.0:$PORT app:app
+    healthCheckPath: /api/cards/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.21
+      - key: FLASK_APP
+        value: app.py
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: MONOPOLY_UI_URL
+        sync: false # e.g. https://monopoly-deal-ui.onrender.com (no trailing slash)
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SESSION_TYPE
+        value: redis
+      - key: API_TITLE
+        value: Monopoly Deal API
+      - key: API_VERSION
+        value: "1.0"
+      - key: DOCUMENTATION
+        value: /documentation/
+      - key: JWT_ACCESS_TOKEN_EXPIRES
+        value: "1"
+      - key: JWT_REFRESH_TOKEN_EXPIRES
+        value: "24"
+      - key: PERMANENT_SESSION_LIFETIME
+        value: "24"
+
+  - type: web
+    name: monopoly-deal-ui
+    runtime: static
+    rootDir: monopoly-ui
+    buildCommand: npm ci && npm run build
+    staticPublishPath: build
+    # Rewrites only apply when no static file matches, so /cards/* images are still served directly
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # react-scripts 4 (webpack 4) fails on Node 17+ OpenSSL
+      - key: NODE_VERSION
+        value: "16"
+      - key: REACT_APP_API_BASE_URL
+        sync: false # e.g. https://monopoly-deal-api.onrender.com
+      - key: REACT_APP_API_TIMEOUT
+        value: "60000" # free API instances can take ~50s to wake

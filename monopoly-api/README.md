@@ -2,49 +2,42 @@
 
 
 ## Dev Dependencies
-* Python 3.8.2
+* Python 3.9
 * Flask 2.0.1
-* Redis 3.5.3
-* Pyrebase 3.0.27
-* Psycopg2 2.8.5
+* Postgres
+* Redis (server-side sessions)
 
 
 ## Setup
 
-Install the dependencies 
+Install the dependencies
 
 ```sh
-python3 -m venv monopoly_venv
-```
-
-
-```sh
-.\monopoly_venv\Scripts\activate
-```
-
-```sh
+python3.9 -m venv monopoly_venv
+source monopoly_venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Setup the database
+Copy `.env.example` to `.env` and fill in the database/Redis URLs and secrets.
+
+Create the schema (migrations are committed under `migrations/`)
 
 ```sh
-flask db init
-flask db migrate
 flask db upgrade
 ```
 
-Populate cards tables
-```sh
-python .\init_card_creation.py
-```
+Populate the cards tables. Card images are served by the UI from `monopoly-ui/public/cards`, and this script stores their paths.
 
-Upload card images to firebase storage(Note:you must use your own account)
 ```sh
-python .\upload_images.py
+python init_card_creation.py
 ```
 
 Run local instance
+
 ```sh
 flask run
 ```
+
+After changing `monopoly/models.py`, create a new migration with `flask db migrate -m "describe change"` and commit it.
+
+Note: `gevent==21.1.2` has no Apple Silicon wheel. On an M-series Mac, `flask run` works without it; production (Linux) installs it from a wheel.
