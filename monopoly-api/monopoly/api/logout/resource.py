@@ -11,11 +11,7 @@ class LogoutResource(Resource):
     def get(self):
 
         
-        gameId = session.get("gameId")
-        playerId = session.get("playerId")
-        if gameId is None or playerId is None:
-            raise FieldValidationException(message="No Session exists.")  
-
+        # The UI now keeps its own tokens, so there may be no cookie session to clear; logging out is still a success
         session.clear()
         response = make_response("Logged Out!",200)
         response.delete_cookie(app.config["SESSION_COOKIE_NAME"])

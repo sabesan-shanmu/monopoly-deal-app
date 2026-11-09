@@ -8,6 +8,9 @@ export const playersApi = {
   login:(loginUrl,data)=>{
       return axiosInstance.post(loginUrl,data);
   },
+  refresh:(gamePassCode,refreshToken)=>{
+      return axiosInstance.post(`/api/games/${gamePassCode}/refresh/`,null,{headers: {'Authorization': `Bearer ${refreshToken}`}});
+  },
   vote:(voteUrl,accessToken,data)=>{
     return axiosInstance.post(voteUrl,data,{headers: {'Authorization': `Bearer ${accessToken}`}});
   }  

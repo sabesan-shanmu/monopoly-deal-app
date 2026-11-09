@@ -27,14 +27,21 @@ def validate_gamepassCode(func):
 
 
 def validate_player(func):
+    """
+    Authorize from the signed JWT alone. It used to also compare against the server-side session cookie,
+    but the UI and API live on different sites, so browsers that block third-party cookies never send it.
+    The token is signed and carries playerId + gamePassCode, so it is checked against the requested game.
+    """
     @wraps(func)
     def wrapper(*args,**kwargs):
         verify_jwt_in_request()
-        identity = get_jwt_identity()
-        expectedPlayerId = identity.get("playerId", None)        
-        actualPlayerId = session.get("playerId", None)
-        if expectedPlayerId != actualPlayerId:
+        identity = get_jwt_identity() or {}
+        if identity.get("playerId", None) is None:
             return get_formatted_error("PLAYER_ID_MISMATCH_ERROR")
+
+        requestedGamePassCode = kwargs.get("gamePassCode", None)
+        if requestedGamePassCode is not None and identity.get("gamePassCode", None) != requestedGamePassCode:
+            return get_formatted_error("GAME_CODE_MISMATCH_ERROR")
 
         return func(*args,**kwargs)
     return wrapper

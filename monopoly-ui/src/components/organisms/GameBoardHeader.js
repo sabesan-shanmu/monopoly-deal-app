@@ -3,6 +3,7 @@ import {PlayerCharacter} from '../molecules/PlayerCharacter'
 import {MonopolyDealButton} from '../atoms/MonopolyDealButton'
 import {PlayerContext} from '../../context/PlayerContext'
 import {sessionsApi} from "../../api/sessionsApi"
+import {clearTokens} from "../../common/tokenStorage"
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
 import {ResourceTypes} from '../../common/constants'
@@ -54,14 +55,20 @@ export const GameBoardHeader = () =>{
 
     const logoutBtn = {
         onClick:()=>{
+            // Log out locally even if the API call fails (e.g. no cookie session to clear)
+            const logoutLocally = ()=>{
+                clearTokens();
+                playerDispatch({type:ResourceTypes.DeleteResource});
+                history.push('/games-list');
+            };
             sessionsApi.clear()
                 .then(function(success){
                     console.log(success.data);
-                    playerDispatch({type:ResourceTypes.DeleteResource});
-                    history.push('/games-list');
+                    logoutLocally();
                 })
                 .catch(function(error){
-                    console.log(error.response.data);
+                    console.log(error && error.response ? error.response.data : error);
+                    logoutLocally();
                 })
         },
         label:"Logout"
