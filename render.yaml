@@ -58,6 +58,9 @@ services:
       # react-scripts 4 (webpack 4) fails on Node 17+ OpenSSL
       - key: NODE_VERSION
         value: "16"
+      # CRA fails the build on lint warnings when CI=true; the app has existing warnings
+      - key: CI
+        value: "false"
       - key: REACT_APP_API_BASE_URL
         sync: false # e.g. https://monopoly-deal-api.onrender.com
       - key: REACT_APP_API_TIMEOUT
