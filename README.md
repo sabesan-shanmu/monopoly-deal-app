@@ -1,5 +1,12 @@
 # Monopoly Deal Game
 
+## Sites
+
+- Application: https://monopoly-deal-ui.onrender.com/
+- API: https://monopoly-deal-api-9dfl.onrender.com/documentation/
+
+Hosted on Render's free tier, so the first request after the services have been idle can take ~50s.
+
 ## Deployment (Render + Neon + Upstash)
 
 The repo deploys as a [Render Blueprint](render.yaml): the Flask API as a web service and the React UI as a static site. Card images are served by the UI from `monopoly-ui/public/cards`.
@@ -10,9 +17,9 @@ The repo deploys as a [Render Blueprint](render.yaml): the Flask API as a web se
    - `DATABASE_URL`: the Neon URL
    - `REDIS_URL`: the Upstash URL
    - `MONOPOLY_UI_URL`: `https://monopoly-deal-ui.onrender.com`
-   - `REACT_APP_API_BASE_URL`: `https://monopoly-deal-api.onrender.com`
+   - `REACT_APP_API_BASE_URL`: `https://monopoly-deal-api-9dfl.onrender.com`
 
-   If Render gives the services different hostnames, update these two URLs, then redeploy the UI. Its env vars are baked in at build time.
+   Render may add a suffix to a hostname when the name is taken (the API got `-9dfl`). Check each service's real URL, set these two values to match (no trailing slash), then redeploy the UI with **Clear build cache & deploy**. Its env vars are baked in at build time.
 4. **Seed the cards** (once, after the first API deploy). Migrations already run on every start. Run this from the API service's Shell tab:
    ```sh
    python init_card_creation.py
