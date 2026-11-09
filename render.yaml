@@ -5,6 +5,7 @@ services:
     name: monopoly-deal-api
     runtime: python
     plan: free
+    region: virginia # same region as the Neon database (AWS us-east-1)
     rootDir: monopoly-api
     buildCommand: pip install -r requirements.txt
     # Free instances have no pre-deploy step, so migrations run on start (no-op when already up to date)
