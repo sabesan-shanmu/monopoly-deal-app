@@ -1,4 +1,4 @@
-import React,{useContext,createContext,useReducer,useEffect} from 'react'
+import React,{useContext,createContext,useReducer,useEffect,useRef} from 'react'
 import { SocketContext } from './SocketContext';
 import { GameContext } from './GameContext';
 import { ResourceTypes } from '../common/constants';
@@ -55,6 +55,8 @@ export const CurrentPlayerCardsContextProvider = ({children}) => {
     const {socket} = useContext(SocketContext); 
     const {gameState,gameDispatch}  = useContext(GameContext);
     const {playerState,playerDispatch}  = useContext(PlayerContext);
+    const accessTokenRef = useRef(playerState.player.accessToken);
+    accessTokenRef.current = playerState.player.accessToken;
    
     useEffect(() => {
         let isMounted=true;
@@ -69,33 +71,41 @@ export const CurrentPlayerCardsContextProvider = ({children}) => {
                 currentPlayerCardsStateDispatch({type:ResourceTypes.DeleteResource,errors:error.response.data});
         });
 
-        socket.on(`add_player_cards_on_hand_${gameState.game.gamePassCode}_${playerState.player.playerId}`, (player_cards) => {
-      
-            console.log("add_player_cards_on_hand fired!");
-            console.log(player_cards);
-            if(isMounted)
-                currentPlayerCardsStateDispatch({type:ResourceTypes.CreateResource,playerCards:player_cards});
-          });
+        // Hand events are only sent to this player's private room, which the API lets a socket join
+        // after verifying its access token. Join now and again after every reconnect (rooms don't survive one).
+        const joinPlayerRoom = () => {
+            socket.emit('join_player_room', {accessToken: accessTokenRef.current}, (ack) => {
+                if(!ack || !ack.joined)
+                    console.log("join_player_room failed", ack);
+            });
+        };
+        if(socket.connected)
+            joinPlayerRoom();
+        socket.on('connect', joinPlayerRoom);
 
-        socket.on(`update_player_cards_on_hand_${gameState.game.gamePassCode}_${playerState.player.playerId}`, (player_cards) => {
-      
-            console.log("update_player_cards_on_hand fired!");
-            console.log(player_cards);
-            if(isMounted)
-                currentPlayerCardsStateDispatch({type:ResourceTypes.UpdateResource,playerCards:player_cards});
-        });
-
-        
-        socket.on(`delete_player_cards_on_hand_${gameState.game.gamePassCode}_${playerState.player.playerId}`, (player_cards) => {
-      
-            console.log("delete_player_cards_on_hand fired!");
-            console.log(player_cards);
-            if(isMounted)
-                currentPlayerCardsStateDispatch({type:ResourceTypes.DeleteResource,playerCards:player_cards});
-          });
+        const handEvent = (action) => `${action}_player_cards_on_hand_${gameState.game.gamePassCode}_${playerState.player.playerId}`;
+        const handlers = {
+            [handEvent('add')]: (player_cards) => {
+                if(isMounted)
+                    currentPlayerCardsStateDispatch({type:ResourceTypes.CreateResource,playerCards:player_cards});
+            },
+            [handEvent('update')]: (player_cards) => {
+                if(isMounted)
+                    currentPlayerCardsStateDispatch({type:ResourceTypes.UpdateResource,playerCards:player_cards});
+            },
+            [handEvent('delete')]: (player_cards) => {
+                if(isMounted)
+                    currentPlayerCardsStateDispatch({type:ResourceTypes.DeleteResource,playerCards:player_cards});
+            }
+        };
+        Object.entries(handlers).forEach(([event, handler]) => socket.on(event, handler));
 
         return () => {
             isMounted=false
+            socket.off('connect', joinPlayerRoom);
+            Object.entries(handlers).forEach(([event, handler]) => socket.off(event, handler));
+            // Stop receiving this hand once the board unmounts (logout, leaving the game)
+            socket.emit('leave_player_room');
         }
     }, [gameState.game.gameStatus])
 

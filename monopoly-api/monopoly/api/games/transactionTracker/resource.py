@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 from flask_restx import Resource,Namespace
 from flask import request,jsonify   
 from monopoly.auth import validate_gamepassCode,validate_player
@@ -22,6 +23,7 @@ transaction_tracker_namespace = Namespace('TransactionTracker', description='Res
 class ManyTransactionTrackerResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def post(self,gamePassCode):
         try:
             identity = get_jwt_identity()
@@ -77,6 +79,7 @@ class ManyTransactionTrackerResource(Resource):
 class SingleTransactionTrackerResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def patch(self,gamePassCode,transactionTrackerId):
         try:
             identity = get_jwt_identity()

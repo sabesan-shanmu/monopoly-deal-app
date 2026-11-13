@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 
 from flask_restx import Resource,Namespace
 from flask import request,jsonify
@@ -36,6 +37,7 @@ class ManyGameCardsResource(Resource):
 class SingleGameCardsResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def patch(self,gamePassCode,gameCardId):
         try:    
             identity = get_jwt_identity()

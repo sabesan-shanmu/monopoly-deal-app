@@ -43,17 +43,20 @@ export const GameContextProvider = ({children}) => {
       history.push('/games-list');
     });
     
-    socket.on(`update_game_${gamePassCode}`, (update_game) => {
+    const socketEvent1 = `update_game_${gamePassCode}`;
+    const onSocketEvent1 = (update_game) => {
       
       console.log("update_game fired!");
       console.log(update_game);
       if(isMounted)
         gameDispatch({type:ResourceTypes.UpdateResource,game:update_game});
-    });
+    };
+    socket.on(socketEvent1, onSocketEvent1);
 
 
     return () =>{
       isMounted = false
+      socket.off(socketEvent1, onSocketEvent1);
       
     }
   },[])

@@ -47,24 +47,30 @@ export const GameMoveContextProvider = ({children}) => {
                 gameMoveDispatch({type:ResourceTypes.DeleteResource,errors:error.response.data});
         });
 
-        socket.on(`create_game_moves_${gameState.game.gamePassCode}`, (created_game_moves) => {
+        const socketEvent1 = `create_game_moves_${gameState.game.gamePassCode}`;
+        const onSocketEvent1 = (created_game_moves) => {
             console.log(`create_game_moves_${gameState.game.gamePassCode} fired!`);
             console.log(created_game_moves);
             if(isMounted)
                 gameMoveDispatch({type:ResourceTypes.CreateResource,gameMove:created_game_moves});
-        });
+        };
+        socket.on(socketEvent1, onSocketEvent1);
     
              
-        socket.on(`update_game_moves_${gameState.game.gamePassCode}`, (update_game_moves) => {
+        const socketEvent2 = `update_game_moves_${gameState.game.gamePassCode}`;
+        const onSocketEvent2 = (update_game_moves) => {
             console.log(`update_game_moves_${gameState.game.gamePassCode} fired!`);
             console.log(update_game_moves);
             if(isMounted)
                 gameMoveDispatch({type:ResourceTypes.UpdateResource,gameMove:update_game_moves});
-        });
+        };
+        socket.on(socketEvent2, onSocketEvent2);
 
         
         return () => {
             isMounted=false
+            socket.off(socketEvent1, onSocketEvent1);
+            socket.off(socketEvent2, onSocketEvent2);
         }
     }, [])
 

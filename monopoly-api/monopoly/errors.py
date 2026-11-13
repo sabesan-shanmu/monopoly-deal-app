@@ -35,8 +35,8 @@ MONOPOLY_ERRORS = {
     },
     "CARD_NOT_FOUND_ERROR":{
         "statusCode": 404,
-        "name":"GameCodeMismatchError",
-        "message":"Game Code in Token does not match requested resource."
+        "name":"CardNotFoundError",
+        "message":"Requested card is not found."
     },
     "GAME_CODE_MISMATCH_ERROR":{
         "statusCode": 400,
@@ -53,8 +53,13 @@ MONOPOLY_ERRORS = {
         "name":"NotFoundError",
         "message":"Request Resource is not found."
     },
+    "FORBIDDEN_ERROR":{
+        "statusCode": 403,
+        "name":"ForbiddenError",
+        "message":"You are not allowed to perform this action."
+    },
     "VALIDATION_ERROR":{
-        "statusCode": 404,
+        "statusCode": 400,
         "name":"ValidationError",
         "message":"Validation Error(s)"
     },
@@ -76,9 +81,11 @@ MONOPOLY_ERRORS = {
 }
 
 def get_formatted_error(errorType,**kwargs):
-    error = MONOPOLY_ERRORS.get(errorType)
+    # Copy so a custom message never leaks into later errors of the same type
+    error = dict(MONOPOLY_ERRORS.get(errorType, MONOPOLY_ERRORS["DEFAULT"]))
     msg = kwargs.get('message', None)
-    error["message"] = msg if msg is not None else error["message"]
+    if msg is not None:
+        error["message"] = msg
     return error,error.get("statusCode")
 
 @flask_api.errorhandler(IntegrityError)

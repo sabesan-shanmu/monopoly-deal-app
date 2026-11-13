@@ -20,6 +20,13 @@ export const loadTokens = () => {
     }
 };
 
+// Lets the API layer tell React that tokens were refreshed in the background (see axiosInstance)
+export const TOKENS_REFRESHED_EVENT = 'monopoly-deal-tokens-refreshed';
+
+export const notifyTokensRefreshed = (tokens) => {
+    window.dispatchEvent(new CustomEvent(TOKENS_REFRESHED_EVENT, {detail: tokens}));
+};
+
 export const clearTokens = () => {
     try {
         sessionStorage.removeItem(STORAGE_KEY);

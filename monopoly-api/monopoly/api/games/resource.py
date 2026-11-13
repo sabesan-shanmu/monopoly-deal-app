@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 from flask_restx import Resource,Namespace
 from flask import request,jsonify,make_response
 from .schema import GameSchema,create_game_schema,update_game_schema
@@ -9,7 +10,9 @@ from monopoly.api.cards.services import get_cards
 from monopoly.api.games.gameCards.services import create_game_cards
 from monopoly.api.games.players.services import get_players_by_gameid,have_all_players_accepted
 from sqlalchemy import exc
-from monopoly.auth import validate_gamepassCode
+from monopoly.auth import validate_gamepassCode,validate_player
+from flask_jwt_extended import get_jwt_identity
+from monopoly.errors import get_formatted_error
 from monopoly.api.games.gamePlayerMoves.services import create_game_player_moves
 from monopoly.api.games.gamePlayerMoves.schema import GamePlayerMovesSchema
 from monopoly.exceptions import ResourceNotFoundException,ResourceValidationException,FieldValidationException
@@ -39,6 +42,7 @@ class SingleGameResource(Resource):
 
         
     @validate_gamepassCode
+    @serialize_game_writes
     def post(self,gamePassCode):
         try:
             gameFound = get_game_by_gamepasscode(gamePassCode)
@@ -92,12 +96,19 @@ class SingleGameResource(Resource):
 
 
     @validate_gamepassCode
+    @validate_player
+    @serialize_game_writes
     def delete(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
             if game is None:
                 raise ResourceNotFoundException(message="Game Not Found")
             else:
+                # Only the host (the first player to join, who created the game) may delete it
+                identity = get_jwt_identity()
+                host = next((p for p in game.players if p.playerGameOrder == 1), None)
+                if host is None or host.playerId != identity.get("playerId"):
+                    return get_formatted_error("FORBIDDEN_ERROR",message="Only the game's host can delete it.")
                 delete_game(game)
                 result = GameSchema().dump(game)
                 return jsonify(result)

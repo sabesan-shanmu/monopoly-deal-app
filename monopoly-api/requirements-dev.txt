@@ -1,0 +1,3 @@
+-r requirements.txt
+fakeredis==1.7.1
+pytest==7.4.4

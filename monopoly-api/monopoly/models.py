@@ -100,12 +100,12 @@ class Game(db.Model):
         db.UniqueConstraint('name',name='unique_game'),
     )
     gameId = db.Column(db.Integer,primary_key=True,unique=True,nullable=False)
-    gamePassCode = db.Column(db.String, unique=True,nullable=False,default=uuid.uuid4)
+    gamePassCode = db.Column(db.String, unique=True,nullable=False,default=lambda: str(uuid.uuid4()))
     gameMode = db.Column(db.Enum(Enum.GameMode),nullable=False,default=Enum.GameMode.RegularMode)
     numberOfPlayers = db.Column(db.Integer,nullable=False,default=0)
     name = db.Column(db.String,nullable=False,unique=True)
     gameStatus = db.Column(db.Enum(Enum.GameStatus),nullable=False, default=Enum.GameStatus.WaitingToStart)
-    createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow())
+    createdUtcDate = db.Column(db.DateTime,default=datetime.utcnow)  # callable: evaluated per row, not once at import
     players =  db.relationship(Player,primaryjoin=gameId==Player.gameId,cascade="all,delete")
     inPlayPileCards = db.relationship(GameCards,primaryjoin=and_(gamePassCode==GameCards.gamePassCode,GameCards.cardLocationStatus==Enum.GameCardLocationStatus.IsInPlay))    
     gameWinnerId = db.Column(db.Integer,db.ForeignKey("player.playerId",use_alter=True,ondelete='CASCADE'))  

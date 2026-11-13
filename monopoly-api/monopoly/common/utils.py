@@ -1,9 +1,9 @@
 from monopoly import ma 
 
-#TODO: this is temporary , will need to figure out why gunicron resolves https url as http
 def url_overwrite(endpoint,**kwargs):
-
-    return ma.AbsoluteUrlFor(endpoint,**kwargs,_scheme="https",_external=True)
+    # Absolute link using the request's own scheme and host. Behind Render's TLS proxy that is https,
+    # because create_app wraps the app in ProxyFix (trusts X-Forwarded-Proto/Host); locally it stays http.
+    return ma.AbsoluteUrlFor(endpoint,**kwargs,_external=True)
 
 def get_colour_name(colourId):
     colours = {

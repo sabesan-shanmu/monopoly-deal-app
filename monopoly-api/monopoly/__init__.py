@@ -10,6 +10,7 @@ from monopoly.middleware import Middleware
 from flask_cors import CORS
 from flask_session import Session
 from flask_socketio import SocketIO
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -33,6 +34,8 @@ def create_app():
     migrate.init_app(app,db)
     ma.init_app(app)
     jwt.init_app(app)
+    # Render terminates TLS at its proxy; trust its X-Forwarded-Proto so absolute links come out https
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)
     app.wsgi_app = Middleware(app.wsgi_app)
     cors.init_app(app,origins=[app.config['MONOPOLY_UI_URL']])
     session.init_app(app)
@@ -47,6 +50,7 @@ def create_app():
   
     from . import namespaces
     from . import models
+    from . import sockets
 
 
     return app

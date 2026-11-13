@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 
 from flask_restx import Resource,Namespace
 from flask import request,jsonify
@@ -24,6 +25,7 @@ draw_cards_namespace = Namespace('DrawCards', description='Draw 2 cards from dec
 class DrawCardsResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def get(self,gamePassCode):
         try:
             identity = get_jwt_identity()

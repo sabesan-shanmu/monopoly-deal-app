@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 from flask_restx import Resource,Namespace
 from flask import request,jsonify   
 from monopoly.exceptions import FieldValidationException, ResourceNotFoundException, ResourceValidationException
@@ -27,6 +28,7 @@ trade_payee_tracker_namespace = Namespace('TradePayeeTracker', description='Reso
 class ManyTradePayeeTransactionResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def post(self,gamePassCode,transactionTrackerId):
         try:
             current_user = get_jwt_identity()
@@ -79,6 +81,7 @@ class ManyTradePayeeTransactionResource(Resource):
 class SingleTradePayeeTransactionResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def put(self,gamePassCode,transactionTrackerId,tradePayeeTransactionId):
         try:
             current_user = get_jwt_identity()

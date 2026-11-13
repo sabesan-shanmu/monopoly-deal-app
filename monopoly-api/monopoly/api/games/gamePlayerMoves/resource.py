@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 
 from flask_restx import Resource,Namespace
 from flask import request,jsonify
@@ -28,6 +29,7 @@ game_player_moves_namespace = Namespace('GamePlayerMoves', description='Resource
 class GamePlayerMovesResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def patch(self,gamePassCode):
         try:
 

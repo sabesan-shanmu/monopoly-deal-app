@@ -3,7 +3,7 @@ import {ResourceTypes} from "../common/constants";
 import {sessionsApi} from "../api/sessionsApi"
 import {playersApi} from "../api/playersApi"
 import {getDecodedPlayer} from "../adapters/playerAdapter"
-import {saveTokens,loadTokens,clearTokens} from "../common/tokenStorage"
+import {saveTokens,loadTokens,clearTokens,TOKENS_REFRESHED_EVENT} from "../common/tokenStorage"
 import {useHistory} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 export const PlayerContext = createContext();
@@ -79,6 +79,16 @@ export const PlayerContextProvider = ({children}) => {
         });
 
         return () => { isMounted = false }; 
+    },[]);
+
+    // Pick up tokens refreshed in the background after an expired-token error, so later calls
+    // (and the hand's socket room) use the new access token
+    useEffect(()=>{
+        const onTokensRefreshed = (event)=>{
+            playerDispatch({type:ResourceTypes.UpdateResource,player:getDecodedPlayer(event.detail)});
+        };
+        window.addEventListener(TOKENS_REFRESHED_EVENT,onTokensRefreshed);
+        return ()=> window.removeEventListener(TOKENS_REFRESHED_EVENT,onTokensRefreshed);
     },[]);
 
     // Persist tokens whenever login, register, vote or a refresh hands us new ones

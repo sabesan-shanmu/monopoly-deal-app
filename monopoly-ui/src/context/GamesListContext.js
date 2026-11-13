@@ -49,20 +49,24 @@ export const GamesListContextProvider = ({children}) => {
     useEffect(()=>{
 
         let isMounted = true;      
-        socket.on("create_game", (created_game) => {
+        const socketEvent1 = "create_game";
+        const onSocketEvent1 = (created_game) => {
             console.log("created_game fired!");
             console.log(created_game);
             if(isMounted)
                 gamesListDispatch({type:ResourceTypes.CreateResource,data:created_game});
-        });
+        };
+        socket.on(socketEvent1, onSocketEvent1);
     
              
-        socket.on("update_game", (update_game) => {
+        const socketEvent2 = "update_game";
+        const onSocketEvent2 = (update_game) => {
             console.log("update_game fired!");
             console.log(update_game);
             if(isMounted)
                 gamesListDispatch({type:ResourceTypes.UpdateResource,data:update_game});
-        });
+        };
+        socket.on(socketEvent2, onSocketEvent2);
     
 
         gamesApi.getAll().then((success)=>{
@@ -73,7 +77,11 @@ export const GamesListContextProvider = ({children}) => {
             console.log(error.response.data);
         })
 
-        return () => { isMounted = false }; 
+        return () => {
+            isMounted = false;
+            socket.off(socketEvent1, onSocketEvent1);
+            socket.off(socketEvent2, onSocketEvent2);
+        };
     },[])
     
 

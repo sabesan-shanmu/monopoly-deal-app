@@ -1,3 +1,4 @@
+from monopoly.locks import serialize_game_writes
 from flask_restx import Resource,Namespace
 from .schema import PlayerJwtSchema,login_player_schema,register_player_schema,vote_player_schema
 from monopoly.common import constants,enums
@@ -20,6 +21,7 @@ players_namespace = Namespace('Players', description='Players can sign up or log
 
 @players_namespace.route('/register/')
 class RegisterResource(Resource):
+    @serialize_game_writes
     def post(self,gamePassCode):
         try:
             #Get game and all current players that are part of the game
@@ -69,6 +71,7 @@ class RegisterResource(Resource):
 
 @players_namespace.route('/login/')
 class LoginResource(Resource):
+    @serialize_game_writes
     def post(self,gamePassCode):
         try:
             game = get_game_by_gamepasscode(gamePassCode)
@@ -111,6 +114,7 @@ class RefreshResource(Resource):
 class VoteResource(Resource):
     @validate_gamepassCode
     @validate_player
+    @serialize_game_writes
     def post(self,gamePassCode):
         try:
             current_user = get_jwt_identity()
