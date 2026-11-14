@@ -7,6 +7,8 @@
 
 Hosted on Render's free tier, so the first request after the services have been idle can take ~50s.
 
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the app, API, database and realtime updates fit together.
+
 ## Deployment (Render + Neon + Upstash)
 
 The repo deploys as a [Render Blueprint](render.yaml): the Flask API as a web service and the React UI as a static site. Card images are served by the UI from `monopoly-ui/public/cards`.
